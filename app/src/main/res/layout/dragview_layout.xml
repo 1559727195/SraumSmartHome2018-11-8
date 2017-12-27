@@ -1,0 +1,33 @@
+<RelativeLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
+    android:background="@mipmap/header"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:fitsView="@id/root_layout"/>
+    <com.massky.sraumsmarthome.view.DragGridView
+        android:cacheColorHint="@android:color/transparent"
+        android:gravity="center"
+        android:horizontalSpacing="10dip"
+        android:id="@+id/dragGridView"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dip"
+        ></com.massky.sraumsmarthome.view.DragGridView>
+    <com.yanzhenjie.statusview.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"/>
+
+
+</RelativeLayout>

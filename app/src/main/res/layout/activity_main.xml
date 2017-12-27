@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.massky.sraumsmarthome.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/click_btn"
+        android:layout_height="wrap_content"
+        android:text="点击"
+        tools:layout_editor_absoluteY="162dp"
+        tools:layout_editor_absoluteX="135dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginBottom="17dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/click_next"
+        android:layout_height="wrap_content"
+        android:text="UDP服务器端"
+        tools:layout_editor_absoluteY="162dp"
+        tools:layout_editor_absoluteX="135dp"
+        android:layout_marginRight="29dp"
+        android:layout_marginEnd="29dp"
+        android:layout_alignBaseline="@+id/click_btn"
+        android:layout_alignBottom="@+id/click_btn"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/click_search_ip"
+        android:layout_height="wrap_content"
+        android:text="search"
+
+        android:layout_alignBaseline="@+id/click_btn"
+        android:layout_alignBottom="@+id/click_btn"
+        android:layout_toRightOf="@+id/click_btn"
+        android:layout_toEndOf="@+id/click_btn"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/test_tcp_click"
+        android:layout_height="wrap_content"
+        android:text="发送心跳"
+        android:layout_marginBottom="79dp"
+        android:layout_above="@+id/click_next"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="13dp"
+        android:layout_marginEnd="13dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/test_tcp_login"
+        android:layout_height="wrap_content"
+        android:text="登录网关"
+        android:layout_alignBaseline="@+id/test_tcp_next_page"
+        android:layout_alignBottom="@+id/test_tcp_next_page"
+        android:layout_alignLeft="@+id/click_btn"
+        android:layout_alignStart="@+id/click_btn" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/test_tcp_next_page"
+        android:layout_height="wrap_content"
+        android:text="跳转到下个界面"
+        android:layout_alignBaseline="@+id/test_tcp_click"
+        android:layout_alignBottom="@+id/test_tcp_click"
+        android:layout_centerHorizontal="true" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/scrollView2"
+       >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_server"/>
+    </ScrollView>
+
+</RelativeLayout>

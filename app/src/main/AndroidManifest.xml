@@ -8,6 +8,22 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+
+
+    <!--下面是智能家居的权限-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -73,6 +89,23 @@
        >
 
    </activity>
+
+        <activity android:name=".activity.LaunghSecondActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+
+        <activity android:name=".activity.LoginGateWayActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
+
+        <activity android:name=".myzxingbar.qrcodescanlib.CaptureActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <!--<activity android:name=".myzxingbar.qrcodescanlib.CaptureActivity"-->
+            <!--android:screenOrientation="portrait">-->
+        <!--</activity>-->
     </application>
 
 </manifest>

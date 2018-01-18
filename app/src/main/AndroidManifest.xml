@@ -3,31 +3,33 @@
     package="com.massky.sraumsmarthome">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
 
 
     <!--下面是智能家居的权限-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <application
+        android:name=".widget.ApplicationContext"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name=".widget.ApplicationContext"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -38,14 +40,9 @@
 
         <activity android:name=".UdpServerActivity"></activity>
 
-        <activity android:name=".Main_New_Activity">
+        <activity android:name=".Main_New_Activity"></activity>
 
-        </activity>
-
-
-        <activity android:name=".circle.MainActivity">
-
-        </activity>
+        <activity android:name=".circle.MainActivity"></activity>
 
         <service
             android:name=".service.MyService"
@@ -62,20 +59,22 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.DragViewActivity"
+        <activity
+            android:name=".activity.DragViewActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name=".activity.ProgressBarActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+        <activity
+            android:name=".activity.ProgressBarActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name=".activity.LaunghActivity"
+        <activity
+            android:name=".activity.LaunghActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -84,28 +83,165 @@
             </intent-filter>
         </activity>
 
-   <activity android:name=".activity.NextStepActivity"
-       android:theme="@style/AppTheme.NoActionBar"
-       >
+        <activity
+            android:name=".activity.NextStepActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-   </activity>
+        <activity
+            android:name=".activity.LaunghSecondActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name=".activity.LaunghSecondActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+        <activity
+            android:name=".activity.LoginGateWayActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name=".activity.LoginGateWayActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
-
-        <activity android:name=".myzxingbar.qrcodescanlib.CaptureActivity"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".myzxingbar.qrcodescanlib.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <!--<activity android:name=".myzxingbar.qrcodescanlib.CaptureActivity"-->
-            <!--android:screenOrientation="portrait">-->
+        <!--android:screenOrientation="portrait">-->
         <!--</activity>-->
+        <activity
+            android:name=".activity.SearchGateWayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.EditGateWayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.MainGateWayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.SelectZigbeeDeviceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".activity.AddZigbeeDeviceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".activity.AddHandSceneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".activity.HandAddSceneDeviceDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".activity.GuanLianSceneBtnActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.GuanLianSceneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.GuanLianSceneRealBtnActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.AddAutoSceneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.TimeExcuteCordinationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.AutoAgainSceneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+
+        <activity
+            android:name=".activity.CustomDefineDaySceneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".activity.SelectExecuteSceneResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.DeviceExcuteOpenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".activity.ExcuteSomeHandSceneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".activity.EditSceneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".activity.ExcuteSmartDeviceCordinationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ExcuteSmartDeviceDetailItemActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".activity.PersonMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".activity.ClipImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

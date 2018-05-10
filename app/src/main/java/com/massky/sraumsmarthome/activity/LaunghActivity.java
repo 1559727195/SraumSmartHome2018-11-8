@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.Button;
 import com.massky.sraumsmarthome.R;
 import com.massky.sraumsmarthome.base.BaseActivity;
+import com.yanzhenjie.statusview.StatusUtils;
+import com.yanzhenjie.statusview.StatusView;
+
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,10 +21,13 @@ public class LaunghActivity extends BaseActivity {
 
     private Timer timer;
     private TimerTask task;
-    private int add;
     private boolean activity_destroy;//activity是否被销毁
     @InjectView(R.id.btn_next_step)
     Button btn_next_step;
+    @InjectView(R.id.status_view)
+    StatusView statusView;
+    @InjectView(R.id.three_second_btn)
+    Button three_second_btn;
 
     @Override
     protected int viewId() {
@@ -30,23 +36,25 @@ public class LaunghActivity extends BaseActivity {
 
     @Override
     protected void onView() {
+        StatusUtils.setFullToStatusBar(this);  // StatusBar.
+        setAnyBarAlpha(0);//设置状态栏的颜色为透明
+//        StatusUtils.setFullToNavigationBar(this); // NavigationBar.
         initTimer();
     }
 
     @Override
     protected void onEvent() {
         btn_next_step.setOnClickListener(this);
+        three_second_btn.setOnClickListener(this);
     }
 
     @Override
     protected void onData() {
 
-
-
-        
     }
 
 
+    private int add = 3;
     /**
      * 初始化定时器
      */
@@ -60,12 +68,21 @@ public class LaunghActivity extends BaseActivity {
 
                 @Override
                 public void run() {
-                    add++;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            three_second_btn.setText(add + "秒跳过");
+                            add--;
+                        }
+                    });
                     Log.e("robin debug","add:" + add);
-                    if (add >= 3) {//3min= 1000 * 60 * 3
+                    if (add <= 0) {//3min= 1000 * 60 * 3
                         try {
                             add = 0;
                             closeTimer();
+                            //跳转到 启动第二页
+                            startActivity(new Intent(LaunghActivity.this
+                            ,LaunghSecondActivity.class));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -80,6 +97,7 @@ public class LaunghActivity extends BaseActivity {
             };
         timer.schedule(task, 1, 1000); // 1s后执行task,经过1ms再次执行
     }
+
     /**
      * 关闭定时器和socket客户端
      * @throws IOException
@@ -102,6 +120,9 @@ public class LaunghActivity extends BaseActivity {
             case R.id.btn_next_step:
                 startActivity(new Intent(LaunghActivity.this,NextStepActivity.class));
                 break;
+            case R.id.three_second_btn:
+
+                break;//3秒跳转
         }
     }
 
@@ -109,5 +130,13 @@ public class LaunghActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         activity_destroy = true;
+    }
+
+    /*
+ *动态设置状态栏的颜色
+ */
+    private void setAnyBarAlpha(int alpha) {
+//        mToolbar.getBackground().mutate().setAlpha(alpha);
+       statusView.getBackground().mutate().setAlpha(alpha);
     }
 }

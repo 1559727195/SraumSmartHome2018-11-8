@@ -3,8 +3,6 @@ package com.massky.sraumsmarthome.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.massky.sraumsmarthome.R;
-import com.massky.sraumsmarthome.Util.ICallback;
-import com.massky.sraumsmarthome.Util.ToastUtil;
 import com.massky.sraumsmarthome.service.MyService;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/transparent"
+    android:id="@+id/erweima_linear"
+    android:layout_height="match_parent">
+ <ImageView
+     android:layout_width="match_parent"
+     android:layout_gravity="center_horizontal"
+     android:id="@+id/erweima_big_pic"
+     android:layout_height="@dimen/y200"
+     />
+ <TextView
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="使用sraum APP扫描二维码，立即成为使用伙伴"
+     android:layout_gravity="center_horizontal"
+     android:textColor="@color/dark_gray"
+     android:textSize="14sp"/>
+</LinearLayout>

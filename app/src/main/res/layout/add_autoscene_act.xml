@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/root_layout"
+    android:background="#F6F7FA"
+    android:layout_height="match_parent">
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_t_back" />
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="添加自动场景"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请为新的自动场景选择设备"
+        android:padding="@dimen/x8"
+        android:background="#F2F2F2"
+        android:textSize="14sp"
+        android:textColor="@color/dark_gray"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/x6"
+        android:layout_height="@dimen/y25">
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@mipmap/ic_launcher"/>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="如果"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/x8"
+            android:gravity="center"
+            android:textColor="@color/dark_gray"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/auto_time_exeute"
+        android:padding="@dimen/x10"
+        android:layout_height="@dimen/y35">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/time_img"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_dingshizhixing_sm"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="定时执行"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/x8"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/time_img"
+            android:textColor="@color/dark_gray"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/x10"
+        android:id="@+id/smart_device_exeute"
+        android:layout_height="@dimen/y35">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/smart_img"
+            android:src="@drawable/icon_shebeiyunxing_sm"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="智能设备执行"
+            android:textSize="14sp"
+            android:layout_marginLeft="@dimen/x8"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/smart_img"
+            android:textColor="@color/dark_gray"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/x1"-->
+        <!--android:background="@color/gray"></View>-->
+    </LinearLayout>
+</LinearLayout>

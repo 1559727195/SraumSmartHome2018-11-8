@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/swipemenu_layout"
+    android:layout_height="match_parent"
+    xmlns:slideswitch="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:orientation="horizontal"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1">
+            <ImageView
+                android:id="@+id/device_type_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_weidu" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/y10"
+            android:paddingTop="@dimen/y10"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="有人闯入"
+                    android:id="@+id/hand_device_content"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="来自:厨房红外传感器"
+                    android:id="@+id/hand_gateway_content"
+                    android:layout_below="@+id/hand_device_content"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:id="@+id/hand_scene_btn"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:text="执行"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:background="@drawable/execute_scene_shape"-->
+                <!--android:textSize="14sp"-->
+                <!--android:src="@mipmap/ic_launcher" />-->
+            <TextView
+                android:id="@+id/slide_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x5"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/gray"
+                android:text="2017-11-11"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_width="@dimen/x50"
+                android:layout_height="match_parent"
+                android:text="重命名"
+                android:background="@color/blue_txt"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_width="@dimen/x50"
+                android:layout_height="match_parent"
+                android:text="编辑"
+                android:background="#FF9A02"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_width="@dimen/x50"
+                android:layout_height="match_parent"
+                android:text="删除"
+                android:background="#FF0202"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

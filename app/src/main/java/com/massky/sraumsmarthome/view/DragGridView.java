@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,13 +18,18 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.massky.sraumsmarthome.adapter.DetailDeviceHomeAdapter;
+
 import java.lang.reflect.Field;
 
 /**
- * Created by zhu on 2017/12/11.
+ * @blog http://blog.csdn.net/xiaanming
+ *
+ * @author xiaanming
+ *
  */
-
-public class DragGridView extends GridView {
+@SuppressLint("NewApi")
+public class DragGridView extends GridView{
     /**
      * DragGridView的item长按响应的时间， 默认是1000毫秒，也可以自行设置
      */
@@ -128,7 +134,7 @@ public class DragGridView extends GridView {
         super(context, attrs, defStyle);
         mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        mStatusHeight = getStatusBarHeight(context); //获取状态栏的高度
+        mStatusHeight = getStatusHeight(context); //获取状态栏的高度
     }
 
     private Handler mHandler = new Handler();
@@ -183,6 +189,8 @@ public class DragGridView extends GridView {
                 //根据position获取该item所对应的View
                 mStartDragItemView = getChildAt(mDragPosition - getFirstVisiblePosition());
 
+                Log.e("robin debug","mStartDragItemView:" + mStartDragItemView);
+
                 //下面这几个距离大家可以参考我的博客上面的图来理解下
                 mPoint2ItemTop = mDownY - mStartDragItemView.getTop();
                 mPoint2ItemLeft = mDownX - mStartDragItemView.getLeft();
@@ -195,15 +203,12 @@ public class DragGridView extends GridView {
                 //获取DragGridView自动向下滚动的偏移量，大于这个值，DragGridView向上滚动
                 mUpScrollBorder = getHeight() * 3/4;
 
-
-
                 //开启mDragItemView绘图缓存
                 mStartDragItemView.setDrawingCacheEnabled(true);
                 //获取mDragItemView在缓存中的Bitmap对象
                 mDragBitmap = Bitmap.createBitmap(mStartDragItemView.getDrawingCache());
                 //这一步很关键，释放绘图缓存，避免出现重复的镜像
                 mStartDragItemView.destroyDrawingCache();
-
 
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -232,6 +237,7 @@ public class DragGridView extends GridView {
      * @return
      */
     private boolean isTouchInItem(View dragView, int x, int y){
+        if (dragView == null) return  false;
         int leftOffset = dragView.getLeft();
         int topOffset = dragView.getTop();
         if(x < leftOffset || x > leftOffset + dragView.getWidth()){
@@ -258,8 +264,8 @@ public class DragGridView extends GridView {
                     onDragItem(moveX, moveY);
                     break;
                 case MotionEvent.ACTION_UP:
-                    onStopDrag();
-                    isDrag = false;
+                        onStopDrag();
+                        isDrag = false;
                     break;
             }
             return true;
@@ -272,9 +278,9 @@ public class DragGridView extends GridView {
      * 创建拖动的镜像
      * @param bitmap
      * @param downX
-     *          按下的点相对父控件的X坐标
+     * 			按下的点相对父控件的X坐标
      * @param downY
-     *          按下的点相对父控件的X坐标
+     * 			按下的点相对父控件的X坐标
      */
     private void createDragImage(Bitmap bitmap, int downX , int downY){
         mWindowLayoutParams = new WindowManager.LayoutParams();
@@ -346,6 +352,7 @@ public class DragGridView extends GridView {
 
             View view = getChildAt(mDragPosition - getFirstVisiblePosition());
             //实现GridView的自动滚动
+            if (view == null) return;
             smoothScrollToPositionFromTop(mDragPosition, view.getTop() + scrollY);
         }
     };
@@ -353,23 +360,35 @@ public class DragGridView extends GridView {
 
     /**
      * 交换item,并且控制item之间的显示与隐藏效果
+     *
      * @param moveX
      * @param moveY
      */
-    private void onSwapItem(int moveX, int moveY){
+    private void onSwapItem(int moveX, int moveY) {
         //获取我们手指移动到的那个item的position
         int tempPosition = pointToPosition(moveX, moveY);
-
         //假如tempPosition 改变了并且tempPosition不等于-1,则进行交换
-        if(tempPosition != mDragPosition && tempPosition != AdapterView.INVALID_POSITION){
-            getChildAt(tempPosition - getFirstVisiblePosition()).setVisibility(View.INVISIBLE);//拖动到了新的item,新的item隐藏掉
-            getChildAt(mDragPosition - getFirstVisiblePosition()).setVisibility(View.VISIBLE);//之前的item显示出来
+        if (tempPosition != mDragPosition && tempPosition != AdapterView.INVALID_POSITION) {
 
-            if(onChanageListener != null){
-                onChanageListener.onChange(mDragPosition, tempPosition);
+            if (getChildAt(mDragPosition - getFirstVisiblePosition()) != null && getChildAt(tempPosition - getFirstVisiblePosition()) != null) {
+
+
+                getChildAt(tempPosition - getFirstVisiblePosition()).setVisibility(View.INVISIBLE);//拖动到了新的item,新的item隐藏掉
+                getChildAt(mDragPosition - getFirstVisiblePosition()).setVisibility(View.VISIBLE);//之前的item显示出来
+
+                if (onChanageListener != null) {
+                    onChanageListener.onChange(mDragPosition, tempPosition);
+                }
+
+                mDragPosition = tempPosition;
+            } else {
+                mHandler.removeCallbacks(mLongClickRunnable);
+                mHandler.removeCallbacks(mScrollRunnable);
+                //镜像文件消失时，就重新加载数据， 因为暂时不能把镜像文件从哪里来恢复到哪里去。 把数据及时保存到本地。
+                if (onChanageListener != null) {
+                    onChanageListener.onWrongRefresh();
+                }
             }
-
-            mDragPosition = tempPosition;
         }
     }
 
@@ -378,65 +397,34 @@ public class DragGridView extends GridView {
      * 停止拖拽我们将之前隐藏的item显示出来，并将镜像移除
      */
     private void onStopDrag(){
-        getChildAt(mDragPosition - getFirstVisiblePosition()).setVisibility(View.VISIBLE);
+        if (getChildAt(mDragPosition - getFirstVisiblePosition()) != null) {
+            getChildAt(mDragPosition - getFirstVisiblePosition()).setVisibility(View.VISIBLE);
+        }
         removeDragImage();
     }
-
-//    private static int getStatusHeight(Context context){
-//        int statusHeight = 0;
-//        Rect localRect = new Rect();
-//        ((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(localRect);
-//        statusHeight = localRect.top;
-//        if (0 == statusHeight){
-//            Class<?> localClass;
-//            try {
-//                localClass = Class.forName(com.android.internal.R.dimen);
-//                Object localObject = localClass.newInstance();
-//                int i5 = Integer.parseInt(localClass.getField(status_bar_height).get(localObject).toString());
-//                statusHeight = context.getResources().getDimensionPixelSize(i5);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return statusHeight;
-//    }
-
 
     /**
      * 获取状态栏的高度
      * @param context
      * @return
      */
-    public static int getStatusBarHeight(Context context){
-
-        Class<?> c = null;
-
-        Object obj = null;
-
-        Field field = null;
-
-        int x = 0, statusBarHeight = 38;//通常这个值会是38
-
-        try {
-
-            c = Class.forName("com.android.internal.R$dimen");
-
-            obj = c.newInstance();
-
-            field = c.getField("status_bar_height");
-
-            x = Integer.parseInt(field.get(obj).toString());
-
-            statusBarHeight = context.getResources().getDimensionPixelSize(x);
-
-        } catch (Exception e1) {
-
-            e1.printStackTrace();
-
+    private static int getStatusHeight(Context context){
+        int statusHeight = 0;
+        Rect localRect = new Rect();
+        ((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(localRect);
+        statusHeight = localRect.top;
+        if (0 == statusHeight){
+            Class<?> localClass;
+            try {
+                localClass = Class.forName("com.android.internal.R$dimen");
+                Object localObject = localClass.newInstance();
+                int i5 = Integer.parseInt(localClass.getField("status_bar_height").get(localObject).toString());
+                statusHeight = context.getResources().getDimensionPixelSize(i5);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
-        return statusBarHeight;
-
+        return statusHeight;
     }
 
 
@@ -450,10 +438,11 @@ public class DragGridView extends GridView {
         /**
          * 当item交换位置的时候回调的方法，我们只需要在该方法中实现数据的交换即可
          * @param form
-         *          开始的position
+         * 			开始的position
          * @param to
-         *          拖拽到的position
+         * 			拖拽到的position
          */
-        public void onChange(int form, int to);
+               void onChange(int form, int to);
+               void  onWrongRefresh ();
     }
 }

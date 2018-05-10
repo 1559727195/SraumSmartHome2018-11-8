@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pic_select_linear"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F7FA"
+    android:orientation="vertical">
+
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:background="@color/black" >-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:text="写动态"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:textSize="20sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/activity_selectimg_send"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_marginRight="8dp"-->
+    <!--android:gravity="center"-->
+    <!--android:text="发送"-->
+    <!--android:textColor="@drawable/text_while"-->
+    <!--android:textSize="20sp" />-->
+    <!--</RelativeLayout>-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_t_back" />
+
+        <TextView
+            android:id="@+id/toolbar_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="意见反馈"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/hostory_back_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x8"
+            android:layout_marginTop="@dimen/y8"
+            android:text="历史反馈"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/list_forscrollview"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y35"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/y6"
+                android:background="@color/white">
+
+                <RadioGroup
+                    android:id="@+id/activity_group_radioGroup_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:checkedButton="@+id/order_process"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp">
+
+                    <RadioButton
+                        android:id="@+id/hand_light_open"
+                        style="@style/main_tab_hand_scene"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/x8"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/function_suggesction"
+                        android:gravity="center" />
+
+                    <RadioButton
+                        android:id="@+id/hand_light_close"
+                        style="@style/main_tab_hand_scene"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/x8"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/xingneng_progrom"
+                        android:checked="false"
+                        android:gravity="center" />
+
+                    <RadioButton
+                        android:id="@+id/hand_light_change"
+                        style="@style/main_tab_hand_scene"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/others_radio"
+                        android:checked="false"
+                        android:gravity="center" />
+                </RadioGroup>
+
+
+            </android.support.percent.PercentRelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/y8"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/y3"
+                android:paddingLeft="@dimen/y8"
+                android:paddingTop="@dimen/y3">
+
+                <com.massky.sraumsmarthome.view.ClearEditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/y80"
+                    android:background="@null"
+                    android:gravity="left|top"
+                    android:hint="请简要描述你的问题和意见"
+                    android:paddingRight="@dimen/y5"
+                    android:textSize="16sp"></com.massky.sraumsmarthome.view.ClearEditText>
+
+                <com.massky.sraumsmarthome.widget.ListViewForScrollView
+                    android:id="@+id/noScrollgridview"
+                    android:layout_width="@dimen/x290"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="23dp"
+                    android:horizontalSpacing="@dimen/y3"
+                    android:numColumns="4"
+                    android:scrollbars="none"
+                    android:verticalSpacing="@dimen/y5"></com.massky.sraumsmarthome.widget.ListViewForScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y3"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/y8"
+                android:paddingRight="@dimen/y8">
+
+                <com.massky.sraumsmarthome.view.ClearEditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/y35"
+                    android:background="@null"
+                    android:gravity="left|center_vertical"
+                    android:hint="请输入您的手机号，方便工作人员联系"
+                    android:paddingRight="@dimen/y5"
+                    android:textSize="16sp"></com.massky.sraumsmarthome.view.ClearEditText>
+            </LinearLayout>
+
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y20"
+                android:paddingBottom="@dimen/y15">
+
+                <Button
+                    android:id="@+id/btn_cancel_wangguan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:height="@dimen/y30"
+                    android:background="@drawable/add_zigbee_device_btn"
+                    android:text="提交"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_widthPercent="80%" />
+            </android.support.percent.PercentRelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

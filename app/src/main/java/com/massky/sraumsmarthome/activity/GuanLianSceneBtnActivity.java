@@ -2,11 +2,13 @@ package com.massky.sraumsmarthome.activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.massky.sraumsmarthome.R;
 import com.massky.sraumsmarthome.base.BaseActivity;
+import com.massky.sraumsmarthome.widget.ApplicationContext;
 import com.yanzhenjie.statusview.StatusUtils;
 
 import butterknife.InjectView;
@@ -16,10 +18,12 @@ import butterknife.InjectView;
  */
 
 public class GuanLianSceneBtnActivity extends BaseActivity{
-    @InjectView(R.id.rel_scene_set)
-    RelativeLayout rel_scene_set;
     @InjectView(R.id.next_step_txt)
     TextView next_step_txt;
+    @InjectView(R.id.back)
+    ImageView back;
+    @InjectView(R.id.rel_scene_set)
+    RelativeLayout rel_scene_set;
     @Override
     protected int viewId() {
         return R.layout.guanlian_scene_btn;
@@ -33,11 +37,23 @@ public class GuanLianSceneBtnActivity extends BaseActivity{
     @Override
     protected void onEvent() {
         rel_scene_set.setOnClickListener(this);
+        back.setOnClickListener(this);
     }
 
     @Override
     protected void onData() {
         next_step_txt.setOnClickListener(this);
+        Intent intent = getIntent();
+        if (intent == null) return;
+        String excute = (String) intent.getSerializableExtra("excute");
+        switch (excute) {
+            case "auto"://自动
+                rel_scene_set.setVisibility(View.GONE);
+                break;
+            default:
+                rel_scene_set.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     @Override
@@ -49,6 +65,10 @@ public class GuanLianSceneBtnActivity extends BaseActivity{
                                 GuanLianSceneActivity.class));
                 break;
             case R.id.next_step_txt:
+//                GuanLianSceneBtnActivity.this.finish();
+                ApplicationContext.getInstance().finishButActivity(MainGateWayActivity.class);
+                break;
+            case R.id.back:
                 GuanLianSceneBtnActivity.this.finish();
                 break;
         }

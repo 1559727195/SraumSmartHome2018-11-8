@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Library</string>
+    <array name="clock">
+        <item>"200"</item>
+        <item>"300"</item>
+        <item>"500"</item>
+        <item>"0"</item>
+        <item>"50"</item>
+        <item>"100"</item>
+        <item>"150"</item>
+    </array>
+</resources>

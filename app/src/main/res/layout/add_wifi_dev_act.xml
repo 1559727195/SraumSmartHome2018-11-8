@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/root_layout"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/green"
+        android:layout_height="50dp"
+        >
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_t_back" />
+
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text= "添加Wifi-Fi设备"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#FFFFFF"
+        android:id="@+id/sraum_rela_act"
+        android:layout_below="@+id/backtitle_id"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:id="@+id/sraum_image_select"
+            android:src="@drawable/img_wifi"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/rel_key_txt"
+            android:layout_below="@+id/sraum_image_select"
+            android:layout_marginTop="@dimen/y20"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:id="@+id/sraum_txt"
+                android:textSize="12sp"
+                android:text="1.请将设备接通电源"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_marginTop="@dimen/y15"
+                android:layout_below="@+id/sraum_txt"
+                android:textSize="12sp"
+                android:text="@string/wifiyuyin_txt"
+               />
+        </RelativeLayout>
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/y30"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/y5"
+            >
+            <Button
+                android:layout_width="wrap_content"
+                app:layout_widthPercent="80%"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_cancel_wangguan"
+                android:height="@dimen/y30"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/add_zigbee_device_btn"
+                android:text="下一步"/>
+        </android.support.percent.PercentRelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

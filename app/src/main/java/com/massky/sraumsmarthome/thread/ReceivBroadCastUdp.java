@@ -2,9 +2,7 @@ package com.massky.sraumsmarthome.thread;
 
 import android.os.Message;
 import android.util.Log;
-
 import com.massky.sraumsmarthome.Util.ICallback;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -13,8 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static com.massky.sraumsmarthome.R.id.txt_server;
 import static com.massky.sraumsmarthome.Util.AES.Decrypt;
 import static com.massky.sraumsmarthome.Util.UDPClient.udp_client_destroy;
 
@@ -39,16 +35,14 @@ public class ReceivBroadCastUdp extends Thread {
         this.iCallback = iCallback;
     }
 
-
-
     @Override
     public void run() {
         //搞个定时器10s后,关闭该UDPReceverSocket
 
         initTimer();
-        byte[] data = new byte[256];
+        byte[] data = new byte[1024];
         try {
-            udpSocket = new DatagramSocket(9991);//服务器端UDP端口号，网关端口9991
+            udpSocket = new DatagramSocket(8881);//服务器端UDP端口号，网关端口9991
             udpPacket = new DatagramPacket(data, data.length);
         } catch (SocketException e1) {
             e1.printStackTrace();
@@ -66,18 +60,20 @@ public class ReceivBroadCastUdp extends Thread {
                         final String quest_ip = udpPacket.getAddress().toString();
                         final String codeString = new String(data, 0, udpPacket.getLength());
                         //0a4ab23ad13aac565069283aac3882e5
-//                                                            //在这里解析二维码，变成房号
+
+                        //在这里解析二维码，变成房号
                         // 密钥
                         String key = "masskysraum-6206";//masskysraum-6206
                         // 解密
                         String DeString = null;
                         try {
-//                    content = "0a4ab23ad13aac565069283aac3882e5";
+                            //content = "0a4ab23ad13aac565069283aac3882e5";
                             DeString = Decrypt(codeString, key);
                             Log.e("robin debug","DeString:" + DeString);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+
                         Message message = Message.obtain();
                         Map map = new HashMap();
                         map.put("command", command);
@@ -92,13 +88,13 @@ public class ReceivBroadCastUdp extends Thread {
 //                        }
 //                    });
 
-
                         iCallback.process(map);
                     }
                 } else {
                     iCallback.error("");
                     UDPServer = false;
                 }
+
                 if (udpSocket != null)
                     udpSocket.close();
             } catch (IOException e) {
@@ -111,8 +107,6 @@ public class ReceivBroadCastUdp extends Thread {
             }
         }
     }
-
-
 
     /**
      * 初始化定时器

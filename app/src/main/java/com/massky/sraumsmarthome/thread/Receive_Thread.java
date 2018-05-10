@@ -7,12 +7,9 @@ package com.massky.sraumsmarthome.thread;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
-import com.massky.sraumsmarthome.Main_New_Activity;
 import com.massky.sraumsmarthome.Util.ICallback;
-import com.massky.sraumsmarthome.Util.SharedPreferencesUtil;
+import com.massky.sraumsmarthome.Utils.ApiHelper;
 import com.massky.sraumsmarthome.service.MyService;
-
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,27 +18,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import static com.massky.sraumsmarthome.Util.AES.Decrypt;
-import static com.massky.sraumsmarthome.Util.UDPClient.activity_destroy;
 import static com.massky.sraumsmarthome.Util.UDPClient.udp_client_destroy;
 
-
 /**
- *
  * 接收线程
- *
  */
- public class Receive_Thread implements Runnable//实现Runnable
+public class Receive_Thread implements Runnable//实现Runnable
 {
     private Socket clientSocket;
     private InputStream inputStream;
     //客户端接收子线程标志位，它的生命周期随着客户端物理连接断开，或者3min心跳后，客户端
     public Boolean Recev_flag;
-    private  String command;
-    private  DataInputStream input;
-    private  Context context;
-    private  ICallback iCallback;
+    private String command;
+    private DataInputStream input;
+    private Context context;
+    private ICallback iCallback;
     private Timer timer;
     private TimerTask task;
 
@@ -66,12 +58,11 @@ import static com.massky.sraumsmarthome.Util.UDPClient.udp_client_destroy;
     @Override
     public void run() {
         byte[] b = new byte[1024];//new byte[10000];
-        while(Recev_flag && !udp_client_destroy)
-        {
+        while (Recev_flag && !udp_client_destroy) {
             int length = 0;
             try {
                 length = input.read(b);
-                if (length == -1)  {//当服务器端断开时，input.read(b)就会返回 -1，//开启心跳包每个3min 去连接，
+                if (length == -1) {//当服务器端断开时，input.read(b)就会返回 -1，//开启心跳包每个3min 去连接，
 //                    Recev_flag = false;//杀死该线程,然后
 //                    String ip = (String) SharedPreferencesUtil.getData(MainActivity.this, "ip", "");
 //                    initSocket(ip);//tcp客户端主动连接tcpServer有20s的超时时间
@@ -90,21 +81,22 @@ import static com.massky.sraumsmarthome.Util.UDPClient.udp_client_destroy;
 ////                                txt_show.setText(txt_show.getText() + Msg);
 //                        }
 //                    });
-                        Log.v("data", Msg);
-                        // 密钥
-                        String key = "masskysraum-6206";//masskysraum-6206
-                        // 解密
-                        String DeString = null;
-                        try {
+                    Log.v("data", Msg);
+//                    // 密钥
+                    String key = "masskysraum-6206";//masskysraum-6206
+                    // 解密
+                    String DeString = null;
+                    try {
 //                    content = "0a4ab23ad13aac565069283aac3882e5";
-                            DeString = Decrypt(Msg, key);
-                            Log.e("robin debug", "DeString:" + DeString);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        sendBroad(context,DeString);
-                        initTimer();//刷新重新30s
+                        DeString = Decrypt(Msg, key);
+                        Log.e("robin debug", "DeString:" + DeString);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    sendBroad(context, DeString);
+                    initTimer();//刷新重新30s
                 }
+
             } catch (IOException e) {
                 iCallback.error("");
                 Recev_flag = false;
@@ -119,18 +111,17 @@ import static com.massky.sraumsmarthome.Util.UDPClient.udp_client_destroy;
 
     /**
      * 发送广播
+     *
      * @param context
      * @param
      */
     private void sendBroad(Context context, String tcpreceiver) {
         Intent mIntent = new Intent("com.massky.sraumsmarthome.receivetcpsocket");
-        mIntent.putExtra("tcpreceiver",tcpreceiver);
+        mIntent.putExtra("tcpreceiver", tcpreceiver);
         context.sendBroadcast(mIntent);
     }
 
-
     //在这里搞一个30s的定时器，心跳30s.发一次。没有数据交互。网关断线后，每隔10s去连接。
-
 
     /**
      * 初始化定时器---心跳30s.发一次。没有数据交互。
@@ -148,18 +139,17 @@ import static com.massky.sraumsmarthome.Util.UDPClient.udp_client_destroy;
         //关闭clientSocket即客户端socket
         if (task == null)
             task = new TimerTask() {
-
                 @Override
                 public void run() {
                     add[0]++;
                     Log.e("zhu", "add: " + add[0]);
-                    if (add[0] > 30) {//10s= 1000 * 10
-                        //30s后发送心跳包
+                    if (add[0] > 10) {//10s= 1000 * 10
+                        //10s后发送心跳包
                         add[0] = 0;
                         Map map = new HashMap();
-                        map.put("command", "sraum_beat");
-                        MyService.getInstance().sraum_send_tcp(map, "sraum_beat");//每隔30s发送心跳包
-                        SharedPreferencesUtil.saveData(context,"command","sraum_beat");//flag-》标记为发送心跳包
+                        map.put("command", ApiHelper.Sraum_Beat);
+                        MyService.getInstance().sraum_send_tcp(map, ApiHelper.Sraum_Beat);//每隔30s发送心跳包
+//                        SharedPreferencesUtil.saveData(context,"command",ApiHelper.Sraum_Beat);//flag-》标记为发送心跳包
                     } else if (udp_client_destroy) {//长连接倒计时3分钟未到，TcpServer退出，要停掉该定时器，并关闭clientSocket即客户端socket
                         try {
                             closeTimerAndClientSocket();
@@ -178,14 +168,15 @@ import static com.massky.sraumsmarthome.Util.UDPClient.udp_client_destroy;
      * @throws IOException
      */
     private void closeTimerAndClientSocket() throws IOException {
-        if (timer != null) {
+        if (timer != null) { //
             timer.cancel();
             timer = null;
         }
+
         if (task != null) {
             task.cancel();
             task = null;
         }
-//                    closeUDPServerSocket();//关闭clientSocket即客户端socket
+//closeUDPServerSocket();//关闭clientSocket即客户端socket
     }
 }

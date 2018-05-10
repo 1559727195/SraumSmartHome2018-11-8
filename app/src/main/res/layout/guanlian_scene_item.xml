@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:paddingTop="@dimen/y8"
+    android:paddingBottom="@dimen/y8"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rel_scene_set"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:id="@+id/img_guan_scene"
+            android:src="@mipmap/ic_launcher"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/panel_scene_name_txt"
+            android:text="客厅开关"
+            android:layout_toRightOf="@+id/img_guan_scene"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x15"
+            android:textSize="14sp"
+            android:textColor="@color/dark_gray"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未选择"
+            android:id="@+id/execute_scene_txt"
+            android:layout_marginLeft="@dimen/x8"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/x6"
+            android:layout_toLeftOf="@+id/scene_set"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:textColor="@color/dark_gray"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/scene_set"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/x15"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/wode_right_arrow"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F2F2F2"
+    android:padding="@dimen/x6">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:id="@+id/btn_cancel"
+        android:textColor="@color/dark_gray"
+        android:textSize="16sp"
+        android:layout_alignParentLeft="true"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确定"
+        android:textColor="@color/dark_gray"
+        android:id="@+id/btn_onfirm"
+        android:textSize="16sp"
+        android:layout_alignParentRight="true"
+        />
+</RelativeLayout>
+    <cn.forward.androids.views.BitmapScrollPicker
+        android:id="@+id/picker_02"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/y100"
+        android:background="#FFFFFF"
+        app:spv_disallow_intercept_touch="true"
+        app:spv_draw_bitmap_height="@dimen/y30"
+        app:spv_draw_bitmap_mode="center"
+        app:spv_draw_bitmap_width="@dimen/x30"
+        app:spv_is_circulation="false"
+        app:spv_max_scale="1.1"
+        app:spv_min_scale="0.8"
+        app:spv_visible_item_count="3"
+        />
+</LinearLayout>

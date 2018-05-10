@@ -1,4 +1,5 @@
 package com.massky.sraumsmarthome;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -42,7 +43,7 @@ import static com.massky.sraumsmarthome.Util.ByteUtils.bytesToHexString;
  */
 
 public class UdpServerActivity extends AppCompatActivity implements
-        View.OnClickListener{
+        View.OnClickListener {
     /*
   * ------------------------UDP服务器 参数------------------------
    */
@@ -70,7 +71,7 @@ public class UdpServerActivity extends AppCompatActivity implements
     OutputStream outputStream;//创建输出数据流
     private String socketName;
     private boolean serSocFlag;//ServerSocket标志位
-    public CopyOnWriteArrayList<Receive_Thread> list_recev_server =new CopyOnWriteArrayList<Receive_Thread>();
+    public CopyOnWriteArrayList<Receive_Thread> list_recev_server = new CopyOnWriteArrayList<Receive_Thread>();
     private ListView list_show;
 
     private CopyOnWriteArrayList<ConcurrentHashMap> list_map;
@@ -100,9 +101,9 @@ public class UdpServerActivity extends AppCompatActivity implements
      */
 
 
- /**
-  * 初始化UDP接收
-  */
+    /**
+     * 初始化UDP接收
+     */
     private void initServerUDP() {
         new BroadCastUdpServer().start();
     }
@@ -125,7 +126,7 @@ public class UdpServerActivity extends AppCompatActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_send:
-            final String content_tuisong =    edit_send.getText().toString().trim();
+                final String content_tuisong = edit_send.getText().toString().trim();
 
                 Map map = new HashMap();
                 map.put("result", content_tuisong);
@@ -180,7 +181,7 @@ public class UdpServerActivity extends AppCompatActivity implements
                     // 解密
                     try {
 //                    content = "0a4ab23ad13aac565069283aac3882e5";
-                      content = Decrypt(codeString, key);
+                        content = Decrypt(codeString, key);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -204,14 +205,14 @@ public class UdpServerActivity extends AppCompatActivity implements
                     });
                     Map map = new HashMap();
 
-                    map.put("ip",ip_own);
+                    map.put("ip", ip_own);
 
 //                    doUdp(codeString,buffer,MAX_DATA_PACKET_LENGTH);//doUDP
 
                     // 解密
                     try {
 //                    content = "0a4ab23ad13aac565069283aac3882e5";
-                        content = Encrypt(new Gson().toJson(map),key);
+                        content = Encrypt(new Gson().toJson(map), key);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -325,7 +326,7 @@ public class UdpServerActivity extends AppCompatActivity implements
     private class Receive_Thread implements Runnable//实现Runnable
     {
         public Handler mHandler = null;
-//        private Socket clientSocket;
+        //        private Socket clientSocket;
         private String name;
         private InputStream inputStream;
         public boolean RecevFlag_thread;//客户端接收子线程标志位，它的生命周期随着客户端物理连接断开，或者3min心跳后，客户端
@@ -336,15 +337,16 @@ public class UdpServerActivity extends AppCompatActivity implements
         //虽然连接，单3min之后依然没响应，要关掉该客户端子线程
         public Receive_Thread(final String name, final Socket clientSocket1) {
             this.name = name;
-           clientSocket = clientSocket1;
+            clientSocket = clientSocket1;
             RecevFlag_thread = true;
             try {
-                InputStream inputStream = clientSocket.getInputStream();
+                final InputStream inputStream = clientSocket.getInputStream();
                 this.inputStream = inputStream;
                 //说明是哪个客户端连接上的
                 runOnUiThread(new Runnable() {
                     public void run() {
 //                        client_connect.setText("客户端:" + name + "已连接上");
+
                     }
                 });
 
@@ -379,7 +381,7 @@ public class UdpServerActivity extends AppCompatActivity implements
                     runOnUiThread(new Runnable() {
                         public void run() {
                             if (len != -1) {
-                           final String content  =  new String(buf, 0, len);
+                                final String content = new String(buf, 0, len);
 //                                {
 //                                    "timeStamp": "1510650707711",
 //                                        "command": "sraum_verifySocket",
@@ -407,33 +409,31 @@ public class UdpServerActivity extends AppCompatActivity implements
 
 //                                        final String content = ByteUtils.bytesToHexString(buf,len);//将byte转换为16进制字符串
 //                                        list_map.get(i).put("rev", content);
-                                        runOnUiThread(new Runnable() {
-                                            public void run() {
-
-
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
 //                                                            //0a4ab23ad13aac565069283aac3882e5
 //                                                            //在这里解析二维码，变成房号
-                                                            // 密钥
-                                                            String key = "masskysraum-6206";//masskysraum-6206
-                                                            // 解密
-                                                            String DeString = null;
-                                                            try {
+                                        // 密钥
+                                        String key = "masskysraum-6206";//masskysraum-6206
+                                        // 解密
+                                        String DeString = null;
+                                        try {
 //                    content = "0a4ab23ad13aac565069283aac3882e5";
-                                                                DeString = Decrypt(content, key);
-                                                                Log.e("robin debug","DeString:" + DeString);
-                                                            } catch (Exception e) {
-                                                                e.printStackTrace();
-                                                            }
-                                                            label_udp.append("tcpSocket：" + DeString + "\n");
-                                            }
-                                        });
-                                Map map = new HashMap();
+                                            DeString = Decrypt(content, key);
+                                            Log.e("robin debug", "DeString:" + DeString);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        label_udp.append("tcpSocket：" + DeString + "\n");
+                                    }
+                                });
+                                final Map map = new HashMap();
                                 map.put("result", "100");
                                 String key = "masskysraum-6206";//masskysraum-6206
-                                // 解密
+//                                // 解密
                                 String DeString = null;
                                 try {
-//                    content = "0a4ab23ad13aac565069283aac3882e5";
+////                    content = "0a4ab23ad13aac565069283aac3882e5";
                                     DeString = Encrypt(new Gson().toJson(map), key);
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -442,6 +442,7 @@ public class UdpServerActivity extends AppCompatActivity implements
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
+//                                        response_to_app_tcp(new Gson().toJson(map));//response to tcpCLientSocket
                                         response_to_app_tcp(finalDeString);//response to tcpCLientSocket
                                     }
                                 }).start();
@@ -572,7 +573,7 @@ public class UdpServerActivity extends AppCompatActivity implements
     }
 
     /**
-     *response to tcpCLientSocket
+     * response to tcpCLientSocket
      */
     private void response_to_app_tcp(String content) {
         //发什么回它什么给TcpSocket
@@ -581,7 +582,7 @@ public class UdpServerActivity extends AppCompatActivity implements
         try {
             outputStream = clientSocket.getOutputStream();
 //                byte [] data = ByteUtils.hexStringToBytes(content);//将16进制字符串转换为byte
-            byte [] data = content.getBytes();
+            byte[] data = content.getBytes();
             outputStream.write(data);
         } catch (IOException e) {
             e.printStackTrace();

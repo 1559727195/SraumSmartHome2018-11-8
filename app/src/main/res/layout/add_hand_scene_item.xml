@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y40"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.18">
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_centerInParent="true"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="主灯"
+                   android:id="@+id/hand_device_name"
+                   android:textSize="16sp"
+                   android:layout_gravity="center_horizontal"
+                   android:textColor="@color/black"/>
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="网关1"
+                   android:textSize="14sp"
+                   android:layout_gravity="center_horizontal"
+                   android:textColor="@color/gray"/>
+           </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:orientation="vertical"
+            android:padding="@dimen/x10">
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content">
+                <RadioGroup
+                    android:id="@+id/activity_group_radioGroup_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:checkedButton="@+id/order_process"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp">
+
+                    <RadioButton
+                        android:id="@+id/hand_light_open"
+                        style="@style/main_tab_hand_scene"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:layout_marginRight="@dimen/x8"
+                        android:background="@drawable/add_handscene_open"
+                        android:gravity="center"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/hand_light_close"
+                        style="@style/main_tab_hand_scene"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:checked="false"
+                        android:background="@drawable/add_handscene_close"
+                        android:layout_marginRight="@dimen/x8"
+                        android:gravity="center"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/hand_light_change"
+                        style="@style/main_tab_hand_scene"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:checked="false"
+                        android:background="@drawable/add_handscene_change"
+                        android:gravity="center"
+                       />
+                </RadioGroup>
+
+
+
+            </android.support.percent.PercentRelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1">
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:id="@+id/hand_scene_btn"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:text="执行"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:background="@mipmap/ic_launcher"-->
+                <!--android:textSize="14sp"-->
+                <!--android:src="@mipmap/ic_launcher" />-->
+            <CheckBox
+                android:id="@+id/scene_checkbox"
+                style="@style/CheckSceneTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/x5" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

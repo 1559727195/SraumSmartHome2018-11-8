@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#F6F7FA"
+    android:layout_height="match_parent">
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/green"
+        android:layout_height="50dp"
+        >
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_t_back" />
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="门磁"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <!--<TextView-->
+            <!--android:id="@+id/next_step_txt"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="@dimen/x8"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:text="下一步"-->
+            <!--android:textSize="14sp"-->
+            <!--android:textColor="@color/blue_txt"-->
+            <!--/>-->
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/y5"
+        android:id="@+id/wangguan_set_rel"
+        android:paddingLeft="@dimen/x3"
+        android:background="@color/white"
+        android:paddingTop="@dimen/y6"
+        android:paddingBottom="@dimen/y6"
+        android:layout_height="@dimen/y40">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wangguan_set"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_menci_active"
+            android:layout_marginLeft="@dimen/x10"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/wangguan_set"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x15"
+            android:orientation="vertical">
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="门磁"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="12893123AB"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:id="@+id/touxiang_select"-->
+        <!--android:src="@drawable/account_touxiang"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:src="@drawable/wode_right_arrow"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/x3"
+        android:background="@color/white"
+        android:layout_height="@dimen/y30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="#000000"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="状态"/>
+        <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:id="@+id/touxiang_select"-->
+        <!--android:src="@drawable/account_touxiang"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="离线"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:paddingLeft="@dimen/x3"-->
+        <!--android:id="@+id/delete_device_rel"-->
+        <!--android:background="#F2F2F2"-->
+        <!--android:layout_height="@dimen/y30">-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:textColor="#F166F1"-->
+            <!--android:layout_marginLeft="@dimen/x10"-->
+            <!--android:text="删除设备"/>-->
+        <!--&lt;!&ndash;<com.massky.jingruicenterpark.widget.CircleImageView&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="40dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="40dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/touxiang_select"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:src="@drawable/account_touxiang"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginRight="10dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_toLeftOf="@+id/touxiang_arrow"/>&ndash;&gt;-->
+
+
+
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="@dimen/x10"-->
+            <!--android:src="@mipmap/ic_launcher"/>-->
+    <!--</RelativeLayout>-->
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/gray"></View>-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/x3"
+        android:id="@+id/room_list_rel"
+        android:background="@color/white"
+        android:layout_height="@dimen/y30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="#000000"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="房间"/>
+        <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:id="@+id/touxiang_select"-->
+        <!--android:src="@drawable/account_touxiang"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="客厅"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            android:layout_toLeftOf="@+id/img_room"
+            android:layout_marginRight="@dimen/x10"
+            />
+        <ImageView
+            android:id="@+id/img_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:src="@drawable/wode_right_arrow"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/x3"
+        android:background="@color/white"
+        android:id="@+id/other_information"
+        android:layout_height="@dimen/y30">
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="#000000"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="其他信息"/>
+        <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:id="@+id/touxiang_select"-->
+        <!--android:src="@drawable/account_touxiang"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:src="@drawable/btn_bottom"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/other_scroll"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/x5"
+        android:paddingRight="@dimen/x5"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/x3"
+            android:background="#FFFFFF"
+            android:layout_height="@dimen/y30">
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:layout_marginLeft="@dimen/x10"
+                android:textSize="14sp"
+                android:text="设备版本"/>
+            <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:id="@+id/touxiang_select"-->
+            <!--android:src="@drawable/account_touxiang"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x10"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:text="v1.1.1"
+                />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"></View>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/x3"
+            android:background="#FFFFFF"
+            android:layout_height="@dimen/y30">
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginLeft="@dimen/x10"
+                android:text="MAC"/>
+            <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:id="@+id/touxiang_select"-->
+            <!--android:src="@drawable/account_touxiang"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x10"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:text="v1.1.1"
+                />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"></View>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/x3"
+            android:background="#FFFFFF"
+            android:layout_height="@dimen/y30">
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginLeft="@dimen/x10"
+                android:text="PAN ID"/>
+            <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:id="@+id/touxiang_select"-->
+            <!--android:src="@drawable/account_touxiang"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x10"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:text="v1.1.1"
+                />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"></View>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/x3"
+            android:background="#FFFFFF"
+            android:layout_height="@dimen/y30">
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:layout_marginLeft="@dimen/x10"
+                android:textSize="14sp"
+                android:text="信道"/>
+            <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:id="@+id/touxiang_select"-->
+            <!--android:src="@drawable/account_touxiang"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x10"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:text="v1.1.1"
+                />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"></View>
+    </LinearLayout>
+    </ScrollView>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/delete_device_rel"
+        >
+        <Button
+            android:id="@+id/save_select_room"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:layout_widthPercent="80%"
+            android:background="@drawable/add_zigbee_device_btn"
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </android.support.percent.PercentRelativeLayout>
+
+</LinearLayout>

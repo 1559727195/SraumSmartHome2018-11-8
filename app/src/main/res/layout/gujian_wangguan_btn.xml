@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_t_back" />
+
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="固件更新"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/next_step_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x8"
+            android:layout_marginTop="8dp"
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/y40"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/banbenxin_linear"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/banben_pic"
+                android:src="@drawable/icon_banbengenxin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/new_gujian_promat_txt"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/y10"
+                android:text="有新的固件可更新"></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y80"
+            android:id="@+id/banben_progress_linear"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/progress_txt"
+                android:textSize="18sp"
+                android:text="45%"></TextView>
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/y8"
+                android:layout_height="wrap_content">
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="7.5dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:layout_marginRight="8dp"
+                    android:progressDrawable="@drawable/progressbar_gradient"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="visible"
+                    app:layout_widthPercent="80%"
+                    android:id="@+id/progress"/>
+            </android.support.percent.PercentRelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/y15"
+                android:text="正在更新最新版本的固件，请稍后"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x40"
+            android:id="@+id/current_gujian_version_linear"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/current_gujian_version_txt"
+                android:layout_gravity="center"
+                android:text="当前固件版本v1.1.305"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/new_gujian_version_txt"
+                android:layout_marginTop="@dimen/x10"
+                android:text="最新固件版本v1.1.4"></TextView>
+        </LinearLayout>
+
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/upgrade_rel"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_upgrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/y30"
+                android:height="@dimen/y30"
+                android:background="@drawable/add_zigbee_device_btn"
+                android:text="更新"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_widthPercent="80%" />
+        </android.support.percent.PercentRelativeLayout>
+
+    </LinearLayout>
+
+    <!--</RelativeLayout>-->
+</LinearLayout>

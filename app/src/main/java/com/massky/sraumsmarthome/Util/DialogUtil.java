@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -92,13 +93,14 @@ public class DialogUtil {
         viewBottomDialog.show();
         // 设置dialog没有title
 
-        viewBottomDialog.setContentView(viewbottom, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        viewBottomDialog.setContentView(viewbottom, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         Window window = viewBottomDialog.getWindow();
         window.setWindowAnimations(R.style.mystyle);
         // 实例化一个ColorDrawable颜色为半透明
         ColorDrawable dw = new ColorDrawable(0x00000000);//设置弹出窗体背景透明
         // 设置弹出窗体的背景
         window.setBackgroundDrawable(dw);
+
         // 可以在此设置显示动画
         WindowManager.LayoutParams wl = window.getAttributes();
         //设置dialog背景是否变暗
@@ -113,6 +115,34 @@ public class DialogUtil {
         wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         // 设置显示位置
         viewBottomDialog.onWindowAttributesChanged(wl);
+        // 设置弹出的动画效果
+        return viewBottomDialog;
+    }
+
+    /**
+     * 中间显示的dialog
+     */
+    public Dialog loadcenterdialog() {
+
+        //判断是否创建过
+        if (viewBottomDialog == null) {
+            viewBottomDialog = new Dialog(context,R.style.BottomDialog);
+        }
+//        viewbottom.setAlpha(100);
+        //显示数据
+       viewBottomDialog.setContentView(view);
+       viewBottomDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        int displayWidth = dm.widthPixels;
+        int displayHeight = dm.heightPixels;
+        android.view.WindowManager.LayoutParams p = viewBottomDialog.getWindow().getAttributes(); //获取对话框当前的参数值
+        p.width = (int) (displayWidth * 0.8); //宽度设置为屏幕的0.5
+//        p.height = (int) (displayHeight * 0.5); //宽度设置为屏幕的0.5
+//        dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+        viewBottomDialog.getWindow().setAttributes(p);  //设置生效
+        viewBottomDialog.show();
+
         // 设置弹出的动画效果
         return viewBottomDialog;
     }

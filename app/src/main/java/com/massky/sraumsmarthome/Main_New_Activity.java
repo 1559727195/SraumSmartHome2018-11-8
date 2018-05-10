@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.massky.sraumsmarthome.Util.ICallback;
@@ -23,6 +24,7 @@ import com.massky.sraumsmarthome.Util.ToastUtil;
 import com.massky.sraumsmarthome.Util.UDPClient;
 import com.massky.sraumsmarthome.activity.NextPageActivity;
 import com.massky.sraumsmarthome.service.MyService;
+
 import java.io.DataInputStream;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -33,7 +35,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 //UDP  ->发送对方的PORT,接收自己的PORT
-public class Main_New_Activity extends AppCompatActivity implements View.OnClickListener{
+public class Main_New_Activity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int MAX_DATA_PACKET_LENGTH = 1400;//报文长度
     private byte[] buffer = new byte[MAX_DATA_PACKET_LENGTH];
@@ -72,7 +74,7 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
         click_next1 = (Button) findViewById(R.id.click_next);//click_next
         click_next1.setOnClickListener(this);
 //        new BroadCastUdp("021001000021F403").start();
-       String ip =  InetUtil.getIPAddress(this);//192.168.169.217
+        String ip = InetUtil.getIPAddress(this);//192.168.169.217
         txt_server = (TextView) findViewById(R.id.txt_server);
 //        new ReceivBroadCastUdp().start();
         click_search_ip = (Button) findViewById(R.id.click_search_ip);
@@ -84,7 +86,7 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
         test_tcp_login = (Button) findViewById(R.id.test_tcp_login);
         test_tcp_login.setOnClickListener(this); //test_tcp_login
 
-            //test_tcp_next_page
+        //test_tcp_next_page
 
         test_tcp_next_page = (Button) findViewById(R.id.test_tcp_next_page);
         test_tcp_next_page.setOnClickListener(this); //test_tcp_login
@@ -100,19 +102,19 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
 //                send_udp("12312423542354", "");
                 break;
             case R.id.click_next:
-                startActivity(new Intent(Main_New_Activity.this,UdpServerActivity.class));
+                startActivity(new Intent(Main_New_Activity.this, UdpServerActivity.class));
                 break;
             case R.id.click_search_ip://command:命令标识 sraum_searchFGateway
                 udp_searchGateway();
                 break;
             case R.id.test_tcp_click:
-                send_tcp_heart ();//发送心跳
+                send_tcp_heart();//发送心跳
                 break;
             case R.id.test_tcp_login:
                 login_tcp();
                 break;//通过tcpClient登录到网关
             case R.id.test_tcp_next_page:
-                startActivity(new Intent(Main_New_Activity.this,NextPageActivity.class));
+                startActivity(new Intent(Main_New_Activity.this, NextPageActivity.class));
                 break;
         }
     }
@@ -122,7 +124,7 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
      */
     private void udp_searchGateway() {
         Map map = new HashMap();
-        map.put("command","sraum_searchGateway");
+        map.put("command", "sraum_searchGateway");
 //                send_udp(new Gson().toJson(map),"sraum_searchGateway");
         UDPClient.initUdp(new Gson().toJson(map), "sraum_searchGateway", new ICallback() {
             @Override
@@ -138,7 +140,7 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
                         final User user = new GsonBuilder().registerTypeAdapterFactory(
                                 new NullStringToEmptyAdapterFactory()).create().fromJson(content, User.class);//json字符串转换为对象
                         if (user == null) return;
-                        SharedPreferencesUtil.saveData(Main_New_Activity.this,"tcp_server_ip",user.ip);
+                        SharedPreferencesUtil.saveData(Main_New_Activity.this, "tcp_server_ip", user.ip);
                         init_tcp_connect();
                     }
                 });
@@ -149,20 +151,18 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(Main_New_Activity.this,"网关断线或异常");
+                        ToastUtil.showToast(Main_New_Activity.this, "网关断线或异常");
                     }
                 });
-
             }//
         });
     }
 
     /**
      * 初始化TCP连接
-     *
      */
     private void init_tcp_connect() {
-        final  String ip = (String) SharedPreferencesUtil.getData(Main_New_Activity.this,"tcp_server_ip","");
+        final String ip = (String) SharedPreferencesUtil.getData(Main_New_Activity.this, "tcp_server_ip", "");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -197,7 +197,7 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
                             }
                         });
                     }
-                },new ICallback(){
+                }, new ICallback() {
 
                     @Override
                     public void process(Object data) {
@@ -235,9 +235,8 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtil.showToast(Main_New_Activity.this,"sraum_setGatewayTime_success!");
+                        ToastUtil.showToast(Main_New_Activity.this, "sraum_setGatewayTime_success!");
                         //去连接TCPServer
-
                     }
                 });
             }
@@ -259,7 +258,7 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
     /**
      * 发送tcp心跳包
      */
-    public void send_tcp_heart () {
+    public void send_tcp_heart() {
 //        for (int i = 0; i < 2; i++) {
 //            try {
 //                if (clicksSocket != null)
@@ -291,15 +290,14 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
 //            }
 //        });
 
-        MyService.getInstance().sraum_send_tcp(map,"sraum_beat");
+        MyService.getInstance().sraum_send_tcp(map, "sraum_beat");
     }
 
     /**
      * 登录网关 （App->网关）
-     *
      */
 
-    private  void  login_tcp () {
+    private void login_tcp() {
         Map map = new HashMap();
         map.put("command", "sraum_login");
         map.put("number", "112233445566");
@@ -322,7 +320,7 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
 //            }
 //        });
 
-        MyService.getInstance().sraum_send_tcp(map,"sraum_login");
+        MyService.getInstance().sraum_send_tcp(map, "sraum_login");
     }
 
 
@@ -338,10 +336,10 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
         map.put("timeStamp", time);
         map.put("signature", MD5Util.md5("sraum" + "massky_gw2_6206" + time));
 //                    sraum_send_tcp(map,"sraum_verifySocket");//认证有效的TCP链接
-        TCPClient.sraum_send_tcp(map,"sraum_verifySocket",new ICallback() {
+        TCPClient.sraum_send_tcp(map, "sraum_verifySocket", new ICallback() {
 
             @Override
-            public void process(Object data) {
+            public void process(Object data) { //
 
             }
 
@@ -351,6 +349,4 @@ public class Main_New_Activity extends AppCompatActivity implements View.OnClick
             }
         });
     }
-
-
 }

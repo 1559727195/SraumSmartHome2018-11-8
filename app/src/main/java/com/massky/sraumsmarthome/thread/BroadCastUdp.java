@@ -30,14 +30,14 @@ public class BroadCastUdp extends Thread {
         DatagramPacket dataPacket = null;
 
         try {
-            udpSocket = new DatagramSocket(8881);//接收来自服务器端端口9991发送来的数据
+            udpSocket = new DatagramSocket(9991);//接收来自服务器端端口9991发送来的数据
 
             dataPacket = new DatagramPacket(buffer, MAX_DATA_PACKET_LENGTH);
             byte[] data = dataString.getBytes();
 //                byte[] data = ByteUtils.hexStringToBytes(dataString);//字符串转换为byte
             dataPacket.setData(data);
             dataPacket.setLength(data.length);
-            dataPacket.setPort(8881);
+            dataPacket.setPort(9991);
             InetAddress broadcastAddr;
             broadcastAddr = InetAddress.getByName("255.255.255.255");
             dataPacket.setAddress(broadcastAddr);

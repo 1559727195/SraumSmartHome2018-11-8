@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_select"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_dev_select_bg"
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants"
+    android:paddingLeft="@dimen/x5">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginTop="@dimen/y5"
+            android:layout_marginBottom="@dimen/y5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客厅"
+                android:textColor="@color/dark_gray"
+                android:textSize="12sp" />
+
+            <TextView
+
+                android:id="@+id/device_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客厅窗户"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp" />
+
+            <TextView
+
+                android:id="@+id/device_action_or_father_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="打开"
+                android:textColor="@color/dark_gray"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/scene_img"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_n_scene" />
+
+        <CheckBox
+            android:id="@+id/scene_checkbox"
+            style="@style/CheckSceneTheme"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/x8"
+            android:paddingBottom="@dimen/x5"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical" />
+    </RelativeLayout>
+</LinearLayout>

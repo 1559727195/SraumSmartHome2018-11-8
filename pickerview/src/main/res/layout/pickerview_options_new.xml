@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <!--<include-->
+        <!--layout="@layout/include_pickerview_topbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/pickerview_topbar_height" />-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="#37CC99">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/pickerview_bgColor_default"
+            android:textSize="@dimen/pickerview_topbar_title_textsize" />
+        <ImageView
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/icon_pm_guanbi"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/btnSubmit"
+          />
+
+
+        <ImageView
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_pm_baoun"
+            android:gravity="center_vertical|left"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/optionspicker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+
+        <com.bigkoo.pickerview_new.lib.WheelView
+            android:id="@+id/options1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:pickerview_textColorCenter="#37CC99"
+            app:pickerview_textColorOut="#a8a8a8"
+            />
+
+        <com.bigkoo.pickerview_new.lib.WheelView
+            android:id="@+id/options2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:pickerview_textColorCenter="#37CC99"
+            app:pickerview_textColorOut="#a8a8a8"
+            android:layout_weight="1" />
+
+        <com.bigkoo.pickerview_new.lib.WheelView
+            android:id="@+id/options3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:pickerview_textColorCenter="#37CC99"
+            app:pickerview_textColorOut="#a8a8a8"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+</LinearLayout><!-- From: file:/Users/soyoung/Documents/github/Android-PickerView/pickerview/src/main/res/layout/pickerview_options.xml -->

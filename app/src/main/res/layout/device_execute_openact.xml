@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:slideswitch="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#F6F7FA"
+    android:layout_height="match_parent">
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_t_back" />
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="客厅开关"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/next_step_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x8"
+            android:layout_marginTop="8dp"
+            android:text="保存"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/x8"
+        android:gravity="bottom"
+        android:background="#F2F2F2"
+        android:paddingTop="@dimen/y8"
+        android:paddingBottom="@dimen/y8"
+        android:textSize="14sp"
+        android:text="执行开关"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y40"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingLeft="@dimen/x8"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="卧室灯"
+                    android:id="@+id/hand_device_content"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/hand_device_content"
+                    android:layout_marginTop="@dimen/y3"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="第一路灯控"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:padding="@dimen/x10">
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+            <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:id="@+id/hand_scene_btn"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="执行"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:background="@drawable/execute_scene_shape"-->
+            <!--android:textSize="14sp"-->
+            <!--android:src="@mipmap/ic_launcher" />-->
+            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+                android:layout_width="@dimen/x55"
+                android:layout_height="@dimen/y18"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x5"
+                android:layout_centerVertical="true"
+                slideswitch:isOpen="true"
+                slideswitch:themeColor="#f200aa96"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y40"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingLeft="@dimen/x8"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="主灯"
+                    android:id="@+id/hand_device_content_two"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/hand_device_content_two"
+                    android:layout_marginTop="@dimen/y3"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="第二路灯控"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:padding="@dimen/x10">
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+            <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:id="@+id/hand_scene_btn"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="执行"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:background="@drawable/execute_scene_shape"-->
+            <!--android:textSize="14sp"-->
+            <!--android:src="@mipmap/ic_launcher" />-->
+            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+                android:layout_width="@dimen/x55"
+                android:layout_height="@dimen/y18"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x5"
+                android:layout_centerVertical="true"
+                slideswitch:isOpen="true"
+                slideswitch:themeColor="#f200aa96"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y40"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingLeft="@dimen/x8"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="筒灯"
+                    android:id="@+id/hand_device_content_three"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/hand_device_content_three"
+                    android:layout_marginTop="@dimen/y3"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="第三路灯控"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:padding="@dimen/x10">
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+            <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:id="@+id/hand_scene_btn"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="执行"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:background="@drawable/execute_scene_shape"-->
+            <!--android:textSize="14sp"-->
+            <!--android:src="@mipmap/ic_launcher" />-->
+            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+                android:layout_width="@dimen/x55"
+                android:layout_height="@dimen/y18"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x5"
+                android:layout_centerVertical="true"
+                slideswitch:isOpen="true"
+                slideswitch:themeColor="#f200aa96"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y40"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingLeft="@dimen/x8"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="灯带"
+                    android:id="@+id/hand_device_content_four"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/hand_device_content_four"
+                    android:layout_marginTop="@dimen/y3"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="第四路灯控"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:padding="@dimen/x10">
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+            <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:id="@+id/hand_scene_btn"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="执行"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:background="@drawable/execute_scene_shape"-->
+            <!--android:textSize="14sp"-->
+            <!--android:src="@mipmap/ic_launcher" />-->
+            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+                android:layout_width="@dimen/x55"
+                android:layout_height="@dimen/y18"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x5"
+                android:layout_centerVertical="true"
+                slideswitch:isOpen="true"
+                slideswitch:themeColor="#f200aa96"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

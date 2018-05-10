@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'AndResGuard'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 26
@@ -13,10 +14,12 @@ android {
         //添加如下配置就OK了
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
         ndk {abiFilters "armeabi","armeabi-v7a"}
+        multiDexEnabled true//设置为支持多dex输出模式
     }
+
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -44,6 +47,7 @@ andResGuard {
             "R.string.google_api_key",
             "R.string.google_crash_reporting_api_key"
     ]
+
     compressFilePattern = [
             "*.png",
             "*.jpg",
@@ -51,6 +55,7 @@ andResGuard {
             "*.gif",
             "resources.arsc"
     ]
+
     sevenzip {
         artifact = 'com.tencent.mm:SevenZip:1.2.10'
         //path = "/usr/local/bin/7za"
@@ -69,8 +74,20 @@ andResGuard {
     // digestalg = "SHA-256"
 }
 
+//配置GreenDao文件生成位置，它的级别是与Android标签和dependencies标签一个级别的
+greendao {
+    //数据库的版本号，数据库版本升级的时候用得到
+    schemaVersion 1;
+    //生成的Daos、DaoMaster路径，我选择的是生成在自己的实体类文件下
+    daoPackage "com.massky.sraumsmarthome.bean"
+    //生成的资源路径，默认存放在build中
+    targetGenDir "src/main/java"
+}
+
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
@@ -79,4 +96,34 @@ dependencies {
     implementation files('libs/gson-2.3.1.jar')
     compile 'com.yanzhenjie:statusview:1.0.3'
     compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.android.support:percent:26.1.0'
+    implementation files('libs/zxing.jar')
+    compile 'io.reactivex.rxjava2:rxjava:2.0.5'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.android.support:multidex:1.0.2'
+    compile 'com.contrarywind:Android-PickerView:3.2.7'
+    //    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
+    //    compile 'com.github.1559727195:SwipeMenuLib:v1.0'
+    compile project(':swipemenulib')
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
+    compile 'com.forward.androids:androids:1.1.7.1'
+    compile project(path: ':datepicker')
+    compile project(path: ':pm2.5progressbar')
+    compile 'com.github.lecho:hellocharts-android:v1.5.8'
+    compile project(path: ':aircontrolprogressbar')
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.android.support:cardview-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    compile project(path: ':pickerview')
+    //    compile 'com.bigkoo:pickerview:2.1.1'
+    compile 'com.huxq17.xrefreshview:xrefreshview:3.6.6'
+    // 添加GreenDao的library
+    compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.zhy:okhttputils:2.6.2'
+    implementation files('libs/jcore-android-1.2.0.jar')
+    implementation files('libs/jpush-android-3.1.2.jar')
 }
+
+
+

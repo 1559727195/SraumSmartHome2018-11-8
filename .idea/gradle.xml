@@ -8,7 +8,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/aircontrolprogressbar" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/datepicker" />
+            <option value="$PROJECT_DIR$/pickerview" />
+            <option value="$PROJECT_DIR$/pm2.5progressbar" />
+            <option value="$PROJECT_DIR$/swipemenulib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -64,6 +64,11 @@ public class DragViewActivity extends AppCompatActivity {
                 dataSourceList.set(to, temp);
                 mSimpleAdapter.notifyDataSetChanged();
             }
+
+            @Override
+            public void onWrongRefresh() {
+
+            }
         });
 
         mDragGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

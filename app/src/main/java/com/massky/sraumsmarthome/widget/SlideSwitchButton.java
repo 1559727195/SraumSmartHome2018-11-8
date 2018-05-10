@@ -52,6 +52,7 @@ public class SlideSwitchButton extends View {
     private boolean isRunning = false;
 
     private SlideListener listener;
+    private SlideSwitch slideswitch;
 
     public SlideSwitchButton(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -162,19 +163,21 @@ public class SlideSwitchButton extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (isRunning) {
+        if (isRunning) {//这句话的意思是当SlideSwitchButton运动时，事件传递给父View
             super.onTouchEvent(event);
         }
+        if(slideswitch != null)
+        slideswitch.slide_switch();//说明slideSwitch在滑动
         int action = MotionEventCompat.getActionMasked(event);
-        getParent().requestDisallowInterceptTouchEvent(true);//解决了
+        getParent().requestDisallowInterceptTouchEvent(true);//解决了子View拦截父view的事件
         //SlideSwitchButton和ViewPager的滑动冲突
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                eventStartX = (int) event.getRawX();
+                eventStartX = (int) event.getRawX();//手指点到屏幕最左边
                 break;
             case MotionEvent.ACTION_MOVE:
                 int eventLastX = (int) event.getRawX();
-                int distance = eventLastX - eventStartX;
+                int distance = eventLastX - eventStartX;// -
                 int movePoint = distance + mStartValue;
                 movePoint = (movePoint > maxValue ? maxValue : movePoint);
                 movePoint = (movePoint < minValue ? minValue : movePoint);
@@ -280,4 +283,11 @@ public class SlideSwitchButton extends View {
         void openState(boolean isOpen, View view);
     }
 
+    public void setSlideSwitchListener (SlideSwitch slideswitch) {
+        this.slideswitch =  slideswitch;
+    }
+
+    public interface   SlideSwitch {
+        void  slide_switch ();
+    }
 }

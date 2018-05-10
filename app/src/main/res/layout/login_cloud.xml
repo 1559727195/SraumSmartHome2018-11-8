@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dl_bg"
+    android:orientation="vertical">
+
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:fitsView="@+id/root_layout" />
+
+    <include
+        layout="@layout/toolbar_lay"
+        android:visibility="gone" />
+
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_marginTop="50dp"-->
+    <!--android:src="@mipmap/ic_launcher" />-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="sraum"
+        android:textColor="@color/white"
+        android:textSize="28sp" />
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_widthPercent="80%">
+
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/login_per_lay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:layout_widthPercent="70%">
+
+            <com.massky.sraumsmarthome.view.ClearEditText
+                android:id="@+id/edit_password_again"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:background="@null"
+                android:gravity="left"
+                android:hint="输入用户名/手机号"
+                android:inputType="text"
+                android:maxLength="15"
+                android:textColor="@color/white"
+                android:textColorHint="@color/gray"
+                app:layout_widthPercent="70%" />
+
+            <TextView
+                android:id="@+id/scan_gateway"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="left"
+                android:text="扫一扫"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </android.support.percent.PercentRelativeLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/login_per_lay"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"
+            app:layout_widthPercent="70%"></View>
+
+    </android.support.percent.PercentRelativeLayout>
+
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_widthPercent="80%">
+
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/per_rel_pass_lay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:layout_widthPercent="70%">
+
+            <com.massky.sraumsmarthome.view.ClearEditText
+                android:id="@+id/edit_password_gateway"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:background="@null"
+                android:gravity="left"
+                android:hint="输入密码"
+                android:inputType="textPassword"
+                android:maxLength="15"
+                android:paddingRight="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/gray"
+                app:layout_widthPercent="70%" />
+
+            <ImageView
+                android:id="@+id/eyeimageview_id_gateway"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/eyeclose" />
+
+        </android.support.percent.PercentRelativeLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/per_rel_pass_lay"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"
+            app:layout_widthPercent="70%"></View>
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y15">
+
+        <Button
+            android:id="@+id/btn_login_gateway"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_bg"
+            android:text="登录"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_widthPercent="70%" />
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y10">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:layout_widthPercent="70%">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注册新用户"
+                android:id="@+id/regist_new"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="忘记密码"
+                android:id="@+id/forget_pass"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+    </android.support.percent.PercentRelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/search_gateway_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:text="登录网关"
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
+    </RelativeLayout>
+</LinearLayout>

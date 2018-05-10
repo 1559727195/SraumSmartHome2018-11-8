@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:id="@+id/linear_popcamera"
+    android:layout_height="match_parent"
+    >
+        <LinearLayout
+            android:id="@+id/cameratop_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:paddingTop="@dimen/x15"
+            android:paddingLeft="@dimen/x10"
+            android:paddingRight="@dimen/x10"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_changjing_tanchuang"
+            >
+                <TextView
+                    android:id="@+id/add_hand_scene_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="10dp"
+                    android:text="添加手动场景"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"></View>
+                <TextView
+                    android:id="@+id/add_auto_scene_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="10dp"
+                    android:text="添加自动场景"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
+        </LinearLayout>
+</LinearLayout>

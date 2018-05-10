@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#F6F7FA"
+    android:layout_height="match_parent">
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_t_back" />
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="空调"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/next_step_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x8"
+            android:layout_marginTop="8dp"
+            android:text="保存"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/y5"
+        android:paddingTop="@dimen/y5"
+        android:paddingBottom="@dimen/y10"
+        android:visibility="gone"
+        android:id="@+id/air_control_linear">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:textColor="@color/dark_gray"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:text="模式"
+        android:textSize="14sp"/>
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="0.8"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/activity_group_radioGroup_light"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_widthPercent="90%"
+            android:layout_alignParentLeft="true"
+            android:checkedButton="@+id/order_process"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp">
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textColor="@color/dark_gray"
+                android:button="@drawable/radio_group_selector"
+                android:gravity="center"
+                android:text="制冷"/>
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:textColor="@color/dark_gray"
+                android:layout_height="match_parent"
+                android:button="@drawable/radio_group_selector"
+                android:layout_weight="1.0"
+                android:checked="false"
+                android:gravity="center"
+                android:text="制热"/>
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:checked="false"
+                android:button="@drawable/radio_group_selector"
+                android:textColor="@color/dark_gray"
+                android:gravity="center"
+                android:text="除湿"/>
+
+
+
+            <RadioButton
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:checked="false"
+                android:button="@drawable/radio_group_selector"
+                android:textColor="@color/dark_gray"
+                android:gravity="center"
+                android:text="送风"/>
+        </RadioGroup>
+    </android.support.percent.PercentRelativeLayout>
+</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:padding="@dimen/x5"
+        android:background="@color/gray"></View>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y5"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/dark_gray"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:text="温度"
+            android:textSize="14sp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:layout_weight="0.8">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_kt_reduce" />
+            <TextView
+                android:textColor="@color/dark_gray"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:layout_width="wrap_content"
+                android:text="26"
+                android:textSize="14sp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_kt_add" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/x5"
+        android:padding="@dimen/x5"
+        android:background="@color/gray"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y5"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/dark_gray"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:text="风速"
+            android:textSize="14sp"/>
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.8"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content">
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_widthPercent="90%"
+                android:layout_alignParentLeft="true"
+                android:checkedButton="@+id/order_process"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp">
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:textColor="@color/dark_gray"
+                    android:button="@drawable/radio_group_selector"
+                    android:gravity="center"
+                    android:text="低风"/>
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:textColor="@color/dark_gray"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/radio_group_selector"
+                    android:layout_weight="1.0"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="中风"/>
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/radio_group_selector"
+                    android:layout_weight="1.0"
+                    android:checked="false"
+                    android:textColor="@color/dark_gray"
+                    android:gravity="center"
+                    android:text="高风"/>
+
+
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/radio_group_selector"
+                    android:layout_weight="1.0"
+                    android:checked="false"
+                    android:textColor="@color/dark_gray"
+                    android:gravity="center"
+                    android:text="节能"/>
+            </RadioGroup>
+        </android.support.percent.PercentRelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/y5"
+        android:padding="@dimen/x5"
+        android:background="@color/gray"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y5"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/dark_gray"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:text="开关"
+            android:textSize="14sp"/>
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.8"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content">
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_widthPercent="40%"
+                android:layout_alignParentLeft="true"
+                android:checkedButton="@+id/order_process"
+                android:button="@drawable/radio_group_selector"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp">
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:textColor="@color/dark_gray"
+                    android:button="@drawable/radio_group_selector"
+                    android:gravity="center"
+                    android:text="开"/>
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:textColor="@color/dark_gray"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/x8"
+                    android:button="@drawable/radio_group_selector"
+                    android:layout_weight="1.0"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="关"/>
+
+            </RadioGroup>
+        </android.support.percent.PercentRelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:padding="@dimen/x5"
+        android:layout_marginTop="@dimen/y5"
+        android:background="@color/gray"></View>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/y5"
+        android:paddingTop="@dimen/y5"
+        android:visibility="gone"
+        android:paddingBottom="@dimen/y10"
+        android:id="@+id/window_linear">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/dark_gray"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="内纱"
+                android:textSize="14sp"/>
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content">
+                <RadioGroup
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_widthPercent="50%"
+                    android:layout_alignParentLeft="true"
+                    android:checkedButton="@+id/order_process"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp">
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:textColor="@color/dark_gray"
+                        android:button="@drawable/radio_group_selector"
+                        android:gravity="center"
+                        android:text="打开"/>
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:textColor="@color/dark_gray"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/x8"
+                        android:button="@drawable/radio_group_selector"
+                        android:layout_weight="1.0"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="关闭"/>
+                </RadioGroup>
+            </android.support.percent.PercentRelativeLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:padding="@dimen/x5"
+            android:background="@color/gray"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y5"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/dark_gray"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="外纱"
+                android:textSize="14sp"/>
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content">
+                <RadioGroup
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_widthPercent="50%"
+                    android:layout_alignParentLeft="true"
+                    android:checkedButton="@+id/order_process"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp">
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:textColor="@color/dark_gray"
+                        android:button="@drawable/radio_group_selector"
+                        android:gravity="center"
+                        android:text="打开"/>
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:textColor="@color/dark_gray"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/x8"
+                        android:button="@drawable/radio_group_selector"
+                        android:layout_weight="1.0"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="关闭"/>
+
+                </RadioGroup>
+            </android.support.percent.PercentRelativeLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/y5"
+            android:padding="@dimen/x5"
+            android:background="@color/gray"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y5"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/dark_gray"
+                android:layout_weight="0.2"
+                android:gravity="center_vertical|right"
+                android:paddingRight="@dimen/x10"
+                android:text="阳台灯"
+                android:textSize="14sp"/>
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content">
+                <RadioGroup
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_widthPercent="80%"
+                    android:layout_alignParentLeft="true"
+                    android:checkedButton="@+id/order_process"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp">
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0"
+                        android:textColor="@color/dark_gray"
+                        android:button="@drawable/radio_group_selector"
+                        android:gravity="center"
+                        android:text="打开"/>
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:textColor="@color/dark_gray"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/x8"
+                        android:button="@drawable/radio_group_selector"
+                        android:layout_weight="1.0"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="关闭"/>
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:textColor="@color/dark_gray"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/x8"
+                        android:button="@drawable/radio_group_selector"
+                        android:layout_weight="1.0"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="切换"/>
+
+
+                </RadioGroup>
+            </android.support.percent.PercentRelativeLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:padding="@dimen/x5"
+            android:layout_marginTop="@dimen/y5"
+            android:background="@color/gray"></View>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tiaoguangdeng_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/y5"
+        android:paddingTop="@dimen/y5"
+        android:paddingBottom="@dimen/y10"
+        android:orientation="vertical">
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:checkedButton="@+id/order_process"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                app:layout_widthPercent="80%">
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
+                    android:text="打开"
+                    android:button="@drawable/radio_group_selector"
+                    android:textColor="@color/dark_gray" />
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/x8"
+                    android:layout_weight="1.0"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:button="@drawable/radio_group_selector"
+                    android:text="关闭"
+                    android:textColor="@color/dark_gray" />
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/x8"
+                    android:layout_weight="1.0"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:button="@drawable/radio_group_selector"
+                    android:text="切换"
+                    android:textColor="@color/dark_gray" />
+            </RadioGroup>
+        </android.support.percent.PercentRelativeLayout>
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/y15">
+
+            <TextView
+                android:id="@+id/seek_bar_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="right"
+                android:text="30"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textSize="16sp"
+                app:layout_widthPercent="80%" />
+
+
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_below="@id/seek_bar_txt"
+                android:layout_centerHorizontal="true"
+                app:layout_widthPercent="90%"
+                android:maxHeight="6dip"
+                android:minHeight="6dip"
+                android:layout_height="wrap_content"
+                android:thumb="@drawable/select_seekbar"
+                android:progressDrawable="@drawable/seekbar"
+                android:max="100"
+                android:layout_centerVertical="true"
+                android:progress="30"
+                />
+        </android.support.percent.PercentRelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

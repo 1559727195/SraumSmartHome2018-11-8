@@ -71,7 +71,7 @@
                 <!--android:background="@drawable/execute_scene_shape"-->
                 <!--android:textSize="14sp"-->
                 <!--android:src="@mipmap/ic_launcher" />-->
-            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+            <com.massky.sraum.widget.SlideSwitchButton
                 android:id="@+id/slide_btn"
                 android:layout_width="@dimen/x60"
                 android:layout_height="@dimen/y20"
@@ -88,16 +88,19 @@
         android:orientation="horizontal">
         <RelativeLayout
             android:layout_width="wrap_content"
+            android:id="@+id/rename_rel"
             android:layout_height="match_parent">
             <Button
                 android:layout_width="@dimen/x50"
                 android:layout_height="match_parent"
+                android:id="@+id/btn_rename"
                 android:text="重命名"
                 android:background="@color/blue_txt"
                 android:textColor="@android:color/white" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
+            android:id="@+id/edit_rel"
             android:layout_height="match_parent">
             <Button
                 android:layout_width="@dimen/x50"
@@ -108,6 +111,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
+            android:id="@+id/delete_rel"
             android:layout_height="match_parent">
             <Button
                 android:layout_width="@dimen/x50"

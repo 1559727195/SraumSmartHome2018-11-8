@@ -126,7 +126,7 @@
             <!--android:layout_marginRight="10dp"-->
             <!--android:src="@mipmap/ic_launcher"/>-->
 
-        <com.massky.sraumsmarthome.widget.SlideSwitchButton
+        <com.massky.sraum.widget.SlideSwitchButton
             android:id="@+id/slide_btn"
             android:layout_width="@dimen/x55"
             android:layout_height="@dimen/y18"
@@ -163,7 +163,7 @@
             android:layout_marginLeft="10dp"
             android:text="开关提醒"/>
 
-        <com.massky.sraumsmarthome.widget.SlideSwitchButton
+        <com.massky.sraum.widget.SlideSwitchButton
             android:layout_width="@dimen/x55"
             android:layout_height="@dimen/y18"
             android:layout_centerVertical="true"
@@ -199,7 +199,7 @@
             android:layout_marginLeft="10dp"
             android:text="自动执行智能化场景提醒"/>
 
-        <com.massky.sraumsmarthome.widget.SlideSwitchButton
+        <com.massky.sraum.widget.SlideSwitchButton
             android:layout_width="@dimen/x55"
             android:layout_height="@dimen/y18"
             android:layout_centerVertical="true"
@@ -256,7 +256,7 @@
         </RelativeLayout>
 
 
-        <com.massky.sraumsmarthome.widget.SlideSwitchButton
+        <com.massky.sraum.widget.SlideSwitchButton
             android:layout_width="@dimen/x55"
             android:layout_height="@dimen/y18"
             android:layout_centerVertical="true"

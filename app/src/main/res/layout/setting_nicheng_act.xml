@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_white_shape">
 
-            <com.massky.sraumsmarthome.view.ClearEditText
+            <com.massky.sraum.view.ClearEditText
                 android:id="@+id/edit_nicheng"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                 android:textSize="16sp"
                 app:layout_widthPercent="90%">
 
-            </com.massky.sraumsmarthome.view.ClearEditText>
+            </com.massky.sraum.view.ClearEditText>
             <ImageView
                 android:id="@+id/xiala_nicheng"
                 android:layout_width="wrap_content"

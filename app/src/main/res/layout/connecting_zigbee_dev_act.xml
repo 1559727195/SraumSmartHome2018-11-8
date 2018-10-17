@@ -76,7 +76,7 @@
         <!--/>-->
         <!--</RelativeLayout>-->
 
-        <com.massky.sraumsmarthome.view.RoundProgressBar
+        <com.massky.sraum.view.RoundProgressBar
             android:id="@+id/roundProgressBar2"
             android:layout_width="@dimen/x100"
             android:layout_height="@dimen/y100"

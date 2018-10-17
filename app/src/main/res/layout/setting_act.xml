@@ -265,7 +265,7 @@
             <!--android:layout_marginRight="10dp"-->
             <!--android:src="@mipmap/ic_launcher"/>-->
 
-        <com.massky.sraumsmarthome.widget.SlideSwitchButton
+        <com.massky.sraum.widget.SlideSwitchButton
             android:id="@+id/slide_btn"
             android:layout_width="@dimen/x55"
             android:layout_height="@dimen/y18"
@@ -302,7 +302,7 @@
             android:layout_marginLeft="5dp"
             android:text="震动"/>
 
-        <com.massky.sraumsmarthome.widget.SlideSwitchButton
+        <com.massky.sraum.widget.SlideSwitchButton
             android:layout_width="@dimen/x55"
             android:layout_height="@dimen/y18"
             android:layout_centerVertical="true"
@@ -338,7 +338,7 @@
             android:layout_marginLeft="5dp"
             android:text="获取地理位置"/>
 
-        <com.massky.sraumsmarthome.widget.SlideSwitchButton
+        <com.massky.sraum.widget.SlideSwitchButton
             android:layout_width="@dimen/x55"
             android:layout_height="@dimen/y18"
             android:layout_centerVertical="true"

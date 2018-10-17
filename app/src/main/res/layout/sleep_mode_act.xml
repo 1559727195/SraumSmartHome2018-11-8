@@ -75,7 +75,7 @@
                 android:layout_centerVertical="true"
                 android:textSize="16sp"/>
 
-            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+            <com.massky.sraum.widget.SlideSwitchButton
                 android:layout_width="@dimen/x40"
                 android:layout_height="@dimen/y16"
                 android:layout_alignParentRight="true"

@@ -107,7 +107,7 @@
                 android:padding="@dimen/x10">
 
 
-                <com.massky.sraumsmarthome.widget.SlideSwitchButton
+                <com.massky.sraum.widget.SlideSwitchButton
                     android:layout_width="@dimen/x50"
                     android:layout_height="@dimen/y20"
                     android:layout_alignParentRight="true"
@@ -185,7 +185,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="@dimen/x10">
-                <com.massky.sraumsmarthome.widget.SlideSwitchButton
+                <com.massky.sraum.widget.SlideSwitchButton
                     android:id="@+id/slide_btn"
                     android:layout_width="@dimen/x50"
                     android:layout_height="@dimen/y20"

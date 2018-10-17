@@ -80,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/y2"
         android:layout_height="wrap_content">
-        <com.massky.sraumsmarthome.view.ClearEditText
+        <com.massky.sraum.view.ClearEditText
             android:id="@+id/edit_password_gateway"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
             android:maxLength="15"
             app:layout_widthPercent="95%"
             >
-        </com.massky.sraumsmarthome.view.ClearEditText>
+        </com.massky.sraum.view.ClearEditText>
     </android.support.percent.PercentRelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/y2"
             android:layout_height="wrap_content">
-            <com.massky.sraumsmarthome.view.ClearEditText
+            <com.massky.sraum.view.ClearEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -148,7 +148,7 @@
                 android:textSize="16sp"
                 android:maxLength="15"
                 app:layout_widthPercent="95%"
-                ></com.massky.sraumsmarthome.view.ClearEditText>
+                ></com.massky.sraum.view.ClearEditText>
         </android.support.percent.PercentRelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -181,7 +181,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/y2"
             android:layout_height="wrap_content">
-            <com.massky.sraumsmarthome.view.ClearEditText
+            <com.massky.sraum.view.ClearEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -193,7 +193,7 @@
                 android:textSize="16sp"
                 android:maxLength="15"
                 app:layout_widthPercent="95%"
-                ></com.massky.sraumsmarthome.view.ClearEditText>
+                ></com.massky.sraum.view.ClearEditText>
         </android.support.percent.PercentRelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -226,7 +226,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/y2"
             android:layout_height="wrap_content">
-            <com.massky.sraumsmarthome.view.ClearEditText
+            <com.massky.sraum.view.ClearEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -238,7 +238,7 @@
                 android:textSize="16sp"
                 android:maxLength="15"
                 app:layout_widthPercent="95%"
-                ></com.massky.sraumsmarthome.view.ClearEditText>
+                ></com.massky.sraum.view.ClearEditText>
         </android.support.percent.PercentRelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -271,7 +271,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/y2"
             android:layout_height="wrap_content">
-            <com.massky.sraumsmarthome.view.ClearEditText
+            <com.massky.sraum.view.ClearEditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -283,7 +283,7 @@
                 android:textSize="16sp"
                 android:maxLength="15"
                 app:layout_widthPercent="95%"
-                ></com.massky.sraumsmarthome.view.ClearEditText>
+                ></com.massky.sraum.view.ClearEditText>
         </android.support.percent.PercentRelativeLayout>
     </LinearLayout>
 

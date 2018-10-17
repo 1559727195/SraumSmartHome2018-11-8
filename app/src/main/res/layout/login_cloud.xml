@@ -45,8 +45,8 @@
             android:layout_centerHorizontal="true"
             app:layout_widthPercent="70%">
 
-            <com.massky.sraumsmarthome.view.ClearEditText
-                android:id="@+id/edit_password_again"
+            <com.massky.sraum.view.ClearEditText
+                android:id="@+id/usertext_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -55,7 +55,6 @@
                 android:gravity="left"
                 android:hint="输入用户名/手机号"
                 android:inputType="text"
-                android:maxLength="15"
                 android:textColor="@color/white"
                 android:textColorHint="@color/gray"
                 app:layout_widthPercent="70%" />
@@ -98,8 +97,8 @@
             android:layout_centerHorizontal="true"
             app:layout_widthPercent="70%">
 
-            <com.massky.sraumsmarthome.view.ClearEditText
-                android:id="@+id/edit_password_gateway"
+            <com.massky.sraum.view.ClearEditText
+                android:id="@+id/phonepassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -108,7 +107,6 @@
                 android:gravity="left"
                 android:hint="输入密码"
                 android:inputType="textPassword"
-                android:maxLength="15"
                 android:paddingRight="10dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/gray"

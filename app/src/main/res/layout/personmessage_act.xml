@@ -289,7 +289,7 @@
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:layout_height="wrap_content">
-            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+            <com.massky.sraum.widget.SlideSwitchButton
                 android:id="@+id/slide_btn"
                 android:layout_width="60dp"
                 android:layout_height="30dp"

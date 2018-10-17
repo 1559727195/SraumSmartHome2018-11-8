@@ -76,7 +76,7 @@
             android:id="@+id/login_per_lay"
             android:layout_centerHorizontal="true"
             app:layout_widthPercent="80%">
-            <com.massky.sraumsmarthome.view.ClearEditText
+            <com.massky.sraum.view.ClearEditText
                 android:id="@+id/edit_password_again"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
             android:id="@+id/per_rel_pass_lay"
             app:layout_widthPercent="80%">
 
-            <com.massky.sraumsmarthome.view.ClearEditText
+            <com.massky.sraum.view.ClearEditText
                 android:id="@+id/edit_password_gateway"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

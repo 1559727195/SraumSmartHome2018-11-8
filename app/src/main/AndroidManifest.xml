@@ -1,44 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.massky.sraumsmarthome">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.massky.sraum">
 
 
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="21" />
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="21" />
 
-    <!-- Required -->
+    <!-- Required极光权限 -->
     <permission
-        android:name="com.massky.sraumsmarthome.permission.JPUSH_MESSAGE"
+        android:name="com.massky.sraum.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-
     <!-- Required  一些系统要求的权限，如访问网络等-->
-    <uses-permission android:name="com.massky.sraumsmarthome.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="com.massky.sraum.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Optional for location -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-
-
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
 
     <!--下面是智能家居的权限-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -48,14 +33,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -67,18 +45,19 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".widget.ApplicationContext"
-        android:allowBackup="false"
-        android:icon="@drawable/img_logo"
+        android:name=".Utils.App"
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/img_logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@android:style/Theme.NoTitleBar"
+        tools:replace="android:icon">
+        <activity android:name="com.massky.sraum.MainActivity">
 
         </activity>
 
-        <activity android:name=".UdpServerActivity">
+        <activity android:name="com.massky.sraum.UdpServerActivity">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
 
@@ -86,19 +65,19 @@
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name=".Main_New_Activity"></activity>
+        <activity android:name="com.massky.sraum.Main_New_Activity"></activity>
 
-        <activity android:name=".circle.MainActivity"></activity>
+        <activity android:name="com.massky.sraum.circle.MainActivity"></activity>
 
         <service
-            android:name=".service.MyService"
+            android:name="com.massky.sraum.service.MyService"
             android:enabled="true"
             android:exported="true"></service>
 
-        <activity android:name=".activity.NextPageActivity"></activity>
+        <activity android:name="com.massky.sraum.activity.NextPageActivity"></activity>
 
         <receiver
-            android:name=".receiver.MyReceiver"
+            android:name="com.massky.sraum.receiver.MyReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -107,7 +86,7 @@
         </receiver>
 
         <activity
-            android:name=".activity.DragViewActivity"
+            android:name="com.massky.sraum.activity.DragViewActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
@@ -117,39 +96,39 @@
         </activity>
 
         <activity
-            android:name=".activity.ProgressBarActivity"
+            android:name="com.massky.sraum.activity.ProgressBarActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.LaunghActivity"
+            android:name="com.massky.sraum.activity.LaunghActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 
         <activity
-            android:name=".activity.NextStepActivity"
+            android:name="com.massky.sraum.activity.NextStepActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.LaunghSecondActivity"
+            android:name="com.massky.sraum.activity.LaunghSecondActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.LoginGateWayActivity"
+            android:name="com.massky.sraum.activity.LoginGateWayActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
 
         <activity
-            android:name=".activity.LoginCloudActivity"
+            android:name="com.massky.sraum.activity.LoginCloudActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".myzxingbar.qrcodescanlib.CaptureActivity"
+            android:name="com.massky.sraum.myzxingbar.qrcodescanlib.CaptureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -159,70 +138,70 @@
         <!--android:screenOrientation="portrait">-->
         <!--</activity>-->
         <activity
-            android:name=".activity.SearchGateWayActivity"
+            android:name="com.massky.sraum.activity.SearchGateWayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.EditGateWayActivity"
+            android:name="com.massky.sraum.activity.EditGateWayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.MainGateWayActivity"
+            android:name="com.massky.sraum.activity.MainGateWayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SelectZigbeeDeviceActivity"
+            android:name="com.massky.sraum.activity.SelectZigbeeDeviceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.AddZigbeeDeviceActivity"
+            android:name="com.massky.sraum.activity.AddZigbeeDeviceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
-            android:name=".activity.EditSceneSecondActivity"
+            android:name="com.massky.sraum.activity.EditSceneSecondActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".activity.HandAddSceneDeviceDetailActivity"
+            android:name="com.massky.sraum.activity.HandAddSceneDeviceDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.GuanLianSceneBtnActivity"
+            android:name="com.massky.sraum.activity.GuanLianSceneBtnActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.GuanLianSceneActivity"
+            android:name="com.massky.sraum.activity.GuanLianSceneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.GuanLianSceneRealBtnActivity"
+            android:name="com.massky.sraum.activity.GuanLianSceneRealBtnActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.AddAutoSceneActivity"
+            android:name="com.massky.sraum.activity.AddAutoSceneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.TimeExcuteCordinationActivity"
+            android:name="com.massky.sraum.activity.TimeExcuteCordinationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.AutoAgainSceneActivity"
+            android:name="com.massky.sraum.activity.AutoAgainSceneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -230,55 +209,55 @@
 
 
         <activity
-            android:name=".activity.CustomDefineDaySceneActivity"
+            android:name="com.massky.sraum.activity.CustomDefineDaySceneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.SelectExecuteSceneResultActivity"
+            android:name="com.massky.sraum.activity.SelectExecuteSceneResultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.DeviceExcuteOpenActivity"
+            android:name="com.massky.sraum.activity.DeviceExcuteOpenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.ExcuteSomeHandSceneActivity"
+            android:name="com.massky.sraum.activity.ExcuteSomeHandSceneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.EditSceneActivity"
+            android:name="com.massky.sraum.activity.EditSceneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
-            android:name=".activity.ExcuteSmartDeviceCordinationActivity"
+            android:name="com.massky.sraum.activity.ExcuteSmartDeviceCordinationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.ExcuteSmartDeviceDetailItemActivity"
+            android:name="com.massky.sraum.activity.ExcuteSmartDeviceDetailItemActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.PersonMessageActivity"
+            android:name="com.massky.sraum.activity.PersonMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.ClipImageActivity"
+            android:name="com.massky.sraum.activity.ClipImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -295,108 +274,104 @@
         </provider>
 
         <activity
-            android:name=".activity.AccountNiChengActivity"
+            android:name="com.massky.sraum.activity.AccountNiChengActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.AccountIdActivity"
+            android:name="com.massky.sraum.activity.AccountIdActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.ChangePhoneNumberActivity"
+            android:name="com.massky.sraum.activity.ChangePhoneNumberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.ShareDeviceActivity"
+            android:name="com.massky.sraum.activity.ShareDeviceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.InputPhoneNumberActivity"
+            android:name="com.massky.sraum.activity.InputPhoneNumberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SettingNiChengActivity"
+            android:name="com.massky.sraum.activity.SettingNiChengActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.WangGuanListActivity"
+            android:name="com.massky.sraum.activity.WangGuanListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.WangGuanDetailItemActivity"
+            android:name="com.massky.sraum.activity.WangGuanDetailItemActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SettingWangGuanActivity"
+            android:name="com.massky.sraum.activity.SettingWangGuanActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.WangGuanBaseInformationActivity"
+            android:name="com.massky.sraum.activity.WangGuanBaseInformationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.DeviceListActivity"
+            android:name="com.massky.sraum.activity.DeviceListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activity.DeviceSettingDelRoomActivity"
+            android:name="com.massky.sraum.activity.DeviceSettingDelRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activity.ChangeDeviceNameActivity"
+            android:name="com.massky.sraum.activity.ChangeDeviceNameActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activity.SelectRoomActivity"
+            android:name="com.massky.sraum.activity.SelectRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.ManagerRoomActivity"
+            android:name="com.massky.sraum.activity.ManagerRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
-            android:name=".activity.AddRoomActivity"
+            android:name="com.massky.sraum.activity.AddRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.SettingRoomActivity"
+            android:name="com.massky.sraum.activity.SettingRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.Pm25Activity"
+            android:name="com.massky.sraum.activity.Pm25Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
-            android:name=".activity.AirControlActivity"
+            android:name="com.massky.sraum.activity.AirControlActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -404,28 +379,28 @@
 
 
         <activity
-            android:name=".activity.CurtainWindowActivity"
+            android:name="com.massky.sraum.activity.CurtainWindowActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.AddWifiDeviceActivity"
+            android:name="com.massky.sraum.activity.AddWifiDeviceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.ConRouInforActivity"
+            android:name="com.massky.sraum.activity.ConRouInforActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.AddZigbeeDeviceConnectingActivity"
+            android:name="com.massky.sraum.activity.AddZigbeeDeviceConnectingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -433,58 +408,58 @@
         </activity>
 
         <activity
-            android:name=".activity.AddDeviceScucessActivity"
+            android:name="com.massky.sraum.activity.AddDeviceScucessActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
-            android:name=".activity.TiaoGuangLightActivity"
+            android:name="com.massky.sraum.activity.TiaoGuangLightActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SleepModeActivity"
+            android:name="com.massky.sraum.activity.SleepModeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.HostoryPmActivity"
+            android:name="com.massky.sraum.activity.HostoryPmActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.RegistActivity"
+            android:name="com.massky.sraum.activity.RegistActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.ForgetActivity"
+            android:name="com.massky.sraum.activity.ForgetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.InputCheckCodeActivity"
+            android:name="com.massky.sraum.activity.InputCheckCodeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SettingPasswordActivity"
+            android:name="com.massky.sraum.activity.SettingPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activity.AlarmDeviceMessageActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <activity
-            android:name=".activity.AlarmDetailActivity"
+            android:name="com.massky.sraum.activity.AlarmDeviceMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.AddHandSceneActivity"
+            android:name="com.massky.sraum.activity.AlarmDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name="com.massky.sraum.activity.AddHandSceneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
@@ -518,116 +493,111 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.HistoryBackActivity"
+            android:name="com.massky.sraum.activity.HistoryBackActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SystemMessageActivity"
+            android:name="com.massky.sraum.activity.SystemMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SystemDetailMessageActivity"
+            android:name="com.massky.sraum.activity.SystemDetailMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.AboutActivity"
+            android:name="com.massky.sraum.activity.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SettingActivity"
+            android:name="com.massky.sraum.activity.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.InformationSettingActivity"
+            android:name="com.massky.sraum.activity.InformationSettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.HomeSettingActivity"
+            android:name="com.massky.sraum.activity.HomeSettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.AddHomeActivity"
+            android:name="com.massky.sraum.activity.AddHomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.GuJianWangGuanActivity"
+            android:name="com.massky.sraum.activity.GuJianWangGuanActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SceneListActivity"
+            android:name="com.massky.sraum.activity.SceneListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SceneSettingActivity"
+            android:name="com.massky.sraum.activity.SceneSettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.SettingTimeActivity"
+            android:name="com.massky.sraum.activity.SettingTimeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.InputCheckActivity"
+            android:name="com.massky.sraum.activity.InputCheckActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".activity.BindNewPhoneActivity"
+            android:name="com.massky.sraum.activity.BindNewPhoneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
 
 
         <!-- For jpushdemo.MainActivity 测试的主程序-->
         <!-- For test only 测试高级功能 -->
-        <activity android:name="com.example.jpushdemo.PushSetActivity" android:label="@string/app_name"></activity>
         <!-- For test only 测试设置 -->
-        <activity android:name="com.example.jpushdemo.SettingActivity" android:label="@string/app_name"></activity>
-        <!-- For test only 测试状态通知栏，需要打开的Activity -->
-        <activity android:name="com.example.jpushdemo.TestActivity" android:exported="false">
-            <intent-filter>
-                <action android:name="jpush.testAction" />
-                <category android:name="jpush.testCategory" />
-            </intent-filter>
-        </activity>
 
         <!-- Rich push 核心功能 since 2.0.6-->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
-            android:theme="@style/MyDialogStyle"
-            android:exported="false">
-        </activity>
+            android:exported="false"
+            android:theme="@style/MyDialogStyle"></activity>
 
         <!-- Required SDK核心功能-->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.massky.sraumsmarthome" />
+                <category android:name="com.massky.sraum" />
             </intent-filter>
         </activity>
+
+        <!-- Required  SDK核心功能-->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false"></service>
 
         <!-- Required SDK 核心功能-->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
-            android:process=":mult"
-            android:exported="false">
+            android:process=":mult">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
@@ -635,12 +605,6 @@
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
         </service>
-        <!-- since 3.0.9 Required SDK 核心功能-->
-        <provider
-            android:authorities="com.massky.sraumsmarthome.DataProvider"
-            android:name="cn.jpush.android.service.DataProvider"
-            android:exported="false"
-            />
 
         <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
         <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
@@ -650,24 +614,18 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
-                <category android:name="com.massky.sraumsmarthome" />
+                <category android:name="com.massky.sraum" />
             </intent-filter>
 
         </service>
-        <!-- since 3.1.0 Required SDK 核心功能-->
-        <provider
-            android:authorities="com.massky.sraumsmarthome.DownloadProvider"
-            android:name="cn.jpush.android.service.DownloadProvider"
-            android:exported="true"
-            />
+
         <!-- Required SDK核心功能-->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true"
-            android:exported="false">
+            android:enabled="true">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />   <!--Required  显示通知栏 -->
-                <category android:name="com.massky.sraumsmarthome" />
+                <category android:name="com.massky.sraum" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -683,34 +641,33 @@
         </receiver>
 
         <!-- Required SDK核心功能-->
-        <receiver android:name="cn.jpush.android.service.AlarmReceiver" android:exported="false"/>
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
 
         <!-- User defined.  For test only  用户自定义的广播接收器-->
         <receiver
-            android:name="com.example.jpushdemo.MyReceiver"
-            android:exported="false"
-            android:enabled="true">
+            android:name="com.jpush.MyReceiver"
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
                 <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <category android:name="com.massky.sraumsmarthome" />
+                <category android:name="com.massky.sraum" />
             </intent-filter>
         </receiver>
 
-        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调-->
-        <receiver android:name="com.example.jpushdemo.MyJPushMessageReceiver">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="com.massky.sraumsmarthome"></category>
-            </intent-filter>
-        </receiver>
 
-        <!-- Required  . Enable it you can get statistics data with channel -->
-        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="您应用的Appkey" /> <!--  </>值来自开发者平台取得的AppKey-->
+        <!-- Required  . Enable it you can get statistics data with channel极光配置meta-data -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="3d45319ce06de8467ec87bce" /> <!--  </>值来自开发者平台取得的AppKey-->
 
     </application>
 

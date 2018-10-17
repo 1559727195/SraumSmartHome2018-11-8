@@ -76,7 +76,7 @@
                 android:background="@color/black"></View>
         </LinearLayout>
 
-        <com.massky.sraumsmarthome.view.ClearEditText
+        <com.massky.sraum.view.ClearEditText
             android:id="@+id/edit_password_gateway"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             android:paddingLeft="@dimen/x10"
             android:paddingRight="10dp"
             android:paddingTop="@dimen/y10"
-            app:layout_widthPercent="95%"></com.massky.sraumsmarthome.view.ClearEditText>
+            app:layout_widthPercent="95%"></com.massky.sraum.view.ClearEditText>
     </android.support.percent.PercentRelativeLayout>
 
     <!--<RelativeLayout-->

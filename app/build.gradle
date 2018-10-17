@@ -5,7 +5,7 @@ apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.massky.sraumsmarthome"
+        applicationId "com.massky.sraum"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
@@ -13,7 +13,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //添加如下配置就OK了
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
-        ndk {abiFilters "armeabi","armeabi-v7a"}
+        ndk { abiFilters "armeabi" }
         multiDexEnabled true//设置为支持多dex输出模式
     }
 
@@ -79,7 +79,7 @@ greendao {
     //数据库的版本号，数据库版本升级的时候用得到
     schemaVersion 1;
     //生成的Daos、DaoMaster路径，我选择的是生成在自己的实体类文件下
-    daoPackage "com.massky.sraumsmarthome.bean"
+    daoPackage "com.massky.sraum.bean"
     //生成的资源路径，默认存放在build中
     targetGenDir "src/main/java"
 }
@@ -121,8 +121,15 @@ dependencies {
     // 添加GreenDao的library
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'com.zhy:okhttputils:2.6.2'
-    implementation files('libs/jcore-android-1.2.0.jar')
-    implementation files('libs/jpush-android-3.1.2.jar')
+    implementation files('libs/jcore-android_v1.1.1.jar')
+    implementation files('libs/jpush-android_v3.0.3.jar')
+    compile 'com.alibaba:fastjson:1.2.49'
+
+
+    compile files('libs/MobCommons-2016.1201.1839.jar')
+    compile files('libs/MobTools-2016.1201.1839.jar')
+    compile(name: 'SMSSDK-2.1.3', ext: 'aar')
+    compile(name: 'SMSSDKGUI-2.1.3', ext: 'aar')
 }
 
 

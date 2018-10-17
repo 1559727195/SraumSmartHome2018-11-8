@@ -217,7 +217,6 @@ public class ColorArcProgressBar extends View {
         vTextPaint_zhi.setColor(Color.BLACK);
         vTextPaint_zhi.setTextAlign(Paint.Align.CENTER);
 
-
         //显示单位文字
         hintPaint = new Paint();
         hintPaint.setTextSize(hintSize);

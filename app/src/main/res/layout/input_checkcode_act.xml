@@ -57,18 +57,18 @@
             android:text="请输入13812391092收到的短信验证码"
             android:textSize="14sp"
             android:layout_marginTop="@dimen/y30"
-            android:id="@+id/txt_check_code"
+            android:id="@+id/phone_id"
             android:textColor="@color/dark_gray"/>
         <android.support.percent.PercentRelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/login_per_lay"
             android:layout_marginTop="@dimen/y15"
-            android:layout_below="@+id/txt_check_code"
+            android:layout_below="@+id/phone_id"
             android:layout_centerHorizontal="true"
             app:layout_widthPercent="70%">
-            <com.massky.sraumsmarthome.view.ClearEditText
-                android:id="@+id/edit_password_again"
+            <com.massky.sraum.view.ClearEditText
+                android:id="@+id/checkcode_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -83,7 +83,7 @@
                 app:layout_widthPercent="70%" />
 
             <TextView
-                android:id="@+id/scan_gateway"
+                android:id="@+id/timebutton_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -91,7 +91,7 @@
                 android:textColor="@color/gray"
                 android:gravity="left"
                 android:layout_alignParentRight="true"
-                android:text="重新发送(35s)" />
+                android:text="@string/getcode" />
         </android.support.percent.PercentRelativeLayout>
 
         <View

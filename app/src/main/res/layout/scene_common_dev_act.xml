@@ -66,7 +66,7 @@
         app:back_color="@android:color/darker_gray"
         />
 
-    <com.massky.sraumsmarthome.view.VolumeView
+    <com.massky.sraum.view.VolumeView
         android:layout_width="wrap_content"
         android:layout_marginTop="@dimen/y30"
         android:layout_gravity="center_horizontal"

@@ -48,7 +48,7 @@
         <!--android:layout_marginTop="@dimen/x80"-->
         <!--android:layout_gravity="center_horizontal"-->
         <!--android:src="@mipmap/ic_launcher"/>-->
-    <com.massky.sraumsmarthome.view.SycleSearchView
+    <com.massky.sraum.view.SycleSearchView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/x80"

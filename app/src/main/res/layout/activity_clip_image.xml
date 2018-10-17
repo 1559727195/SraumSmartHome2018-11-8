@@ -40,7 +40,7 @@
         app:clipType="circle"         ： 裁剪框类型为圆形
         app:mHorizontalPadding="30dp" ：裁剪框距离左右边距为30dp
      -->
-    <com.massky.sraumsmarthome.view.ClipViewLayout
+    <com.massky.sraum.view.ClipViewLayout
         android:id="@+id/clipViewLayout1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -50,7 +50,7 @@
         app:mHorizontalPadding="30dp" />
 
     <!--矩形裁剪框示例 -->
-    <com.massky.sraumsmarthome.view.ClipViewLayout
+    <com.massky.sraum.view.ClipViewLayout
         android:id="@+id/clipViewLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"

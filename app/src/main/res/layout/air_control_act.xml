@@ -67,7 +67,7 @@
         app:string_unit="风速:低"
         app:total_engle="360" />
 
-    <com.massky.sraumsmarthome.view.VolumeView
+    <com.massky.sraum.view.VolumeView
         android:id="@+id/volumeView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

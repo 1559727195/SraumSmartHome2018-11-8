@@ -61,7 +61,7 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/edit_white_shape"
             app:layout_widthPercent="100%">
-            <com.massky.sraumsmarthome.view.ClearEditText
+            <com.massky.sraum.view.ClearEditText
                 android:id="@+id/edit_nicheng"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/y20"
         android:layout_height="wrap_content">
-        <com.massky.sraumsmarthome.view.ClearEditText
+        <com.massky.sraum.view.ClearEditText
             android:id="@+id/edit_password_gateway"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -67,6 +67,6 @@
             android:paddingRight="10dp"
             app:layout_widthPercent="70%"
             >
-        </com.massky.sraumsmarthome.view.ClearEditText>
+        </com.massky.sraum.view.ClearEditText>
     </android.support.percent.PercentRelativeLayout>
 </LinearLayout>

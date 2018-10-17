@@ -121,7 +121,7 @@
             <!--android:background="@drawable/execute_scene_shape"-->
             <!--android:textSize="14sp"-->
             <!--android:src="@mipmap/ic_launcher" />-->
-            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+            <com.massky.sraum.widget.SlideSwitchButton
                 android:layout_width="@dimen/x55"
                 android:layout_height="@dimen/y18"
                 android:layout_alignParentRight="true"
@@ -197,7 +197,7 @@
             <!--android:background="@drawable/execute_scene_shape"-->
             <!--android:textSize="14sp"-->
             <!--android:src="@mipmap/ic_launcher" />-->
-            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+            <com.massky.sraum.widget.SlideSwitchButton
                 android:layout_width="@dimen/x55"
                 android:layout_height="@dimen/y18"
                 android:layout_alignParentRight="true"
@@ -273,7 +273,7 @@
             <!--android:background="@drawable/execute_scene_shape"-->
             <!--android:textSize="14sp"-->
             <!--android:src="@mipmap/ic_launcher" />-->
-            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+            <com.massky.sraum.widget.SlideSwitchButton
                 android:layout_width="@dimen/x55"
                 android:layout_height="@dimen/y18"
                 android:layout_alignParentRight="true"
@@ -349,7 +349,7 @@
             <!--android:background="@drawable/execute_scene_shape"-->
             <!--android:textSize="14sp"-->
             <!--android:src="@mipmap/ic_launcher" />-->
-            <com.massky.sraumsmarthome.widget.SlideSwitchButton
+            <com.massky.sraum.widget.SlideSwitchButton
                 android:layout_width="@dimen/x55"
                 android:layout_height="@dimen/y18"
                 android:layout_alignParentRight="true"

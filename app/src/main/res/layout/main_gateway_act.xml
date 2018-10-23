@@ -1,134 +1,7 @@
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:id="@+id/root_linear"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:orientation="vertical">-->
-    <!--<com.yanzhenjie.statusview.StatusView-->
-        <!--android:id="@+id/status_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@color/white"-->
-        <!--app:fitsView="@id/root_linear"/>-->
-
-    <!--&lt;!&ndash;<android.support.v7.widget.Toolbar&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/toolbar"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="?attr/actionBarSize"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:background="@color/white"&ndash;&gt;-->
-    <!--&lt;!&ndash;app:popupTheme="@style/AppTheme.PopupOverlay"/>&ndash;&gt;-->
-
-    <!--<FrameLayout-->
-        <!--android:id="@+id/containLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="1.0" >-->
-        <!--<android.support.v4.view.ViewPager-->
-            <!--android:id="@+id/mViewPager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
-    <!--</FrameLayout>-->
-
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1px"-->
-        <!--android:background="#cdcdcd" />-->
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--&gt;-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/navHomeLayout"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1.0"-->
-            <!--android:gravity="center_horizontal"-->
-            <!--android:orientation="vertical"-->
-            <!--android:paddingBottom="3dp"-->
-            <!--android:paddingTop="3dp"-->
-            <!--android:background="@color/bg_main">-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/ivNavHome"-->
-                <!--android:layout_width="32dp"-->
-                <!--android:layout_height="32dp"-->
-                <!--android:contentDescription="@null"-->
-                <!--android:src="@mipmap/firstpage_on" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tvNavHome"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="首页"-->
-                <!--android:textColor="#E02433"-->
-                <!--android:textSize="12dp" />-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/navPropertiesLayout"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1.0"-->
-            <!--android:gravity="center_horizontal"-->
-            <!--android:orientation="vertical"-->
-            <!--android:paddingBottom="3dp"-->
-            <!--android:paddingTop="3dp"-->
-            <!--android:background="@color/bg_main">-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/ivNavProperties"-->
-                <!--android:layout_width="32dp"-->
-                <!--android:layout_height="32dp"-->
-                <!--android:contentDescription="@null"-->
-                <!--android:src="@mipmap/xuncha_off" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tvNavProperties"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="巡查"-->
-                <!--android:textColor="#909090"-->
-                <!--android:textSize="12dp" />-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/navWebLayout"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1.0"-->
-            <!--android:gravity="center_horizontal"-->
-            <!--android:orientation="vertical"-->
-            <!--android:paddingBottom="3dp"-->
-            <!--android:paddingTop="3dp"-->
-            <!--android:background="@color/bg_main">-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/ivNavWeb"-->
-                <!--android:layout_width="32dp"-->
-                <!--android:layout_height="32dp"-->
-                <!--android:contentDescription="@null"-->
-                <!--android:src="@mipmap/set_off" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tvNavWeb"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="监控"-->
-                <!--android:textColor="#909090"-->
-                <!--android:textSize="12dp" />-->
-        <!--</LinearLayout>-->
-    <!--</LinearLayout>-->
-
-<!--</LinearLayout>-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
 
@@ -153,12 +26,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#EBEBEB"
+        android:background="#FFFFFF"
         android:checkedButton="@+id/order_process"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp">
+        android:paddingBottom="@dimen/y5"
+        android:paddingTop="@dimen/y5">
 
         <RadioButton
             android:id="@+id/order_process"
@@ -168,7 +41,7 @@
             android:layout_weight="1.0"
             android:drawableTop="@drawable/main_tab_1"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:text="首页"/>
 
         <RadioButton
@@ -180,7 +53,7 @@
             android:checked="false"
             android:drawableTop="@drawable/main_tab_2"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:text="场景"/>
 
         <RadioButton
@@ -192,7 +65,7 @@
             android:checked="false"
             android:drawableTop="@drawable/main_tab_3"
             android:gravity="center"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:text="我的"/>
     </RadioGroup>
 

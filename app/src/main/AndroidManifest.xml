@@ -101,7 +101,7 @@
 
         <activity
             android:name="com.massky.sraum.activity.LaunghActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/styleSplashImage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -388,9 +388,7 @@
         <activity
             android:name="com.massky.sraum.activity.AddWifiDeviceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name="com.massky.sraum.activity.ConRouInforActivity"
@@ -659,6 +657,13 @@
                 <category android:name="com.massky.sraum" />
             </intent-filter>
         </receiver>
+
+
+        <!--音乐播放service设置-->
+        <service android:name=".MyServcie" />
+
+        <!--音乐播放service设置-->
+        <service android:name=".MyServcie1" />
 
 
         <!-- Required  . Enable it you can get statistics data with channel极光配置meta-data -->

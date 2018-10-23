@@ -2,5 +2,6 @@
 <!-- 用于设置信息对话框的圆角 -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/white"></solid>
-    <stroke android:color="@color/green" android:width="@dimen/x1"></stroke>
+    <!--<stroke android:color="@color/green" android:width="@dimen/x1"></stroke>-->
+    <corners android:radius="@dimen/x4"></corners>
 </shape>

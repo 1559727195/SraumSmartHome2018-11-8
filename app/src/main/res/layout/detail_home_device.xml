@@ -4,81 +4,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/home_dev_select_bg"
-    android:orientation="horizontal"
     android:descendantFocusability="blocksDescendants"
-    android:paddingLeft="@dimen/x5">
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/x10"
+    android:paddingRight="@dimen/x5">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/image"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher" />
-    </RelativeLayout>
+            android:id="@+id/img_rel"
+            android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/x5"
-            android:layout_marginTop="@dimen/y5"
-            android:layout_marginBottom="@dimen/y5"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/title_room"
+            <ImageView
+                android:id="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="客厅"
-                android:textColor="@color/dark_gray"
-                android:textSize="12sp" />
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_launcher" />
+        </RelativeLayout>
 
-            <TextView
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/txt_rel"
+            android:layout_toRightOf="@+id/img_rel"
+            android:layout_height="match_parent">
 
-                android:id="@+id/device_name"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="客厅窗户"
-                android:textColor="@color/dark_gray"
-                android:textSize="14sp" />
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/y5"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginTop="@dimen/y5"
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/title_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="客厅"
+                    android:textColor="#1A1A22"
+                    android:textSize="10sp" />
 
-                android:id="@+id/device_action_or_father_name"
+                <TextView
+                    android:id="@+id/device_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="客厅窗户"
+                    android:textColor="#1A1A22"
+                    android:textSize="12sp" />
+
+                <TextView
+
+                    android:id="@+id/status_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="打开"
+                    android:textColor="#8A8A8A"
+                    android:textSize="7sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/scene_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="打开"
-                android:textColor="@color/dark_gray"
-                android:textSize="10sp" />
-        </LinearLayout>
+                android:layout_alignParentRight="true"
+                android:src="@drawable/icon_n_scene"
+                android:visibility="gone" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:id="@+id/scene_img"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/icon_n_scene" />
-
-        <CheckBox
-            android:id="@+id/scene_checkbox"
-            style="@style/CheckSceneTheme"
-            android:layout_width="wrap_content"
-            android:visibility="gone"
-            android:layout_alignParentRight="true"
-            android:paddingLeft="@dimen/x8"
-            android:paddingBottom="@dimen/x5"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="center_vertical" />
+            <CheckBox
+                android:id="@+id/scene_checkbox"
+                style="@style/CheckSceneTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/x5"
+                android:paddingLeft="@dimen/x8"
+                android:visibility="gone" />
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

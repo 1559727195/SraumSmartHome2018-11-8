@@ -4,6 +4,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.yanzhenjie.statusview.StatusView
@@ -38,133 +39,69 @@
 
     </RelativeLayout>
 
-    <TextView
+    <ScrollView
+        android:id="@+id/list_forscrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F6F7FA"
-        android:paddingBottom="@dimen/x8"
-        android:paddingLeft="@dimen/x10"
-        android:paddingTop="@dimen/x8"
-        android:text="ZigBee设备" />
-
-    <GridView
-        android:id="@+id/mineRoom_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center"
-        android:horizontalSpacing="@dimen/y5"
-        android:numColumns="4"
-        android:paddingLeft="@dimen/x5"
-        android:paddingRight="@dimen/x5"
-        android:paddingTop="@dimen/y5"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/y5"></GridView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/y5"
-        android:background="#F6F7FA"
-        android:paddingBottom="@dimen/x8"
-        android:paddingLeft="@dimen/x10"
-        android:paddingTop="@dimen/x8"
-        android:text="Wi-Fi设备" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/x5">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/maoyan_control"
             android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="@dimen/x70"
-                android:layout_height="@dimen/x70"
-                android:background="#F6F7FA"
-                android:padding="@dimen/x8">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/icon_maoyan" />
-            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="电子猫眼"
-                android:textColor="@color/dark_gray"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x5"
-            android:id="@+id/shexiangtou_control"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="@dimen/x70"
-                android:layout_height="@dimen/x70"
                 android:background="#F6F7FA"
-                android:padding="@dimen/x8">
+                android:paddingBottom="@dimen/x8"
+                android:paddingLeft="@dimen/x10"
+                android:paddingTop="@dimen/x8"
+                android:textSize="12sp"
+                android:textColor="#8A8A8A"
+                android:text="ZigBee设备" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/icon_jiankong_active" />
-            </RelativeLayout>
+            <com.massky.sraum.widget.ListViewForScrollView
+                android:id="@+id/mineRoom_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:horizontalSpacing="@dimen/y5"
+                android:numColumns="5"
+                android:paddingLeft="@dimen/x5"
+                android:paddingRight="@dimen/x5"
+                android:paddingTop="@dimen/y5"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="@dimen/y5"></com.massky.sraum.widget.ListViewForScrollView>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="智能摄像头"
-                android:textColor="@color/dark_gray"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x5"
-            android:id="@+id/yinyue_control"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="@dimen/x70"
-                android:layout_height="@dimen/x70"
+                android:layout_marginTop="@dimen/y5"
                 android:background="#F6F7FA"
-                android:padding="@dimen/x8">
+                android:paddingBottom="@dimen/x8"
+                android:paddingLeft="@dimen/x10"
+                android:paddingTop="@dimen/x8"
+                android:textSize="12sp"
+                android:textColor="#8A8A8A"
+                android:text="Wi-Fi设备" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/icon_yinyue" />
-            </RelativeLayout>
-
-            <TextView
+            <android.support.percent.PercentRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="音乐面板"
-                android:textColor="@color/dark_gray"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_height="wrap_content">
 
+                <com.massky.sraum.widget.ListViewForScrollView
+                    android:id="@+id/mac_wifi_dev_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x17"
+                    android:layout_marginRight="@dimen/x17"
+                    android:horizontalSpacing="@dimen/x18"
+                    android:listSelector="@null"
+                    android:numColumns="5"
+                    android:verticalSpacing="@dimen/y14" />
+
+            </android.support.percent.PercentRelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

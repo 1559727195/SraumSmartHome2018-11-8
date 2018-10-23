@@ -45,7 +45,7 @@
             android:layout_centerInParent="true"
             android:text="我的家"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/add_device"
@@ -98,7 +98,10 @@
             <ListView
                 android:id="@+id/home_listview"
                 android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/y10"
                 android:layout_height="wrap_content"
+                android:divider="@null"
                 android:choiceMode="singleChoice">
 
             </ListView>
@@ -254,7 +257,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.7"
             android:background="#F6F7FA"
-            android:padding="@dimen/x8">
+            >
             <!--<com.massky.sraumsmarthome.view.DragGridView-->
             <!--android:id="@+id/dragGridView"-->
             <!--android:listSelector="@android:color/transparent"-->
@@ -275,15 +278,16 @@
 
                 <GridView
                     android:id="@+id/dragGridView"
-                    android:listSelector="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/x5"
                     android:cacheColorHint="@android:color/transparent"
-                    android:verticalSpacing="@dimen/x10"
-                    android:horizontalSpacing="@dimen/x10"
-                    android:stretchMode="columnWidth"
                     android:gravity="center"
-                    android:numColumns="2" />
+                    android:horizontalSpacing="@dimen/x5"
+                    android:listSelector="@android:color/transparent"
+                    android:numColumns="2"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="@dimen/y4" />
             </com.andview.refreshview.XRefreshView>
         </LinearLayout>
     </LinearLayout>

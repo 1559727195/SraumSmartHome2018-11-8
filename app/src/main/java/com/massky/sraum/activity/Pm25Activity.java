@@ -3,21 +3,31 @@ package com.massky.sraum.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.massky.sraum.R;
+import com.massky.sraum.Util.SharedPreferencesUtil;
+import com.massky.sraum.Util.linechartview.AbstractChartView_New;
+import com.massky.sraum.Util.linechartview.LineChartView_New;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.widget.ApplicationContext;
 import com.massky.sraum.widget.ChartView;
 import com.mcxtzhang.pm25progressbar.ColorArcProgressBar;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.InjectView;
 import lecho.lib.hellocharts.listener.ViewportChangeListener;
 import lecho.lib.hellocharts.model.Axis;
@@ -41,7 +51,7 @@ public class Pm25Activity extends BaseActivity {
 //    StatusView statusView;
 
     private static final String TAG = "MessageSendActivity";
-    private LineChartView chart;
+    private LineChartView_New chart;
     private boolean hasAxes = true;
     private boolean hasAxesNames = true;
     private Axis axisX;
@@ -60,11 +70,18 @@ public class Pm25Activity extends BaseActivity {
     private String name;
     private String mode;
     private String pm25;
+    private int start_day;
+    private float firstXValue;
+    List<String> list_value = new ArrayList<>();
+    private int slide_index;//左右滑动监听
+    private int left_index_x_value;
+    private boolean isBiss_false;
 
     @Override
     protected int viewId() {
         return R.layout.pm25_act;
     }
+    //
 
     @Override
     protected void onView() {
@@ -80,7 +97,10 @@ public class Pm25Activity extends BaseActivity {
         //
         pm25 = (String) map_item.get("pm2.5");
         bar2.setCurrentValues(Integer.parseInt(pm25));
+        list_value = new ArrayList<>();
+
     }
+
 
     @Override
     protected void onEvent() {
@@ -92,11 +112,13 @@ public class Pm25Activity extends BaseActivity {
     @Override
     protected void onData() {
 
+        start_day = 5;
         progressDialog = new ProgressDialog(this);
 
-        chart = (LineChartView) findViewById(R.id.chart);
+        chart = (LineChartView_New) findViewById(R.id.chart);
 
-        generateData(10);
+        generateData(10, start_day);//start_day为当前日期
+
     }
 
     @Override
@@ -110,7 +132,6 @@ public class Pm25Activity extends BaseActivity {
                 break;
             case R.id.history_pm:
                 startActivity(new Intent(Pm25Activity.this, HostoryPmActivity.class));
-
                 break;
         }
     }
@@ -122,15 +143,49 @@ public class Pm25Activity extends BaseActivity {
      */
     private void addDataPoint(int count) {
         Line line = chart.getLineChartData().getLines().get(0);
-        List<PointValue> values = line.getValues();
-        int startIndex = values.size();
+        List<PointValue> values_old = line.getValues();
+        int startIndex = values_old.size();
+        firstXValue = (int) values_old.get(0).getX();
 
-        for (int i = 0; i < count; i++) {
-            int newIndex = startIndex + i;
-            Log.i(TAG, "addDataPoint: newIndex=" + newIndex);
-            values.add(new PointValue(newIndex, (float) Math.random() * 100f));
+        //如果start_x > 10,  start - 10 ->start;
+        //如果start_x < 10 , 1->10;
+        List<PointValue> values_new = new ArrayList<PointValue>();
+        if (firstXValue > 10) {
+            for (int i = (int) (firstXValue - 11); i < firstXValue - 1; i++) {
+                int newIndex = i + 1;
+                Log.i(TAG, "addDataPoint: newIndex=" + newIndex);
+                values_new.add(new PointValue(newIndex, (float) Math.random() * 100f));
+            }
+//            list_value.set(0, (int) (firstXValue - 11) + "");
+
+            for (PointValue pointValue : values_old) {
+                values_new.add(pointValue);
+            }
+            commonline(line, values_new);
+            //根据点的横坐标实时变换X坐标轴的视图范围
+            Viewport port = initViewPort(firstXValue - 11, firstXValue - 1);
+//        chart.setMaximumViewport(port);
+            chart.setCurrentViewport(port);
+        } else {
+            for (int i = 0; i < firstXValue - 1; i++) {
+                int newIndex = i + 1;
+                Log.i(TAG, "addDataPoint: newIndex=" + newIndex);
+                values_new.add(new PointValue(newIndex, (float) Math.random() * 100f));
+            }
+//            list_value.set(0, "1");
+            for (PointValue pointValue : values_old) {
+                values_new.add(pointValue);
+            }
+            commonline(line, values_new);
+            //根据点的横坐标实时变换X坐标轴的视图范围
+            Viewport port = initViewPort(1, 10);
+//        chart.setMaximumViewport(port);
+            chart.setCurrentViewport(port);
+            isBiss_false= true;
         }
+    }
 
+    private void commonline(Line line, List<PointValue> values) {
         line.setValues(values);
         List<Line> lines = new ArrayList<>();
         lines.add(line);
@@ -138,25 +193,6 @@ public class Pm25Activity extends BaseActivity {
         lineData.setAxisXBottom(axisX);
         lineData.setAxisYLeft(axisY);
         chart.setLineChartData(lineData);
-
-        //根据点的横坐标实时变换X坐标轴的视图范围
-        Viewport port = initViewPort(startIndex + 1, startIndex + 10);
-//        chart.setMaximumViewport(port);
-        chart.setCurrentViewport(port);
-
-        final float firstXValue = values.get(values.size() - 1).getX();
-        //向右拉取本月数据
-        //向左拉取历史数据
-        chart.setViewportChangeListener(new ViewportChangeListener() {
-            @Override
-            public void onViewportChanged(Viewport viewport) {
-                Log.i(TAG, "onViewportChanged: " + viewport.toString());
-                if (!isBiss && viewport.right == firstXValue) {
-                    isBiss = true;
-                    loadData();
-                }
-            }
-        });
     }
 
     /**
@@ -205,19 +241,35 @@ public class Pm25Activity extends BaseActivity {
      *
      * @param numberOfPoints 初始数据
      */
-    private void generateData(int numberOfPoints) {
-
+    private void generateData(int numberOfPoints, int endIndex) { // 也就是从endIndex - numberOfPoints -> endI
+        //endIndex < 9时， 0-》endIndex ， endIndex -> 10填充数据为0；
+        //endIndex > 9时，    endIndex - 9-> endIndex; // 1- 9,
         List<Line> lines = new ArrayList<Line>();
         int numberOfLines = 1;
         List<PointValue> values = null;
         for (int i = 0; i < numberOfLines; ++i) {
 
             values = new ArrayList<PointValue>();
-            for (int j = 0; j < numberOfPoints; j++) {//PointValue [x=-1.0, y=94.90094]
-                int newIndex = j * 1;
-                Log.i(TAG, "generateData: newIndex=" + newIndex);
-                values.add(new PointValue(newIndex, (float) Math.random() * 200f));
+
+            if (endIndex <= 10) {
+                for (int j = 0; j < endIndex; j++) {//PointValue [x=-1.0, y=94.90094]
+                    int newIndex = j * 1 + 1;
+                    Log.i(TAG, "generateData: newIndex=" + newIndex);
+                    values.add(new PointValue(newIndex, (float) Math.random() * 200f));
+                }
+
+                for (int j = endIndex; j < 10; j++) {
+                    values.add(new PointValue(j + 1, (float) 0));
+                }
+
+            } else {
+                for (int j = endIndex - 10; j < endIndex; j++) {//PointValue [x=-1.0, y=94.90094]
+                    int newIndex = j * 1 + 1;
+                    Log.i(TAG, "generateData: newIndex=" + newIndex);
+                    values.add(new PointValue(newIndex, (float) Math.random() * 200f));
+                }
             }
+
 
             Line line = new Line(values);
             line.setColor(Color.GRAY);//设置折线颜色
@@ -253,26 +305,64 @@ public class Pm25Activity extends BaseActivity {
             data.setAxisYLeft(null);
         }
 
-
         data.setBaseValue(Float.NEGATIVE_INFINITY);
         chart.setLineChartData(data);
-
-        final float firstXValue = values.get(values.size() - 1).getX();
-        Viewport v = new Viewport(chart.getMaximumViewport());
-        v.top = 200;
-        v.bottom = 0;
-        v.left = 0;
-        v.right = 9;//写死每个Viewport的区间范围0 - 9
-        chart.setCurrentViewport(v);
+        firstXValue = values.get(0).getX();
+//        Viewport v = new Viewport(chart.getMaximumViewport());
+//        v.top = 200;
+//        v.bottom = 0;
+//        v.left = 0;
+//        v.right = 9;//写死每个Viewport的区间范围0 - 9
+//        chart.setCurrentViewport(v);
+        chart.setOSlidingAroundListener(new AbstractChartView_New.SlidingAroundListener() {
+            @Override
+            public void sliding_around(int index) {
+                handler.sendEmptyMessage(1);
+                slide_index = index;
+            }
+        });
         chart.setViewportChangeListener(new ViewportChangeListener() {
             @Override
             public void onViewportChanged(Viewport viewport) {
-                Log.i(TAG, "onViewportChanged: " + viewport.toString());
-                if (!isBiss && viewport.right == firstXValue) {//历史数据
-                    isBiss = true;
-                    loadData();
-                }
+                Log.e("robin debug1", "onViewportChanged: " + viewport.toString());
+//                slide_index = (int) SharedPreferencesUtil.getData(Pm25Activity.this, "sliding_around", 0);
+                left_index_x_value = (int) viewport.left;
+                handler.sendEmptyMessage(0);
+
+                //右划怎么样都可以,左划加载数据，右划不加载
             }
         });
     }
+
+    private boolean viewport;
+    private boolean Sliding;
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    viewport = true;
+                    break;
+                case 1:
+                    Sliding = true;
+                    break;
+            }
+
+            if (viewport == true && Sliding == true) {
+                viewport = false;
+                Sliding = false;
+                switch (slide_index) {
+                    case 1:
+                        if (!isBiss &&  left_index_x_value > 1 && !isBiss_false) {//历史数据
+                            isBiss = true;
+                            loadData();
+                        }
+                        break;
+                    case 0:
+
+                        break;
+                }
+            }
+        }
+    };
 }

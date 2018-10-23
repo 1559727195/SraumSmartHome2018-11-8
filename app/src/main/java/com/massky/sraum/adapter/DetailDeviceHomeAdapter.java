@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-
 import com.massky.sraum.R;
 import com.massky.sraum.activity.AirControlActivity;
 import com.massky.sraum.activity.CurtainWindowActivity;
 import com.massky.sraum.activity.DeviceSettingDelRoomActivity;
 import com.massky.sraum.activity.Pm25Activity;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,10 +53,27 @@ public class DetailDeviceHomeAdapter extends BaseAdapter {
 //            }
 
 
+            // 根据列数计算项目宽度，以使总宽度尽量填充屏幕
+            int itemWidth =  ((context.getResources().getDisplayMetrics().widthPixels
+            ) / 3 * 2 - dip2px(context,6)) / 2;
+            // Calculate the height by your scale rate, I just use itemWidth here
+            // 下面根据比例计算您的item的高度，此处只是使用itemWidth
+            int itemHeight = itemWidth;
+            AbsListView.LayoutParams params = (AbsListView.LayoutParams) convertView.getLayoutParams();
+            if (params == null) {
+                params = new AbsListView.LayoutParams(
+                        itemWidth,
+                        itemHeight / 10 * 6);
+                convertView.setLayoutParams(params);
+            } else {
+                params.height = itemHeight;//
+                params.width = itemWidth;
+            }
+
             viewHolderContentType.title_room = (TextView) convertView.findViewById(R.id.title_room);
             viewHolderContentType.device_name = (TextView) convertView.findViewById(R.id.device_name);
-            viewHolderContentType.device_action_or_father_name = (TextView) convertView.findViewById(R.id.device_action_or_father_name);
-            viewHolderContentType.image = (ImageView) convertView.findViewById(R.id.image);//title_room;//device_name,
+            viewHolderContentType.status_txt = (TextView) convertView.findViewById(R.id.status_txt);
+            viewHolderContentType.imageitem_id = (ImageView) convertView.findViewById(R.id.image);//title_room;//device_name,
             // device_action_or_father_name
 
             //linear_select
@@ -76,400 +91,307 @@ public class DetailDeviceHomeAdapter extends BaseAdapter {
         }
 
         String type = (String) list.get(position).get("type");
-        String status = (String) list.get(position).get("status");
-        if (type != null) {//
-            switch (status) {
-                case "0":
-                    status_bolt(position, viewHolderContentType, type);
-                    break;
-                case "1":
-                    status_normal(position, viewHolderContentType, type);
-                    break;
-            }
-            viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-            //roomName
-            String roomName = list.get(position).get("roomName").toString();
-            if (roomName != null) { //说明是所有下的
-                viewHolderContentType.title_room.setText(list.get(position).get("roomName").toString());
-            }
-
-//            switch (list.get(position).get("title_room").toString()) {
-//                case "吃饭":
-//                case "睡觉":
-//                    viewHolderContentType.scene_img.setVisibility(View.VISIBLE);
-////                viewHolderContentType.scene_checkbox.setVisibility(View.VISIBLE);
+//        String status = (String) list.get(position).get("status");
+////        if (type != null) {//
+//            switch (status) {
+//                case "0":
+//                    status_bolt(position, viewHolderContentType, type);
 //                    break;
-//                default:
-//                    viewHolderContentType.scene_img.setVisibility(View.GONE);
-//                    viewHolderContentType.scene_checkbox.setVisibility(View.GONE);
+//                case "1":
+//                    status_normal(position, viewHolderContentType, type);
 //                    break;
 //            }
-
-
-//            final ViewHolderContentType finalViewHolderContentType1 = viewHolderContentType;
-//            viewHolderContentType.linear_select.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                Intent intent = new Intent(context, SettingRoomActivity.class);
-//////                intent.putExtra("id", (Serializable) list.get(position).get("id").toString());
-////                context.startActivity(intent);
-//
-//                    String type = (String) list.get(position).get("type");
-//                    String status = (String) list.get(position).get("status");
-//                    //获取单个设备或是按钮信息（APP->网关） ->command：命令标识 sraum_getOneInfo
-//
-//
-//                    switch (type) {//空调,PM检测,客厅窗帘,门磁,主灯
-//                        case "4":
-//                            Intent intent_air_control = new Intent(context,
-//                                    AirControlActivity.class);
-//                            intent_air_control.putExtra("air_control", (Serializable) list.get(position));
-//                            context.startActivity(intent_air_control);
-//                            break;
-//                        case "12":
-//                            Intent intent_pm25 = new Intent(context,
-//                                    Pm25Activity.class);
-//                            intent_pm25.putExtra("air_control", (Serializable) list.get(position));
-//                            context.startActivity(intent_pm25);
-//                            break;
-//                        case "3":
-//                            Intent intent_window = new Intent(context,
-//                                    CurtainWindowActivity.class);
-//                            intent_window.putExtra("air_control", (Serializable) list.get(position));
-//                            context.startActivity(intent_window);
-//                            break;
-//                        case "7":
-//                            Intent intent_magnetic_door = new Intent(context,
-//                                    DeviceSettingDelRoomActivity.class);
-//                            intent_magnetic_door.putExtra("air_control", (Serializable) list.get(position));
-//                            context.startActivity(intent_magnetic_door);
-//                            break;
-//                        case "1"://灯，控制灯的开关
-//                            switch (status) { //
-//                                case "1":
-////                                    finalViewHolderContentType1.image.setImageResource(R.drawable.icon_deng);
-////                                    //home_dev_select_bg
-////                                    finalViewHolderContentType1.linear_select.setBackgroundResource(
-////                                            R.drawable.home_dev_select_bg);
-//                                    //去关灯
-//
-//                                    break;
-//                                case "0":
-////                                    finalViewHolderContentType1.image.setImageResource(R.drawable.icon_deng);
-////                                    finalViewHolderContentType1.linear_select.setBackgroundResource(
-////                                            R.drawable.home_dev_bg);
-//                                    //去开灯
-//
-//                                    break;
-//                            }
-//
-//                            break;
-//                    }
-//                }
-//            });
+        viewHolderContentType.device_name.setText(list.get(position).get("device_name").toString());
+        //roomName
+        String roomName = list.get(position).get("title_room").toString();
+        if (roomName != null) { //说明是所有下的
+            viewHolderContentType.title_room.setText(roomName);
         }
+
+        viewHolderContentType.imageitem_id.setImageResource((Integer) list.get(position).get("item_image"));
+//        }
+
+//        ViewHolderContentType  mHolder  = viewHolderContentType;
+//        switch (list.get(position).get("type").toString()) {
+//            case "1":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.status_txt.setText("开");//#E2C891
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_quankai_40_active);
+//                } else {
+//                    mHolder.status_txt.setText("关");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_deng_40);
+//                }
+//                break;
+//            case "2":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_tiaoguang_40_active);
+//                    mHolder.status_txt.setText("开");//#E2C891
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_tiaoguang_40);
+//                    mHolder.status_txt.setText("关");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//            case "3":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_kongtiao_40_active);
+//                    mHolder.status_txt.setText("开");//#E2C891
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_kongtiao_40);
+//                    mHolder.status_txt.setText("关");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//
+//                break;
+//            case "4":
+//                String curstatus = list.get(position).get("status").toString();
+//                if (curstatus.equals("1") || curstatus.equals("3") || curstatus.equals("4")
+//                        || curstatus.equals("4") || curstatus.equals("5") || curstatus.equals("8")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("开");//#E2C891
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_chuanglian_40_active);
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.status_txt.setText("关");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_chuanglian_40);
+//                }
+//                break;
+//            case "5":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("开");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.status_txt.setText("关");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                mHolder.imageitem_id.setImageResource(R.drawable.freshair);
+//                break;
+//            case "6":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("开");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.status_txt.setText("关");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                mHolder.imageitem_id.setImageResource(R.drawable.floorheating);
+//                break;
+//
+//
+//            case "7":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_menci_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("打开");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_menci_40);
+//                    mHolder.status_txt.setText("关闭");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//            case "8":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_rentiganying_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("有人");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_rentiganying_40);
+//                    mHolder.status_txt.setText("正常");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//
+//                break;
+//            case "9":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_shuijin_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("报警");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_shuijin_40);
+//                    mHolder.status_txt.setText("正常");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//
+//                break;
+//            case "10":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_pm25_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+////                    mHolder.status_txt.setText("报警");//#E2C891
+//                    mHolder.status_txt.setText(list.get(position).get("dimmer").toString());//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_pm25_40);
+////                    mHolder.status_txt.setText("正常");
+//                    mHolder.status_txt.setText(list.get(position).get("dimmer").toString());//#E2C891
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//            case "11":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_jinjianniu_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("报警");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_jinjianniu_40);
+//                    mHolder.status_txt.setText("正常");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//            case "12":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_rucebjq_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("报警");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_rucebjq_40);
+//                    mHolder.status_txt.setText("正常");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//            case "13":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_yanwubjq_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("报警");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_yanwubjq_40);
+//                    mHolder.status_txt.setText("正常");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//            case "14":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_ranqibjq_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("报警");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_ranqibjq_40);
+//                    mHolder.status_txt.setText("正常");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//            case "15":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_zhinengmensuo_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("打开");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_zhinengmensuo_40);
+//                    mHolder.status_txt.setText("关闭");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//            case "16":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_jixieshou_40);
+//                    mHolder.status_txt.setText("打开");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                } else {
+//                    //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_jixieshou_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("关闭");//#E2C891
+//                }
+//                break;
+//
+//            case "202":
+//            case "206":
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_yaokongqi_40_active);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setText("开");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_yaokongqi_40);
+//                    mHolder.status_txt.setText("关");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//            case "101"://wifi摄像头
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_shexiangtou_40);
+////                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                    mHolder.status_txt.setText("正常");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_shexiangtou_40);
+//                    mHolder.status_txt.setText("断线");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//
+//            case "103"://wifi摄像头
+//                if (list.get(position).get("status").toString().equals("1")) {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_keshimenling_40);
+////                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                    mHolder.status_txt.setText("正常");//#E2C891
+//                } else {
+////                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+//                    mHolder.imageitem_id.setImageResource(R.drawable.icon_keshimenling_40);
+//                    mHolder.status_txt.setText("断线");
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+//                }
+//                break;
+//
+//            default:
+//                mHolder.imageitem_id.setImageResource(R.drawable.marklamph);
+//                break;
+//        }
 
         return convertView;
     }
-
     /**
-     * 设备正常状态
-     *
-     * @param position
-     * @param viewHolderContentType
-     * @param type
+     * 根据手机分辨率从DP转成PX
+     * @param context
+     * @param dpValue
+     * @return
      */
-    private void status_normal(int position, ViewHolderContentType viewHolderContentType, String type) {
-        viewHolderContentType.linear_select.setBackgroundResource(
-                R.drawable.home_dev_select_bg);
-        switch (type) {
-            case "1"://灯
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("fatherName").toString());
-                break;
-            case "2"://调光灯
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("fatherName").toString());
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "3"://窗帘
-                viewHolderContentType.image.setImageResource(R.drawable.icon_chuanglian_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("fatherName").toString());
-                // viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "4"://空调
-                viewHolderContentType.image.setImageResource(R.drawable.icon_kongtiao_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("mode").toString()
-                        + "|" + list.get(position).get("temperature").toString()
-                        + "|" + list.get(position).get("speed").toString());
-                // viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "5"://地暖
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("mode").toString()
-                        + "|" + list.get(position).get("temperature").toString()
-                        + "|" + list.get(position).get("speed").toString());
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "6"://新风
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("mode").toString()
-                        + "|" + list.get(position).get("temperature").toString()
-                        + "|" + list.get(position).get("speed").toString());
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "7"://门磁
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("alarm").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "8"://人体感应
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("alarm").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "9"://红外转发
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("vlaue").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "10"://燃气检测
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("alarm").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "11"://水浸检测
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("alarm").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "12"://PM2.5Zigbee
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("pm2.5").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "13"://健康检测
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                // viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "14"://蓝牙转发
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("vlaue").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "15"://报警器
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "16"://指纹锁
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "17"://人连锁
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "50"://普通摄像头
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "51"://全景摄像头
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                // viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "52"://智能门铃
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("alarm").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "53"://音乐面板
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "54"://PM2.5WIfi
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("pm2.5").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "100"://手动场景
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                // viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-        }
+    public  int dip2px(Context context, float dpValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 
 
-    /**
-     * 设备断线状态
-     *
-     * @param position
-     * @param viewHolderContentType
-     * @param type
-     */
-    private void status_bolt(int position, ViewHolderContentType viewHolderContentType, String type) {
-        viewHolderContentType.linear_select.setBackgroundResource(
-                R.drawable.home_dev_bg);
-        switch (type) {
-            case "1"://灯
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("fatherName").toString());
-                break;
-            case "2"://调光灯
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("fatherName").toString());
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "3"://窗帘
-                viewHolderContentType.image.setImageResource(R.drawable.icon_chuanglian_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("fatherName").toString());
-                // viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "4"://空调
-                viewHolderContentType.image.setImageResource(R.drawable.icon_kongtiao_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("mode").toString()
-                        + "|" + list.get(position).get("temperature").toString()
-                        + "|" + list.get(position).get("speed").toString());
-                // viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "5"://地暖
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("mode").toString()
-                        + "|" + list.get(position).get("temperature").toString()
-                        + "|" + list.get(position).get("speed").toString());
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "6"://新风
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("mode").toString()
-                        + "|" + list.get(position).get("temperature").toString()
-                        + "|" + list.get(position).get("speed").toString());
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "7"://门磁
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("alarm").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "8"://人体感应
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("alarm").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "9"://红外转发
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("vlaue").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "10"://燃气检测
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("alarm").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "11"://水浸检测
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("alarm").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "12"://PM2.5Zigbee
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("pm2.5").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "13"://健康检测
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                // viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "14"://蓝牙转发
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("vlaue").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "15"://报警器
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "16"://指纹锁
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "17"://人连锁
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "50"://普通摄像头
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "51"://全景摄像头
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                // viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "52"://智能门铃
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("alarm").toString()
-                        + "|" + list.get(position).get("electricity").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "53"://音乐面板
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "54"://PM2.5WIfi
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                viewHolderContentType.device_action_or_father_name.setText(list.get(position).get("pm2.5").toString()
-                );
-                //viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-            case "100"://手动场景
-                viewHolderContentType.image.setImageResource(R.drawable.icon_deng_active);
-                // viewHolderContentType.device_name.setText(list.get(position).get("name").toString());
-                break;
-        }
-    }
+
 
 //    public void setList(List<Map> dataSourceList) {
 //        this.list = new ArrayList<>();
@@ -478,10 +400,10 @@ public class DetailDeviceHomeAdapter extends BaseAdapter {
 //    }
 
     class ViewHolderContentType {
-        ImageView image;
+        ImageView imageitem_id;
         TextView title_room;//device_name,device_action_or_father_name
         TextView device_name;
-        TextView device_action_or_father_name;
+        TextView status_txt;
         LinearLayout linear_select;
         ImageView scene_img;//场景图片
         CheckBox scene_checkbox;//场景选中

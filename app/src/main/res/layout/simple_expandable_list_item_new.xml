@@ -5,6 +5,7 @@
     android:layout_height="30dp"
     android:textAppearance="?android:attr/textAppearanceListItem"
     android:gravity="center"
+    android:background="@color/transparent"
     android:textColor="@color/black"
     android:textSize="12sp"
     />

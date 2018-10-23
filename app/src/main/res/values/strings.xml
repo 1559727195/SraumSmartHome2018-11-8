@@ -52,4 +52,57 @@
 
 
     <string name="getcode">获取验证码</string>
+
+
+    <string name="kongtiao">空调</string>
+    <string name="xinfeng">新风</string>
+    <string name="dinuan">地暖</string>
+    <string name="xinfeng_mode">新风模块</string>
+    <string name="dinuan_mode">地暖模块</string>
+    <string name="menci">门磁</string>
+    <string name="rentiganying">人体感应</string>
+    <string name="shuijin">水浸检测器</string>
+    <string name="pm_ruqiang">入墙PM2.5</string>
+    <string name="jinjin_btn">紧急按钮</string>
+    <string name="kaiguan">开关</string>
+    <string name="light_promat">快速连续按A键三次，在快速连续按B键三次，直到蓝灯连续闪烁3次</string>
+    <string name="zigbee_promat">请将电池绝缘片拨出后，长按设备组网2秒，直至绿灯快闪。</string>
+    <string name="hongwai">红外转发器</string>
+    <string name="jiuzuo">久坐报警器</string>
+    <string name="smoke_alarm">烟雾报警器</string>
+    <string name="gas_alarm">天然气报警器</string>
+    <string name="pm25_in_wall">PM2.5入墙</string>
+    <string name="pm25_rubik">PM2.5魔方</string>
+    <string name="smart_lock">智能门锁</string>
+    <string name="dc_mini">直流电阀机械手</string>
+    <string name="yijianlight">一键灯控</string>
+    <string name="liangjianlight">两键灯控</string>
+    <string name="sanjianlight">三键灯控</string>
+    <string name="sijianlight">四键灯控</string>
+    <string name="yilutiaoguang">一调光三灯控</string>
+    <string name="lianglutiaoguang">二调光二灯控</string>
+    <string name="sanlutiao">三调光一灯控</string>
+    <string name="window_panel">二窗帘一灯控</string>
+
+    <string name="yilutiaoguang1">一路调光</string>
+    <string name="lianglutiaoguang1">两路调光</string>
+    <string name="sanlutiao1">三路调光</string>
+    <string name="window_panel1">窗帘面板</string>
+    <string name="air_panel">空调面板</string>
+    <string name="yanwu">烟雾报警器</string>
+    <string name="tianranqi">天然气报警器</string>
+    <string name="zhineng">智能门锁</string>
+    <string name="pm25">PM2.5</string>
+    <string name="duogongneng">多功能模块</string>
+    <string name="jixieshou">机械手</string>
+    <string name="air_mode">空调模块</string>
+    <string name="air_model">空调模块</string>
+    <string name="yijianlight_promat">连续按A键3次，在连续按B键3次，指示灯快闪。</string>
+    <string name="zigbee_other_promat">用针桶小孔，长按设备组网键2秒，绿灯快闪</string>
+    <string name="zigbee_promat_btn_down">长按设备组网2秒，绿灯快闪</string>
+    <string name="shexiangtou">摄像头</string>
+    <string name="pm_mofang">PM魔方</string>
+    <string name="yaokongqi">遥控器</string>
+    <string name="dianshiji">电视机</string>
+    <string name="keshimenling">可视门铃</string>
 </resources>

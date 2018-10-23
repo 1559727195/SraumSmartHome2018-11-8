@@ -28,15 +28,17 @@ public class ApiHelper {
      * http协议
      */
     public static String sraum_getGatewayName = api;
-    public static String sraum_getRoomsInfo = api;
-    public static String sraum_getOneRoomInfo = api;
+    public static String sraum_getRoomsInfo = api + "sraum_getRoomsInfo";
+    public static String sraum_getOneRoomInfo = api + "sraum_getOneRoomInfo";
     public static String sraum_getInfos = api;
     public static String sraum_getOneInfo = api;
-    public static String sraum_updateRoomInfo = api;
+    public static String sraum_updateRoomInfo = api + "sraum_updateRoomInfo";
     public static String sraum_addRoomInfo = api;
     public static String sraum_updateRoomName = api;
     public static String sraum_deleteRoom = api;
     public static String sraum_getGatewayInfo = api;
     public static String sraum_isLogin = api + "sraum_isLogin";
     public static String sraum_getAllArea = api + "sraum_getAllArea";
+    public static String sraum_changeArea = api + "sraum_changeArea";
+    public static String sraum_deviceControl = api + "sraum_deviceControl";
 }

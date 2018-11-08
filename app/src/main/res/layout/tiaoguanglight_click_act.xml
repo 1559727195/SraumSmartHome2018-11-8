@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6F7FA"
+    android:orientation="vertical">
+
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y30"
+        android:background="@color/green">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:paddingRight="@dimen/x20"
+            android:src="@drawable/icon_t_back" />
+
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="调光"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/next_step_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x8"
+            android:layout_marginTop="@dimen/y8"
+            android:text="保存"
+            android:textColor="@color/blue_txt"
+            android:textSize="14sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y80"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/y8"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/x8"
+        android:paddingRight="@dimen/x8">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/seek_one"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="第一路调光"
+            android:textColor="@color/smssdk_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/seek_bar_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/seek_one"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:text="30"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/smssdk_gray"
+            android:textSize="18sp" />
+
+        <SeekBar
+            android:id="@+id/seek_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:max="100"
+            android:maxHeight="6dip"
+            android:minHeight="6dip"
+            android:progress="30"
+            android:progressDrawable="@drawable/seekbar"
+            android:thumb="@drawable/select_seekbar" />
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y80"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/x8"
+        android:paddingRight="@dimen/x8">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/seek_two"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="第二路调光"
+            android:textColor="@color/smssdk_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/seek_two"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:text="30"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/smssdk_gray"
+            android:textSize="18sp" />
+
+        <SeekBar
+            android:id="@+id/seek_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:max="100"
+            android:maxHeight="6dip"
+            android:minHeight="6dip"
+            android:progress="40"
+            android:progressDrawable="@drawable/seekbar"
+            android:thumb="@drawable/select_seekbar" />
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y80"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/x8"
+        android:paddingRight="@dimen/x8">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/seek_three"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="第三路调光"
+            android:textColor="@color/smssdk_gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/seek_three"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x10"
+            android:text="30"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/smssdk_gray"
+            android:textSize="18sp" />
+
+        <SeekBar
+            android:id="@+id/seek_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:max="100"
+            android:maxHeight="6dip"
+            android:minHeight="6dip"
+            android:progress="50"
+            android:progressDrawable="@drawable/seekbar"
+            android:thumb="@drawable/select_seekbar" />
+    </android.support.percent.PercentRelativeLayout>
+</LinearLayout>

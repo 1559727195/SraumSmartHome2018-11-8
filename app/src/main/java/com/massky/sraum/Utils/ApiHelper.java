@@ -41,4 +41,6 @@ public class ApiHelper {
     public static String sraum_getAllArea = api + "sraum_getAllArea";
     public static String sraum_changeArea = api + "sraum_changeArea";
     public static String sraum_deviceControl = api + "sraum_deviceControl";
+    public static String sraum_getAllDevice = api + "sraum_getAllDevice";
+    public static String sraum_getBoxStatus = api + "sraum_getBoxStatus";
 }

@@ -2,7 +2,6 @@ package com.massky.sraum.Util.linechartview;
 
 import android.content.Context;
 import android.util.AttributeSet;
-
 import lecho.lib.hellocharts.listener.DummyLineChartOnValueSelectListener;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.ChartData;
@@ -48,7 +47,6 @@ public class LineChartView_New extends AbstractChartView_New implements LineChar
         } else {
             this.data = data;
         }
-
         super.onChartDataChange();
     }
 
@@ -64,7 +62,6 @@ public class LineChartView_New extends AbstractChartView_New implements LineChar
         } else {
             this.onValueTouchListener.onValueDeselected();
         }
-
     }
 
     public LineChartOnValueSelectListener getOnValueTouchListener() {
@@ -75,6 +72,5 @@ public class LineChartView_New extends AbstractChartView_New implements LineChar
         if (null != touchListener) {
             this.onValueTouchListener = touchListener;
         }
-
     }
 }

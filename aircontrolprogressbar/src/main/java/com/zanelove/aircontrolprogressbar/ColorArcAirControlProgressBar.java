@@ -19,7 +19,7 @@ import android.view.WindowManager;
  * colorful arc progress bar
  * Created by shinelw on 12/4/15.
  */
-public class ColorArcProgressBar extends View {
+public class ColorArcAirControlProgressBar extends View {
 
     private int mWidth;
     private int mHeight;
@@ -33,7 +33,6 @@ public class ColorArcProgressBar extends View {
     private Paint hintPaint;
     private Paint degreePaint;
     private Paint curSpeedPaint;
-
     private RectF bgRect;
 
     private ValueAnimator progressAnimator;
@@ -74,19 +73,22 @@ public class ColorArcProgressBar extends View {
     // sweepAngle / maxValues 的值
     private float k;
     private String currentvalue;
+    private int back_color;
+    private int front_color1;
+    private int front_color2;
 
-    public ColorArcProgressBar(Context context) {
+    public ColorArcAirControlProgressBar(Context context) {
         super(context, null);
         initView();
     }
 
-    public ColorArcProgressBar(Context context, AttributeSet attrs) {
+    public ColorArcAirControlProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
         initCofig(context, attrs);
         initView();
     }
 
-    public ColorArcProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ColorArcAirControlProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initCofig(context, attrs);
         initView();
@@ -107,6 +109,10 @@ public class ColorArcProgressBar extends View {
 
         sweepAngle = a.getInteger(R.styleable.ColorArcProgressBar_total_engle, 270);
         bgArcWidth = a.getDimension(R.styleable.ColorArcProgressBar_back_width, dipToPx(2));
+
+        back_color = a.getColor(R.styleable.ColorArcProgressBar_back_color, color1);
+        front_color1 = a.getColor(R.styleable.ColorArcProgressBar_front_color1, color1);
+        front_color2 = a.getColor(R.styleable.ColorArcProgressBar_front_color2, color1);
         progressWidth = a.getDimension(R.styleable.ColorArcProgressBar_front_width, dipToPx(10));
         isNeedTitle = a.getBoolean(R.styleable.ColorArcProgressBar_is_need_title, false);
         isNeedContent = a.getBoolean(R.styleable.ColorArcProgressBar_is_need_content, false);
@@ -131,7 +137,7 @@ public class ColorArcProgressBar extends View {
 
     private void initView() {
 
-        diameter = 3 * getScreenWidth() / 5;
+        diameter = 3 * getScreenWidth() / 6;
         //弧形的矩阵区域
         bgRect = new RectF();
         bgRect.top = longdegree + progressWidth / 2 + DEGREE_PROGRESS_DISTANCE;
@@ -152,7 +158,7 @@ public class ColorArcProgressBar extends View {
         allArcPaint.setAntiAlias(true);
         allArcPaint.setStyle(Paint.Style.STROKE);
         allArcPaint.setStrokeWidth(bgArcWidth);
-        allArcPaint.setColor(Color.parseColor(bgArcColor));
+        allArcPaint.setColor(back_color);
         allArcPaint.setStrokeCap(Paint.Cap.ROUND);
 
         //当前进度的弧形
@@ -161,7 +167,7 @@ public class ColorArcProgressBar extends View {
         progressPaint.setStyle(Paint.Style.STROKE);
         progressPaint.setStrokeCap(Paint.Cap.ROUND);
         progressPaint.setStrokeWidth(progressWidth);
-        progressPaint.setColor(Color.GREEN);
+        progressPaint.setColor(back_color);
 
         //内容显示文字
         vTextPaint = new Paint();
@@ -172,13 +178,13 @@ public class ColorArcProgressBar extends View {
         //显示单位文字
         hintPaint = new Paint();
         hintPaint.setTextSize(hintSize);
-        hintPaint.setColor(Color.parseColor(hintColor));
+        hintPaint.setColor(front_color2);
         hintPaint.setTextAlign(Paint.Align.CENTER);
 
         //显示标题文字
         curSpeedPaint = new Paint();
         curSpeedPaint.setTextSize(curSpeedSize);
-        curSpeedPaint.setColor(Color.parseColor(hintColor));
+        curSpeedPaint.setColor(front_color2);
         curSpeedPaint.setTextAlign(Paint.Align.CENTER);
 
         mDrawFilter = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
@@ -227,18 +233,18 @@ public class ColorArcProgressBar extends View {
 //        canvas.drawArc(bgRect, startAngle, currentAngle, false, progressPaint);//当前进度不用画
 
         if (isNeedContent) {
-            canvas.drawText(String.format("%.0f", curValues), centerX, centerY + textSize / 3, vTextPaint);
+            canvas.drawText(String.format("%.0f", curValues) + "°C", centerX, centerY, vTextPaint);
+            //@NonNull String text, float x, float y, @NonNull Paint paint
         }
 
         if (isNeedUnit) {
-            canvas.drawText("风速:" +hintString, centerX, centerY + 2 * textSize / 3, hintPaint);
+            canvas.drawText(hintString, centerX - diameter / 5, centerY + diameter / 4, hintPaint);
         }
 
         if (isNeedTitle) {
-            canvas.drawText("模式:" + titleString, centerX, centerY - 2 * textSize / 3, curSpeedPaint);
+            canvas.drawText(titleString, centerX + diameter / 5, centerY + diameter / 4, curSpeedPaint);
         }
         invalidate();
-
     }
 
     /**
@@ -267,7 +273,6 @@ public class ColorArcProgressBar extends View {
         lastAngle = currentAngle;
         setAnimation(lastAngle, currentValues * k, aniSpeed);
     }
-
 
     /**
      * 设置整个圆弧宽度
@@ -333,9 +338,6 @@ public class ColorArcProgressBar extends View {
         this.titleString = title;
         invalidate();
     }
-
-
-
 
     /**
      * 设置是否显示标题

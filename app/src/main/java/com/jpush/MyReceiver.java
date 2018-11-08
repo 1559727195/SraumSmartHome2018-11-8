@@ -43,7 +43,6 @@ public class MyReceiver extends BroadcastReceiver {
     private String action = "";
     private MediaPlayer player;
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;

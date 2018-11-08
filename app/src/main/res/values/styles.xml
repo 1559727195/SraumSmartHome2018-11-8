@@ -1,5 +1,8 @@
 <resources>
 
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/textsize</item>
+    </style>
 
     <style name="styleSplashImage" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>

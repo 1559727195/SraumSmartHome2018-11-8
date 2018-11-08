@@ -11,7 +11,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.10'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
     }

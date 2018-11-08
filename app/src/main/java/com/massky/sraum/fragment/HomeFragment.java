@@ -10,6 +10,7 @@ import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.andview.refreshview.XRefreshView;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.IntentUtil;
 import com.massky.sraum.Util.LogUtil;
 import com.massky.sraum.Util.MusicUtil;
 import com.massky.sraum.Util.MyOkHttp;
@@ -54,11 +56,13 @@ import com.massky.sraum.service.MyService;
 import com.massky.sraum.view.ListViewAdaptWidth;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.InjectView;
 import okhttp3.Call;
 
@@ -116,6 +120,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     //震动和音乐的判断值
     private boolean vibflag, musicflag;
     private String loginPhone;
+    public static String ACTION_INTENT_RECEIVER_TO_SECOND_PAGE = "com.massky.secondpage.treceiver";
 
     @Override
     protected void onData() {
@@ -177,8 +182,11 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Map<String, Object> mapalldevice = new HashMap<String, Object>();
                 listob = new ArrayList<Map<String, Object>>();
-                test_pm25();
-                if(listtype.size() == 0) return;
+//                test_pm25();
+//                test_tiaoguanglight();
+//                test_air_control();
+                test_control_curtain();
+                if (listtype.size() == 0) return;
                 if (listtype.get(position).equals("1")) {
                     status = "0";
                 } else {
@@ -351,26 +359,138 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         if (deviceList.get(position).get("type").toString().equals("1") || deviceList.get(position).get("type").toString().equals("11")
                 || deviceList.get(position).get("type").toString().equals("16")
                 || deviceList.get(position).get("type").toString().equals("15")) {
-//            String boxstatus = TokenUtil.getBoxstatus(getActivity());
-//            if (!boxstatus.equals("0")) {
-//                getBoxStatus(mapalldevice, position);
-            sraum_device_control(mapalldevice,position);
-//            }
-//        } else {
-//            /*窗帘所需要的属性值*/
-//            Log.e("zhu", "chuanglian:" + "窗帘所需要的属性值");
-//            Bundle bundle = new Bundle();
-//            bundle.putString("type",   deviceList.get(position).get("type").toString());
-//            bundle.putString("number", deviceList.get(position).get("number").toString());
-//            bundle.putString("name1",  deviceList.get(position).get("name1").toString());
-//            bundle.putString("name2",  deviceList.get(position).get("name2").toString());
-//            bundle.putString("name",   deviceList.get(position).get("name").toString());
-//            LogUtil.eLength("名字",deviceList.get(position).get("name1").toString() + deviceList.get(position).get("name2").toString());
-////            IntentUtil.startActivity(getActivity(), LamplightActivity.class, bundle);
-//        }
+            String boxstatus = TokenUtil.getBoxstatus(getActivity());
+            if (!boxstatus.equals("0")) {
+                getBoxStatus(mapalldevice, position);
+            }
+        } else {
+            /*窗帘所需要的属性值*/
+            Log.e("zhu", "chuanglian:" + "窗帘所需要的属性值");
+            Bundle bundle = new Bundle();
+            bundle.putString("type", deviceList.get(position).get("type").toString());
+            bundle.putString("number", deviceList.get(position).get("number").toString());
+            bundle.putString("name1", deviceList.get(position).get("name1").toString());
+            bundle.putString("name2", deviceList.get(position).get("name2").toString());
+            bundle.putString("name", deviceList.get(position).get("name").toString());
+            LogUtil.eLength("名字", deviceList.get(position).get("name1").toString() + deviceList.get(position).get("name2").toString());
+
+            switch (deviceList.get(position).get("type").toString()) {
+                case "2":
+                    IntentUtil.startActivity(getActivity(), TiaoGuangLightActivity.class, bundle);
+                    break;
+                case "3":
+                    IntentUtil.startActivity(getActivity(), AirControlActivity.class, bundle);
+                    break;
+            }
         }
     }
 
+    private void getBoxStatus(final Map<String, Object> mapdevice, final int position) {
+        Map<String, String> map = new HashMap<>();
+        map.put("token", TokenUtil.getToken(getActivity()));
+        map.put("boxNumber", TokenUtil.getBoxnumber(getActivity()));
+        dialogUtil.loadDialog();
+        get_mac_fragment(mapdevice, position, map);
+    }
+
+    /**
+     * 获取网关在线状态
+     *
+     * @param mapdevice
+     * @param position
+     * @param map
+     */
+    private void get_mac_fragment(final Map<String, Object> mapdevice, final int position, final Map<String, String> map) {
+        MyOkHttp.postMapString(ApiHelper.sraum_getBoxStatus, map, new Mycallback(new AddTogglenInterfacer() {
+            @Override
+            public void addTogglenInterfacer() {//这个是获取togglen来刷新数据
+                getBoxStatus(mapdevice, position);
+            }
+        }, getActivity(), dialogUtil) {
+            @Override
+            public void onSuccess(User user) {
+                super.onSuccess(user);
+                switch (user.status) {
+                    case "1":
+                        sraum_device_control(mapdevice);
+                        break;
+                    case "0":
+                        //网关离线
+                        ToastUtil.showDelToast(getActivity(), "网关处于离线状态");
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            /**
+             * sraum_device_control
+             *
+             * @param
+             */
+            private void sraum_device_control(final Map<String, Object> mapdevice) {
+                MyOkHttp.postMapObject(ApiHelper.sraum_deviceControl, mapdevice, new Mycallback(new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {
+                        sraum_device_control(mapdevice);
+                    }
+                }, getActivity(), dialogUtil) {
+                    @Override
+                    public void fourCode() {
+                        super.fourCode();
+                        switch (listob.get(0).get("type").toString()) {
+                            case "11":
+                                ToastUtil.showToast(getActivity(), "恢复失败");
+                                break;
+                            default:
+                                ToastUtil.showToast(getActivity(), "操作失败");
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(User user) {
+                        super.onSuccess(user);
+
+                        switch (listob.get(0).get("type").toString()) {
+                            case "11":
+                                ToastUtil.showToast(getActivity(), "恢复成功");
+                                break;
+                            default:
+                                ToastUtil.showToast(getActivity(), "操作成功");
+                                break;
+                        }
+
+                        if (vibflag) {
+                            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                            vibrator.vibrate(200);
+                        }
+
+                        if (musicflag) {
+                            LogUtil.i("铃声响起");
+                            MusicUtil.startMusic(getActivity(), 1, "");
+                        } else {
+                            MusicUtil.stopMusic(getActivity(), "");
+                        }
+                        listtype.set(position, status);
+                        String string = listtype.get(position);
+//                        if (string.equals("1")) {
+//                            itemrela_id.setBackgroundResource(R.drawable.markstarh);
+//                        } else {
+//                            itemrela_id.setBackgroundResource(R.drawable.markh);
+//                        }
+//                upload(true);刷新设备猎去显示，当前房间下的设备列表
+                        sraum_getOneRoomInfo(current_room_number);
+                    }
+
+                    @Override
+                    public void wrongToken() {
+                        super.wrongToken();
+                    }
+                });
+            }
+        });
+    }
 
     /**
      * 测试pm2.5
@@ -382,76 +502,34 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     }
 
     /**
-     * sraum_device_control
-     * @param
-     * @param position
+     * 测试调光灯
      */
-    private void sraum_device_control(final Map<String, Object> mapdevice,final int position) {
-        MyOkHttp.postMapObject(ApiHelper.sraum_deviceControl, mapdevice, new Mycallback(new AddTogglenInterfacer() {
-            @Override
-            public void addTogglenInterfacer() {
-                sraum_device_control(mapdevice, position);
-            }
-        }, getActivity(), dialogUtil) {
-            @Override
-            public void fourCode() {
-                super.fourCode();
-                switch (listob.get(0).get("type").toString()) {
-                    case "11":
-                        ToastUtil.showToast(getActivity(), "恢复失败");
-                        break;
-                    default:
-                        ToastUtil.showToast(getActivity(), "操作失败");
-                        break;
-                }
-            }
-
-            @Override
-            public void onSuccess(User user) {
-                super.onSuccess(user);
-
-                switch (listob.get(0).get("type").toString()) {
-                    case "11":
-                        ToastUtil.showToast(getActivity(), "恢复成功");
-                        break;
-                    default:
-                        ToastUtil.showToast(getActivity(), "操作成功");
-                        break;
-                }
-
-                if (vibflag) {
-                    Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                    vibrator.vibrate(200);
-                }
-
-                if (musicflag) {
-                    LogUtil.i("铃声响起");
-                    MusicUtil.startMusic(getActivity(), 1,"");
-                } else {
-                    MusicUtil.stopMusic(getActivity(),"");
-                }
-                listtype.set(position, status);
-                String string = listtype.get(position);
-//                        if (string.equals("1")) {
-//                            itemrela_id.setBackgroundResource(R.drawable.markstarh);
-//                        } else {
-//                            itemrela_id.setBackgroundResource(R.drawable.markh);
-//                        }
-//                upload(true);刷新设备猎去显示，当前房间下的设备列表
-                sraum_getOneRoomInfo(current_room_number);
-            }
-
-            @Override
-            public void wrongToken() {
-                super.wrongToken();
-            }
-        });
+    private void test_tiaoguanglight() {
+        Intent intent_tiaoguang = new Intent(getActivity(), TiaoGuangLightActivity.class);
+        startActivity(intent_tiaoguang);
     }
 
 
-/**
- * 测试数据
- */
+    /**
+     * 测试空调
+     */
+    private void test_air_control() {
+        Intent intent_air_control = new Intent(getActivity(), AirControlActivity.class);
+        startActivity(intent_air_control);
+    }
+
+
+    /**
+     * 测试窗帘控制
+     */
+    private void test_control_curtain() {
+        Intent intent_air_control = new Intent(getActivity(), CurtainWindowActivity.class);
+        startActivity(intent_air_control);
+    }
+
+    /**
+     * 测试数据
+     */
     private void test_device_data() {
         list_homedev_items = new ArrayList<>();
 
@@ -472,107 +550,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         itemHashMap.put("name", "客厅");
         itemHashMap.put("type", "0");
         list_homedev_items.add(itemHashMap);
-    }
-
-    /**
-     * 获取单个设备或是按钮信息（APP->网关）
-     *
-     * @param map
-     */
-    private void get_single_device_info(final Map map) {
-        MyOkHttp.postMapObject(ApiHelper.sraum_getOneInfo, map,
-                new Mycallback(new AddTogglenInterfacer() {
-                    @Override
-                    public void addTogglenInterfacer() {
-
-                    }
-                }, getActivity(), null) {
-                    @Override
-                    public void onSuccess(User user) {
-//       switch (type) {//空调,PM检测,客厅窗帘,门磁,主灯
-                        String type = (String) map.get("type");
-                        map.put("status", user.status);
-                        map.put("name", user.name);
-                        switch (type) {
-                            case "4"://空调
-                                map.put("mode", user.mode);
-                                map.put("temperature", user.temperature);
-                                map.put("speed", user.speed);
-//                                startActivity(new Intent(getActivity(),
-//                                        AirControlActivity.class));
-                                Intent intent_air_control = new Intent(getActivity(),
-                                        AirControlActivity.class);
-                                intent_air_control.putExtra("map_item", (Serializable) map);
-                                startActivity(intent_air_control);
-
-                                break;
-
-                            case "12"://PM25(zigbee)
-
-//                                map.put("mode", user.mode);
-//                                map.put("pm2.5", user.temperature);
-//                                map.put("speed", user.speed);
-//                                startActivity(new Intent(getActivity(),
-//                                        Pm25Activity.class));
-//                                Intent intent_curtain = new Intent(getActivity(),
-//                                        CurtainWindowActivity.class);
-//                                intent_curtain.putExtra("map_item", (Serializable) map);
-//                                startActivity(intent_curtain);
-
-                                break;
-
-                            case "3"://窗帘
-                                map.put("name1", user.name1);
-                                map.put("name2", user.name2);
-
-                                Intent intent_curtain = new Intent(getActivity(),
-                                        CurtainWindowActivity.class);
-                                intent_curtain.putExtra("map_item", (Serializable) map);
-                                startActivity(intent_curtain);
-
-                                break;
-
-                            case "7"://门磁
-                                startActivity(new Intent(getActivity(),
-                                        DeviceSettingDelRoomActivity.class));
-                                break;
-
-                            case "1"://灯
-                                Map map_light = new HashMap();
-                                map_light.put("command", "sraum_controlButton");
-                                map_light.put("number", map.get("number"));
-                                map_light.put("type", map.get("type"));
-                                switch (user.status) {
-                                    case "0":
-                                        //去开灯，TCP
-                                        map_light.put("status", "1");
-                                        MyService.getInstance().sraum_send_tcp(map_light, "sraum_controlButton");
-                                        break;
-                                    case "1":
-                                        //去关灯，TCP
-                                        map_light.put("status", "0");
-                                        MyService.getInstance().sraum_send_tcp(map_light, "sraum_controlButton");
-                                        break;
-                                }
-
-                                break;
-
-                            case "2"://调光灯
-//                        //map_item
-                                map.put("dimmer", user.dimmer);
-                                Intent intent_tiaoguang = new Intent(getActivity(), TiaoGuangLightActivity.class);
-                                intent_tiaoguang.putExtra("map_item", (Serializable) map);
-                                startActivity(intent_tiaoguang);
-
-                                break;
-
-//                    default:
-//                        dialogUtil.loadViewBottomdialog();
-//                        break;//默认 是场景
-                        }
-
-                    }
-                });
     }
 
     /**
@@ -1713,16 +1690,16 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 
             ListViewAdaptWidth wv = (ListViewAdaptWidth) view.findViewById(R.id.wheel_view_wv);
 
-           List<String> data = new ArrayList<>();
+            List<String> data = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
-               data.add("小区yihao" + i);
+                data.add("小区yihao" + i);
             }
 
 //            final String[] data = new String[areaList.size()];
 //            for (int i = 0; i < areaList.size(); i++) {
 //                data[i] = areaList.get(i).get("name").toString();
 //            }
-            AreaListAdapter areaListAdapter = new AreaListAdapter(getActivity(),data);
+            AreaListAdapter areaListAdapter = new AreaListAdapter(getActivity(), data);
 //            ArrayAdapter<String> array = new ArrayAdapter<>(getActivity(),
 //                    R.layout.simple_expandable_list_item_new, data);
             wv.setAdapter(areaListAdapter);
@@ -1811,6 +1788,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         current_room_number = roomList.get(position).get("number").toString();
         sraum_getOneRoomInfo(current_room_number);
     }
+
+
 }
-
-

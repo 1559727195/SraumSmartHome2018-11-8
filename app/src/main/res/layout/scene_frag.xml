@@ -54,6 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
                 app:layout_widthPercent="60%"
                 app:tabIndicatorColor="#4CC9C3"
                 app:tabSelectedTextColor="#4CC9C3"

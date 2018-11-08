@@ -86,7 +86,6 @@ public class Pm25Activity extends BaseActivity {
     @Override
     protected void onView() {
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
-
         Map map_item = (Map) getIntent().getSerializableExtra("map_item");
         if (map_item == null) return;
         status = (String) map_item.get("status");
@@ -98,7 +97,6 @@ public class Pm25Activity extends BaseActivity {
         pm25 = (String) map_item.get("pm2.5");
         bar2.setCurrentValues(Integer.parseInt(pm25));
         list_value = new ArrayList<>();
-
     }
 
 
@@ -111,14 +109,10 @@ public class Pm25Activity extends BaseActivity {
 
     @Override
     protected void onData() {
-
         start_day = 5;
         progressDialog = new ProgressDialog(this);
-
         chart = (LineChartView_New) findViewById(R.id.chart);
-
         generateData(10, start_day);//start_day为当前日期
-
     }
 
     @Override

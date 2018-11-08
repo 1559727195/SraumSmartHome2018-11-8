@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.massky.sraum.R;
 import com.massky.sraum.activity.EditSceneActivity;
 import com.massky.sraum.activity.EditSceneSecondActivity;
+import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,7 +43,9 @@ public class HandSceneAdapter extends BaseAdapter {
             viewHolderContentType.hand_device_content = (TextView) convertView.findViewById(R.id.hand_device_content);
             viewHolderContentType.swipe_context = (LinearLayout) convertView.findViewById(R.id.swipe_context);
 //            viewHolderContentType.hand_gateway_content = (TextView) convertView.findViewById(R.id.hand_gateway_content);
-            viewHolderContentType. hand_scene_btn = (ImageView) convertView.findViewById(R.id. hand_scene_btn);
+            viewHolderContentType.hand_scene_btn = (ImageView) convertView.findViewById(R.id.hand_scene_btn);
+            viewHolderContentType.swipe_layout = (SwipeMenuLayout) convertView.findViewById(R.id.swipe_layout);
+
 
             convertView.setTag(viewHolderContentType);
         } else {
@@ -52,30 +56,45 @@ public class HandSceneAdapter extends BaseAdapter {
         viewHolderContentType.device_type_pic.setImageResource(element);
         viewHolderContentType.hand_device_content.setText(list.get(position).get("name").toString());
 
-        viewHolderContentType.swipe_context.setOnClickListener(new View.OnClickListener() {
+        final ViewHolderContentType finalViewHolderContentType1 = viewHolderContentType;
+//        viewHolderContentType.swipe_context.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if ( finalViewHolderContentType1.swipe_layout.isIsopen()) {
+//
+//                } else {
+//                    Intent intent = new Intent(context, EditSceneSecondActivity.class);
+//                    context.startActivity(intent);
+//                }
+//            }
+//        });
+
+        ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onItemClick() {
                 Intent intent = new Intent(context, EditSceneSecondActivity.class);
                 context.startActivity(intent);
             }
         });
 
         final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
-        viewHolderContentType. hand_scene_btn.setOnClickListener(new View.OnClickListener() {
+        viewHolderContentType.hand_scene_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finalViewHolderContentType. hand_scene_btn.setImageResource(R.drawable.icon_root);
+                finalViewHolderContentType.hand_scene_btn.setImageResource(R.drawable.icon_root);
             }
         });
         return convertView;
     }
 
     class ViewHolderContentType {
-       ImageView device_type_pic;
-       TextView  hand_device_content;
-       TextView  hand_gateway_content;
-       ImageView   hand_scene_btn;
-       LinearLayout swipe_context;
+        ImageView device_type_pic;
+        TextView hand_device_content;
+        TextView hand_gateway_content;
+        ImageView hand_scene_btn;
+        LinearLayout swipe_context;
+        SwipeMenuLayout swipe_layout;
 
     }
 }

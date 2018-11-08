@@ -105,4 +105,11 @@
     <string name="yaokongqi">遥控器</string>
     <string name="dianshiji">电视机</string>
     <string name="keshimenling">可视门铃</string>
+    <string name="light_panel">灯控面板</string>
+    <string name="wangguan">网关</string>
+    <string name="chuanglian">窗帘面板</string>
+    <string name="kongtiao_panel">空调面板</string>
+    <string name="dianzimao">电子猫眼</string>
+    <string name="zhinengcamera">智能摄像头</string>
+    <string name="yinyuepanel">音乐面板</string>
 </resources>

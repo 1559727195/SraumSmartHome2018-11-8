@@ -23,7 +23,6 @@ import com.massky.sraum.Util.DisplayUtil;
  * 自定义音量显示控件
  *
  * @author zhupengfei
- *
  * @time 2017年12月21日 上午11:42:10
  */
 public class VolumeView extends View {
@@ -36,7 +35,7 @@ public class VolumeView extends View {
     // 小喇叭图片
     private Bitmap volume;
     private Paint paint = new Paint();
-//    // 控件高度
+    //    // 控件高度
     private int height = 150;
 
     // 控件宽度
@@ -54,9 +53,11 @@ public class VolumeView extends View {
     // 最左侧音量矩形距离控件最左侧距离
     private int leftMargen = 0;
     private Context context;
-    private int[] mColors = { Color.BLACK,Color.GREEN,Color.MAGENTA, Color.RED};//进度条颜色（渐变色的2个点）
+    private int[] mColors = {Color.BLACK, Color.GREEN, Color.MAGENTA, Color.RED};//进度条颜色（渐变色的2个点）
     private Paint vTextPaint;
-    private float textSize = dipToPx(14);
+    private float textSize = dipToPx(10);
+    private int volback_color;
+    private int textcolor1;
 
 
     public VolumeView(Context context) {
@@ -66,14 +67,13 @@ public class VolumeView extends View {
 
     public VolumeView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context,attrs);
+        init(context, attrs);
     }
 
     public VolumeView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
-
 
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
@@ -84,26 +84,30 @@ public class VolumeView extends View {
 //        leftMargen = volume.getWidth() + reduceBitmap.getWidth() + volume.getWidth() / 4;//音量图标和减音量图标的宽度
 
 
-        height = DisplayUtil.dip2px(context,75);
+        height = DisplayUtil.dip2px(context, 75);
 //        width = DisplayUtil.dip2px(context,460);
         width = 4 * getScreenWidth() / 5 + getScreenWidth() / 10;//控件高度
         leftMargen = getScreenWidth() / 5 / 4;//控件左边距
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.VolumeView);
 
-        rectMargen = (int) a.getDimension(R.styleable.VolumeView_rectMargen, DisplayUtil.dip2px(context,(float)12.5));
-        recW = (int) a.getDimension(R.styleable.VolumeView_recW, DisplayUtil.dip2px(context,(float)7.5));
-        rectH = (int) a.getDimension(R.styleable.VolumeView_rectH, DisplayUtil.dip2px(context,(float)35));//
+        rectMargen = (int) a.getDimension(R.styleable.VolumeView_rectMargen, DisplayUtil.dip2px(context, (float) 12.5));
+        recW = (int) a.getDimension(R.styleable.VolumeView_recW, DisplayUtil.dip2px(context, (float) 7.5));
+        rectH = (int) a.getDimension(R.styleable.VolumeView_rectH, DisplayUtil.dip2px(context, (float) 35));//
+        volback_color = (int) a.getColor(R.styleable.VolumeView_volback_color, Color.GREEN);//
+        textcolor1 = (int) a.getColor(R.styleable.VolumeView_textColor1, Color.GREEN);//
         a.recycle();//一定要回收TypedArray
 
         //设置温度字体显示
         //内容显示文字
         vTextPaint = new Paint();
         vTextPaint.setTextSize(textSize);
-        vTextPaint.setColor(Color.BLACK);
+        vTextPaint.setColor(textcolor1);
         vTextPaint.setTextAlign(Paint.Align.CENTER);
     }
+
     /**
      * 得到屏幕宽度
+     *
      * @return
      */
     private int getScreenWidth() {
@@ -123,10 +127,10 @@ public class VolumeView extends View {
 
         // 绘制没有被选中的白色音量矩形
         paint.setShader(null);
-        paint.setColor(getResources().getColor(R.color.gray));
+        paint.setColor(volback_color);
         for (int i = current; i < MAX; i++) {
             canvas.drawRect(leftMargen + (i + 2) * rectMargen, (height - rectH) / 2,
-                            leftMargen + (i + 2) * rectMargen + recW, (height - rectH) / 2 + rectH,
+                    leftMargen + (i + 2) * rectMargen + recW, (height - rectH) / 2 + rectH,
                     paint);
             //left,top,right,bottom
         }
@@ -154,18 +158,18 @@ public class VolumeView extends View {
 //        // 绘制音量减少图片
 //        canvas.drawBitmap(reduceBitmap, reduceBitmap.getWidth() + volume.getWidth(), (height - reduceBitmap.getHeight()) / 2, paint);
         //绘制音量减少图片
-        canvas.drawBitmap(reduceBitmap, reduceBitmap.getWidth() / 3, (height - reduceBitmap.getHeight()) / 2,paint);
+        canvas.drawBitmap(reduceBitmap, leftMargen - reduceBitmap.getWidth() + rectMargen, (height - reduceBitmap.getHeight()) / 2, paint);
 
         // 绘制音量增加图片
-        canvas.drawBitmap(addBitmap, leftMargen + (MAX + 2) * rectMargen, (height - addBitmap.getHeight()) / 2, paint);
+        canvas.drawBitmap(addBitmap, leftMargen + MAX * rectMargen + reduceBitmap.getWidth() - rectMargen, (height - addBitmap.getHeight()) / 2, paint);
 
         //绘制总音量字体
-        canvas.drawText( "32℃", leftMargen + (MAX + 2) * rectMargen, (height - textSize * 3) / 2, vTextPaint);
+        canvas.drawText("32℃", leftMargen + (MAX + 3) * rectMargen, (height - textSize * 4) / 2, vTextPaint);
 
         //绘制增长音量键
 
         //绘制总音量字体
-        canvas.drawText( current + "℃", reduceBitmap.getWidth() / 2 + textSize, (height - textSize * 3) / 2, vTextPaint);
+        canvas.drawText(current + "℃", reduceBitmap.getWidth() / 2 + textSize, (height - textSize * 4) / 2, vTextPaint);
     }
 
     @Override
@@ -180,7 +184,7 @@ public class VolumeView extends View {
                         }
                     }
                     Log.d(TAG, "current:" + current);
-                } else if (event.getX() > leftMargen + (MAX + 1) * rectMargen + recW){//点击加区域时候响应加事件
+                } else if (event.getX() > leftMargen + (MAX + 1) * rectMargen + recW) {//点击加区域时候响应加事件
                     if (current < 32) {
                         current += 1;
                         if (onChangeListener != null) {
@@ -211,7 +215,7 @@ public class VolumeView extends View {
     /**
      * 设置温度值
      */
-    public void set_temperature (int current) {
+    public void set_temperature(int current) {
         this.current = current;
         invalidate();
     }
@@ -242,12 +246,13 @@ public class VolumeView extends View {
 
     /**
      * dip 转换成px
+     *
      * @param dip
      * @return
      */
     private int dipToPx(float dip) {
         float density = getContext().getResources().getDisplayMetrics().density;
-        return (int)(dip * density + 0.5f * (dip >= 0 ? 1 : -1));
+        return (int) (dip * density + 0.5f * (dip >= 0 ? 1 : -1));
     }
 
 }

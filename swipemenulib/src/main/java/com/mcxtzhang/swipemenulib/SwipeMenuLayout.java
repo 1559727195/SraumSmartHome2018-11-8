@@ -82,6 +82,7 @@ public class SwipeMenuLayout extends ViewGroup {
     //防止多只手指一起滑我的flag 在每次down里判断， touch事件结束清空
     private static boolean isTouching;
 
+    private boolean isopen; //判断Swipemenulayout是否打开，
     private VelocityTracker mVelocityTracker;//滑动速度变量
     private android.util.Log LogUtils;
 
@@ -193,8 +194,6 @@ public class SwipeMenuLayout extends ViewGroup {
             }
         }
         ta.recycle();
-
-
     }
 
     @Override
@@ -333,6 +332,7 @@ public class SwipeMenuLayout extends ViewGroup {
                         }
                         //只要有一个侧滑菜单处于打开状态， 就不给外层布局上下滑动了
                         getParent().requestDisallowInterceptTouchEvent(true);
+                        isopen = true;
                     }
                     //求第一个触点的id， 此时可能有多个触点，但至少一个，计算滑动速率用
                     mPointerId = ev.getPointerId(0);
@@ -405,7 +405,6 @@ public class SwipeMenuLayout extends ViewGroup {
                                 } else {
                                     //平滑展开Menu
                                     smoothExpand();
-
                                 }
                             }
                         } else {
@@ -414,7 +413,19 @@ public class SwipeMenuLayout extends ViewGroup {
                                 smoothExpand();
                             } else {
                                 // 平滑关闭Menu
-                                smoothClose();
+                                if (isopen) {
+                                    isopen = false;
+                                } else {//已经关闭，跳转到content界面
+
+                                    //2016 11 03 add,判断手指起始落点，如果距离属于滑动了，就屏蔽一切点击事件。
+                                    if (Math.abs(ev.getRawY() - mFirstP.y) > mScaleTouchSlop) {
+
+                                    } else {
+                                        if (mOnMenuClickListener != null)
+                                            mOnMenuClickListener.onItemClick();
+                                    }
+                                }
+                                smoothClose();//这个地方，即是是点击，然后跑到这里来
                             }
                         }
                     }
@@ -502,6 +513,7 @@ public class SwipeMenuLayout extends ViewGroup {
         invalidate();*/
         //展开就加入ViewCache：
         mViewCache = SwipeMenuLayout.this;
+        isopen = true;
 
         //2016 11 13 add 侧滑菜单展开，屏蔽content长按
         if (null != mContentView) {
@@ -538,6 +550,15 @@ public class SwipeMenuLayout extends ViewGroup {
         }
     }
 
+//    /**
+//     * 判断SwipeMenuLayout是否打开
+//     *
+//     * @return
+//     */
+//    public static boolean isIsopen() {
+//        return isopen;
+//    }
+
     /**
      * 平滑关闭
      */
@@ -546,6 +567,7 @@ public class SwipeMenuLayout extends ViewGroup {
 /*        mScroller.startScroll(getScrollX(), 0, -getScrollX(), 0);
         invalidate();*/
         mViewCache = null;
+        isopen = false;
 
         //2016 11 13 add 侧滑菜单展开，屏蔽content长按
         if (null != mContentView) {
@@ -645,5 +667,16 @@ public class SwipeMenuLayout extends ViewGroup {
             mViewCache = null;
         }
     }
+
+    private OnMenuClickListener mOnMenuClickListener;
+
+    public void setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {
+        this.mOnMenuClickListener = onMenuClickListener;
+    }
+
+    public interface OnMenuClickListener {
+        void onItemClick();
+    }
+
 
 }

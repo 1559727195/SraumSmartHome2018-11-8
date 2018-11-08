@@ -52,133 +52,53 @@
     </RelativeLayout>
 
 
-    <android.support.percent.PercentRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y80"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/y8"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/x8"
-        android:paddingRight="@dimen/x8">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/seek_one"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:text="第一路调光"
-            android:textColor="@color/smssdk_gray"
-            android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/seek_bar_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/seek_one"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x10"
-            android:text="30"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/smssdk_gray"
-            android:textSize="18sp" />
+        <com.zanelove.aircontrolprogressbar.ColorArcProgressBar
+            android:id="@+id/bar1"
+            android:layout_width="@dimen/x100"
+            android:layout_height="@dimen/y100"
+            android:layout_gravity="center_horizontal"
+            app:back_color="@android:color/darker_gray"
+            android:layout_marginTop="@dimen/y20"
+            app:back_width="@dimen/x10"
+            app:front_color1="@color/colorAccent"
+            app:front_width="@dimen/x10"
+            app:is_need_content="true"
+            app:is_need_title="false"
+            app:is_need_unit="false"
+            app:max_value="100"
+            app:total_engle="360" />
 
         <SeekBar
-            android:id="@+id/seek_one"
+            android:id="@+id/id_seekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/y20"
             android:max="100"
             android:maxHeight="6dip"
             android:minHeight="6dip"
             android:progress="30"
             android:progressDrawable="@drawable/seekbar"
             android:thumb="@drawable/select_seekbar" />
-    </android.support.percent.PercentRelativeLayout>
 
-    <android.support.percent.PercentRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y80"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="1dp"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/x8"
-        android:paddingRight="@dimen/x8">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/seek_two"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:text="第二路调光"
-            android:textColor="@color/smssdk_gray"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/seek_two"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x10"
-            android:text="30"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/smssdk_gray"
-            android:textSize="18sp" />
-
-        <SeekBar
-            android:id="@+id/seek_two"
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/open_tiaoguangdeng"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:max="100"
-            android:maxHeight="6dip"
-            android:minHeight="6dip"
-            android:progress="40"
-            android:progressDrawable="@drawable/seekbar"
-            android:thumb="@drawable/select_seekbar" />
-    </android.support.percent.PercentRelativeLayout>
+            android:layout_height="70dp"
+            android:layout_below="@+id/id_seekBar"
+            android:layout_marginTop="50dp">
 
-    <android.support.percent.PercentRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y80"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="1dp"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/x8"
-        android:paddingRight="@dimen/x8">
+            <ImageView
+                android:id="@+id/openbtn_tiao_guang"
+                android:layout_width="81dp"
+                android:layout_height="81dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_cl_open_active" />
+        </android.support.percent.PercentRelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/seek_three"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:text="第三路调光"
-            android:textColor="@color/smssdk_gray"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/seek_three"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/x10"
-            android:text="30"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textColor="@color/smssdk_gray"
-            android:textSize="18sp" />
-
-        <SeekBar
-            android:id="@+id/seek_three"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:max="100"
-            android:maxHeight="6dip"
-            android:minHeight="6dip"
-            android:progress="50"
-            android:progressDrawable="@drawable/seekbar"
-            android:thumb="@drawable/select_seekbar" />
-    </android.support.percent.PercentRelativeLayout>
 </LinearLayout>
+
+

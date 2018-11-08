@@ -50,21 +50,22 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <com.zanelove.aircontrolprogressbar.ColorArcProgressBar
+    <com.zanelove.aircontrolprogressbar.ColorArcAirControlProgressBar
         android:id="@+id/bar1"
         android:layout_width="@dimen/x200"
         android:layout_height="@dimen/y200"
         android:layout_gravity="center_horizontal"
-        app:back_color="@android:color/darker_gray"
-        app:back_width="@dimen/x10"
-        app:front_color1="@color/colorAccent"
-        app:front_width="@dimen/x10"
+        app:back_color="#E6E6E6"
+        app:back_width="@dimen/x6"
+        app:front_color1="#171717"
+        app:front_color2="#8a8a8a"
+        app:front_width="@dimen/x6"
         app:is_need_content="true"
         app:is_need_title="true"
         app:is_need_unit="true"
         app:max_value="100"
-        app:string_title="模式:制冷"
-        app:string_unit="风速:低"
+        app:string_title="制冷"
+        app:string_unit="低风速"
         app:total_engle="360" />
 
     <com.massky.sraum.view.VolumeView
@@ -73,9 +74,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/y30"
-        app:recW="@dimen/x5"
-        app:rectH="@dimen/y25"
-        app:rectMargen="@dimen/x7" />
+        app:recW="@dimen/x3"
+        app:rectH="@dimen/y20"
+        app:textColor1 = "#8A8A8A"
+        app:rectMargen="@dimen/x7"
+        app:volback_color="#E6E6E6" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,9 +87,9 @@
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:id="@+id/moshi_rel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/moshi_rel"
             android:layout_weight="1">
 
             <ImageView
@@ -97,9 +100,9 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/fengsu_rel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/fengsu_rel"
             android:layout_weight="1">
 
             <ImageView
@@ -112,12 +115,12 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/air_conrol_rel"
             android:layout_weight="1">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/openbtn_tiao_guang"
                 android:layout_centerInParent="true"
                 android:src="@drawable/btn_kt_close" />
         </RelativeLayout>

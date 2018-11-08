@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <declare-styleable name="RoundProgressBar">
         <attr name="roundColor" format="color"/>
         <attr name="roundProgressColor" format="color"/>
@@ -143,6 +144,8 @@
         <attr name="rectMargen" format="dimension"></attr>
         <attr name="rectH" format="dimension"></attr>
         <attr name="recW" format="dimension"></attr>
+        <attr name="volback_color" format="color" />
+        <attr name="textColor1" format="color" />
     </declare-styleable>
 
 

@@ -47,7 +47,7 @@ public abstract class BaseFragment1 extends Fragment implements View.OnClickList
         View rootView = inflater.inflate(viewId(), null);
         ButterKnife.inject(this, rootView);
         mIntentFilter = new IntentFilter();
-        mReceiver = new CommonReceiver();
+//        mReceiver = new CommonReceiver();
         mCallbacks = new HashMap<String, List<OnActionResponse>>();
         onView(rootView);
         onEvent();
@@ -186,14 +186,14 @@ public abstract class BaseFragment1 extends Fragment implements View.OnClickList
     @Override
     public void onPause() {
         isForegrounds = false;
-        getActivity().unregisterReceiver(mReceiver);
+//        getActivity().unregisterReceiver(mReceiver);
         super.onPause();
     }
 
     @Override
     public void onResume() {
         isForegrounds = true;
-        getActivity().registerReceiver(mReceiver, mIntentFilter);
+//        getActivity().registerReceiver(mReceiver, mIntentFilter);
         super.onResume();
     }
 }

@@ -19,6 +19,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.massky.sraum.R;
 
+import static com.mcxtzhang.swipemenulib.SwipeMenuLayout.isopen;
+
 
 /**
  * Author: Owen Chan
@@ -45,6 +47,7 @@ public class SlideSwitchButton extends View {
     private boolean isRunning = false;
     private SlideListener listener;
     private SlideSwitch slideswitch;
+    boolean srcoll = false;
 
     public SlideSwitchButton(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -155,29 +158,32 @@ public class SlideSwitchButton extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (isopen) {
+            return false;
+        }
         if (isRunning) {//这句话的意思是当SlideSwitchButton运动时，事件传递给父View
             super.onTouchEvent(event);
         }
-        if(slideswitch != null)
-        slideswitch.slide_switch();//说明slideSwitch在滑动
         int action = MotionEventCompat.getActionMasked(event);
         getParent().requestDisallowInterceptTouchEvent(true);//解决了子View拦截父view的事件
         //SlideSwitchButton和ViewPager的滑动冲突
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 eventStartX = (int) event.getRawX();//手指点到屏幕最左边
+                srcoll = false;
                 break;
-            case MotionEvent.ACTION_MOVE:
-                int eventLastX = (int) event.getRawX();
-                int distance = eventLastX - eventStartX;// -
-                int movePoint = distance + mStartValue;
-                movePoint = (movePoint > maxValue ? maxValue : movePoint);
-                movePoint = (movePoint < minValue ? minValue : movePoint);
-                if (movePoint >= minValue && movePoint <= maxValue) {
-                    changingValue = movePoint;
-                    mAlpha = (int) (255 * (float) movePoint / (float) maxValue);
-                    invalidateView();
-                }
+            case MotionEvent.ACTION_MOVE://MotionEvent.ACTION_MOVE被执行的话，则说明是滑动，SlideSwitchButton不执行任何动作；
+//                int eventLastX = (int) event.getRawX();
+//                int distance = eventLastX - eventStartX;// -
+//                int movePoint = distance + mStartValue;
+//                movePoint = (movePoint > maxValue ? maxValue : movePoint);
+//                movePoint = (movePoint < minValue ? minValue : movePoint);
+//                if (movePoint >= minValue && movePoint <= maxValue) {
+//                    changingValue = movePoint;
+//                    mAlpha = (int) (255 * (float) movePoint / (float) maxValue);
+//                    invalidateView();
+//                }
+                srcoll = true;
                 break;
             case MotionEvent.ACTION_UP:
                 int wholeX = (int) (event.getRawX() - eventStartX);
@@ -188,6 +194,14 @@ public class SlideSwitchButton extends View {
                     toRight = !toRight;
                 }
                 startAnimator(toRight);
+
+                if (srcoll) {
+
+                } else {
+                    if (slideswitch != null)
+                        slideswitch.slide_switch();//说明slideSwitch在滑动
+                }
+                srcoll = false;
                 break;
             default:
                 break;
@@ -275,11 +289,11 @@ public class SlideSwitchButton extends View {
         void openState(boolean isOpen, View view);
     }
 
-    public void setSlideSwitchListener (SlideSwitch slideswitch) {
-        this.slideswitch =  slideswitch;
+    public void setSlideSwitchListener(SlideSwitch slideswitch) {
+        this.slideswitch = slideswitch;
     }
 
-    public interface   SlideSwitch {
-        void  slide_switch ();
+    public interface SlideSwitch {
+        void slide_switch();
     }
 }

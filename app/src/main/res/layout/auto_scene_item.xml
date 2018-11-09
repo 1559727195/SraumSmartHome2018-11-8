@@ -42,8 +42,8 @@
                     android:layout_height="wrap_content"
                     android:text="全屋灯光全开"
                     android:id="@+id/hand_device_content"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="14sp" />
+                    android:textColor="#171717"
+                    android:textSize="15sp" />
                 <!--<TextView-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
@@ -73,8 +73,8 @@
                 <!--android:src="@mipmap/ic_launcher" />-->
             <com.massky.sraum.widget.SlideSwitchButton
                 android:id="@+id/slide_btn"
-                android:layout_width="@dimen/x60"
-                android:layout_height="@dimen/y20"
+                android:layout_width="@dimen/x45"
+                android:layout_height="@dimen/y15"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/x5"
                 android:layout_centerVertical="true"

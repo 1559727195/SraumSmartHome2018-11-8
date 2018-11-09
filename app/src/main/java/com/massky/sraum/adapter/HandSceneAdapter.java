@@ -27,6 +27,7 @@ import java.util.Map;
 
 public class HandSceneAdapter extends BaseAdapter {
     private List<Map> list = new ArrayList<>();
+    private boolean is_open_to_close;
 
     public HandSceneAdapter(Context context, List<Map> list) {
         super(context, list);
@@ -71,10 +72,16 @@ public class HandSceneAdapter extends BaseAdapter {
 
         ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
 
+
             @Override
             public void onItemClick() {
                 Intent intent = new Intent(context, EditSceneSecondActivity.class);
                 context.startActivity(intent);
+            }
+
+            @Override
+            public void onItemClick_By_btn(boolean is_open_to_close1) {//SwipeLayout是否在打开到关闭的过程
+                is_open_to_close = is_open_to_close1;
             }
         });
 
@@ -82,6 +89,9 @@ public class HandSceneAdapter extends BaseAdapter {
         viewHolderContentType.hand_scene_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(is_open_to_close) {//SwipeLayout是否在打开到关闭的过程
+                    is_open_to_close = false;
+                } else
                 finalViewHolderContentType.hand_scene_btn.setImageResource(R.drawable.icon_root);
             }
         });

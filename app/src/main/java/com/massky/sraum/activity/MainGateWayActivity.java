@@ -276,6 +276,6 @@ public class MainGateWayActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        UDPClient.activity_destroy(true);//udp线程被杀死,暂时不能被杀死
+       // UDPClient.activity_destroy(true);//udp线程被杀死,暂时不能被杀死
     }
 }

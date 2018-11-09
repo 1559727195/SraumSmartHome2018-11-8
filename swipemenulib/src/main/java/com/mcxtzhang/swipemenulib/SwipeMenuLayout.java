@@ -82,7 +82,7 @@ public class SwipeMenuLayout extends ViewGroup {
     //防止多只手指一起滑我的flag 在每次down里判断， touch事件结束清空
     private static boolean isTouching;
 
-    private boolean isopen; //判断Swipemenulayout是否打开，
+    public  static  boolean isopen; //判断Swipemenulayout是否打开，
     private VelocityTracker mVelocityTracker;//滑动速度变量
     private android.util.Log LogUtils;
 
@@ -102,6 +102,7 @@ public class SwipeMenuLayout extends ViewGroup {
      * 20160929add 左滑右滑的开关,默认左滑打开菜单
      */
     private boolean isLeftSwipe;
+    private int width_child;
 
     public SwipeMenuLayout(Context context) {
         this(context, null);
@@ -233,6 +234,7 @@ public class SwipeMenuLayout extends ViewGroup {
                 }
             }
         }
+        width_child = getPaddingLeft() + getPaddingRight() + contentWidth;//childView-Width
         setMeasuredDimension(getPaddingLeft() + getPaddingRight() + contentWidth,
                 mHeight + getPaddingTop() + getPaddingBottom());//宽度取第一个Item(Content)的宽度
         mLimit = mRightMenuWidths * 4 / 10;//滑动判断的临界值
@@ -297,7 +299,6 @@ public class SwipeMenuLayout extends ViewGroup {
                         childView.layout(right - childView.getMeasuredWidth(), getPaddingTop(), right, getPaddingTop() + childView.getMeasuredHeight());
                         right = right - childView.getMeasuredWidth();
                     }
-
                 }
             }
         }
@@ -412,19 +413,7 @@ public class SwipeMenuLayout extends ViewGroup {
                                 //平滑展开Menu
                                 smoothExpand();
                             } else {
-                                // 平滑关闭Menu
-                                if (isopen) {
-                                    isopen = false;
-                                } else {//已经关闭，跳转到content界面
-
-                                    //2016 11 03 add,判断手指起始落点，如果距离属于滑动了，就屏蔽一切点击事件。
-                                    if (Math.abs(ev.getRawY() - mFirstP.y) > mScaleTouchSlop) {
-
-                                    } else {
-                                        if (mOnMenuClickListener != null)
-                                            mOnMenuClickListener.onItemClick();
-                                    }
-                                }
+                                add_new_zone_function(ev);
                                 smoothClose();//这个地方，即是是点击，然后跑到这里来
                             }
                         }
@@ -440,6 +429,32 @@ public class SwipeMenuLayout extends ViewGroup {
         }
         return super.dispatchTouchEvent(ev);
     }
+
+    /**
+     * 添加新功能控制区域
+     *
+     * @param ev
+     */
+    private void add_new_zone_function(MotionEvent ev) {
+        // 平滑关闭Menu
+        if (isopen) {
+            if (mOnMenuClickListener != null) mOnMenuClickListener.onItemClick_By_btn(isopen);
+            isopen = false;
+        } else {//已经关闭，跳转到content界面
+
+            //2016 11 03 add,判断手指起始落点，如果距离属于滑动了，就屏蔽一切点击事件。
+            if (Math.abs(ev.getRawY() - mFirstP.y) > mScaleTouchSlop) {
+
+            } else {
+
+                //添加判断点击区域，如果是右面她子view的区域时，点击无效
+                if (Math.abs(width_child - ev.getRawX()) > width_child / 5)
+                    if (mOnMenuClickListener != null)
+                        mOnMenuClickListener.onItemClick();
+            }
+        }
+    }
+
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -676,7 +691,7 @@ public class SwipeMenuLayout extends ViewGroup {
 
     public interface OnMenuClickListener {
         void onItemClick();
+
+        void onItemClick_By_btn(boolean is_open_to_close);//SwipeLayout是否在打开到关闭的过程
     }
-
-
 }

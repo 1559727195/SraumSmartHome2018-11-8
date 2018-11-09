@@ -12,13 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.massky.sraum.R;
 import com.massky.sraum.Util.ToastUtil;
+import com.massky.sraum.activity.EditSceneSecondActivity;
 import com.massky.sraum.activity.SceneSettingActivity;
 import com.massky.sraum.widget.SlideSwitchButton;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +28,7 @@ import java.util.Map;
 
 public class AutoSceneAdapter extends BaseAdapter {
     private List<Map> list = new ArrayList<>();
+    private boolean is_open_to_close;
 
     public AutoSceneAdapter(Context context, List<Map> list) {
         super(context, list);
@@ -116,6 +116,22 @@ public class AutoSceneAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 //                context.startActivity(new Intent(context, SceneSettingActivity.class));
+
+            }
+        });
+
+        ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
+
+            @Override
+            public void onItemClick() {
+//                Intent intent = new Intent(context, EditSceneSecondActivity.class);
+//                context.startActivity(intent);
+                ToastUtil.showDelToast(context,"被点击");
+            }
+
+            @Override
+            public void onItemClick_By_btn(boolean is_open_to_close1) {
+                is_open_to_close = is_open_to_close1;
             }
         });
         return convertView;

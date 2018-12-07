@@ -8,15 +8,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.massky.sraum.R;
 import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.IntentUtil;
+import com.massky.sraum.Util.SharedPreferencesUtil;
+import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.permissions.RxPermissions;
 import com.massky.sraum.widget.ApplicationContext;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
-
 import butterknife.InjectView;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -99,8 +100,13 @@ public class SettingActivity extends BaseActivity {
                 startActivity(new Intent(SettingActivity.this,InformationSettingActivity.class));
                 break;//消息设置
             case R.id.btn_quit_gateway:
-                ApplicationContext.getInstance().removeActivity();
-                startActivity(new Intent(SettingActivity.this,LoginCloudActivity.class));
+//                ApplicationContext.getInstance().removeActivity();
+//                startActivity(new Intent(SettingActivity.this,LoginCloudActivity.class));
+                SharedPreferencesUtil.saveData(SettingActivity.this, "editFlag", false);
+                SharedPreferencesUtil.saveData(SettingActivity.this, "loginflag", false);
+                IntentUtil.startActivityAndFinishFirst(SettingActivity.this, LoginCloudActivity.class);
+                AppManager.getAppManager().finishAllActivity();
+
                 break;//
         }
     }

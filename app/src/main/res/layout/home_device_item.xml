@@ -12,6 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:src="@drawable/common_device_home_select"
+        android:visibility="gone"
         android:scaleType="fitXY" />
 
     <TextView

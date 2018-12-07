@@ -1,5 +1,27 @@
-<resources>
+<resources tools:ignore="MissingTranslation" xmlns:tools="http://schemas.android.com/tools">
 
+    <!--网关详细信息-->
+    <!--搜索界面所需字体-->
+    <string name="gosearch" translatable="false">继续搜索</string>
+    <string name="details">查看详情</string>
+    <string name="stopsearch">停止搜索</string>
+    <string name="nosearch">未搜索到局域网</string>
+    <string name="zhinengchazuo_promat">连续按键3次，指示灯快闪</string>
+    <string name="cha_zuo_2">智能插座</string>
+    <!--网关详情字体-->
+    <string name="gateone">您的局域网未发现Massky</string>
+    <string name="gatetwo">®</string>
+    <string name="gatethree">网关</string>
+    <string name="gatefour">您可以按以下方法来解决问题:</string>
+    <string name="gatefive">1.请检查网关设备是否通电;</string>
+    <string name="gatesix">2.网关设备与手机必须在同一个局域网</string>
+    <string name="gateseven">3.网关设备故障灯是否闪烁</string>
+    <string name="gateight">4.如未发现以上问题,请致电40012345678</string>
+
+    <string name="gatedeta">添加网关</string>
+    <string name="gatedone">网关ID</string>
+    <string name="gatedtwo">自定义名称</string>
+    <string name="gatedthree">网关密码</string>
     <string name="hello">Hello World, JPush!</string>
     <string name="tag_hint">Tag can be number, alphabet, underscore, Chinese. Use , to split many tags.</string>
     <string name="alias_hint">Alias can be number, alphabet, underscore, Chinese.</string>
@@ -104,12 +126,42 @@
     <string name="pm_mofang">PM魔方</string>
     <string name="yaokongqi">遥控器</string>
     <string name="dianshiji">电视机</string>
-    <string name="keshimenling">可视门铃</string>
+
     <string name="light_panel">灯控面板</string>
     <string name="wangguan">网关</string>
     <string name="chuanglian">窗帘面板</string>
-    <string name="kongtiao_panel">空调面板</string>
     <string name="dianzimao">电子猫眼</string>
     <string name="zhinengcamera">智能摄像头</string>
     <string name="yinyuepanel">音乐面板</string>
+
+
+    <string name="one_light_control">一调光一灯控</string>
+    <string name="two_light_control">一调光二灯控</string>
+    <string name="three_light_control">一调光三灯控</string>
+    <string name="two_dimming_one_control">二调光一灯控</string>
+    <string name="two_dimming_two_control">二调光二灯控</string>
+    <string name="two_dimming_trhee_control">三调光一灯控</string>
+    <string name="keshimenling">可视门铃</string>
+    <string name="tuisongtongzhi">推送通知</string>
+    <string name="touyingyi">投影仪</string>
+    <string name="yinxiang">音响</string>
+
+    <string name="wifi_hongwai">WIFI红外转发</string>
+
+    <string name="cha_zuo">86插座两位</string>
+    <string name="cha_zuo_1">入墙式智能插座</string>
+
+
+
+    <string name="connect">连接</string>
+    <string name="see_mode">预览模式</string>
+    <string name="locat_video">本地视频</string>
+    <string name="chang_pwd">修改密码</string>
+    <string name="sensorsetting">传感器设置</string>
+    <string name="sd_record">TF卡远程录像</string>
+    <string name="out_sensor">退出对码</string>
+    <string name="sensorcodeing">对码状态中...</string>
+    <string name="wifi_camera">WIFI摄像头</string>
+
+
 </resources>

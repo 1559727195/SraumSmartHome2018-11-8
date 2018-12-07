@@ -55,7 +55,7 @@ public class MainGateWayActivity extends BaseActivity {
     private SceneFragment fragment2;
     private MineFragment fragment3;
     private Fragment currentFragment;
-
+    public static String ACTION_SRAUM_SETBOX = "ACTION_SRAUM_SETBOX";//notifactionId = 8 ->设置网关模式，sraum_setBox
     @Override
     protected int viewId() {
         return R.layout.main_gateway_act;

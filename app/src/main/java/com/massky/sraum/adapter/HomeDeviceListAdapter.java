@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,13 +20,14 @@ import java.util.Map;
  */
 
 public class HomeDeviceListAdapter extends BaseAdapter {
+    private final Context context;
     private List<Map> list = new ArrayList<>();
     private HomeDeviceItemClickListener homeDeviceItemClickListener;
     // 用来控制CheckBox的选中状况
     private static HashMap<Integer, Boolean> isSelected = new HashMap<>();
 
     public HomeDeviceListAdapter(Context context, List<Map> list, HomeDeviceItemClickListener homeDeviceItemClickListener) {
-        super(context, list);
+        this.context = context;
         this.list = list;
         this.homeDeviceItemClickListener = homeDeviceItemClickListener;
         initDate();
@@ -48,6 +50,21 @@ public class HomeDeviceListAdapter extends BaseAdapter {
 
 
     @Override
+    public int getCount() {
+        return list.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return list.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolderContentType viewHolderContentType = null;
         if (null == convertView) {
@@ -61,137 +78,26 @@ public class HomeDeviceListAdapter extends BaseAdapter {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
 
-//        map1.put("number","3");
-//        map1.put("name","儿童房");
-//        map1.put("count","23");
-        viewHolderContentType.title_home_device.setText((String) list.get(position).get("name") + "(" +
-                (String) list.get(position).get("count") + ")");
+            viewHolderContentType.title_home_device.setText((String) list.get(position).get("name") + "(" +
+                    (String) list.get(position).get("count") + ")");
 
-//        final String is_select = (String) list.get(position).get("is_select");
-//        switch (is_select) {
-//            case "0":
-//                viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.black));
-//                viewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_changyong);
-//                break;
-//            case "1":
-//                viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.green));
-//                viewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_changyong_active);
-//                break;
-//        }
-        final String number = (String) list.get(position).get("number");
-        switch (number) {
-            case "1":
-                if (getIsSelected().get(position)) {
+        if (getIsSelected().get(position)) {
 //            viewHolderContentType.img_guan_scene.setImageResource(listintwo.get(position));
-                    viewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_changyong_active);
-                    viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.green));
-                } else {
+//            viewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_keting_active);
+            viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.green));
+        } else {
 //            viewHolderContentType.img_guan_scene.setImageResource(listint.get(position));
-                    viewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_changyong);
-                    viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.black));
-                }
-                break;
-            case "2":
-                if (getIsSelected().get(position)) {
-//            viewHolderContentType.img_guan_scene.setImageResource(listintwo.get(position));
-                    viewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_woshi_active);
-                    viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.green));
-                } else {
-//            viewHolderContentType.img_guan_scene.setImageResource(listint.get(position));
-                    viewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_woshi);
-                    viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.black));
-                }
-                break;
-            case "3":
-                if (getIsSelected().get(position)) {
-//            viewHolderContentType.img_guan_scene.setImageResource(listintwo.get(position));
-                    viewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_keting_active);
-                    viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.green));
-                } else {
-//            viewHolderContentType.img_guan_scene.setImageResource(listint.get(position));
-                    viewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_keting);
-                    viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.black));
-                }
-                break;
+//            viewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_keting);
+            viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.black));
         }
-
-
-//        viewHolderContentType.txt_again_autoscene.setText(list.get(position).get("name").toString());
-
         final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
-
-
-//        for (int i = 0 ; i < list.size(); i++) {
-//
-//            switch (item_image) {
-//                case "1":
-//                    switch (type) {//常用
-//                        case "0":
-//                            finalViewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_changyong);
-//
-//                            break;
-//                        case "1":
-//                            finalViewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_changyong_active);
-//                            break;
-//                    }
-//                    break;
-//                case "2":
-//                    switch (type) {//卧室
-//                        case "0":
-//                            finalViewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_woshi);
-//                            break;
-//                        case "1":
-//                            finalViewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_woshi_active);
-//                            break;
-//                    }
-//                    break;
-//                case "3":
-//                    switch (type) {//客厅
-//                        case "0":
-//                            finalViewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_keting);
-//                            break;
-//                        case "1":
-//                            finalViewHolderContentType.image_home_device_item.setImageResource(R.drawable.icon_l_keting_active);
-//                            break;
-//                    }
-//                    break;
-//            }
-//
-//
-//            switch (type) {//
-//                case "0":
-//                    viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.black));
-//
-//                    break;
-//                case "1":
-//                    viewHolderContentType.title_home_device.setTextColor(context.getResources().getColor(R.color.green));
-//                    break;
-//            }
-//
-//            viewHolderContentType.title_home_device.setText((String) list.get(position).get("name"));
-
-//        convertView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent intent = new Intent(context, SettingRoomActivity.class);
-//////                intent.putExtra("id", (Serializable) list.get(position).get("id").toString());
-////                context.startActivity(intent);
-//                for (int i = 0; i < list.size(); i++) {
-//                    list.get(i).put("type", "0");
-//                    if (i == position) {
-//                        list.get(i).put("type", "1");
-//                    }
-//                }
-//                homeDeviceItemClickListener.homedeviceClick((String) list.get(position).get("number"));
-//                notifyDataSetChanged();
-//            }
-//        });
         return convertView;
     }
 
 
     public void setList1(List<Map> list1) {
         this.list = list1;
+        initDate();
     }
 
     class ViewHolderContentType {

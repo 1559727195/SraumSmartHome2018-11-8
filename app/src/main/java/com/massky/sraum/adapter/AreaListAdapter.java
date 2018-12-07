@@ -20,9 +20,9 @@ import java.util.Map;
  */
 
 public class AreaListAdapter extends BaseAdapter {
-    private List<String> list = new ArrayList<>();
+    private List<Map> list = new ArrayList<>();
 
-    public AreaListAdapter(Context context, List<String> list) {
+    public AreaListAdapter(Context context, List<Map> list) {
         super(context, list);
         this.list = list;
     }
@@ -49,7 +49,7 @@ public class AreaListAdapter extends BaseAdapter {
                 viewHolderContentType.area_linear_item.setBackgroundColor(context.getResources().getColor(R.color.dark_deep));
                 break;
         }
-        viewHolderContentType.area_item_txt.setText(list.get(position));
+        viewHolderContentType.area_item_txt.setText(list.get(position).get("name").toString());
 
         return convertView;
     }

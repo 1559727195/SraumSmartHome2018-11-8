@@ -99,7 +99,7 @@
 
         <activity
             android:name="com.massky.sraum.activity.LaunghActivity"
-            android:theme="@style/styleSplashImage">
+            android:theme="@style/GuideTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -123,6 +123,18 @@
 
         <activity
             android:name="com.massky.sraum.activity.LoginCloudActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+        <activity
+            android:name=".activity.MyDeviceListActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.AreaSettingActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".EditGateWayResultActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
@@ -205,9 +217,23 @@
 
         </activity>
 
-
         <activity
             android:name="com.massky.sraum.activity.CustomDefineDaySceneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name="com.massky.sraum.activity.AddRoomNewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name="com.massky.sraum.activity.AddNewRoomActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name="com.massky.sraum.activity.RoomListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -524,7 +550,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name="com.massky.sraum.activity.AddHomeActivity"
+            android:name="com.massky.sraum.activity.AddAreaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 

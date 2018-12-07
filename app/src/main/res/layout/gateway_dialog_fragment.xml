@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linear"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#EFEFF2"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_write_cancel" />
+
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="选择设备类型"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y60">
+        <RelativeLayout
+            android:id="@+id/sao_rel"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rectangle_bottom_new_shape"
+            app:layout_widthPercent="70%">
+        </RelativeLayout>
+        <ListView
+            android:id="@+id/list_show_rev_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sao_rel"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+           ></ListView>
+
+
+    </android.support.percent.PercentRelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <android.support.percent.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+
+                <Button
+                    android:id="@+id/start_btn_store"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    app:layout_widthPercent="70%" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/start_btn_store"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="11dp"
+                    android:textColor="#000000" />
+
+            </android.support.percent.PercentRelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

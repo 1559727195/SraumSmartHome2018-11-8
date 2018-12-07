@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2F2F2"
+    android:orientation="vertical">
+
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_t_back" />
+
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="房间列表(9)"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/add_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/y8"
+            android:src="@drawable/icon_plus" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <com.massky.sraum.view.XListView
+                android:id="@+id/xListView_scan"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="#00000000"
+                android:divider="#E3E3E3"
+                android:dividerHeight="1dp"></com.massky.sraum.view.XListView>
+        </LinearLayout>
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="0.13">-->
+
+            <!--<Button-->
+                <!--android:id="@+id/add_room"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:background="@color/blue_txt"-->
+                <!--android:text="添加房间"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="16sp" />-->
+        <!--</RelativeLayout>-->
+
+    </LinearLayout>
+</LinearLayout>

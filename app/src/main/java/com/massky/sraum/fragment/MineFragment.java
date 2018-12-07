@@ -14,7 +14,10 @@ import com.king.photo.activity.MessageSendActivity;
 import com.massky.sraum.R;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.activity.AboutActivity;
+import com.massky.sraum.activity.AreaSettingActivity;
+import com.massky.sraum.activity.HomeSettingActivity;
 import com.massky.sraum.activity.LoginGateWayActivity;
+import com.massky.sraum.activity.MyDeviceListActivity;
 import com.massky.sraum.activity.PersonMessageActivity;
 import com.massky.sraum.activity.SettingActivity;
 import com.massky.sraum.activity.ShareDeviceActivity;
@@ -66,6 +69,12 @@ public class MineFragment extends BaseFragment1{
     RelativeLayout about_rel;
     @InjectView(R.id.setting_rel)
     RelativeLayout setting_rel;
+    @InjectView(R.id.dev_manager_rel)
+    RelativeLayout dev_manager_rel;
+    @InjectView(R.id.room_manager_rel)
+    RelativeLayout room_manager_rel;
+    @InjectView(R.id.area_manager_rel)
+    RelativeLayout area_manager_rel;
 
     @Override
     protected void onData() {
@@ -82,6 +91,9 @@ public class MineFragment extends BaseFragment1{
         system_infor_rel.setOnClickListener(this);
         about_rel.setOnClickListener(this);
         setting_rel.setOnClickListener(this);
+        dev_manager_rel.setOnClickListener(this);
+        room_manager_rel.setOnClickListener(this);
+        area_manager_rel.setOnClickListener(this);
     }
 
     @Override
@@ -157,6 +169,15 @@ public class MineFragment extends BaseFragment1{
             case R.id.setting_rel:
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;//设置
+            case R.id.dev_manager_rel://设备列表
+                startActivity(new Intent(getActivity(),MyDeviceListActivity.class));
+                break;
+            case R.id.room_manager_rel://房间管理
+                startActivity(new Intent(getActivity(),HomeSettingActivity.class));
+                break;
+            case R.id.area_manager_rel://区域设置
+                startActivity(new Intent(getActivity(),AreaSettingActivity.class));
+                break;
         }
     }
 

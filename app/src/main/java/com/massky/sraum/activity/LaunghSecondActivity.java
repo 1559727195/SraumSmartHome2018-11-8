@@ -52,6 +52,7 @@ import butterknife.InjectView;
                 startActivity(new Intent(LaunghSecondActivity.this,RegistActivity.class));
                 break;
         }
+        LaunghSecondActivity.this.finish();
     }
 
    /*

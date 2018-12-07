@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y30"
+    android:id="@+id/swipemenu_layout"
+    android:background="@color/white"
+    android:clickable="true"
+    app:ios="false"
+    app:leftSwipe="true"
+    app:swipeEnable="true">
+
+    <LinearLayout
+        android:id="@+id/swipe_context"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:paddingLeft="@dimen/x5">
+
+            <TextView
+                android:id="@+id/area_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_toRightOf="@+id/pic_room_img"
+                android:text="我的家"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/txt_device_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="5个房间"
+                    android:visibility="gone"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"
+            android:paddingRight="@dimen/x10">
+
+            <ImageView
+                android:id="@+id/hand_scene_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/wode_right_arrow" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/rename_btn"
+                android:layout_width="@dimen/x50"
+                android:layout_height="match_parent"
+                android:background="#FF9A02"
+                android:text="重命名"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="@dimen/x50"
+                android:layout_height="match_parent"
+                android:id="@+id/delete_btn"
+                android:background="#FF0202"
+                android:text="删除"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>--><!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--android:id="@+id/swipe_context"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@color/white"--><!--android:orientation="horizontal">-->
+
+    <!--<android.support.percent.PercentRelativeLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:orientation="vertical"--><!--android:paddingLeft="@dimen/x10"--><!--android:paddingRight="@dimen/x10">-->
+
+    <!--<RelativeLayout--><!--android:id="@+id/first_rel_room"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_centerVertical="true"--><!--android:paddingBottom="@dimen/y8"--><!--android:paddingTop="@dimen/y8"--><!--app:layout_widthPercent="80%">-->
+
+    <!--<TextView--><!--android:id="@+id/txt_again_autoscene"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_centerVertical="true"--><!--android:layout_marginLeft="@dimen/x8"--><!--android:layout_toRightOf="@+id/pic_room_img"--><!--android:text="我的家"--><!--android:textColor="@color/dark_gray"--><!--android:textSize="14sp" />--><!--</RelativeLayout>-->
+
+    <!--<RelativeLayout--><!--android:id="@+id/second_rel_room"--><!--android:layout_width="0dp"--><!--android:layout_height="wrap_content"--><!--android:layout_centerVertical="true"--><!--android:layout_toEndOf="@+id/first_rel_room"--><!--android:layout_toRightOf="@+id/first_rel_room"--><!--android:paddingBottom="@dimen/y8"--><!--android:paddingTop="@dimen/y8"--><!--app:layout_widthPercent="20%">-->
+
+    <!--<TextView--><!--android:id="@+id/txt_device_num"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentLeft="true"--><!--android:layout_centerVertical="true"--><!--android:text="5个房间"--><!--android:textColor="@color/gray"--><!--android:textSize="12sp" />-->
+
+    <!--<ImageView--><!--android:id="@+id/img_again_autoscene"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentRight="true"--><!--android:layout_centerVertical="true"--><!--android:src="@drawable/wode_right_arrow"-->
+
+    <!--/>--><!--</RelativeLayout>--><!--</android.support.percent.PercentRelativeLayout>--><!--</LinearLayout>-->

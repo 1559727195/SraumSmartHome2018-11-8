@@ -3,7 +3,6 @@ package com.massky.sraum.Util;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.alibaba.fastjson.JSON;
 import com.massky.sraum.User;

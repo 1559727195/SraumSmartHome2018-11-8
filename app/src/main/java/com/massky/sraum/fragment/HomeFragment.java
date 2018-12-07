@@ -1,8 +1,10 @@
 package com.massky.sraum.fragment;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -43,7 +45,6 @@ import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.activity.AirControlActivity;
 import com.massky.sraum.activity.AlarmDeviceMessageActivity;
 import com.massky.sraum.activity.CurtainWindowActivity;
-import com.massky.sraum.activity.DeviceSettingDelRoomActivity;
 import com.massky.sraum.activity.Pm25Activity;
 import com.massky.sraum.activity.SelectZigbeeDeviceActivity;
 import com.massky.sraum.activity.TiaoGuangLightActivity;
@@ -52,7 +53,6 @@ import com.massky.sraum.adapter.DetailDeviceHomeAdapter;
 import com.massky.sraum.adapter.HomeDeviceListAdapter;
 import com.massky.sraum.base.BaseFragment1;
 import com.massky.sraum.event.MyDialogEvent;
-import com.massky.sraum.service.MyService;
 import com.massky.sraum.view.ListViewAdaptWidth;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
@@ -74,11 +74,10 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     private PopupWindow popupWindow;
     @InjectView(R.id.status_view)
     StatusView statusView;
-    @InjectView(R.id.project_select)
-    TextView project_select;
+    @InjectView(R.id.area_name_txt)
+    TextView area_name_txt;
     @InjectView(R.id.dragGridView)
     GridView mDragGridView;
-    private List<Map> dataSourceList = new ArrayList<>();
     @InjectView(R.id.add_device)
     ImageView add_device;
     @InjectView(R.id.home_listview)
@@ -122,12 +121,29 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     private String loginPhone;
     public static String ACTION_INTENT_RECEIVER_TO_SECOND_PAGE = "com.massky.secondpage.treceiver";
 
+    public MessageReceiver mMessageReceiver;
+    public static String ACTION_INTENT_RECEIVER = "com.massky.jr.treceiver";
+    private String areaNumber;
+
+
+    /**
+     * 动态注册广播
+     */
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ACTION_INTENT_RECEIVER);
+        getActivity().registerReceiver(mMessageReceiver, filter);
+    }
+
+
     @Override
     protected void onData() {
         share_getData();
-        sraum_getAllArea();
-        test_device_data();
-        init_device_onclick();
+//        sraum_getAllArea();
+//        test_device_data();
+        areaNumber = (String) SharedPreferencesUtil.getData(getActivity(), "areaNumber", "");
+        init_device_onclick();//监听首页设备点击事件
         room_list_show_adapter();
     }
 
@@ -143,26 +159,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
      * 侧栏房间列数据显示
      */
     private void room_list_show_adapter() {
-
-        Map map1 = new HashMap();
-
-        map1.put("number", "1");
-        map1.put("name", "客厅");
-        map1.put("count", "12");
-        roomList.add(map1);
-
-        map1 = new HashMap();
-        map1.put("number", "2");
-        map1.put("name", "书房");
-        map1.put("count", "22");
-        roomList.add(map1);
-
-        map1 = new HashMap();
-        map1.put("number", "3");
-        map1.put("name", "儿童房");
-        map1.put("count", "23");
-        roomList.add(map1);
-
+        roomList = new ArrayList<>();
         homeDeviceListAdapter = new HomeDeviceListAdapter(getActivity(), roomList, new HomeDeviceListAdapter.HomeDeviceItemClickListener() {
             @Override
             public void homedeviceClick(String number) {//获取单个房间关联信息（APP->网关）
@@ -372,11 +369,20 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
             bundle.putString("name1", deviceList.get(position).get("name1").toString());
             bundle.putString("name2", deviceList.get(position).get("name2").toString());
             bundle.putString("name", deviceList.get(position).get("name").toString());
+            String areaNumber = (String) current_area_map.get("number");
+            bundle.putString("areaNumber", areaNumber);//区域编号
+            bundle.putString("roomNumber", current_room_number);//当前房间编号
+            bundle.putSerializable("mapalldevice", (Serializable) mapalldevice);//当前房间编号
+
+
             LogUtil.eLength("名字", deviceList.get(position).get("name1").toString() + deviceList.get(position).get("name2").toString());
 
             switch (deviceList.get(position).get("type").toString()) {
                 case "2":
                     IntentUtil.startActivity(getActivity(), TiaoGuangLightActivity.class, bundle);
+                    break;
+                case "4":
+                    IntentUtil.startActivity(getActivity(), CurtainWindowActivity.class, bundle);
                     break;
                 case "3":
                     IntentUtil.startActivity(getActivity(), AirControlActivity.class, bundle);
@@ -573,7 +579,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     @Override
     protected void onEvent() {
         addViewid();//底部弹出拍照，相册弹出框
-        project_select.setOnClickListener(this);
+        area_name_txt.setOnClickListener(this);
         add_device.setOnClickListener(this);
         back_rel.setOnClickListener(this);
         refresh_view.setScrollBackDuration(300);
@@ -729,292 +735,59 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 
     @Override
     protected void onView(View view) {
+        registerMessageReceiver();
         StatusUtils.setFullToStatusBar(getActivity());  // StatusBar.
-//
-//        for (int i = 0; i < 30; i++) {
-//            HashMap<String, Object> itemHashMap = new HashMap<>();
-//            itemHashMap.put("item_image", R.mipmap.ic_launcher);
-//            itemHashMap.put("item_text", "拖拽" + Integer.toString(i));
-//            dataSourceList.add(itemHashMap);
-//        }
-
-        //title_room;//device_name,device_action
-        init_grideview_data();
-
-//        final SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), dataSourceList,
-//                R.layout.drag_view_item, new String[]{"item_image", "item_text"}, new int[]{R.id.item_image, R.id.item_text});
-        deviceListAdapter = new DetailDeviceHomeAdapter(getActivity()
-                , deviceList);
-        mDragGridView.setAdapter(deviceListAdapter);
-//        get_gateway_name();
-////        get_allroominfo();
-//        addBrodcastAction();//添加TCP接收广播通知
+        room_list_show_adapter();
     }
 
-//    /**
-//     * 添加TCP接收广播通知
-//     * // add Action1
-//     */
-//    private void addBrodcastAction() {
-//        //推送修改网关名称（网关->APP）
-//        push_gatewayName();
-//        push_sraum_controlButton();
-//        sraum_pushDeviceName();
-//        sraum_pushDeleteDevice();
-//    }
-//
-//    /**
-//     * 推送修改设备名称（网关->APP）
-//     */
-//    private void sraum_pushDeviceName() {
-//        addCanReceiveAction(new Intent(ApiTcpReceiveHelper.Sraum_PushDeviceName), new OnActionResponse() {
-//
-//            @Override
-//            public void onResponse(Intent intent) {
-//                String tcpreceiver = intent.getStringExtra("strcontent");
-////                ToastUtil.showToast(context, "tcpreceiver:" + tcpreceiver);
-//                //解析json数据
-//                final User user = new GsonBuilder().registerTypeAdapterFactory(
-//                        new NullStringToEmptyAdapterFactory()).create().fromJson(tcpreceiver, User.class);//json字符串转换为对象
-//                if (user == null) return;
-//                String newName = user.newName;
-//                String number = user.number;
-//                //更新房间下的某个设备的设备名称
-//                switch (roomNumber) {
-//                    case "":
-//                        sraum_getInfos(false, device_type);//获取全部信息（APP->网关）
-//                        break;
-//                    default:
-//                        sraum_getOneRoomInfo(roomNumber);
-//                        break;
-//                }
-//            }
-//        });
-//    }
-//
-//    /**
-//     * 推送删除设备（网关->APP）
-//     */
-//    private void sraum_pushDeleteDevice() {
-//        addCanReceiveAction(new Intent(ApiTcpReceiveHelper.Sraum_PushDeleteDevice), new OnActionResponse() {
-//
-//            @Override
-//            public void onResponse(Intent intent) {
-//                String tcpreceiver = intent.getStringExtra("strcontent");
-////                ToastUtil.showToast(context, "tcpreceiver:" + tcpreceiver);
-//                //解析json数据
-//                final User user = new GsonBuilder().registerTypeAdapterFactory(
-//                        new NullStringToEmptyAdapterFactory()).create().fromJson(tcpreceiver, User.class);//json字符串转换为对象
-//                if (user == null) return;
-////                String newName = user.newName;
-//                String number = user.number;
-//                //更新房间下的某个设备的设备名称
-//                switch (roomNumber) {
-//                    case "":
-//                        sraum_getInfos(false, device_type);//获取全部信息（APP->网关）
-//                        break;
-//                    default:
-//                        sraum_getOneRoomInfo(roomNumber);
-//                        break;
-//                }
-//            }
-//        });
-//    }
 
-//    /**
-//     * 接收jpush推送回来的控制按钮（APP->网关）
-//     */
-//    private void push_sraum_controlButton() {
-//        addCanReceiveAction(new Intent(ApiTcpReceiveHelper.Sraum_Control_Button), new OnActionResponse() {
-//
-//            @Override
-//            public void onResponse(Intent intent) {
-//                String tcpreceiver = intent.getStringExtra("strcontent");
-////                ToastUtil.showToast(context, "tcpreceiver:" + tcpreceiver);
-//                //解析json数据
-//                final User user = new GsonBuilder().registerTypeAdapterFactory(
-//                        new NullStringToEmptyAdapterFactory()).create().fromJson(tcpreceiver, User.class);//json字符串转换为对象
-//                if (user == null) return;
-//                device_type = user.type;//设备类型
-//                switch (roomNumber) {
-//                    case "":
-//                        sraum_getInfos(false, device_type);//获取全部信息（APP->网关）
-//                        break;
-//                    default:
-//                        sraum_getOneRoomInfo(roomNumber);
-//                        break;
-//                }
-//            }
-//        });
-//    }
+    public class MessageReceiver extends BroadcastReceiver {
 
-//    /**
-//     * 广播刷新第二个界面
-//     *
-//     * @param context
-//     * @param action
-//     * @param strcontent
-//     */
-//    private void processCustomMessage(Context context
-//            , String action, String strcontent) {
-//
-//        Intent msgIntent = new Intent(action);
-////            msgIntent.putExtra(MainActivity.KEY_MESSAGE, message);
-//        msgIntent.putExtra("result", strcontent);
-//        LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
-//    }
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+            if (intent.getAction().equals(ACTION_INTENT_RECEIVER)) {
+                int messflag = intent.getIntExtra("notifactionId", 0);
+                if (messflag == 1 || messflag == 3 || messflag == 4 || messflag == 5) {
+//                    upload(false);//控制部分，推送刷新；主动推送刷新。
+                    Log.e("zhu", "upload(false):" + "upload(false)" + "messflag:" + messflag);
+                    //控制部分的二级页面进去要同步更新推送的信息显示 （推送的是消息）。
+                    sendBroad();
+                    //推送过来的
+//                    ToastUtil.showToast(getActivity(), "我控制的设备时推送过来的" + ",messflag:" + messflag);
+                }
+            }
+        }
+    }
 
-//    /**
-//     * 广播刷新第二个界面
-//     *
-//     * @param device_type
-//     */
-//    private void broadcast_refresh_second_page(final String device_type) {
-//        //发送广播，通知最新列表更新
-//
-//        switch (device_type) {
-//            case "1":
-//                //更新数据
-//
-//                break;//灯
-//            case "2":
-//                processCustomMessage(getActivity(), ApiTcpReceiveHelper.TIAO_GUANG_RECEIVE_ACTION, "100");
-//                break;//调光灯
-//            case "3":
-//                processCustomMessage(getActivity(), ApiTcpReceiveHelper.CURTAIN_RECEIVE_ACTION, "100");
-//                break;//3-窗帘
-//            case "4":
-//                processCustomMessage(getActivity(), ApiTcpReceiveHelper.AIRCONTROL_RECEIVE_ACTION, "100");
-//                break;//4-空调
-//            case "5":
-//
-//                break;//5-地暖
-//            case "6":
-//
-//                break;//6-新风
-//            case "7":
-//
-//                break;//7-门磁
-//            case "8":
-//
-//                break;//8-人体感应
-//            case "9":
-//
-//                break;//9-红外转发
-//            case "10"://10-燃气
-//
-//                break;
-//        }
-//    }
-//
-//    /**
-//     * 推送修改网关名称（网关->APP）
-//     */
-//    private void push_gatewayName() {
-//        addCanReceiveAction(new Intent(ApiTcpReceiveHelper.Sraum_PushGateWayName), new OnActionResponse() {
-//
-//            @Override
-//            public void onResponse(Intent intent) {
-//                String tcpreceiver = intent.getStringExtra("strcontent");
-////                ToastUtil.showToast(context, "tcpreceiver:" + tcpreceiver);
-//                //解析json数据
-//                final User user = new GsonBuilder().registerTypeAdapterFactory(
-//                        new NullStringToEmptyAdapterFactory()).create().fromJson(tcpreceiver, User.class);//json字符串转换为对象
-//                if (user == null) return;
-//                if (user.newName != null) {
-//                    project_select.setText(user.newName.toString());
-//                }
-//            }
-//        });
-//    }
-//
-//    private void get_gateway_name() {
-//        //获取网关名称（APP->网关）
-//        Map map = new HashMap();
-//        map.put("command", "sraum_getGatewayName");
-//        MyOkHttp.postMapObject(ApiHelper.sraum_getGatewayName, map,
-//                new Mycallback(new AddTogglenInterfacer() {
-//                    @Override
-//                    public void addTogglenInterfacer() {
-//
-//                    }
-//                }, getActivity(), null) {
-//                    @Override
-//                    public void onSuccess(User user) {
-//                        project_select.setText(user.name);
-//                    }
-//                });
-//    }
 
-//    private void get_allroominfo() {
-//        //获取网关名称（APP->网关）
-//        Map map = new HashMap();
-//        map.put("command", "sraum_getRoomsInfo");
-//
-//        MyOkHttp.postMapObject(ApiHelper.sraum_getRoomsInfo, map,
-//                new Mycallback(new AddTogglenInterfacer() {
-//                    @Override
-//                    public void addTogglenInterfacer() {
-//
-//                    }
-//                }, getActivity(), null) {
-//                    @Override
-//                    public void onSuccess(User user) {
-////                        project_select.setText(user.name);
-//                        roomsInfos = new ArrayList<>();
-//                        int all_index = 0;
-//                        for (int i = 0; i < user.roomList.size(); i++) {
-//                            Map map = new HashMap();
-//                            map.put("number", user.roomList.get(i).number);
-//                            map.put("name", user.roomList.get(i).name);
-//                            map.put("count", user.roomList.get(i).count);
-//                            map.put("is_select", "0");
-//                            roomsInfos.add(map);
-//                            int index = Integer.parseInt(user.roomList.get(i).count);
-//                            all_index += index;
-//                        }  //
-//
-//                        //添加头全部所有房间综合，
-//                        Map map_all = new HashMap();
-//                        map_all.put("number", "");
-//                        map_all.put("name", "全部");
-//                        map_all.put("count", "" + all_index);
-//                        map_all.put("is_select", "0");
-//                        roomsInfos.set(0, map_all);
-//                        homeDeviceListAdapter = new HomeDeviceListAdapter(getActivity(), roomsInfos, new HomeDeviceListAdapter.HomeDeviceItemClickListener() {
-//                            @Override
-//                            public void homedeviceClick(String number) {//获取单个房间关联信息（APP->网关）
-//                                switch (number) {
-//                                    case "":
-//                                        roomNumber = "";
-//                                        sraum_getInfos(true, device_type);//获取全部信息（APP->网关）
-//                                        break;
-//                                    default:
-//                                        roomNumber = number;
-//                                        sraum_getOneRoomInfo(number);
-//                                        break;
-//                                }
-//                            } //
-//                        });
-//                        home_listview.setAdapter(homeDeviceListAdapter);//设备侧栏列表
-//                    }
-//                });
-//    } //
+    private void sendBroad() {
+        Intent mIntent = new Intent(ACTION_INTENT_RECEIVER_TO_SECOND_PAGE);
+        getActivity().sendBroadcast(mIntent);
+//        //MACFRAGMENT_PM25
+    }
+
+
+    @Override
+    public void onResume() {//视图可见后，去加载接口数据
+        super.onResume();
+        sraum_getAllArea();
+    }
 
     /**
      * 获取单个房间关联信息（APP->网关）
      *
      * @param number
      */
-    private void sraum_getOneRoomInfo(final String number) { //
+    private void sraum_getOneRoomInfo(final String number) {
         Map map = new HashMap();
-        String areaNumber = (String) current_area_map.get("areaNumber");
+        String areaNumber = (String) current_area_map.get("number");
         map.put("areaNumber", areaNumber);
         map.put("roomNumber", number);
         map.put("token", TokenUtil.getToken(getActivity()));
-        if (dialogUtil != null) {
-            dialogUtil.loadDialog();
-        }
+//        if (dialogUtil != null) {
+//            dialogUtil.loadDialog();
+//        }
 
 //        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(SelectSensorActivity.this));
         MyOkHttp.postMapString(ApiHelper.sraum_getOneRoomInfo
@@ -1079,12 +852,14 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                             deviceList.add(map);
                         }
 
-                        for (Map map : deviceList) {
-                            listtype.add(map.get("status").toString());
-                        }
+                        if (deviceList.size() != 0) {
+                            for (Map map : deviceList) {
+                                listtype.add(map.get("status").toString());
+                            }
 
-                        //展示首页设备列表
-                        display_home_device_list();
+                            //展示首页设备列表
+                            display_home_device_list();
+                        }
                     }
                 });
     }
@@ -1097,180 +872,12 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         deviceListAdapter.notifyDataSetChanged();
     }
 
-//    /**
-//     * 各个房间的详细配置和其他的设备详情
-//     *
-//     * @param json
-//     * @throws JSONException
-//     */
-//    private Map detail_room_select(JSONObject json) throws JSONException {
-//        Map map = new HashMap();
-//        String type = json.getString("type");
-//        if (type != null) {
-//            map.put("type", type);
-//        }
-//
-//        String online = json.getString("online");
-//        if (online != null) {
-//            map.put("online", online);
-//        }
-//
-//        String number = json.getString("number");
-//        if (number != null) {
-//            map.put("number", number);
-//        }
-//
-//        String name = json.getString("name");
-//        if (name != null) {
-//            map.put("name", name);
-//        }
-//
-//        String status = json.getString("status");
-//        if (status != null) {
-//            map.put("status", status);
-//        }
-//
-//        String fatherName = json.getString("fatherName");
-//        if (fatherName != null) {
-//            map.put("fatherName", fatherName);
-//        }
-//
-//        String mode = json.getString("mode");
-//        if (mode != null) {
-//            map.put("mode", mode);
-//        }
-//
-//        String temperature = json.getString("temperature");
-//        if (temperature != null) {
-//            map.put("temperature", temperature);
-//        }
-//
-//        String speed = json.getString("speed");
-//        if (speed != null) {
-//            map.put("speed", speed);
-//        }
-//
-//        String electricity = json.getString("electricity");
-//        if (electricity != null) {
-//            map.put("electricity", electricity);
-//        }
-//
-//        String vlaue = json.getString("vlaue");
-//        if (vlaue != null) {
-//            map.put("vlaue", vlaue);
-//        }
-//
-//        String pm25 = json.getString("pm2.5");
-//        if (pm25 != null) {
-//            map.put("pm2.5", pm25);
-//        }
-//
-//        String pm1 = json.getString("pm1.0");
-//        if (pm1 != null) {
-//            map.put("pm1.0", pm1);
-//        }
-//
-//        String pm10 = json.getString("pm10");
-//        if (pm10 != null) {
-//            map.put("pm10", pm10);
-//        }
-//
-//        String humidity = json.getString("humidity");
-//        if (humidity != null) {
-//            map.put("humidity", humidity);
-//        }
-//
-//        String alarm = json.getString("alarm");
-//        if (alarm != null) {
-//            map.put("alarm", alarm);
-//        }
-//
-//        String roomNumber = json.getString("roomNumber");
-//        if (roomNumber != null) {
-//            map.put("roomNumber", roomNumber);
-//        }
-//
-//        String dimmer = json.getString("dimmer");
-//        if (dimmer != null) {
-//            map.put("dimmer", dimmer);
-//        }
-//
-//        String roomName = json.getString("roomName");
-//        if (roomName != null) {
-//            map.put("roomName", roomName);
-//        }
-//
-//        return map;
-//    }
-
-    /**
-     * 初始化grideview -data
-     */
-    private void init_grideview_data() {
-        deviceList = new ArrayList<>();
-        HashMap<String, Object> itemHashMap = new HashMap<>();
-        itemHashMap.put("item_image", R.drawable.icon_kongtiao_active);
-        itemHashMap.put("title_room", "客厅123");
-        itemHashMap.put("device_name", "空调");
-        itemHashMap.put("device_action", "制冷|22|底风12313");
-        deviceList.add(itemHashMap);
-
-        itemHashMap = new HashMap<>();
-        itemHashMap.put("item_image", R.drawable.icon_pm25_active);
-        itemHashMap.put("title_room", "客厅");
-        itemHashMap.put("device_name", "PM检测");
-        itemHashMap.put("device_action", "50 良");
-        deviceList.add(itemHashMap);
-
-        itemHashMap = new HashMap<>();
-        itemHashMap.put("item_image", R.drawable.icon_chuanglian_active);
-        itemHashMap.put("title_room", "客厅");
-        itemHashMap.put("device_name", "客厅窗帘3");
-        itemHashMap.put("device_action", "打开");
-        deviceList.add(itemHashMap);
-
-        itemHashMap = new HashMap<>();
-        itemHashMap.put("item_image", R.drawable.icon_menci_active);
-        itemHashMap.put("title_room", "南卧室");
-        itemHashMap.put("device_name", "门磁");
-        itemHashMap.put("device_action", "离线");
-        deviceList.add(itemHashMap);
-
-        itemHashMap = new HashMap<>();
-        itemHashMap.put("item_image", R.drawable.icon_deng_active);
-        itemHashMap.put("title_room", "客厅");
-        itemHashMap.put("device_name", "主灯");
-        itemHashMap.put("device_action", "客厅开关");
-        deviceList.add(itemHashMap);
-
-        itemHashMap = new HashMap<>();
-        itemHashMap.put("item_image", R.drawable.icon_deng_active);
-        itemHashMap.put("title_room", "卧室");
-        itemHashMap.put("device_name", "调光灯");
-        itemHashMap.put("device_action", "卧室开关");
-        deviceList.add(itemHashMap);
-
-        //添加两个场景，吃饭，和睡觉场景
-        itemHashMap = new HashMap<>();
-        itemHashMap.put("item_image", R.drawable.icon_scene_chifan_active);
-        itemHashMap.put("title_room", "吃饭");
-        itemHashMap.put("device_name", "卧室开关");
-        itemHashMap.put("device_action", "");
-        deviceList.add(itemHashMap);
-
-        itemHashMap = new HashMap<>();
-        itemHashMap.put("item_image", R.drawable.icon_scene_shuijiao_active);
-        itemHashMap.put("title_room", "睡觉");
-        itemHashMap.put("device_name", "卧室开关");
-        itemHashMap.put("device_action", "");
-        deviceList.add(itemHashMap);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.project_select:
-                showPopWindow();
+            case R.id.area_name_txt:
+                if (areaList.size() > 1)//区域列表大于1时，显示
+                    showPopWindow();
                 break;//项目选择
             case R.id.add_device://为网关添加设备(即添加面板)
                 startActivity(new Intent(getActivity(), SelectZigbeeDeviceActivity.class));
@@ -1321,61 +928,8 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         return map;
     }
 
-//    /**
-//     * 获取全部信息（APP->网关）
-//     *
-//     * @param refresh
-//     * @param device_type
-//     */
-//    private void sraum_getInfos(final boolean refresh, final String device_type) {
-//        Map map = new HashMap();
-//        map.put("command", "sraum_getInfos");
-////        MyOkHttp.postMapString(ApiHelper.sraum_getInfos, map,
-////                new MyStringcallback(getActivity()) {
-////                    @Override
-////                    public void onSuccess(String result) {
-////                        //解析
-////                        JSONObject json = null;
-////                        try {
-////                            json = new JSONObject(result);
-////                            if (null != json) {
-//////                                json.getString("appid");
-////                                JSONArray jsonArray = json.getJSONArray("list");
-////                                if (jsonArray == null) return;
-////                                singleRoomAssoList = new ArrayList<>();
-////                                for (int i = 0; i < jsonArray.length(); i++) {
-////                                    singleRoomAssoList.add(detail_room_select(jsonArray.getJSONObject(i)));
-////                                }
-////
-////                                if (refresh) {
-////                                    detailDeviceHomeAdapter = new DetailDeviceHomeAdapter(getActivity()
-////                                            , singleRoomAssoList);
-////                                    mDragGridView.setAdapter(detailDeviceHomeAdapter);
-////                                } else {
-////                                    detailDeviceHomeAdapter.setList(singleRoomAssoList);
-////                                    detailDeviceHomeAdapter.notifyDataSetChanged();
-////                                    broadcast_refresh_second_page(device_type);
-////                                }
-////                            }
-////                        } catch (JSONException e) {
-////                            e.printStackTrace();
-////                        }
-////                    }
-////                });
-//    }
-
     //自定义dialog,centerDialog
     public void showCenterDeleteDialog() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        // 布局填充器
-//        LayoutInflater inflater = LayoutInflater.from(getActivity());
-//        View view = inflater.inflate(R.layout.user_name_dialog, null);
-//        // 设置自定义的对话框界面
-//        builder.setView(view);
-//
-//        cus_dialog = builder.create();
-//        cus_dialog.show();
-
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.promat_dialog, null);
         TextView confirm; //确定按钮
         TextView cancel; //确定按钮
@@ -1418,16 +972,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 
     //自定义dialog,自定义重命名dialog
     public void showRenameDialog() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        // 布局填充器
-//        LayoutInflater inflater = LayoutInflater.from(getActivity());
-//        View view = inflater.inflate(R.layout.user_name_dialog, null);
-//        // 设置自定义的对话框界面
-//        builder.setView(view);
-//
-//        cus_dialog = builder.create();
-//        cus_dialog.show();
-
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.editscene_dialog, null);
         TextView confirm; //确定按钮
@@ -1524,17 +1068,53 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                         areaList = new ArrayList<>();
                         for (int i = 0; i < user.areaList.size(); i++) {
                             Map<String, String> mapdevice = new HashMap<>();
-                            mapdevice.put("name", user.areaList.get(i).name);
+                            mapdevice.put("name", user.areaList.get(i).areaName);
                             mapdevice.put("number", user.areaList.get(i).number);
                             mapdevice.put("sign", user.areaList.get(i).sign);
                             mapdevice.put("authType", user.areaList.get(i).authType);
+                            mapdevice.put("roomCount", user.areaList.get(i).roomCount);
                             areaList.add(mapdevice);
                         }
 
-                        if (user.areaList != null) {//区域命名
-                            project_select.setText(user.areaList.get(0).name);
+                        boolean ishas_ = false;//判断有没有该区域编号
+                        for (int i = 0; i < areaList.size(); i++) {
+                            if (areaNumber.equals(areaList.get(i).get("number"))) {
+                                ishas_ = true;
+                                break;
+                            } else {
+                                ishas_ = false;
+                            }
+                        }
+
+                        if (!ishas_) {
+                            SharedPreferencesUtil.saveData(getActivity(), "areaNumber", "");
+                            areaNumber = "";
+                        }
+
+                        if (user.areaList != null && user.areaList.size() != 0) {//区域命名
+                            area_name_txt.setText(user.areaList.get(0).areaName == null ? "" :
+                                    user.areaList.get(0).areaName + "(" + user.areaList.get(0).roomCount + ")");
                             //，加载默认区域下默认房间
-                            sraum_getRoomsInfo(user.areaList.get(0).number);
+                            if (!areaNumber.equals("")) {
+                                sraum_getRoomsInfo(areaNumber);
+//                                current_area_map = areaList.get(areaNumber);
+                                if (areaList.size() != 0)
+                                    for (Map map : areaList) {
+                                        if (areaNumber.equals(map.get("number").toString())) {
+                                            current_area_map = map;
+                                            area_name_txt.setText(current_area_map.get("name").toString()
+                                                    + "(" + current_area_map.get("roomCount").toString() + ")");
+                                            break;
+                                        }
+                                    }
+                            } else {
+                                current_area_map = areaList.get(0);
+                                area_name_txt.setText(user.areaList.get(0).areaName == null ? "" :
+                                        user.areaList.get(0).areaName + "(" + user.areaList.get(0).roomCount + ")");
+                                sraum_getRoomsInfo(user.areaList.get(0).number);
+                                areaNumber = user.areaList.get(0).number;
+                                SharedPreferencesUtil.saveData(getActivity(), "areaNumber", areaNumber);
+                            }
                         }
                     }
                 });
@@ -1586,8 +1166,11 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 
                     @Override
                     public void onSuccess(final User user) {
-                        ToastUtil.showToast(getActivity(), "区域切换成功");
+//                        ToastUtil.showToast(getActivity(), "区域切换成功");
                         //qie huan cheng gong ,获取区域的所有房间信息
+                        SharedPreferencesUtil.saveData(getActivity(), "areaNumber", areaNumber);
+                        area_name_txt.setText(current_area_map.get("name").toString() == null ? "" :
+                                current_area_map.get("name").toString() + "(" + current_area_map.get("roomCount").toString() + ")");
                         sraum_getRoomsInfo(areaNumber);
                     }
 
@@ -1605,9 +1188,9 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
      * @param areaNumber
      */
     private void sraum_getRoomsInfo(final String areaNumber) {
-        if (dialogUtil != null) {
-            dialogUtil.loadDialog();
-        }
+//        if (dialogUtil != null) {
+//            dialogUtil.loadDialog();
+//        }
         Map<String, String> mapdevice = new HashMap<>();
         mapdevice.put("token", TokenUtil.getToken(getActivity()));
         mapdevice.put("areaNumber", areaNumber);
@@ -1690,25 +1273,15 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 
             ListViewAdaptWidth wv = (ListViewAdaptWidth) view.findViewById(R.id.wheel_view_wv);
 
-            List<String> data = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
-                data.add("小区yihao" + i);
-            }
 
-//            final String[] data = new String[areaList.size()];
-//            for (int i = 0; i < areaList.size(); i++) {
-//                data[i] = areaList.get(i).get("name").toString();
-//            }
-            AreaListAdapter areaListAdapter = new AreaListAdapter(getActivity(), data);
-//            ArrayAdapter<String> array = new ArrayAdapter<>(getActivity(),
-//                    R.layout.simple_expandable_list_item_new, data);
+            AreaListAdapter areaListAdapter = new AreaListAdapter(getActivity(), areaList);
             wv.setAdapter(areaListAdapter);
             wv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //xuan zhong mou ge quyu
                     current_area_map = areaList.get(position);
-                    sraum_changeArea(areaList.get(position).get("areaNumber").toString());
+                    sraum_changeArea(areaList.get(position).get("number").toString());
                 }
             });
             pop_set(view);
@@ -1744,7 +1317,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         ColorDrawable cd = new ColorDrawable(0x00ffffff);// 背景颜色全透明
         popupWindow.setBackgroundDrawable(cd);
         int[] location = new int[2];
-        project_select.getLocationOnScreen(location);//获得textview的location位置信息，绝对位置
+        area_name_txt.getLocationOnScreen(location);//获得textview的location位置信息，绝对位置
         popupWindow.setAnimationStyle(R.style.style_pop_animation);// 动画效果必须放在showAsDropDown()方法上边，否则无效
         backgroundAlpha(1.0f);// 设置背景半透明 ,0.0f->1.0f为不透明到透明变化。
         // 将pixels转为dip
@@ -1752,7 +1325,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         popupWindow.getContentView().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         int xPos = (displayWidth - popupWindow.getContentView().getMeasuredWidth()) / 2;
 //            popupWindow.showAsDropDown(project_select, 0, dip2px(getActivity(), 10));
-        popupWindow.showAtLocation(project_select, Gravity.NO_GRAVITY, xPos, location[1] + project_select.getHeight() * 3 / 2);
+        popupWindow.showAtLocation(area_name_txt, Gravity.NO_GRAVITY, xPos, location[1] + area_name_txt.getHeight() * 3 / 2);
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {

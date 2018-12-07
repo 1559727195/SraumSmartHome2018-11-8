@@ -25,8 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/itemrela_id"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="@dimen/y6"
+        android:layout_marginBottom="@dimen/y3"
         android:text="空调"
         android:textColor="@color/black"
         android:textSize="10sp" />

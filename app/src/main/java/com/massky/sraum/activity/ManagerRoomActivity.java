@@ -21,28 +21,30 @@ import com.massky.sraum.receiver.ApiTcpReceiveHelper;
 import com.massky.sraum.view.XListView;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.InjectView;
 
 /**
  * Created by zhu on 2018/1/9.
  */
 
-public class ManagerRoomActivity extends BaseActivity implements XListView.IXListViewListener{
+public class ManagerRoomActivity extends BaseActivity implements XListView.IXListViewListener {
     @InjectView(R.id.back)
     ImageView back;
     @InjectView(R.id.xListView_scan)
-   XListView xListView_scan;
-//    @InjectView(R.id.next_step_txt)
+    XListView xListView_scan;
+    //    @InjectView(R.id.next_step_txt)
 //    TextView next_step_txt;
-    String [] again_elements = {"客厅","卧室","厨房","客厅","餐厅","阳台","儿童房","老年房"};
+    String[] again_elements = {"客厅", "卧室", "厨房", "客厅", "餐厅", "阳台", "儿童房", "老年房"};
     private List<Map> list_hand_scene;
     private Handler mHandler = new Handler();
     @InjectView(R.id.add_room)
-   TextView add_room;
+    TextView add_room;
     private ManagerRoomAdapter managerroomadapter;
     @InjectView(R.id.status_view)
     StatusView statusView;
@@ -89,9 +91,9 @@ public class ManagerRoomActivity extends BaseActivity implements XListView.IXLis
 //            map.put("type","0");
 //            list_hand_scene.add(map);
 //        }
+//
 
-
-        managerroomadapter = new ManagerRoomAdapter(ManagerRoomActivity.this,list_hand_scene);
+        managerroomadapter = new ManagerRoomAdapter(ManagerRoomActivity.this, list_hand_scene);
 
         xListView_scan.setAdapter(managerroomadapter);
         xListView_scan.setPullLoadEnable(false);
@@ -127,7 +129,7 @@ public class ManagerRoomActivity extends BaseActivity implements XListView.IXLis
                         new NullStringToEmptyAdapterFactory()).create().fromJson(tcpreceiver, User.class);//json字符串转换为对象
                 if (user == null) return;
                 String number = user.number;//房间编号
-                ToastUtil.showToast(ManagerRoomActivity.this,"该房间被删除:" + number);
+                ToastUtil.showToast(ManagerRoomActivity.this, "该房间被删除:" + number);
 
             }
         });
@@ -149,7 +151,7 @@ public class ManagerRoomActivity extends BaseActivity implements XListView.IXLis
                 if (user == null) return;
                 String number = user.number;//房间编号
                 String newName = user.newName;//卧室
-                ToastUtil.showToast(ManagerRoomActivity.this,"卧室:" + newName);
+                ToastUtil.showToast(ManagerRoomActivity.this, "卧室:" + newName);
 
             }
         });
@@ -167,7 +169,7 @@ public class ManagerRoomActivity extends BaseActivity implements XListView.IXLis
                     public void addTogglenInterfacer() {
                         get_allroominfo();
                     }
-                },ManagerRoomActivity.this,null) {
+                }, ManagerRoomActivity.this, null) {
                     @Override
                     public void onSuccess(User user) {
 //                        project_select.setText(user.name);
@@ -225,8 +227,8 @@ public class ManagerRoomActivity extends BaseActivity implements XListView.IXLis
 //                ManagerRoomActivity.this.finish();
 //                break;
             case R.id.add_room://
-                Intent intent = new Intent(ManagerRoomActivity.this,AddRoomActivity.class);
-                    startActivity(intent);
+                Intent intent = new Intent(ManagerRoomActivity.this, AddRoomActivity.class);
+                startActivity(intent);
                 break;
         }
     }

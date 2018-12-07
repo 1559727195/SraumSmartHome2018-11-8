@@ -51,9 +51,6 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-
-
-
         <com.zanelove.aircontrolprogressbar.ColorArcProgressBar
             android:id="@+id/bar1"
             android:layout_width="@dimen/x100"

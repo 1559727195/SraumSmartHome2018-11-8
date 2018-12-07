@@ -31,8 +31,7 @@
             android:background="@drawable/edit_scene_shape"
             android:gravity="left"
             android:hint="默认名称"
-            android:inputType="textPassword"
-            android:maxLength="15"
+            android:inputType="text"
             android:paddingRight="10dp"
             app:layout_widthPercent="95%"
             >

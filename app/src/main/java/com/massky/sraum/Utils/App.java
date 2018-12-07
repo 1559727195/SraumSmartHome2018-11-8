@@ -66,7 +66,6 @@ public class App extends Application implements Application.ActivityLifecycleCal
     private boolean isDoflag;
 
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -80,6 +79,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
 //        }
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
+
         //用于判断log值是否打印
         LogUtil.isDebug = true;
         //okhttp网络配置
@@ -120,7 +120,9 @@ public class App extends Application implements Application.ActivityLifecycleCal
 //        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 //        this.context.registerReceiver(networkConnectionStatusBroadcastReceiver, intentFilter);
 //        ToastUtil.showToast(_instance,"你好");
+
     }
+
 
 
 

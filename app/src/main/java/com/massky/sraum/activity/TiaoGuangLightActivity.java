@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,6 +19,7 @@ import com.alibaba.fastjson.JSON;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.IntentUtil;
 import com.massky.sraum.Util.LogUtil;
 import com.massky.sraum.Util.MusicUtil;
 import com.massky.sraum.Util.MyOkHttp;
@@ -33,6 +35,7 @@ import com.massky.sraum.service.MyService;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.zanelove.aircontrolprogressbar.ColorArcProgressBar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,6 +78,13 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
     private boolean addflag;
     private boolean mapflag;
     private boolean statusbo;
+    private String name1;
+    private String name2;
+    private String name;
+    private String areaNumber;
+    private String roomNumber;
+    private Map<String, Object> mapalldevice = new HashMap<>();
+
 
     @Override
     protected int viewId() {
@@ -88,12 +98,33 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
         loginPhone = (String) SharedPreferencesUtil.getData(TiaoGuangLightActivity.this, "loginPhone", "");
         SharedPreferences preferences = getSharedPreferences("sraum" + loginPhone,
                 Context.MODE_PRIVATE);
+        boxnumber = (String) SharedPreferencesUtil.getData(TiaoGuangLightActivity.this, "boxnumber", "");
+        dialogUtil = new DialogUtil(TiaoGuangLightActivity.this);
         vibflag = preferences.getBoolean("vibflag", false);
         musicflag = preferences.getBoolean("musicflag", false);
         LogUtil.i("查看值状态" + musicflag);
-        boxnumber = (String) SharedPreferencesUtil.getData(TiaoGuangLightActivity.this, "boxnumber", "");
-        dialogUtil = new DialogUtil(TiaoGuangLightActivity.this);
-        bar1.setCurrentValues(80);
+        init_Data();
+    }
+
+    private void init_Data() {
+        Bundle bundle = IntentUtil.getIntentBundle(TiaoGuangLightActivity.this);
+        type = bundle.getString("type");
+        number = bundle.getString("number");
+        name1 = bundle.getString("name1");
+        name2 = bundle.getString("name2");
+        name = bundle.getString("name");
+
+        areaNumber = bundle.getString("areaNumber");
+        roomNumber = bundle.getString("roomNumber");//当前房间编号
+
+        mapalldevice = (Map<String, Object>) bundle.getSerializable("mapalldevice");
+
+        if (mapalldevice != null) {
+            status = (String) mapalldevice.get("status");
+            dimmer = (String) mapalldevice.get("dimmer");
+            bar1.setCurrentValues(Integer.parseInt(dimmer));
+            id_seekBar.setProgress(Integer.parseInt(dimmer));
+        }
     }
 
     /**
@@ -150,59 +181,53 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
     //下载设备信息并且比较状态（为了显示开关状态）
     private void upload() {
         Map<String, String> mapdevice = new HashMap<>();
+        mapdevice.put("areaNumber", areaNumber);
+        mapdevice.put("roomNumber", number);
         mapdevice.put("token", TokenUtil.getToken(TiaoGuangLightActivity.this));
-        mapdevice.put("boxNumber", boxnumber);
         dialogUtil.loadDialog();
         SharedPreferencesUtil.saveData(TiaoGuangLightActivity.this, "boxnumber", boxnumber);
-        MyOkHttp.postMapString(ApiHelper.sraum_getAllDevice, mapdevice, new Mycallback(new AddTogglenInterfacer() {
-            @Override
-            public void addTogglenInterfacer() {//获取togglen成功后重新刷新数据
-                upload();
-            }
-        }, TiaoGuangLightActivity.this, dialogUtil) {
-            @Override
-            public void onSuccess(User user) {
-                super.onSuccess(user);
-                //拿到设备状态值
-                for (User.device d : user.deviceList) {
-                    if (d.number.equals(number)) {
-                        //匹配状值设置当前状态
-                        if (d.status != null) {
-                            //进行判断是否为窗帘
-                            statusflag = d.status;
-                            LogUtil.eLength("下载数据", statusflag);
-                            //不为窗帘开关状态
-                            dimmer = d.dimmer;
-                            Log.e("zhu", "d.dimmer:" + dimmer);
-                            modeflag = d.mode;
-                            temperature = d.temperature;
-                            windflag = d.speed;
-                            if (type.equals("2")) {
-                                if (dimmer != null && !dimmer.equals("")) {
-//                                    tempimage_id.setText(dimmer);
-//                                    id_seekBar.setProgress(Integer.parseInt(dimmer));
+        MyOkHttp.postMapString(ApiHelper.sraum_getOneRoomInfo
+                , mapdevice, new Mycallback(new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {//获取togglen成功后重新刷新数据
+                        upload();
+                    }
+                }, TiaoGuangLightActivity.this, dialogUtil) {
+                    @Override
+                    public void onSuccess(User user) {
+                        super.onSuccess(user);
+                        //拿到设备状态值
+                        for (User.device d : user.deviceList) {
+                            if (d.number.equals(number)) {
+                                //匹配状值设置当前状态
+                                if (d.status != null) {
+                                    //进行判断是否为窗帘
+                                    statusflag = d.status;
+                                    //不为窗帘开关状态
+                                    dimmer = d.dimmer;
+                                    Log.e("zhu", "d.dimmer:" + dimmer);
+                                    if (type.equals("2")) {
+                                        if (dimmer != null && !dimmer.equals("")) {
+                                            bar1.setCurrentValues(Integer.parseInt(dimmer));
+                                            id_seekBar.setProgress(Integer.parseInt(dimmer));
+                                        }
+                                    }
+                                    if (d.status.equals("0")) {
+                                        statusbo = false;
+
+                                    } else {
+                                        statusbo = true;
+                                    }
                                 }
-                            }
-//                            setModetwo();
-//                            setSpeed();
-                            LogUtil.eLength("查看是否进去", temperature + "进入方法" + dimmer);
-                            if (d.status.equals("0")) {
-//                                getBoxclose();
-                                LogUtil.eLength("没有进去", "进入方法");
-                            } else {
-                                LogUtil.eLength("你看", "进入方法");
-//                                getBoxopen();
                             }
                         }
                     }
-                }
-            }
 
-            @Override
-            public void wrongToken() {
-                super.wrongToken();
-            }
-        });
+                    @Override
+                    public void wrongToken() {
+                        super.wrongToken();
+                    }
+                });
     }
 
 
@@ -241,6 +266,7 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
                 windflag = "";
                 break;
         }
+
         mapdevice.put("type", type);
         mapdevice.put("number", number);
 
@@ -257,7 +283,7 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
         mapdevice.put("speed", windflag);
         listob.add(mapdevice);
         mapalldevice.put("token", TokenUtil.getToken(TiaoGuangLightActivity.this));
-        mapalldevice.put("boxNumber", boxnumber);
+        mapalldevice.put("areaNumber", areaNumber);
         mapalldevice.put("deviceInfo", listob);
         LogUtil.eLength("真正传入", JSON.toJSONString(mapalldevice));
         getBoxStatus(mapalldevice);

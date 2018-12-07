@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="家庭设置"
+            android:text="房间管理"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -45,6 +45,14 @@
             <!--android:text="我要反馈"-->
             <!--android:textColor="@color/white"-->
             <!--android:textSize="16sp" />-->
+        <ImageView
+            android:id="@+id/add_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/y8"
+            android:src="@drawable/icon_plus" />
     </RelativeLayout>
 <LinearLayout
     android:layout_width="match_parent"
@@ -67,6 +75,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         android:layout_weight="0.2">
 
         <android.support.percent.PercentRelativeLayout

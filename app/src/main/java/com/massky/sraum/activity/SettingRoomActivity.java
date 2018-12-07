@@ -56,7 +56,7 @@ public class SettingRoomActivity extends BaseActivity {
         Map map = new HashMap();
         map.put("name", name);
         map.put("type", "1");
-        MyOkHttp.postMapObject(ApiHelper.sraum_addRoomInfo, map,
+        MyOkHttp.postMapObject(ApiHelper.sraum_addRoom, map,
                 new Mycallback(new AddTogglenInterfacer() {
                     @Override
                     public void addTogglenInterfacer() {

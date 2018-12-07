@@ -28,6 +28,7 @@ import com.yanzhenjie.statusview.StatusView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,9 +119,18 @@ public class RegistActivity extends BaseActivity {
             case R.id.registbtn_id:
 //                startActivity(new Intent(RegistActivity.this, InputCheckCodeActivity.class));
 //                RegistActivity.this.finish();
-                String registerphone = phone_id.getText().toString();
-                IntentUtil.startActivity(RegistActivity.this, InputCheckCodeActivity.class, "registerphone", registerphone);
-                //checkNum();
+
+//                String registerphone = phone_id.getText().toString();
+//                IntentUtil.startActivity(RegistActivity.this, InputCheckCodeActivity.class, "registerphone", registerphone);
+
+//                String registerphone = phone_id.getText().toString();
+//                Map map = new HashMap();
+//                map.put("mobilePhone",registerphone);
+//                Intent intent = new Intent(RegistActivity.this,
+//                        SettingPasswordActivity.class);
+//                intent.putExtra("mapcode", (Serializable) map);
+//                startActivity(intent);
+                checkNum();
                 break;//登录网关
         }
     }

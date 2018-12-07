@@ -14,6 +14,7 @@ import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.MycallbackNest;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.view.ClearEditText;
 import com.yanzhenjie.statusview.StatusUtils;
@@ -102,32 +103,6 @@ public class SettingPasswordActivity extends BaseActivity {
         eyeUtil = new EyeUtil(SettingPasswordActivity.this, eyeimageview_id, edit_password_again, true);
     }
 
-//    private void init_permissions() {
-//
-//        // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
-//        RxPermissions permissions = new RxPermissions(this);
-//        permissions.request(Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(Boolean aBoolean) {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
-//    }
 
     /**
      * ApiHelper.sraum_register
@@ -149,9 +124,12 @@ public class SettingPasswordActivity extends BaseActivity {
             public void onSuccess(User user) {
                 switch (user.result) {
                     case "100":
+//                        startActivity(new Intent(SettingPasswordActivity.this,
+//                              LoginCloudActivity.class));
+//                        SettingPasswordActivity.this.finish();
+                        AppManager.getAppManager().finishAllActivity();
                         startActivity(new Intent(SettingPasswordActivity.this,
-                                LoginGateWayActivity.class));
-                        SettingPasswordActivity.this.finish();
+                                LoginCloudActivity.class));
                         break;
                     default:
                         ToastUtil.showDelToast(SettingPasswordActivity.this, "注册失败");
@@ -174,10 +152,10 @@ public class SettingPasswordActivity extends BaseActivity {
                 SettingPasswordActivity.this.finish();
                 break;
             case R.id.btn_login_gateway:
-                startActivity(new Intent(SettingPasswordActivity.this,
-                        LoginGateWayActivity.class));
+//                startActivity(new Intent(SettingPasswordActivity.this,
+//                        LoginGateWayActivity.class));
 //                SettingPasswordActivity.this.finish();
-                // commit_code();
+                commit_code();
                 break;//登录网关
             case R.id.eyeimageview_id:
                 eyeUtil.EyeStatus();

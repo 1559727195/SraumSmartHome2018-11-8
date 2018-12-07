@@ -15,16 +15,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/green"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/green">
+
         <ImageView
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:id="@+id/back"
-            android:paddingRight="20dp"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/icon_t_back"/>
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_t_back" />
 
         <TextView
             android:id="@+id/toolbar_txt"
@@ -49,58 +50,64 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_widthPercent="80%">
+
         <TextView
-            android:layout_width="0dp"
-            app:layout_widthPercent="70%"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:text="请输入13812391092收到的短信验证码"
-            android:textSize="14sp"
-            android:layout_marginTop="@dimen/y30"
             android:id="@+id/phone_id"
-            android:textColor="@color/dark_gray"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y30"
+            android:text="请输入13812391092收到的短信验证码"
+            android:textColor="@color/dark_gray"
+            android:textSize="14sp"
+            app:layout_widthPercent="70%" />
+
         <android.support.percent.PercentRelativeLayout
+            android:id="@+id/login_per_lay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/login_per_lay"
-            android:layout_marginTop="@dimen/y15"
             android:layout_below="@+id/phone_id"
-            android:layout_centerHorizontal="true"
-            app:layout_widthPercent="70%">
+            android:layout_marginLeft="@dimen/x50"
+            android:layout_marginTop="@dimen/y15"
+            app:layout_widthPercent="50%">
+
             <com.massky.sraum.view.ClearEditText
                 android:id="@+id/checkcode_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
-                android:textColorHint="@color/gray"
-                android:textColor="@color/black"
                 android:background="@null"
                 android:gravity="left"
                 android:hint="请输入验证码"
+                android:layout_centerHorizontal="true"
                 android:inputType="text"
                 android:maxLength="15"
-                app:layout_widthPercent="70%" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray"
+                app:layout_widthPercent="80%" />
 
-            <TextView
-                android:id="@+id/timebutton_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textSize="12sp"
-                android:textColor="@color/gray"
-                android:gravity="left"
-                android:layout_alignParentRight="true"
-                android:text="@string/getcode" />
         </android.support.percent.PercentRelativeLayout>
+
+        <TextView
+            android:id="@+id/timebutton_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone_id"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@+id/login_per_lay"
+            android:gravity="left"
+            android:text="@string/getcode"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
+            android:layout_below="@+id/login_per_lay"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:background="@color/gray"
-            android:layout_below="@+id/login_per_lay"
             app:layout_widthPercent="70%"></View>
 
     </android.support.percent.PercentRelativeLayout>

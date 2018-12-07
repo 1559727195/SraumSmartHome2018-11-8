@@ -1,9 +1,25 @@
 package com.massky.sraum.activity;
+
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
+import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.dialog.CommonData;
+import com.dialog.ToastUtils;
+import com.jpush.Constants;
+import com.jpush.ExampleUtil;
 import com.massky.sraum.R;
+import com.massky.sraum.Util.SharedPreferencesUtil;
+import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.Utils.App;
 import com.massky.sraum.base.BaseActivity;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
@@ -11,6 +27,7 @@ import com.yanzhenjie.statusview.StatusView;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import butterknife.InjectView;
 
 /**
@@ -19,6 +36,7 @@ import butterknife.InjectView;
 
 public class LaunghActivity extends BaseActivity {
 
+    private static final String PROCESS_NAME = "com.massky.sraum";
     private Timer timer;
     private TimerTask task;
     private boolean activity_destroy;//activity是否被销毁
@@ -39,8 +57,34 @@ public class LaunghActivity extends BaseActivity {
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         setAnyBarAlpha(0);//设置状态栏的颜色为透明
 //        StatusUtils.setFullToNavigationBar(this); // NavigationBar.
+        isAppMainProcess();
         initTimer();
     }
+
+
+    /**
+     * 判断是不是UI主进程，因为有些东西只能在UI主进程初始化
+     */
+    public void isAppMainProcess() {
+
+        int pid = android.os.Process.myPid();//4731
+        int pid_past = (int) SharedPreferencesUtil.getData(LaunghActivity.this, "pid", 0);
+        if (pid_past == pid) {//则说明app没有被杀死,直接跳转
+            tiaozhuan();
+            return;
+        } else {
+            saveProcess();
+        }
+    }
+
+    /**
+     * 判断是不是UI主进程，因为有些东西只能在UI主进程初始化
+     */
+    public void saveProcess() {
+        int pid = android.os.Process.myPid();//4731
+        SharedPreferencesUtil.saveData(LaunghActivity.this,"pid",pid);
+    }
+
 
     @Override
     protected void onEvent() {
@@ -55,6 +99,7 @@ public class LaunghActivity extends BaseActivity {
 
 
     private int add = 3;
+
     /**
      * 初始化定时器
      */
@@ -75,14 +120,13 @@ public class LaunghActivity extends BaseActivity {
                             add--;
                         }
                     });
-                    Log.e("robin debug","add:" + add);
+                    Log.e("robin debug", "add:" + add);
                     if (add <= 0) {//3min= 1000 * 60 * 3
                         try {
                             add = 0;
                             closeTimer();
-                            //跳转到 启动第二页
-                            startActivity(new Intent(LaunghActivity.this
-                            ,LaunghSecondActivity.class));
+                            tiaozhuan();
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -99,7 +143,32 @@ public class LaunghActivity extends BaseActivity {
     }
 
     /**
+     * 跳转到主界面
+     */
+    private void tiaozhuan() {
+        boolean flag = (boolean) SharedPreferencesUtil.getData(LaunghActivity.this, "loginflag", false);
+        //登录状态保存
+        if (flag) {
+//            IntentUtil.startActivityAndFinishFirst(LoginActivity.this, MainfragmentActivity.class);
+            Intent intent = new Intent(LaunghActivity.this, MainGateWayActivity.class);
+            if (getIntent().getBundleExtra(Constants.EXTRA_BUNDLE) != null) {
+                intent.putExtra(Constants.EXTRA_BUNDLE,
+                        getIntent().getBundleExtra(Constants.EXTRA_BUNDLE));
+            }
+            startActivity(intent);
+//            SharedPreferencesUtil.saveData(LoginActivity.this,"loginflag",true);
+            finish();
+        } else {
+            //跳转到 启动第二页
+            startActivity(new Intent(LaunghActivity.this
+                    , LaunghSecondActivity.class));
+            LaunghActivity.this.finish();
+        }
+    }
+
+    /**
      * 关闭定时器和socket客户端
+     *
      * @throws IOException
      */
     private void closeTimer() throws IOException {
@@ -118,7 +187,7 @@ public class LaunghActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_next_step:
-                startActivity(new Intent(LaunghActivity.this,NextStepActivity.class));
+                startActivity(new Intent(LaunghActivity.this, NextStepActivity.class));
                 break;
             case R.id.three_second_btn:
 
@@ -133,10 +202,10 @@ public class LaunghActivity extends BaseActivity {
     }
 
     /*
- *动态设置状态栏的颜色
- */
+     *动态设置状态栏的颜色
+     */
     private void setAnyBarAlpha(int alpha) {
 //        mToolbar.getBackground().mutate().setAlpha(alpha);
-       statusView.getBackground().mutate().setAlpha(alpha);
+        statusView.getBackground().mutate().setAlpha(alpha);
     }
 }

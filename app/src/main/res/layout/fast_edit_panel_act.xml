@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#EFEFF2"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/backtitle_id"
+        layout="@layout/backtitle" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:textColor="@color/black"
+        android:text="当按下智能开关上任何一个按键后，APP会自动"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:text="弹出设置界面，请耐心等待"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="200dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:text="已等待"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/second"
+            android:text="01"
+            android:textSize="28sp"
+
+            android:textColor="#161616"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分"
+
+            android:layout_toRightOf="@+id/second"
+            android:id="@+id/second_txt"
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/second_txt"
+            android:layout_height="wrap_content"
+            android:text="30"
+            android:id="@+id/miao"
+            android:textSize="28sp"
+            android:textColor="#161616"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/miao"
+            android:text="秒"
+            android:id="@+id/miao_txt"
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+</LinearLayout>

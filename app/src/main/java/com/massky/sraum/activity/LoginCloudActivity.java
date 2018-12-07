@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.alibaba.fastjson.JSON;
 import com.massky.sraum.R;
@@ -34,10 +33,8 @@ import com.massky.sraum.tool.Constants;
 import com.massky.sraum.view.ClearEditText;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.InjectView;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -99,7 +96,7 @@ public class LoginCloudActivity extends BaseActivity {
         search_gateway_btn.setOnClickListener(this);
         btn_login_gateway.setOnClickListener(this);
         eyeimageview_id_gateway.setOnClickListener(this);
-        eyeUtil = new EyeUtil(LoginCloudActivity.this, eyeimageview_id_gateway, usertext_id, true);
+        eyeUtil = new EyeUtil(LoginCloudActivity.this, eyeimageview_id_gateway, phonepassword, true);
         forget_pass.setOnClickListener(this);
         regist_new.setOnClickListener(this);
     }
@@ -151,8 +148,8 @@ public class LoginCloudActivity extends BaseActivity {
                 break;
             case R.id.btn_login_gateway:
                 //开始登录
-                startActivity(new Intent(LoginCloudActivity.this, MainGateWayActivity.class));
-//                login();
+//                startActivity(new Intent(LoginCloudActivity.this, MainGateWayActivity.class));
+                login();
                 break;//登录网关
             case R.id.eyeimageview_id_gateway:
                 eyeUtil.EyeStatus();
@@ -241,18 +238,18 @@ public class LoginCloudActivity extends BaseActivity {
         SharedPreferencesUtil.saveData(LoginCloudActivity.this, "logintime", (int) System.currentTimeMillis());
         SharedPreferencesUtil.saveData(LoginCloudActivity.this, "tagint", 0);
         Map<String, Object> map = new HashMap<>();
-        TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        if (ActivityCompat.checkSelfPermission(LoginCloudActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return null;
-        }
-        String szImei = TelephonyMgr.getDeviceId();
+//        TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(LoginCloudActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return null;
+//        }
+//        String szImei = TelephonyMgr.getDeviceId();
         String regId = (String) SharedPreferencesUtil.getData(LoginCloudActivity.this, "regId", "");
         map.put("token", user.token);
         map.put("regId", regId);
@@ -284,7 +281,8 @@ public class LoginCloudActivity extends BaseActivity {
 //                                    ToastUtil.showToast(LoginActivity.this,"登录成功");
                 SharedPreferencesUtil.saveData(LoginCloudActivity.this, "loginPhone", usertext_id.getText().toString());
                 SharedPreferencesUtil.saveData(LoginCloudActivity.this, "avatar", user.avatar);
-                SharedPreferencesUtil.saveData(LoginCloudActivity.this, "accountType", user.accountType);
+                SharedPreferencesUtil.saveData(LoginCloudActivity.this, "accountType", user.accountType == null ? "" :
+                        user.accountType);
                 SharedPreferencesUtil.saveData(LoginCloudActivity.this, "loginflag", true);
                 if (user.userName != null && !user.userName.equals("")) {
                     SharedPreferencesUtil.saveData(LoginCloudActivity.this, "userName", user.userName);

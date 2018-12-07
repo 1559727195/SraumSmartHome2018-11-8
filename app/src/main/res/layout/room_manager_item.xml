@@ -14,10 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/y12"
         android:paddingLeft="@dimen/x10"
         android:paddingRight="@dimen/x10"
-        android:paddingTop="@dimen/y12">
+   >
         <RelativeLayout
             android:layout_width="wrap_content"
             app:layout_widthPercent="80%"
@@ -33,7 +32,7 @@
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:id="@+id/txt_again_autoscene"
+                android:id="@+id/room_name_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -59,6 +58,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="2个设备"
+                android:visibility="gone"
                 android:textColor="@color/gray"
                 android:textSize="12sp" />
 

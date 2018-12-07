@@ -82,6 +82,7 @@ public class InputCheckCodeActivity extends BaseActivity {
         //请输入13812391092收到的短信验证码
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         btn_login_gateway.setOnClickListener(this);
+        timebutton_id.setOnClickListener(this);
         dialogUtil = new DialogUtil(InputCheckCodeActivity.this);
         getSms();
         getCode();
@@ -117,33 +118,6 @@ public class InputCheckCodeActivity extends BaseActivity {
 
     }
 
-//    private void init_permissions() {
-//
-//        // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
-//        RxPermissions permissions = new RxPermissions(this);
-//        permissions.request(Manifest.permission.CAMERA).subscribe(new Observer<Boolean>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(Boolean aBoolean) {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
-//    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -151,13 +125,9 @@ public class InputCheckCodeActivity extends BaseActivity {
                 InputCheckCodeActivity.this.finish();
                 break;
             case R.id.btn_login_gateway:
-
-                startActivity(new Intent(InputCheckCodeActivity.this,
-                        SettingPasswordActivity.class));
-//                InputCheckCodeActivity.this.finish();
-                //checkRes();
+                checkRes();
                 break;//登录网关
-            case R.id.phone_id:
+            case R.id.timebutton_id:
                 getCode();
                 break;
         }
@@ -184,11 +154,11 @@ public class InputCheckCodeActivity extends BaseActivity {
         if (mobilePhone.equals("") || code.equals("") || checkcode_id.equals("") || checkcode_id.equals("")) {
             ToastUtil.showDelToast(InputCheckCodeActivity.this, "注册信息不能为空");
         } else {
-            mapcode.put("mobilePhone", mobilePhone);
+            mapcode.put("mobilePhone", phoneId);
 //            mapcode.put("code", code);
 //                    mapcode.put("loginPwd", loginPwd);
 //            SMSSDK.submitVerificationCode("86", mobilePhone, code);
-            SMSSDK.submitVerificationCode("86", mobilePhone, code);
+            SMSSDK.submitVerificationCode("86", phoneId, code);
         }
     }
 

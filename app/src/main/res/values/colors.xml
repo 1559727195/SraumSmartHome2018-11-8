@@ -5,6 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
     <color name="blue_txt">#4DC9C3</color>
+    <color name="e30">#303030</color>
+    <color name="colorgraystatusbar">#EFEFF2</color>
+    <color name="clore3e">#e3e3e3</color>
 
     <!-- camera -->
     <color name="black">#333333</color>

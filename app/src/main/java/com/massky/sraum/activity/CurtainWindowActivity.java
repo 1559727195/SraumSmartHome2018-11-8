@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.IntentUtil;
 import com.massky.sraum.Util.LogUtil;
 import com.massky.sraum.Util.MusicUtil;
 import com.massky.sraum.Util.MyOkHttp;
@@ -36,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 import butterknife.InjectView;
 import okhttp3.Call;
+
+import static com.massky.sraum.fragment.HomeFragment.ACTION_INTENT_RECEIVER_TO_SECOND_PAGE;
 
 /**
  * Created by zhu on 2018/1/30.
@@ -80,6 +84,13 @@ public class CurtainWindowActivity extends BaseActivity {
     private String temperature;
     private String windflag;
     String statusm;
+    private MessageReceiver mMessageReceiver;
+
+    private boolean mapflag;
+    private boolean statusbo;
+    private String areaNumber;
+    private String roomNumber;
+    private Map<String, Object> mapalldevice = new HashMap<>();
 
     @Override
     protected int viewId() {
@@ -90,39 +101,46 @@ public class CurtainWindowActivity extends BaseActivity {
     protected void onView() {
         StatusUtils.setFullToStatusBar(this);
 //        init_receiver_control();
+        registerMessageReceiver();
         init_event();
-        change_status_toui("4", "8");
-//        Map map_item = (Map) getIntent().getSerializableExtra("map_item");
-//
-//        loginPhone = (String) SharedPreferencesUtil.getData(CurtainWindowActivity.this, "loginPhone", "");
-//        SharedPreferences preferences = getSharedPreferences("sraum" + loginPhone,
-//                Context.MODE_PRIVATE);
-//        vibflag = preferences.getBoolean("vibflag", false);
-//        musicflag = preferences.getBoolean("musicflag", false);
-//        LogUtil.i("查看值状态" + musicflag);
-//        boxnumber = (String) SharedPreferencesUtil.getData(CurtainWindowActivity.this, "boxnumber", "");
-//        dialogUtil = new DialogUtil(CurtainWindowActivity.this);
-////        bar1.setCurrentValues(80);
-//
-//        switch (type) {
-//            //空调
-//            case "3":
-//
-//                break;
-//        }
-//
-//        //下载设备信息
-//        upload();
+//        change_status_toui("4", "8");
+
     }
+
+
+    /**
+     * 动态注册广播
+     */
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ACTION_INTENT_RECEIVER_TO_SECOND_PAGE);
+        registerReceiver(mMessageReceiver, filter);
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+            if (intent.getAction().equals(ACTION_INTENT_RECEIVER_TO_SECOND_PAGE)) {
+                Log.e("zhu", "LamplightActivity:" + "LamplightActivity");
+                //控制部分的二级页面进去要同步更新推送的信息显示 （推送的是消息）。
+                upload();
+            }
+        }
+    }
+
 
     //下载设备信息并且比较状态（为了显示开关状态）
     private void upload() {
         Map<String, String> mapdevice = new HashMap<>();
+        mapdevice.put("areaNumber", areaNumber);
+        mapdevice.put("roomNumber", number);
         mapdevice.put("token", TokenUtil.getToken(CurtainWindowActivity.this));
-        mapdevice.put("boxNumber", boxnumber);
         dialogUtil.loadDialog();
         SharedPreferencesUtil.saveData(CurtainWindowActivity.this, "boxnumber", boxnumber);
-        MyOkHttp.postMapString(ApiHelper.sraum_getAllDevice, mapdevice, new Mycallback(new AddTogglenInterfacer() {
+        MyOkHttp.postMapString(ApiHelper.sraum_getOneRoomInfo, mapdevice, new Mycallback(new AddTogglenInterfacer() {
             @Override
             public void addTogglenInterfacer() {//获取togglen成功后重新刷新数据
                 upload();
@@ -336,62 +354,6 @@ public class CurtainWindowActivity extends BaseActivity {
         }
     }
 
-//    private void init_receiver_control() {
-//        //注册广播
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(ApiTcpReceiveHelper.TIAO_GUANG_RECEIVE_ACTION);
-//        registerReceiver(mReceiver, filter);
-//
-//    }
-
-//    /**
-//     * 广播接收
-//     */
-//    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            String action = intent.getAction();
-//            String result = intent.getStringExtra("result");
-//            ToastUtil.showToast(CurtainWindowActivity.this, "成功");
-//            //获取窗帘控制后状态
-//            //
-//            Map map = new HashMap();
-//            map.put("number", number);
-//            map.put("type", type);
-//            get_single_device_info(map);
-//        }
-//    };
-
-//    /**
-//     * 获取单个设备或是按钮信息（APP->网关）
-//     *
-//     * @param map
-//     */
-//    private void get_single_device_info(final Map map) {
-//        MyOkHttp.postMapObject(ApiHelper.sraum_getOneInfo, map,
-//                new Mycallback(new AddTogglenInterfacer() {
-//                    @Override
-//                    public void addTogglenInterfacer() {
-//                        get_single_device_info(map);
-//                    }
-//                }, CurtainWindowActivity.this, null) {
-//                    @Override
-//                    public void onSuccess(User user) {
-////       switch (type) {//空调,PM检测,客厅窗帘,门磁,主灯
-////                        String type = (String) map.get("type");
-////                        map.put("status",user.status);
-////                        map.put("name",user.name)
-//                        status = (String) user.status;
-//                        number = (String) user.number;
-//                        type = (String) user.type;
-//                        name = (String) user.name;
-//                        name1 = (String) user.name1;
-//                        name2 = (String) user.name2;
-//                        switch_curtain_status();
-//                    }
-//                });
-//    }
-//
 
     /**
      * 初始化监听事件
@@ -648,43 +610,7 @@ public class CurtainWindowActivity extends BaseActivity {
                     @Override
                     public void onSuccess(User user) {
                         super.onSuccess(user);
-//                        if (type.equals("4")) {
-//                            switch (statusm == null ? "" : statusm) {
-//                                //窗帘1打开
-//                                case "1":
-//
-//                                    break;
-//                                //窗帘1关闭
-//                                case "2":
-//
-//                                    break;
-//                                //窗帘2打开
-//                                case "3":
-//
-//                                    break;
-//                                //窗帘2关闭
-//                                case "4":
-//
-//                                    break;
-//                                //全开
-//                                case "5":
-//
-//                                    break;
-//                                //全关
-//                                case "6":
-//
-//                                    break;
-//                                //暂停
-//                                case "7":
-//
-//                                    break;
-//                                default:
-//                                    break;
-//                            }
-////                            switchState(flagone, flagtwo, flagthree);
-//                        }
                         change_status_toui(type, statusm == null ? "" : statusm);
-
                         if (vibflag) {
                             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                             vibrator.vibrate(200);
@@ -705,115 +631,6 @@ public class CurtainWindowActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 去执行窗帘操作
-     */
-    private void do_tcp_send_curtain() {
-        Map map = new HashMap();
-        map.put("number", number);
-        map.put("type", type);
-        map.put("status", status);
-        MyService.getInstance().sraum_send_tcp(map, "sraum_controlButton");
-    }
-
-//    /**
-//     * 切换窗帘状态
-//     */
-//    private void switch_curtain_status() {
-//        switch (status) {
-//            case "0":
-//                select_radio_out(2);//打开，暂停，关闭
-//                select_radio_in(2);
-//                select_radio_all(2);
-//                break;
-//            case "1":
-//                select_radio_out(0);
-//                select_radio_in(0);
-//                select_radio_all(0);
-//                break;
-//            case "2":
-//                select_radio_out(1);
-//                select_radio_in(1);
-//                select_radio_all(1);
-//                break;
-//            case "3":
-//                select_radio_out(0);
-//                select_radio_in(2);
-//                select_radio_all(-1);
-//                break;
-//            case "4":
-//                select_radio_out(0);
-//                select_radio_in(1);
-//                select_radio_all(-1);
-//                break;
-//            case "5":
-//                select_radio_out(2);
-//                select_radio_in(0);
-//                select_radio_all(-1);
-//                break;
-//            case "6":
-//                select_radio_out(2);
-//                select_radio_in(1);
-//                select_radio_all(-1);
-//                break;
-//            case "7":
-//                select_radio_out(1);
-//                select_radio_in(2);
-//                select_radio_all(-1);
-//                break;
-//            case "8":
-//                select_radio_out(1);
-//                select_radio_in(0);
-//                select_radio_all(-1);
-//                break;
-//        }
-//    }
-
-//    /**
-//     * 外纱
-//     */
-//    private void select_radio_out(int index) {
-//        radio_out_index = index;
-//        //外纱
-//        for (int i = 0; i < radio_group_out.getChildCount(); i++) {
-//            final RadioButton child = (RadioButton) radio_group_out.getChildAt(i);
-//            if (index == i) {
-//                child.setChecked(true);
-//            } else
-//                child.setChecked(false);
-//        }
-//    }
-
-//    /**
-//     * 内纱
-//     */
-//    private void select_radio_in(int index) {
-//        //radio_group_in,内纱
-//        radio_in_index = index;
-//        for (int i = 0; i < radio_group_in.getChildCount(); i++) {
-//            final RadioButton child = (RadioButton) radio_group_in.getChildAt(i);
-//            if (index == i) {
-//                child.setChecked(true);
-//            } else
-//                child.setChecked(false);
-//        }
-//    }
-//
-//    /**
-//     * 全部
-//     */
-//    private void select_radio_all(int index) {
-//        //radio_group_all，全部
-//        radio_all_index = index;
-//        for (int i = 0; i < radio_group_all.getChildCount(); i++) {
-//            final RadioButton child = (RadioButton) radio_group_all.getChildAt(i);
-//            if (index == i) {
-//                child.setChecked(true);
-//            } else
-//                child.setChecked(false);
-//        }
-//    }
-
     @Override
     protected void onEvent() {
         back.setOnClickListener(this);
@@ -821,7 +638,28 @@ public class CurtainWindowActivity extends BaseActivity {
 
     @Override
     protected void onData() {
+        init_Data();
+    }
 
+    private void init_Data() {
+        Bundle bundle = IntentUtil.getIntentBundle(CurtainWindowActivity.this);
+        type = bundle.getString("type");
+        number = bundle.getString("number");
+        name1 = bundle.getString("name1");
+        name2 = bundle.getString("name2");
+        name = bundle.getString("name");
+
+        areaNumber = bundle.getString("areaNumber");
+        roomNumber = bundle.getString("roomNumber");//当前房间编号
+
+        mapalldevice = (Map<String, Object>) bundle.getSerializable("mapalldevice");
+
+        if (mapalldevice != null) {
+            status = (String) mapalldevice.get("status");
+            type = (String) mapalldevice.get("type");
+            //初始化窗帘参数
+            change_status_toui(type, status);
+        }
     }
 
     @Override
@@ -836,6 +674,6 @@ public class CurtainWindowActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unregisterReceiver(mReceiver);
+        unregisterReceiver(mMessageReceiver);
     }
 }

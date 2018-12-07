@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#F6F7FA"
+    android:layout_height="match_parent">
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/green"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/icon_t_back" />
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="添加房间"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/next_step_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x8"
+            android:layout_marginTop="8dp"
+            android:text="保存"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            />
+    </RelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y2"
+      android:layout_marginRight="@dimen/x8"
+        android:layout_marginLeft="@dimen/x8"
+        android:background="@drawable/edit_white_shape">
+
+        <LinearLayout
+            android:id="@+id/img_show_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_keting_black" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/x3"
+                android:layout_marginRight="@dimen/x3"
+                android:background="@color/black"></View>
+        </LinearLayout>
+
+        <com.massky.sraum.view.ClearEditText
+            android:id="@+id/edit_password_gateway"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/img_show_linear"
+            android:background="@null"
+            android:gravity="left"
+            android:hint="房间"
+            android:inputType="text"
+            android:paddingBottom="@dimen/y10"
+            android:paddingLeft="@dimen/x10"
+            android:paddingRight="10dp"
+            android:paddingTop="@dimen/y10"
+            app:layout_widthPercent="95%"></com.massky.sraum.view.ClearEditText>
+    </android.support.percent.PercentRelativeLayout>
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_marginTop="@dimen/y5"-->
+        <!--android:id="@+id/rel_scene_set"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/x8"-->
+            <!--android:text="关联场景开关"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_marginLeft="@dimen/x15"-->
+            <!--android:textSize="14sp"-->
+            <!--android:textColor="@color/dark_gray"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/x8"-->
+            <!--android:text="未设置"-->
+            <!--android:layout_marginLeft="@dimen/x8"-->
+            <!--android:layout_gravity="right"-->
+         <!--android:layout_marginRight="@dimen/x3"-->
+            <!--android:layout_toLeftOf="@+id/scene_set"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:textSize="14sp"-->
+            <!--android:textColor="@color/dark_gray"/>-->
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:id="@+id/scene_set"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="@dimen/x15"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:src="@mipmap/ic_launcher"/>-->
+    <!--</RelativeLayout>-->
+</LinearLayout>

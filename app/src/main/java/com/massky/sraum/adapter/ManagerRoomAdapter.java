@@ -41,7 +41,7 @@ public class ManagerRoomAdapter extends BaseAdapter {
         if (null == convertView) {
             viewHolderContentType = new ViewHolderContentType();
             convertView = LayoutInflater.from(context).inflate(R.layout.room_manager_item, null);
-            viewHolderContentType.txt_again_autoscene = (TextView) convertView.findViewById(R.id.txt_again_autoscene);
+            viewHolderContentType.room_name_txt = (TextView) convertView.findViewById(R.id.room_name_txt);
             viewHolderContentType.img_again_autoscene = (ImageView) convertView.findViewById(R.id.img_again_autoscene);
             //pic_room_img
             viewHolderContentType.pic_room_img = (ImageView) convertView.findViewById(R.id.pic_room_img);
@@ -63,18 +63,18 @@ public class ManagerRoomAdapter extends BaseAdapter {
 //                break;
 //        }
 
-        String name = (String) ((Map) getList().get(position)).get("name");
-        switch (name) {
-            case "客厅":
-                viewHolderContentType.pic_room_img.setImageResource(R.drawable.icon_keting_sm);
-                break;
-            case "儿童房":
-                viewHolderContentType.pic_room_img.setImageResource(R.drawable.icon_ertongfang_sm);
-                break;
-        }
+//        String name = (String) ((Map) getList().get(position)).get("name");
+//        switch (name) {
+//            case "客厅":
+//                viewHolderContentType.pic_room_img.setImageResource(R.drawable.icon_keting_sm);
+//                break;
+//            case "儿童房":
+//                viewHolderContentType.pic_room_img.setImageResource(R.drawable.icon_ertongfang_sm);
+//                break;
+//        }
 
-        viewHolderContentType.txt_again_autoscene.setText(((Map) getList().get(position)).get("name").toString());
-        viewHolderContentType.txt_device_num.setText(((Map) getList().get(position)).get("count").toString() + "个设备");
+        viewHolderContentType.room_name_txt.setText(((Map) getList().get(position)).get("name").toString());
+//        viewHolderContentType.txt_device_num.setText(((Map) getList().get(position)).get("count").toString() + "个设备");
 
         final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
 //        convertView.setOnClickListener(new View.OnClickListener() {
@@ -227,7 +227,7 @@ public class ManagerRoomAdapter extends BaseAdapter {
 
     class ViewHolderContentType {
         ImageView img_again_autoscene;
-        TextView txt_again_autoscene;
+        TextView room_name_txt;
         ImageView pic_room_img;
         TextView txt_device_num;
         Button rename_btn;

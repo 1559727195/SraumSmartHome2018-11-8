@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/backrela_id"
+        android:layout_width="@dimen/x100"
+        android:layout_height="@dimen/y50"></RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/x8"
+        android:background="@drawable/icon_t_back" />
+
+    <TextView
+        android:id="@+id/titlecen_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/y15"
+        android:text=""
+        android:textColor="@color/e30"
+        android:textSize="14sp" />
+
+    <RelativeLayout
+        android:id="@+id/search_image_rel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"></RelativeLayout>
+
+    <ImageView
+        android:id="@+id/search_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp"
+        android:src="@drawable/see_icon"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/backsave"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/y45"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/x10"
+        android:layout_marginTop="@dimen/y3"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/backimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="保存"
+            android:textColor="@color/e30"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

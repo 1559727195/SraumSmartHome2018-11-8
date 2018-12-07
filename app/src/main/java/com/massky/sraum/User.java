@@ -60,6 +60,9 @@ public class User {
     public String userName;
     public String avatar;
     public String accountType;
+    public String panelType;
+    public String panelName;
+    public String panelMAC;
 
     public static class roomList {
         public String number;
@@ -153,9 +156,10 @@ public class User {
     public static class areaList
             implements Serializable {
         public String number;
-        public String name;
+        public String areaName;
         public String sign;
         public String authType;
+        public String roomCount;
     }
 
 
@@ -187,4 +191,77 @@ public class User {
         public String panelName;
         public String panelMac;
     }
+
+    public List<panellist> panelList;
+    /*
+  * id：面板编号
+  mac：面板 MAC 地址
+  name：面板名称
+  type：面板类型
+  status：面板状态 1-在线，0-离线*/
+    public static class panellist {
+        public String id;
+        public String mac;
+        public String name;
+        public String type;
+        public String status;
+        public String buttonStatus;
+        public String button5Name;
+        public String button5Type;
+        public String button6Name;
+        public String button6Type;
+        public String button7Name;
+        public String button7Type;
+        public String button8Name;
+        public String button8Type;
+        public String panelNumber;
+        public String panelName;
+        public String panelType;
+        public String boxNumber;
+        public String boxName;
+        public String firmware;
+        public String hardware;
+        public String gatewayid;
+        public String isUse;
+    }
+
+
+    public List<wifi_device> wifiList;//wifi设备列表
+
+    /**
+     * WIFI设备
+     */
+    public static class wifi_device implements Serializable {
+        //根据面板id-》去查找设备列表
+        public String type;
+        public String number;
+        public String name;
+        public String status;
+        public String mode;
+        public String dimmer;
+        public String temperature;
+        public String speed;
+        public String mac;
+        public String deviceId;
+
+        public String id;
+        public String controllerId;
+        public String wifi;
+        public String isUse;
+    }
+
+    /**
+     * 获取我的网关列表
+     */
+    public List<gateway> gatewayList;
+
+    /**
+     * 网关设备
+     */
+    public static class gateway implements Serializable {
+        public String number;
+        public String name;
+    }
+
+
 }

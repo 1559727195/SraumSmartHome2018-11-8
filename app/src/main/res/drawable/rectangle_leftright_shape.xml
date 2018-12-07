@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+            <solid android:color="@android:color/holo_red_light" />
+        </shape>
+    </item>
+    <!-- content background 内容背景色 其中android:left="3dp" 意为左边框 -->
+    <item
+        android:left="1dp"
+        android:right="1dp">
+        <shape>
+            <solid android:color="@android:color/background_light" />
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+        </shape>
+    </item>
+</layer-list><!--<?xml version="1.0" encoding="utf-8"?>--><!--<shape xmlns:android="http://schemas.android.com/apk/res/android">--><!--<stroke-->
+
+    <!--android:width="@dimen/x1"-->
+
+    <!--android:color="@color/gray"--><!--&gt;</stroke>--><!--</shape>-->

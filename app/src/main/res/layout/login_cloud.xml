@@ -83,7 +83,6 @@
 
     </android.support.percent.PercentRelativeLayout>
 
-
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -163,19 +162,19 @@
             app:layout_widthPercent="70%">
 
             <TextView
+                android:id="@+id/regist_new"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="注册新用户"
-                android:id="@+id/regist_new"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/forget_pass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="忘记密码"
-                android:id="@+id/forget_pass"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -184,7 +183,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/search_gateway_btn"

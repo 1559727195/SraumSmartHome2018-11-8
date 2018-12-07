@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y30"
+    android:id="@+id/swipe_layout"
+    android:background="@color/white"
+    app:ios="false"
+    app:leftSwipe="true"
+    app:swipeEnable="true"
+    android:clickable="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipe_context"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/x5"
+            android:layout_weight="0.15">
+            <ImageView
+                android:id="@+id/device_type_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_launcher" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:orientation="vertical"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="全屋灯光全开"
+                    android:id="@+id/hand_device_content"
+                    android:textColor="#171717"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingRight="@dimen/x10"
+            android:layout_weight="0.25">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/hand_scene_btn"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/wode_right_arrow" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/delete_rel"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_width="@dimen/x50"
+                android:layout_height="match_parent"
+                android:text="删除"
+                android:background="#FF0202"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>
+
+
+

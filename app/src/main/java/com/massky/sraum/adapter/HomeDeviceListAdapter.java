@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.massky.sraum.R;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

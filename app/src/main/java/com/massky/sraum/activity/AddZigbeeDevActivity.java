@@ -113,15 +113,14 @@ public class AddZigbeeDevActivity extends BaseActivity {
 
     @Override
     protected void onView() {
+        StatusUtils.setFullToStatusBar(this);  // StatusBar.
         registerMessageReceiver();
         back.setOnClickListener(this);
         next_step_id.setOnClickListener(this);
         dialogUtil = new DialogUtil(AddZigbeeDevActivity.this);
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         back.setOnClickListener(this);
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
+
 
         roundProgressBar2.setAdd_Delete("delete");
         initDialog();
@@ -528,7 +527,7 @@ public class AddZigbeeDevActivity extends BaseActivity {
      */
     private void getPanel_devices(final String panelid) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(AddZigbeeDevActivity.this,"areaNumber","");
+        String areaNumber = (String) SharedPreferencesUtil.getData(AddZigbeeDevActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(AddZigbeeDevActivity.this));
         map.put("areaNumber", areaNumber);
         map.put("boxNumber", gateway_number);

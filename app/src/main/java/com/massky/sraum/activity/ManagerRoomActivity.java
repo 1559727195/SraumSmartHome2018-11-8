@@ -101,61 +101,8 @@ public class ManagerRoomActivity extends BaseActivity implements XListView.IXLis
         xListView_scan.setXListViewListener(this);
 
         get_allroominfo();
-        addBrodcastAction();
     }
 
-    /**
-     * 添加TCP接收广播通知
-     * // add Action1
-     */
-    private void addBrodcastAction() {
-        sraum_pushDeleteRoom();
-        sraum_pushRoomName();
-    }
-
-
-    /**
-     * 推送删除房间（网关->APP）
-     */
-    private void sraum_pushDeleteRoom() {
-        addCanReceiveAction(new Intent(ApiTcpReceiveHelper.sraum_pushDeleteRoom), new OnActionResponse() {
-
-            @Override
-            public void onResponse(Intent intent) {
-                String tcpreceiver = intent.getStringExtra("strcontent");
-//                ToastUtil.showToast(context, "tcpreceiver:" + tcpreceiver);
-                //解析json数据
-                final User user = new GsonBuilder().registerTypeAdapterFactory(
-                        new NullStringToEmptyAdapterFactory()).create().fromJson(tcpreceiver, User.class);//json字符串转换为对象
-                if (user == null) return;
-                String number = user.number;//房间编号
-                ToastUtil.showToast(ManagerRoomActivity.this, "该房间被删除:" + number);
-
-            }
-        });
-    }
-
-    /**
-     * 推送房间名称（网关->APP）
-     */
-    private void sraum_pushRoomName() {
-        addCanReceiveAction(new Intent(ApiTcpReceiveHelper.sraum_pushRoomName), new OnActionResponse() {
-
-            @Override
-            public void onResponse(Intent intent) {
-                String tcpreceiver = intent.getStringExtra("strcontent");
-//                ToastUtil.showToast(context, "tcpreceiver:" + tcpreceiver);
-                //解析json数据
-                final User user = new GsonBuilder().registerTypeAdapterFactory(
-                        new NullStringToEmptyAdapterFactory()).create().fromJson(tcpreceiver, User.class);//json字符串转换为对象
-                if (user == null) return;
-                String number = user.number;//房间编号
-                String newName = user.newName;//卧室
-                ToastUtil.showToast(ManagerRoomActivity.this, "卧室:" + newName);
-
-            }
-        });
-    }
 
 
     private void get_allroominfo() {

@@ -38,7 +38,7 @@ public class ShowGatewayListAdapter extends BaseAdapter {
         } else {
             mHolder = (ViewHolder) convertView.getTag();
         }
-        mHolder.txt_sao_one.setText(getList().get(position).toString());
+        mHolder.txt_sao_one.setText(((Map)getList().get(position)).get("name").toString());
         if (position == list.size() - 1) {
             mHolder.sao_rel.setBackgroundResource(R.drawable.rectangle_shape);
         } else {

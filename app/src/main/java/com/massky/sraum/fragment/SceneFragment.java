@@ -1,4 +1,5 @@
 package com.massky.sraum.fragment;
+
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
@@ -15,7 +16,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
+import com.massky.sraum.User;
+import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.MyOkHttp;
+import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
+import com.massky.sraum.Util.ToastUtil;
+import com.massky.sraum.Util.TokenUtil;
+import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.activity.AddAutoSceneActivity;
 import com.massky.sraum.activity.AddHandSceneActivity;
 import com.massky.sraum.activity.EditSceneSecondActivity;
@@ -27,7 +38,10 @@ import com.yanzhenjie.statusview.StatusView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import butterknife.InjectView;
 
 import static com.massky.sraum.Util.DipUtil.dip2px;
@@ -40,7 +54,7 @@ public class SceneFragment extends BaseFragment1 {
     private List<Fragment> _fragments = new ArrayList<>();
     @InjectView(R.id.status_view)
     StatusView statusView;
-//    @InjectView(R.id.mViewPager)
+    //    @InjectView(R.id.mViewPager)
 //    NoSlideViewPager mContentPager;
 //    @InjectView(R.id.hand_scene_line)
 //    LinearLayout hand_scene_line;
@@ -66,6 +80,10 @@ public class SceneFragment extends BaseFragment1 {
     private List<String> list_title;
     private int mCurrentPageIndex;
     private DynamicFragmentViewPagerAdapter fragmentViewPagerAdapter;
+    public static String ACTION_INTENT_RECEIVER = "com.massky.sraum.sceceiver";
+    private DialogUtil dialogUtil;
+    private String manuallyCount;
+    private String autoCount;
 
     @Override
     protected void onData() {
@@ -91,8 +109,47 @@ public class SceneFragment extends BaseFragment1 {
     protected void onView(View view) {
         StatusUtils.setFullToStatusBar(getActivity());  // StatusBar.
 //        initView();
-        initControls();
+        dialogUtil = new DialogUtil(getActivity());
+//        initControls();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sraum_getAllScenesCount();
+    }
+
+
+    /**
+     * 获取场景数量
+     */
+    /**
+     * 获取网关在线状态
+     */
+    private void sraum_getAllScenesCount() {
+        Map map = new HashMap();
+        String areaNumber = (String) SharedPreferencesUtil.getData(getActivity(), "areaNumber", "");
+        map.put("areaNumber", areaNumber);
+        map.put("token", TokenUtil.getToken(getActivity()));
+        if (dialogUtil != null) {
+            dialogUtil.loadDialog();
+        }
+        MyOkHttp.postMapString(ApiHelper.sraum_getAllScenesCount, map, new Mycallback(new AddTogglenInterfacer() {
+            @Override
+            public void addTogglenInterfacer() {//这个是获取togglen来刷新数据
+                sraum_getAllScenesCount();
+            }
+        }, getActivity(), dialogUtil) {
+            @Override
+            public void onSuccess(User user) {
+                super.onSuccess(user);
+                manuallyCount = user.manuallyCount;
+                autoCount = user.autoCount;
+                initControls();
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -124,8 +181,10 @@ public class SceneFragment extends BaseFragment1 {
 
         //将名称加载tab名字列表，正常情况下，我们应该在values/arrays.xml中进行定义然后调用
         list_title = new ArrayList<>();
-        list_title.add("手动(8)");
-        list_title.add("自动(8)");
+        manuallyCount = manuallyCount == null ? "0" : manuallyCount;
+        autoCount = autoCount == null ? "0" : autoCount;
+        list_title.add("手动(" + manuallyCount + ")");
+        list_title.add("自动(" + autoCount + ")");
 
         //设置TabLayout的模式
         tab_FindFragment_title.setTabMode(TabLayout.MODE_FIXED);
@@ -227,7 +286,7 @@ public class SceneFragment extends BaseFragment1 {
                 public void onClick(View v) {
                     int position = (Integer) child.getTag();
 //                    vp_FindFragment_pager.setCurrentItem(position,false);
-                    Log.e("robin debug","position:" + position);//监听viewpager+Tablayout -》item点击事件
+                    Log.e("robin debug", "position:" + position);//监听viewpager+Tablayout -》item点击事件
                 }
             });
         }
@@ -353,8 +412,8 @@ public class SceneFragment extends BaseFragment1 {
             add_scene.getLocationOnScreen(location);//获得textview的location位置信息，绝对位置
             popupWindow.setAnimationStyle(R.style.style_pop_animation);// 动画效果必须放在showAsDropDown()方法上边，否则无效
             backgroundAlpha(0.5f);// 设置背景半透明 ,0.0f->1.0f为不透明到透明变化。
-            int xoff = dip2px(getActivity(),20);
-            popupWindow.showAsDropDown(add_scene, 0,0);
+            int xoff = dip2px(getActivity(), 20);
+            popupWindow.showAsDropDown(add_scene, 0, 0);
 //            popupWindow.showAtLocation(tv_pop, Gravity.NO_GRAVITY, location[0]+tv_pop.getWidth(),location[1]);
             popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -368,7 +427,7 @@ public class SceneFragment extends BaseFragment1 {
                 @Override
                 public void onClick(View v) {
                     popupWindow.dismiss();
-                    startActivity(new Intent(getActivity(),AddHandSceneActivity.class));
+                    startActivity(new Intent(getActivity(), AddHandSceneActivity.class));
                 }
             });
 
@@ -376,7 +435,7 @@ public class SceneFragment extends BaseFragment1 {
                 @Override
                 public void onClick(View v) {//添加自动场景
                     popupWindow.dismiss();
-                    startActivity(new Intent(getActivity(),AddAutoSceneActivity.class));
+                    startActivity(new Intent(getActivity(), AddAutoSceneActivity.class));
                 }
             });
         } catch (Exception e) {
@@ -386,7 +445,7 @@ public class SceneFragment extends BaseFragment1 {
 
     // 设置popupWindow背景半透明
     public void backgroundAlpha(float bgAlpha) {
-        WindowManager.LayoutParams lp =getActivity().getWindow().getAttributes();
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgAlpha;// 0.0-1.0
         getActivity().getWindow().setAttributes(lp);
     }

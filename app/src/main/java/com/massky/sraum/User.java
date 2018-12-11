@@ -63,6 +63,8 @@ public class User {
     public String panelType;
     public String panelName;
     public String panelMAC;
+    public String manuallyCount;
+    public String autoCount;
 
     public static class roomList {
         public String number;
@@ -223,6 +225,7 @@ public class User {
         public String hardware;
         public String gatewayid;
         public String isUse;
+        public String number;
     }
 
 
@@ -259,9 +262,32 @@ public class User {
      * 网关设备
      */
     public static class gateway implements Serializable {
-        public String number;
+        public String id;
         public String name;
+        public String number;
+        public String type;
     }
 
+
+
+    //gatewayid面板id panelType面板类型
+    public static class scenelist {
+        public String type;
+        public String name;
+        public String sceneStatus;
+        public String gatewayid;
+        public String panelType;
+        public String status;
+        public String id;
+        public String panelNumber;
+        public String buttonNumber;
+        public List<devicesce> deviceList;
+        public String sceneId;
+        public String sceneName;
+        public String sceneType;
+        public String boxNumber;
+        public String boxName;
+
+    }
 
 }

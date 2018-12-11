@@ -1,6 +1,5 @@
 package com.massky.sraum.activity;
 
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
-import com.massky.sraum.Util.ClearLengthEditText;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
@@ -22,6 +20,7 @@ import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.base.BaseActivity;
+import com.massky.sraum.view.ClearLengthEditText;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import butterknife.InjectView;
 import okhttp3.Call;
-import static com.massky.sraum.Util.ClearLengthEditText.dip2px;
+import static com.massky.sraum.Util.DipUtil.dip2px;
 
 /**
  * Created by zhu on 2018/1/8.
@@ -78,9 +77,6 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
 
     @Override
     protected void onView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         back.setOnClickListener(this);
         btn_login_gateway.setOnClickListener(this);
         dialogUtil = new DialogUtil(this);

@@ -58,4 +58,12 @@ public class ApiHelper {
     public static String sraum_updateAreaName = api + "sraum_updateAreaName";
     public static String sraum_deleteArea = api + "sraum_deleteArea";
     public static String sraum_getAllAreas = api + "sraum_getAllAreas";
+    public static String sraum_findButton = api + "sraum_findButton";
+    public static String sraum_deleteDevice = api + "sraum_deleteDevice";
+    public static String sraum_deleteWifiCamera = api + "sraum_deleteWifiCamera";
+    public static String sraum_deleteWifiApple = api + "sraum_deleteWifiApple";
+    public static String sraum_deleteGateway = api + "sraum_deleteGateway";
+    public static String sraum_deviceRelatedRoom = api + "sraum_deviceRelatedRoom";
+    public static String sraum_getAllScenesCount = api + "sraum_getAllScenesCount";
+    public static String sraum_getManuallyScenes = api + "sraum_getManuallyScenes";
 }

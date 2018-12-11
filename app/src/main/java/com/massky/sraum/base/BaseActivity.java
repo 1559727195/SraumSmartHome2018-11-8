@@ -32,12 +32,9 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
     public static boolean isForegrounds = false;
+    public static boolean isDestroy = false;
     public Bundle savedInstanceState;
-    private BroadcastReceiver mReceiver;
-    private IntentFilter mIntentFilter;
     private static final String TAG = "BaseActivity";
-    // 用来记录需要处理的action和响应函数
-    private Map<String, List<OnActionResponse>> mCallbacks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         this.savedInstanceState = savedInstanceState;
         AppManager.getAppManager().addActivity(this);//添加activity
         ButterKnife.inject(this);
-        mIntentFilter = new IntentFilter();
-        mReceiver = new CommonReceiver();
-        mCallbacks = new HashMap<String, List<OnActionResponse>>();
+        isDestroy = false;
         onView();
         onEvent();
         onData();
@@ -70,7 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onPause() {
         isForegrounds = false;
-        unregisterReceiver(mReceiver);
         super.onPause();
     }
 
@@ -94,7 +88,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onResume() {
         isForegrounds = true;
-        registerReceiver(mReceiver, mIntentFilter);
         super.onResume();
     }
 
@@ -110,83 +103,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isDestroy = true;
     }
-
-    //子类调用该方法，注册所要处理的广播action
-
-    /**
-     * if subclass need response BroadcastReceiver, need invoke this method to
-     * add can Receive Action
-     *
-     * @param intent
-     * @param callback
-     */
-    public void addCanReceiveAction(Intent intent, OnActionResponse callback) {
-        final String action = intent.getAction();
-
-        if (!mIntentFilter.hasAction(action)) {
-            mIntentFilter.addAction(action);
-            registerReceiver(mReceiver, mIntentFilter);
-        }
-
-        if (!mCallbacks.containsKey(action)) {
-            mCallbacks.put(action, Collections.synchronizedList(new ArrayList<OnActionResponse>()));
-        }
-
-        mCallbacks.get(action).add(callback);
-        intent.putExtra(Constants.EXTRA_ACTION_CALLBACK_HASH_CODE, callback.hashCode());
-    }
-
-    private class CommonReceiver extends BroadcastReceiver {
-
-        // 子类收到广播后的逻辑
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "CommonReceiver receiver intent:" + intent.getAction());
-            final String action = intent.getAction();
-            if (mCallbacks != null && mCallbacks.containsKey(action)) {
-                int hashCode = intent.getIntExtra(Constants.EXTRA_ACTION_CALLBACK_HASH_CODE, -1);
-                List<OnActionResponse> list = mCallbacks.get(action);
-                if (list != null) {
-                    int index = -1;
-                    int count = list.size();
-
-                    for (int i = 0; i < count; i++) {
-                        if (hashCode == list.get(i).hashCode()) {
-                            index = i;
-                            break;
-                        }
-                    }
-
-                    if (index >= 0) {
-                        list.get(index).onResponse(intent);
-                    } else {
-                        list.get(count - 1).onResponse(intent);
-                    }
-
-                    if (list.isEmpty()) {
-                        mCallbacks.remove(action);
-                    }
-                }
-            }
-        }
-    }
-
-    //子类具体实现处理逻辑
-    protected interface OnActionResponse {
-        void onResponse(Intent intent);
-    }
-
-//    @Override
-//    protected void onPause() {
-//        unregisterReceiver(mReceiver);
-//        super.onPause();
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        registerReceiver(mReceiver, mIntentFilter);
-//        super.onResume();
-//    }
 
 }

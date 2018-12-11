@@ -55,7 +55,12 @@ public class MainGateWayActivity extends BaseActivity {
     private SceneFragment fragment2;
     private MineFragment fragment3;
     private Fragment currentFragment;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
     public static String ACTION_SRAUM_SETBOX = "ACTION_SRAUM_SETBOX";//notifactionId = 8 ->设置网关模式，sraum_setBox
+    public static String UPDATE_GRADE_BOX = "com.massky.sraum.update_grade_box";
+
     @Override
     protected int viewId() {
         return R.layout.main_gateway_act;
@@ -152,90 +157,6 @@ public class MainGateWayActivity extends BaseActivity {
     }
 
 
-//    private FragmentTransaction switchFragment(Fragment targetFragment) {
-//
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        if (!targetFragment.isAdded()) {
-//            //第一次使用switchFragment()时currentFragment为null，所以要判断一下
-//            if (currentFragment != null) {
-//                transaction.hide(currentFragment);
-//            }
-//            transaction.add(R.id.container, targetFragment, targetFragment.getClass().getName());
-//
-//        } else {
-//            transaction
-//                    .hide(currentFragment)
-//                    .show(targetFragment);
-//        }
-//        currentFragment = targetFragment;
-//        return transaction;
-//    }
-
-
-    /**
-     * 把所有fragment全部加载进去
-     *
-     * @param targetFragment
-     */
-    private void addFragment(Fragment targetFragment) {
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (!targetFragment.isAdded()) {
-            //第一次使用switchFragment()时currentFragment为null，所以要判断一下
-            transaction.add(R.id.container, targetFragment, targetFragment.getClass().getName());
-        }
-        transaction.commitAllowingStateLoss();
-    }
-
-    /**
-     * 添加TCP接收广播通知
-     * // add Action1
-     */
-    private void addBrodcastAction() {
-        //推送修改网关名称（网关->APP）
-        push_gatewayName();
-
-    }
-
-    /**
-     * 推送修改网关名称（网关->APP）
-     */
-    private void push_gatewayName() {
-        addCanReceiveAction(new Intent(ApiTcpReceiveHelper.Sraum_PushGatewayPassword), new OnActionResponse() {
-
-            @Override
-            public void onResponse(Intent intent) {
-                String tcpreceiver = intent.getStringExtra("strcontent");
-//                ToastUtil.showToast(context, "tcpreceiver:" + tcpreceiver);
-                //解析json数据
-                final User user = new GsonBuilder().registerTypeAdapterFactory(
-                        new NullStringToEmptyAdapterFactory()).create().fromJson(tcpreceiver, User.class);//json字符串转换为对象
-                if (user == null) return;
-                if (user.newPassword != null) {//APP收到修改密码命令后应主动退出网关
-                    ApplicationContext.getInstance().removeActivity_but_activity(MainGateWayActivity.this);
-                    startActivity(new Intent(MainGateWayActivity.this, LoginGateWayActivity.class));
-                    MainGateWayActivity.this.finish();
-                    SharedPreferencesUtil.saveData(MainGateWayActivity.this, "password", user.newPassword.toString());
-                    //退出网关（APP->网关），断开TCP连接
-                    MyService.getInstance().quitTCP();
-                    UDPClient.activity_destroy(true);
-                }
-            }
-        });
-    }
-
-
-    /**
-     * 登录网关
-     */
-    private void logout_gateway() {
-
-        //MyService.getInstance().sraum_send_tcp(map, ApiHelper.Sraum_Login);
-        //退出网关，断开TCP连接
-
-    }
-
-
     @Override
     protected void onEvent() {
 
@@ -252,9 +173,6 @@ public class MainGateWayActivity extends BaseActivity {
     }
 
     private RadioGroup radioGroup;
-    public static final String fragment1Tag = "fragment1";
-    public static final String fragment2Tag = "fragment2";
-    public static final String fragment3Tag = "fragment3";
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -276,6 +194,5 @@ public class MainGateWayActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-       // UDPClient.activity_destroy(true);//udp线程被杀死,暂时不能被杀死
     }
 }

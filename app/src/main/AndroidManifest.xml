@@ -228,6 +228,23 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
+            android:name="com.massky.sraum.activity.AddZigbeeDevActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name="com.massky.sraum.activity.ChangePanelAndDeviceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name="com.massky.sraum.activity.AddZigbeeDeviceScucessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+
+        <activity
             android:name="com.massky.sraum.activity.AddNewRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>

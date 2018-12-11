@@ -13,9 +13,11 @@ import com.massky.sraum.User;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.NullStringToEmptyAdapterFactory;
+import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.adapter.ManagerRoomAdapter;
 import com.massky.sraum.adapter.RoomListNewAdapter;
 import com.massky.sraum.base.BaseActivity;
@@ -49,13 +51,14 @@ public class RoomListActivity extends BaseActivity implements XListView.IXListVi
     String[] again_elements = {"客厅", "卧室", "厨房", "客厅", "餐厅", "阳台", "儿童房", "老年房"};
     private List<Map> list_hand_scene;
     private Handler mHandler = new Handler();
-//    @InjectView(R.id.add_room)
+    //    @InjectView(R.id.add_room)
 //    TextView add_room;
     private RoomListNewAdapter managerroomadapter;
     @InjectView(R.id.status_view)
     StatusView statusView;
     private List<Map> roomsInfos = new ArrayList<>();
     private String areaNumber;
+    private String doit;
 
     @Override
     protected int viewId() {
@@ -137,7 +140,16 @@ public class RoomListActivity extends BaseActivity implements XListView.IXListVi
 
     @Override
     protected void onData() {
-        areaNumber = (String) getIntent().getSerializableExtra("areaNumber");
+        doit = (String) getIntent().getSerializableExtra("doit");
+        switch (doit == null ? "":doit) {
+            case "sraum_deviceRelatedRoom":
+                areaNumber = (String) SharedPreferencesUtil.getData(RoomListActivity.this, "areaNumber", "");
+                break;
+            default:
+                areaNumber = (String) getIntent().getSerializableExtra("areaNumber");
+                break;
+        }
+
     }
 
     @Override
@@ -152,7 +164,8 @@ public class RoomListActivity extends BaseActivity implements XListView.IXListVi
 //                break;
             case R.id.add_room://
                 Intent intent = new Intent(RoomListActivity.this, AddNewRoomActivity.class);
-                intent.putExtra("areaNumber",areaNumber);
+                intent.putExtra("areaNumber", areaNumber);
+                intent.putExtra("doit", getIntent().getSerializableExtra("doit"));
                 startActivity(intent);
                 break;
         }

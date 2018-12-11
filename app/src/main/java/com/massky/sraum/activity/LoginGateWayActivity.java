@@ -97,7 +97,6 @@ public class LoginGateWayActivity extends BaseActivity {
         Intent intent = new Intent(this, MyService.class);
         startService(intent);
 //        udp_searchGateway();//初始化UDP，和TCP连接...
-        addBrodcastAction();
         //
         String number = (String) SharedPreferencesUtil.getData(LoginGateWayActivity.this, "number",
                 "");
@@ -111,41 +110,6 @@ public class LoginGateWayActivity extends BaseActivity {
     }
 
 
-    /**
-     * 添加TCP接收广播通知
-     */
-    private void addBrodcastAction() {
-        // add Action1
-        addCanReceiveAction(new Intent(MESSAGE_SRAUM_VERIFI_SOCKET), new OnActionResponse() {
-
-            @Override
-            public void onResponse(Intent intent) {
-                //处理action1
-                User user = init_user_from_tcp(intent);
-                if (user == null) return;
-                if (user.result.equals("100")) {
-                    //去登录网关
-                    init_login_gateway();
-                }
-            }
-        });
-
-        // add Action2
-        addCanReceiveAction(new Intent(MESSAGE_SRAUM_LOGIN), new OnActionResponse() {
-
-            @Override
-            public void onResponse(Intent intent) {
-                //处理action2
-                //处理action1
-                User user = init_user_from_tcp(intent);
-                if (user == null) return;
-                if (user.result.equals("100")) {
-                    //去登录网关
-                    ToastUtil.showToast(LoginGateWayActivity.this, "网关登录成功");
-                }
-            }
-        });
-    }
 
     /**
      * 登录网关

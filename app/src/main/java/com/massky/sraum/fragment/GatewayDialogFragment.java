@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -180,8 +181,6 @@ public class GatewayDialogFragment extends DialogFragment implements View.OnClic
     }
 
 
-
-
     /**
      * 让dialogFragment铺满整个屏幕的好办法
      */
@@ -227,6 +226,7 @@ public class GatewayDialogFragment extends DialogFragment implements View.OnClic
 
     /**
      * 设置网关开启模式
+     *
      * @param position
      */
     private void set_gateway(int position) {
@@ -235,7 +235,7 @@ public class GatewayDialogFragment extends DialogFragment implements View.OnClic
         final String type = (String) map.get("type");
         String status = (String) map.get("status");
         final String gateway_number = (String) gatewayList.get(position).get("number");
-        String areaNumber = (String) SharedPreferencesUtil.getData(getActivity(), "", "areaNumber");
+        String areaNumber = (String) SharedPreferencesUtil.getData(getActivity(), "areaNumber", "");
         //在这里先调
         //设置网关模式-sraum-setBox
         Map map = new HashMap();
@@ -263,9 +263,8 @@ public class GatewayDialogFragment extends DialogFragment implements View.OnClic
                         startActivity(intent_position);
                     }
 
-
                     @Override
-                    public void wrongToken() {
+                    public void wrongToken() {//
                         super.wrongToken();
                     }
 
@@ -286,8 +285,15 @@ public class GatewayDialogFragment extends DialogFragment implements View.OnClic
     }
 
     @Override
-    public void sendGateWayparams(Map map, List<Map> gatewayList) {
+    public void sendGateWayparams(Map map, final List<Map> gatewayList1) {
         this.map = map;
-        this.gatewayList = gatewayList;
+        this.gatewayList = gatewayList1;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showGatewayListAdapter = new ShowGatewayListAdapter(getActivity(), gatewayList1);
+                list_show_rev_item.setAdapter(showGatewayListAdapter);
+            }
+        }, 50);
     }
 }

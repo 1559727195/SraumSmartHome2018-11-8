@@ -75,6 +75,7 @@
                 android:layout_width="@dimen/x50"
                 android:layout_height="match_parent"
                 android:text="删除"
+                android:id="@+id/delete_btn"
                 android:background="#FF0202"
                 android:textColor="@android:color/white" />
         </RelativeLayout>

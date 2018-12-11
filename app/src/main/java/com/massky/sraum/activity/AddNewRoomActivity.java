@@ -13,6 +13,7 @@ import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.view.ClearEditText;
 import com.massky.sraum.widget.ApplicationContext;
@@ -39,6 +40,7 @@ public class AddNewRoomActivity extends BaseActivity {
     private String areaNumber;
     @InjectView(R.id.edit_password_gateway)
     ClearEditText edit_password_gateway;
+    private String doit;
 
     @Override
     protected int viewId() {
@@ -51,7 +53,7 @@ public class AddNewRoomActivity extends BaseActivity {
 //            statusView.setBackgroundColor(Color.BLACK);
 //        }
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
-
+        doit = (String) getIntent().getSerializableExtra("doit");
     }
 
     /**
@@ -78,7 +80,16 @@ public class AddNewRoomActivity extends BaseActivity {
                     @Override
                     public void onSuccess(User user) {
                         //"roomNumber":"1"
-                        AddNewRoomActivity.this.finish();
+                        switch (doit == null ? "" : doit) {
+                            case "sraum_deviceRelatedRoom":
+                                AddNewRoomActivity.this.finish();
+                                AppManager.getAppManager().finishActivity_current(RoomListActivity.class);
+                                break;
+                            default:
+                                AddNewRoomActivity.this.finish();
+                                break;
+                        }
+
                     }
                 });
     }
@@ -111,7 +122,7 @@ public class AddNewRoomActivity extends BaseActivity {
             case R.id.next_step_txt:
 //                GuanLianSceneBtnActivity.this.finish();
                 if (edit_password_gateway.getText().toString().equals("")) {
-                    ToastUtil.showToast(AddNewRoomActivity.this,"房间为空");
+                    ToastUtil.showToast(AddNewRoomActivity.this, "房间为空");
                     return;
                 }
                 sraum_addRoomInfo(edit_password_gateway.getText().toString().trim());

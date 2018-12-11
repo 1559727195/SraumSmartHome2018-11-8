@@ -9,21 +9,33 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
+import com.massky.sraum.User;
+import com.massky.sraum.Util.MyOkHttp;
+import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
+import com.massky.sraum.Util.TokenUtil;
+import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.activity.EditSceneSecondActivity;
 import com.massky.sraum.activity.GuanLianSceneRealBtnActivity;
 import com.massky.sraum.activity.MyDeviceListActivity;
+import com.massky.sraum.view.ClearEditText;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
 
 /**
  * Created by masskywcy on 2017-05-16.
@@ -37,15 +49,17 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
     private int temp = -1;
     private Context context;//上下文
     private String accountType;
+    private RefreshListener refreshListener;
 
 
-    public MyDeviceListAdapter(Context context, List<Map> list, List<Integer> listint, List<Integer> listintwo, String accountType) {
+    public MyDeviceListAdapter(Context context, List<Map> list, List<Integer> listint, List<Integer> listintwo, String accountType, RefreshListener refreshListener) {
 
         this.list = list;
         this.listint = listint;
         this.listintwo = listintwo;
         this.context = context;
         this.accountType = accountType;
+        this.refreshListener = refreshListener;
     }
 
     @Override
@@ -75,28 +89,15 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
 //            viewHolderContentType.hand_gateway_content = (TextView) convertView.findViewById(R.id.hand_gateway_content);
             viewHolderContentType.hand_scene_btn = (ImageView) convertView.findViewById(R.id.hand_scene_btn);
             viewHolderContentType.swipe_layout = (SwipeMenuLayout) convertView.findViewById(R.id.swipe_layout);
-            viewHolderContentType.delete_rel = (RelativeLayout) convertView.findViewById(R.id.delete_rel);
+            viewHolderContentType.delete_btn = (Button) convertView.findViewById(R.id.delete_btn);
             convertView.setTag(viewHolderContentType);
         } else {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
 
-        int element = (Integer) list.get(position).get("image");
-        viewHolderContentType.device_type_pic.setImageResource(element);
+        viewHolderContentType.device_type_pic.setImageResource(listint.get(position));
         viewHolderContentType.hand_device_content.setText(list.get(position).get("name").toString());
-
         final ViewHolderContentType finalViewHolderContentType1 = viewHolderContentType;
-//        viewHolderContentType.swipe_context.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if ( finalViewHolderContentType1.swipe_layout.isIsopen()) {
-//
-//                } else {
-//                    Intent intent = new Intent(context, EditSceneSecondActivity.class);
-//                    context.startActivity(intent);
-//                }
-//            }
-//        });
 
         ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
 
@@ -114,23 +115,18 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
         });
 
         final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
-        viewHolderContentType.hand_scene_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(is_open_to_close) {//SwipeLayout是否在打开到关闭的过程
-                    is_open_to_close = false;
-                } else
-                    finalViewHolderContentType.hand_scene_btn.setImageResource(R.drawable.icon_root);
-            }
-        });
 
-        viewHolderContentType.delete_rel.setOnClickListener(new View.OnClickListener() {
+
+        viewHolderContentType.delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                ToastUtil.showToast(context,"onDelete");
-                 //弹出删除对话框
-
-
+                //弹出删除对话框
+                finalViewHolderContentType.swipe_layout.quickClose();
+                showCenterDeleteDialog(list.get(position).get("name").toString()
+                        , list.get(position).get("number").toString(), list.get(position).get("type").toString()
+                        , list.get(position).get("boxNumber") == null ? "" :
+                                list.get(position).get("boxNumber").toString());
             }
         });
 
@@ -139,8 +135,7 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
 
 
     //自定义dialog,centerDialog删除对话框
-    public void showCenterDeleteDialog(final String panelNumber, final String name, final String type,
-                                       final SwipeMenuLayout finalConvertView) {
+    public void showCenterDeleteDialog(final String name, final String number, final String type, final String boxNumber) {
 //        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 //        // 布局填充器
 //        LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -161,7 +156,7 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
         confirm = (TextView) view.findViewById(R.id.call_confirm);
         tv_title = (TextView) view.findViewById(R.id.tv_title);//name_gloud
 //        name_gloud = (TextView) view.findViewById(R.id.name_gloud);
-//        name_gloud.setText(name);
+        tv_title.setText(name);
 //        tv_title.setText("是否拨打119");
 //        content.setText(message);
         //显示数据
@@ -169,7 +164,7 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
         dialog.setContentView(view);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        DisplayMetrics dm =context.getResources().getDisplayMetrics();
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
         int displayWidth = dm.widthPixels;
         int displayHeight = dm.heightPixels;
         android.view.WindowManager.LayoutParams p = dialog.getWindow().getAttributes(); //获取对话框当前的参数值
@@ -182,6 +177,10 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String areaNumber = (String) SharedPreferencesUtil.getData(context, "areaNumber", "");
+
+                sraum_deleteDevice(areaNumber, number, type, boxNumber);
                 dialog.dismiss();
             }
         });
@@ -189,7 +188,85 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                linkage_delete(linkId, dialog);
+                dialog.dismiss();
+            }
+        });
+    }
 
+    /**
+     * 删除设备
+     * *
+     *
+     * @param areaNumber
+     */
+    private void sraum_deleteDevice(final String areaNumber, final String number, final String type,
+                                    final String boxNumber) {
+        Map<String, String> mapdevice = new HashMap<>();
+        mapdevice.put("token", TokenUtil.getToken(context));
+        mapdevice.put("areaNumber", areaNumber);
+        String send_method = "";
+        switch (type) {
+            case "AA02":
+                mapdevice.put("number", number);
+                send_method = ApiHelper.sraum_deleteWifiApple;
+                break;//wifi模块
+            case "AA03":
+            case "AA04":
+                mapdevice.put("number", number);
+                send_method = ApiHelper.sraum_deleteWifiCamera;
+                break;//wifi模块
+            default:
+                mapdevice.put("gatewayNumber", boxNumber);
+                mapdevice.put("deviceNumber", number);
+                send_method = ApiHelper.sraum_deleteDevice;
+                break;
+            case "网关":
+                mapdevice.put("number", number);
+                send_method = ApiHelper.sraum_deleteGateway;
+                break;
+        }
+
+//        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(LinkageListActivity.this));
+        MyOkHttp.postMapString(send_method, mapdevice, new Mycallback(new AddTogglenInterfacer() {
+            @Override
+            public void addTogglenInterfacer() {//刷新togglen数据
+                sraum_deleteDevice(areaNumber, number, type, boxNumber);
+            }
+        }, context, null) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                super.onError(call, e, id);
+            }
+
+            @Override
+            public void pullDataError() {
+                super.pullDataError();
+            }
+
+            @Override
+            public void emptyResult() {
+                super.emptyResult();
+            }
+
+            @Override
+            public void wrongToken() {
+                super.wrongToken();
+                //重新去获取togglen,这里是因为没有拉到数据所以需要重新获取togglen
+
+            }
+
+            @Override
+            public void wrongBoxnumber() {
+                ToastUtil.showToast(context, "areaNumber\n" +
+                        "不存在");
+            }
+
+            @Override
+            public void onSuccess(final User user) {
+//                refreshLayout.autoRefresh();
+                if (refreshListener != null)
+                    refreshListener.refresh();
             }
         });
     }
@@ -203,13 +280,17 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
 
 
     class ViewHolderContentType {
+        public Button delete_btn;
         ImageView device_type_pic;
         TextView hand_device_content;
         TextView hand_gateway_content;
         ImageView hand_scene_btn;
         LinearLayout swipe_context;
         SwipeMenuLayout swipe_layout;
-        RelativeLayout delete_rel;
 
+    }
+
+    public interface RefreshListener {
+        void refresh();
     }
 }

@@ -43,7 +43,6 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
     @InjectView(R.id.back)
     ImageView back;
 
-
     @InjectView(R.id.mineRoom_list)
     ListViewForScrollView macfragritview_id;
     @InjectView(R.id.mac_wifi_dev_id)
@@ -58,7 +57,7 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
             R.drawable.icon_type_menci_90, R.drawable.icon_type_rentiganying_90,
             R.drawable.icon_type_toa_90, R.drawable.icon_type_yanwucgq_90, R.drawable.icon_type_tianranqibjq_90,
             R.drawable.icon_type_jinjianniu_90, R.drawable.icon_type_zhinengmensuo_90, R.drawable.icon_type_pm25,
-            R.drawable.icon_type_shuijin, R.drawable.icon_type_duogongneng,R.drawable.icon_kaiguan_socket_90, R.drawable.icon_wangguan
+            R.drawable.icon_type_shuijin, R.drawable.icon_type_duogongneng, R.drawable.icon_kaiguan_socket_90, R.drawable.icon_wangguan
     };
 
     //"B301"暂时为多功能模块
@@ -83,13 +82,13 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
             R.drawable.icon_maoyan,
 
     };
+
     private int[] iconNam_wifi = {R.string.hongwai, R.string.yaokongqi, R.string.shexiangtou, R.string.keshimenling};//, R.string.pm_mofang
     private int[] iconName = {R.string.yijianlight, R.string.liangjianlight, R.string.sanjianlight, R.string.sijianlight,
             R.string.yilutiaoguang1, R.string.lianglutiaoguang1, R.string.sanlutiao1, R.string.window_panel1
             , R.string.menci, R.string.rentiganying, R.string.jiuzuo, R.string.yanwu, R.string.tianranqi, R.string.jinjin_btn,
             R.string.zhineng, R.string.pm25, R.string.shuijin, R.string.duogongneng, R.string.cha_zuo_2, R.string.wangguan
     };
-
 
     private SelectDevTypeAdapter adapter;
     private ConfigDialogFragment newFragment;
@@ -165,6 +164,7 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
         if (dialogUtil != null) {
             dialogUtil.loadDialog();
         }
+
         Map<String, String> mapdevice = new HashMap<>();
         mapdevice.put("token", TokenUtil.getToken(SelectZigbeeDeviceActivity.this));
         String areaNumber = (String) SharedPreferencesUtil.getData(SelectZigbeeDeviceActivity.this, "areaNumber", "");
@@ -229,7 +229,6 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
                     }
                 });
     }
-
 
     /**
      * 给全屏窗体传参数
@@ -313,7 +312,6 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
         }
         sraum_getAllGateWays(map);
     }
-
 
     @Override
     public void onClick(View v) {

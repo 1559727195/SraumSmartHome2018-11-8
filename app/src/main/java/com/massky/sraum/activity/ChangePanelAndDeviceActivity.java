@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
-import com.massky.sraum.Util.ClearLengthEditText;
+
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
@@ -26,9 +26,12 @@ import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.base.BaseActivity;
+import com.massky.sraum.view.ClearLengthEditText;
 import com.massky.sraum.widget.ApplicationContext;
+import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,6 +91,16 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
     @InjectView(R.id.panelname)
     ClearLengthEditText panelname;
 
+    @InjectView(R.id.findButton_four)
+    ImageView findButton_four;
+
+    @InjectView(R.id.findButton_three)
+    ImageView findButton_three;
+    @InjectView(R.id.findButton_two)
+    ImageView findButton_two;
+    @InjectView(R.id.findButton_one)
+    ImageView findButton_one;
+
     private List<User.panellist> panelList = new ArrayList<>();
     private DialogUtil dialogUtil;
     private List<User.device> deviceList = new ArrayList<>();
@@ -113,6 +126,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
 
     @Override
     protected void onView() {
+        StatusUtils.setFullToStatusBar(this);  // StatusBar.
         dialogUtil = new DialogUtil(this);
         //根据面板类型，显示不同的设备列表UI
         get_panel_detail();
@@ -134,6 +148,10 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
     protected void onEvent() {
         back.setOnClickListener(this);
         btn_login_gateway.setOnClickListener(this);
+        findButton_four.setOnClickListener(this);
+        findButton_three.setOnClickListener(this);
+        findButton_two.setOnClickListener(this);
+        findButton_one.setOnClickListener(this);
     }
 
     @Override
@@ -437,7 +455,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
     /**
      * 显示第一个
      */
-    private void  show_one_item() {
+    private void show_one_item() {
         onekey_device.setVisibility(View.VISIBLE);
         twokey_device.setVisibility(View.GONE);
         threekey_device.setVisibility(View.GONE);
@@ -490,9 +508,29 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
                 break;
 
             case R.id.btn_login_gateway:
-                save_panel();
+                    //
+
+                Map map = new HashMap();
+                map.put("deviceId",panelNumber);
+                map.put("deviceType",panelType);
+                map.put("type","1");
+                Intent intent = new Intent(ChangePanelAndDeviceActivity.this, SelectRoomActivity.class);
+                intent.putExtra("map_deivce", (Serializable) map);
+                startActivity(intent);
                 break;
 
+            case R.id.findButton_four://找按钮
+                sraum_find_button(deviceList.get(0).number);
+                break;
+            case R.id.findButton_three:
+                sraum_find_button(deviceList.get(1).number);
+                break;
+            case R.id.findButton_two:
+                sraum_find_button(deviceList.get(2).number);
+                break;
+            case R.id.findButton_one:
+                sraum_find_button(deviceList.get(3).number);
+                break;
         }
     }
 
@@ -536,6 +574,62 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
                     @Override
                     public void wrongToken() {
                         super.wrongToken();
+                    }
+                });
+    }
+
+    /**
+     * 查找按钮
+     */
+    private void sraum_find_button(String buttonNumber) {
+        Map<String, Object> map = new HashMap<>();
+        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this, "areaNumber", "");
+        map.put("areaNumber", areaNumber);
+        map.put("gatewayNumber", boxNumber);
+        map.put("deviceNumber", panelNumber);
+        map.put("buttonNumber", buttonNumber);
+        map.put("token", TokenUtil.getToken(ChangePanelAndDeviceActivity.this));
+        MyOkHttp.postMapObject(ApiHelper.sraum_findButton, map,
+                new Mycallback(new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {//刷新togglen获取新数据
+                        sraum_find_panel();
+                    }
+                }, ChangePanelAndDeviceActivity.this, dialogUtil) {
+                    @Override
+                    public void onSuccess(User user) {
+                        super.onSuccess(user);
+                        ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "操作完成，查看对应面板");
+                    }
+
+                    @Override
+                    public void threeCode() {
+                        super.threeCode();
+                        ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "gatewayNumber 不存在");
+                    }
+
+                    @Override
+                    public void fourCode() {
+                        super.fourCode();
+                        ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "-deviceNumber 不\n" +
+                                "存在");
+                    }
+
+                    @Override
+                    public void wrongToken() {
+                        super.wrongToken();
+                    }
+
+                    @Override
+                    public void wrongBoxnumber() {
+                        //areaNumber 不存在
+                        ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "areaNumber 不存在");
+                    }
+
+                    @Override
+                    public void fiveCode() {
+                        //buttonNumber 不存在
+                        ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "buttonNumber 不存在");
                     }
                 });
     }

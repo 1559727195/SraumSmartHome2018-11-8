@@ -23,8 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.Util.DialogUtil;
-import com.base.Basecactivity;
 import com.ipcamera.demo.BridgeService.CallBack_AlarmParamsInterface;
 import com.ipcamera.demo.BridgeService.SDCardInterface;
 import com.ipcamera.demo.BridgeService.TimingInterface;
@@ -36,10 +34,11 @@ import com.ipcamera.demo.bean.SdcardBean;
 import com.ipcamera.demo.bean.SwitchBean;
 import com.ipcamera.demo.utils.ContentCommon;
 import com.massky.sraum.R;
-import com.suke.widget.SwitchButton;
+import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.base.BaseActivity;
+import com.massky.sraum.widget.SlideSwitchButton;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,8 +47,8 @@ import butterknife.InjectView;
 import vstc2.nativecaller.NativeCaller;
 
 
-public class SettingSDCardActivity extends Basecactivity implements
-        OnClickListener, SDCardInterface, SwitchButton.OnCheckedChangeListener,
+public class SettingSDCardActivity extends BaseActivity implements
+        OnClickListener, SDCardInterface, SlideSwitchButton.SlideSwitch,
         VideoTimingInterface, TimingInterface, CallBack_AlarmParamsInterface {
     private TextView tvSdTotal = null;
     private TextView tvSdRemain = null;
@@ -57,7 +56,7 @@ public class SettingSDCardActivity extends Basecactivity implements
     private Button btnFormat = null;
     private CheckBox cbxConverage = null;
     private EditText editRecordLength = null;
-    private SwitchButton cbxRecordTime = null;
+    private SlideSwitchButton cbxRecordTime = null;
     private ImageView btnBack = null;
     private Button btnOk = null;
     private final int TIMEOUT = 3000;
@@ -81,7 +80,7 @@ public class SettingSDCardActivity extends Basecactivity implements
     @InjectView(R.id.next_step_txt)
     TextView next_step_txt;
     @InjectView(R.id.cbx_record_time)
-    SwitchButton cbx_record_time;
+   SlideSwitchButton cbx_record_time;
     @InjectView(R.id.plan_luxiang_rel)
     RelativeLayout plan_luxiang_rel;
 
@@ -121,21 +120,26 @@ public class SettingSDCardActivity extends Basecactivity implements
                         tvSdStatus
                                 .setText(SettingSDCardActivity.this.getResources()
                                         .getString(R.string.sdcard_inserted));
-                        cbx_record_time.setChecked(false);
+//                        cbx_record_time.setChecked(false);
+                        cbx_record_time.changeOpenState(false);
                     } else if (sdcardBean.getRecord_sd_status() == 2) {
-                        cbx_record_time.setChecked(true);
+//                        cbx_record_time.setChecked(true);
+                        cbx_record_time.changeOpenState(true);
                         tvSdStatus.setText(getString(R.string.sdcard_video));
                     } else if (sdcardBean.getRecord_sd_status() == 3) {
                         tvSdStatus.setText(getString(R.string.sdcard_file_error));
-                        cbx_record_time.setChecked(false);
+//                        cbx_record_time.setChecked(false);
+                        cbx_record_time.changeOpenState(false);
                     } else if (sdcardBean.getRecord_sd_status() == 4) {
                         tvSdStatus.setText(getString(R.string.sdcard_isformatting));
-                        cbx_record_time.setChecked(false);
+//                        cbx_record_time.setChecked(false);        cbx_record_time.changeOpenState(false);
+                        cbx_record_time.changeOpenState(false);
                     } else {
                         tvSdStatus.setText(SettingSDCardActivity.this
                                 .getResources().getString(
                                         R.string.sdcard_status_info));
-                        cbx_record_time.setChecked(false);
+//                        cbx_record_time.setChecked(false);
+                        cbx_record_time.changeOpenState(false);
                     }
 //                    cbx_record_time.setChecked(true);
 //                    if (sdcardBean.getRecord_time_enable() == 1) {
@@ -201,6 +205,16 @@ public class SettingSDCardActivity extends Basecactivity implements
         BridgeService.setCallBack_AlarmParamsInterface(this);
     }
 
+    @Override
+    protected void onEvent() {
+
+    }
+
+    @Override
+    protected void onData() {
+
+    }
+
     private void getDataFromOther() {
         Intent intent = getIntent();
         strDID = intent.getStringExtra(ContentCommon.STR_CAMERA_ID);
@@ -231,7 +245,7 @@ public class SettingSDCardActivity extends Basecactivity implements
 //        cbxRecordTime.setOnCheckedChangeListener(this);
 //        iv_video_mode.setOnCheckedChangeListener(this);
         next_step_txt.setOnClickListener(this);
-        cbx_record_time.setOnCheckedChangeListener(this);
+        cbx_record_time.setSlideSwitchListener(this);
         plan_luxiang_rel.setOnClickListener(this);
 
     }
@@ -243,7 +257,7 @@ public class SettingSDCardActivity extends Basecactivity implements
         btnFormat = (Button) findViewById(R.id.btn_format);
         cbxConverage = (CheckBox) findViewById(R.id.cbx_coverage);
         editRecordLength = (EditText) findViewById(R.id.edit_record_length);
-        cbxRecordTime = (SwitchButton) findViewById(R.id.cbx_record_time);
+        cbxRecordTime = (SlideSwitchButton) findViewById(R.id.cbx_record_time);
         btnBack = (ImageView) findViewById(R.id.back);
         btnOk = (Button) findViewById(R.id.ok);
 
@@ -1104,63 +1118,14 @@ public class SettingSDCardActivity extends Basecactivity implements
     }
 
     @Override
-    public void onCheckedChanged(SwitchButton v, boolean isChecked) {
-        switch (v.getId()) {
-            // case R.id.cbx_coverage:
-            // if (isChecked) {
-            // sdcardBean.setRecord_conver_enable(1);
-            // } else {
-            // sdcardBean.setRecord_conver_enable(0);
-            // }
-            // break;
-            case R.id.cbx_record_time:
-                if (isChecked) {
-                    sdcardBean.setRecord_time_enable(1);
-                } else {
-                    sdcardBean.setRecord_time_enable(0);
-                }
-                setSDCardSchedule();
-                break;
-            case R.id.iv_video_mode:
-                if (isChecked) {
-                    rl_plan_all.setVisibility(View.VISIBLE);
-                } else {
-                    rl_plan_all.setVisibility(View.GONE);
-                }
-                break;
-            default:
-                break;
+    public void slide_switch() {
+        if (cbx_record_time.isOpen) {//启用和禁止启用，
+//                    ToastUtil.showToast(context, "打开了");
+            sdcardBean.setRecord_time_enable(1);
+        } else {
+//                    ToastUtil.showToast(context, "关闭了");
+            sdcardBean.setRecord_time_enable(0);
         }
-
     }
 
-//    @Override
-//    public void onCheckedChanged(SwitchButton v, boolean isChecked) {
-//        switch (v.getId()) {
-//            // case R.id.cbx_coverage:
-//            // if (isChecked) {
-//            // sdcardBean.setRecord_conver_enable(1);
-//            // } else {
-//            // sdcardBean.setRecord_conver_enable(0);
-//            // }
-//            // break;
-//            case R.id.cbx_record_time:
-//                if (isChecked) {
-//                    sdcardBean.setRecord_time_enable(1);
-//                } else {
-//                    sdcardBean.setRecord_time_enable(0);
-//                }
-//                setSDCardSchedule();
-//                break;
-//            case R.id.iv_video_mode:
-//                if (isChecked) {
-//                    rl_plan_all.setVisibility(View.VISIBLE);
-//                } else {
-//                    rl_plan_all.setVisibility(View.GONE);
-//                }
-//                break;
-//            default:
-//                break;
-//        }
-//    }
 }

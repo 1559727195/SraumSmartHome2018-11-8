@@ -1,9 +1,9 @@
 package com.massky.sraum.activity;
 
 import android.content.res.Resources;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 
 import com.massky.sraum.R;
 import com.massky.sraum.adapter.DynamicFragmentViewPagerAdapter;
-import com.massky.sraum.adapter.FragmentViewPagerAdapter;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.fragment.DevicePagerFragment;
 import com.yanzhenjie.statusview.StatusUtils;
@@ -20,7 +19,6 @@ import com.yanzhenjie.statusview.StatusUtils;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.InjectView;
 

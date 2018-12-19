@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/SraumSmartHome.iml" filepath="$PROJECT_DIR$/SraumSmartHome.iml" />
       <module fileurl="file://$PROJECT_DIR$/aircontrolprogressbar/aircontrolprogressbar.iml" filepath="$PROJECT_DIR$/aircontrolprogressbar/aircontrolprogressbar.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/citypickerview/citypickerview.iml" filepath="$PROJECT_DIR$/citypickerview/citypickerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/datepicker/datepicker.iml" filepath="$PROJECT_DIR$/datepicker/datepicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/pickerview/pickerview.iml" filepath="$PROJECT_DIR$/pickerview/pickerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/pm2.5progressbar/pm2.5progressbar.iml" filepath="$PROJECT_DIR$/pm2.5progressbar/pm2.5progressbar.iml" />

@@ -27,6 +27,7 @@ import com.ipcamera.demo.bean.PlayBackBean;
 import com.ipcamera.demo.utils.ContentCommon;
 import com.massky.sraum.R;
 import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.base.BaseActivity;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
@@ -43,7 +44,7 @@ import vstc2.nativecaller.NativeCaller;
 /**
  * 
  * */
-public class PlayBackTFActivity extends Basecactivity implements
+public class PlayBackTFActivity extends BaseActivity implements
         OnItemClickListener, OnClickListener, PlayBackTFInterface {
 	private ListView listView;
 	private TextView tvNoVideo;
@@ -185,6 +186,16 @@ public class PlayBackTFActivity extends Basecactivity implements
 		NativeCaller.PPPPGetSDCardRecordFileList(strDID, 0, 500);
 		listView.setAdapter(mAdapter);
 		mAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	protected void onEvent() {
+
+	}
+
+	@Override
+	protected void onData() {
+
 	}
 
 	private void setListener() {

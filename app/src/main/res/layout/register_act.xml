@@ -46,13 +46,13 @@
     </RelativeLayout>
 
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         app:layout_widthPercent="90%">
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:id="@+id/per_rel_pass_lay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                 app:layout_widthPercent="80%" />
 
 
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
         <View
             android:id="@+id/one_line"
@@ -97,9 +97,9 @@
             android:textColor="@color/gray"
             android:textSize="14sp"
             app:layout_widthPercent="80%"></TextView>
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y40">
@@ -142,5 +142,5 @@
                 android:textSize="14sp"
                 app:layout_widthPercent="80%"></TextView>
         </LinearLayout>
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 </LinearLayout>

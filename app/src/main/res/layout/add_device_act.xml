@@ -86,7 +86,7 @@
                 android:textColor="#8A8A8A"
                 android:text="Wi-Fi设备" />
 
-            <android.support.percent.PercentRelativeLayout
+            <androidx.percentlayout.widget.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -104,7 +104,7 @@
                     android:stretchMode="columnWidth"
                     android:verticalSpacing="@dimen/y5"/>
 
-            </android.support.percent.PercentRelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

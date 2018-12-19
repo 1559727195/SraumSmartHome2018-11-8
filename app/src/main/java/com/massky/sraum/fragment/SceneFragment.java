@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -24,14 +24,10 @@ import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.SharedPreferencesUtil;
-import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.AppManager;
-import com.massky.sraum.activity.AddAutoSceneActivity;
-import com.massky.sraum.activity.AddHandSceneActivity;
 import com.massky.sraum.activity.EditLinkDeviceResultActivity;
-import com.massky.sraum.activity.EditSceneSecondActivity;
 import com.massky.sraum.activity.SelectSensorActivity;
 import com.massky.sraum.activity.SelectiveLinkageActivity;
 import com.massky.sraum.adapter.DynamicFragmentViewPagerAdapter;
@@ -89,6 +85,7 @@ public class SceneFragment extends BaseFragment1 {
     private DialogUtil dialogUtil;
     private String manuallyCount;
     private String autoCount;
+    private int intfirst;
 
     @Override
     protected void onData() {
@@ -114,13 +111,17 @@ public class SceneFragment extends BaseFragment1 {
     protected void onView(View view) {
         StatusUtils.setFullToStatusBar(getActivity());  // StatusBar.
 //        initView();
+        intfirst = 1;
         dialogUtil = new DialogUtil(getActivity());
-        initControls();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (intfirst == 1) {
+            intfirst = 2;
+            initControls();
+        }
         sraum_getAllScenesCount();
     }
 
@@ -241,7 +242,7 @@ public class SceneFragment extends BaseFragment1 {
         tab_FindFragment_title.post(new Runnable() {
             @Override
             public void run() {
-                setIndicator(tab_FindFragment_title, 5, 5);
+//                setIndicator(tab_FindFragment_title, 5, 5);
             }
         });
     }

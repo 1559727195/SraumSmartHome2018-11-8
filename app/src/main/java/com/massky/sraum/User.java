@@ -388,4 +388,22 @@ public class User {
         public String isUse;
         public String type;
     }
+
+
+    /**
+     * 获取 wifi 红外转发设备列表
+     */
+
+    public List<controllerList> controllerList;
+
+    public static class controllerList
+            implements Serializable {
+        public String type;
+        public String name;
+        public String number;
+        public String controllerId;
+    }
+
+
+
 };

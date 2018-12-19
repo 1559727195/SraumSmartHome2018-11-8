@@ -149,4 +149,22 @@
         <item name="android:windowExitAnimation">@anim/popup_exit</item>
     </style>
 
+    <style name="top_bg_style">
+        <item name="android:background">@drawable/top_bg_blue</item>
+    </style>
+
+    <style name="bg_style">
+        <item name="android:background">@color/color_bg</item>
+    </style>
+
+
+    <style name="AnimationPreview">
+        <item name="android:windowEnterAnimation">@anim/zoomin</item>
+        <item name="android:windowExitAnimation">@anim/zoomout</item>
+    </style>
+
+    <style name="all_bg_background">
+        <item name="android:background">#f3f3f3</item>
+    </style>
+
 </resources>

@@ -8,10 +8,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.base.Basecactivity;
 import com.ipcamera.demo.adapter.VideoTimingAdapter;
 import com.massky.sraum.R;
+import com.massky.sraum.base.BaseActivity;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
@@ -24,7 +23,7 @@ import static com.ipcamera.demo.SettingSDCardActivity.strDID;
 import static com.ipcamera.demo.SettingSDCardActivity.strPWD;
 import static com.ipcamera.demo.SettingSDCardActivity.switchBean;
 
-public class PlanToVideoActivity extends Basecactivity implements OnClickListener {
+public class PlanToVideoActivity extends BaseActivity implements OnClickListener {
 
     /**
      * 添加计划录像
@@ -67,6 +66,16 @@ public class PlanToVideoActivity extends Basecactivity implements OnClickListene
 //		setContentView(R.layout.plan_to_video_message);
         findView();
         setLister();
+    }
+
+    @Override
+    protected void onEvent() {
+
+    }
+
+    @Override
+    protected void onData() {
+
     }
 
     private void getDataFromOther() {
@@ -148,12 +157,12 @@ public class PlanToVideoActivity extends Basecactivity implements OnClickListene
             case R.id.back:
                 finish();
                 break;
-            case R.id.rl_add_infoplan:
-                Intent intent1 = new Intent(PlanToVideoActivity.this,
-                        SCameraSetPushVideoTiming.class);
-                intent1.putExtra("type", 0);
-                startActivityForResult(intent1, 0);
-                break;
+//            case R.id.rl_add_infoplan:
+//                Intent intent1 = new Intent(PlanToVideoActivity.this,
+//                        SCameraSetPushVideoTiming.class);
+//                intent1.putExtra("type", 0);
+//                startActivityForResult(intent1, 0);
+//                break;
             case R.id.next_step_txt:
                 Intent it = new Intent(PlanToVideoActivity.this,
                         SCameraSetSDCardVideoTimingActivity.class);

@@ -408,7 +408,7 @@
             android:src="@drawable/wode_right_arrow"/>
     </RelativeLayout>
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/y15">
@@ -426,5 +426,5 @@
             android:textSize="18sp"
             app:layout_widthPercent="70%" />
 
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 </LinearLayout>

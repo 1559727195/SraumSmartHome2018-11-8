@@ -86,4 +86,12 @@ public class ApiHelper {
     public static String sraum_setDeviceLinkIsUse = api + "sraum_setDeviceLinkIsUse";
     public static String UpdateApkUrl ;
     public static String sraum_getVersion;
+    public static String sraum_updateWifiCameraTimeZone = api + "sraum_updateWifiCameraTimeZone";
+    public static String sraum_setWifiCameraTimeZone = api + "sraum_setWifiCameraTimeZone";
+    public static String sraum_addWifiCamera = api + "sraum_addWifiCamera";
+    public static String sraum_updatePanelName = api + "sraum_updatePanelName";
+    public static String sraum_addWifiAppleDevice = api + "sraum_addWifiAppleDevice";
+    public static String sraum_addWifiApple = api + "sraum_addWifiApple";
+    public static String sraum_updateWifiAppleName = api + "sraum_updateWifiAppleName";
+    public static String sraum_getWifiAppleInfos = api + "sraum_getWifiAppleInfos";
 }

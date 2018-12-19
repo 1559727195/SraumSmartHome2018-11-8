@@ -446,7 +446,7 @@
     </LinearLayout>
     </ScrollView>
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/delete_device_rel"
@@ -461,6 +461,6 @@
             android:text="保存"
             android:textColor="@color/white"
             android:textSize="14sp" />
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
 </LinearLayout>

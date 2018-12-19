@@ -68,7 +68,7 @@
         android:layout_height="150dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        app:content="s"
+        app:content1="s"
         app:roundColor="#C7C7C7"
         app:roundProgressColor="#161616"
         app:roundWidth="6dp"
@@ -89,7 +89,7 @@
         android:textColor="@color/black"
         android:textSize="12sp" />
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp">
@@ -103,7 +103,8 @@
             android:text="取消"
             android:textSize="@dimen/s13"
             android:textColor="@color/white"
-            app:layout_widthPercent="80%" />
-    </android.support.percent.PercentRelativeLayout>
+            app:layout_widthPercent="80%"
+            android:layout_width="wrap_content" />
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
 </LinearLayout>

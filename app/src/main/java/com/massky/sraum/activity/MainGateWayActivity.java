@@ -1,44 +1,32 @@
 package com.massky.sraum.activity;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.StatFs;
-import android.provider.Settings;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
+
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
-import android.text.format.Formatter;
-import android.transition.Scene;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -50,7 +38,6 @@ import com.dialog.CommonData;
 import com.dialog.ToastUtils;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
-import com.google.gson.GsonBuilder;
 import com.ipcamera.demo.BridgeService;
 import com.jpush.Constants;
 import com.jpush.ExampleUtil;
@@ -59,34 +46,23 @@ import com.larksmart7618.sdk.communication.tools.commen.ToastTools;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
-import com.massky.sraum.Util.ICallback;
-import com.massky.sraum.Util.IntentUtil;
 import com.massky.sraum.Util.LogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
-import com.massky.sraum.Util.NullStringToEmptyAdapterFactory;
 import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
-import com.massky.sraum.Util.UDPClient;
 import com.massky.sraum.Util.UpdateManager;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.App;
 import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.Utils.NetUtils;
 import com.massky.sraum.Utils.VersionUtil;
-import com.massky.sraum.adapter.FragmentViewPagerAdapter;
 import com.massky.sraum.base.BaseActivity;
-import com.massky.sraum.base.BaseFragment1;
-import com.massky.sraum.bean.GateWayInfoBean;
 import com.massky.sraum.fragment.HomeFragment;
 import com.massky.sraum.fragment.MineFragment;
-import com.massky.sraum.fragment.NewFragment;
 import com.massky.sraum.fragment.SceneFragment;
 import com.massky.sraum.permissions.RxPermissions;
-import com.massky.sraum.receiver.ApiTcpReceiveHelper;
-import com.massky.sraum.service.MyService;
-import com.massky.sraum.widget.ApplicationContext;
 import com.yaokan.sdk.api.YkanSDKManager;
 import com.yaokan.sdk.ir.InitYkanListener;
 import com.yaokan.sdk.utils.Utility;
@@ -97,11 +73,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -179,36 +151,12 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         add_page_select();
         common_second();
         //        iswait_down_load = false;
-        init_jizhiyun = 1;//机智云index
-        dialogUtil = new DialogUtil(this);
-        initPermission();
-//        toggleNotificationListenerService();
-        over_camera_list();//结束wifi摄像头的tag
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                handler_wifi.sendEmptyMessage(0);
-            }
-        }).start();
+        init_jizhiyun_1();
+        init_video();
+        init_receiver();
+    }
 
-        Intent intent = new Intent();
-        intent.setClass(MainGateWayActivity.this, BridgeService.class);
-        startService(intent);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    NativeCaller.PPPPInitialOther("ADCBBFAOPPJAHGJGBBGLFLAGDBJJHNJGGMBFBKHIBBNKOKLDHOBHCBOEHOKJJJKJBPMFLGCPPJMJAPDOIPNL");
-                    Thread.sleep(3000);
-                    Message msg = new Message();
-                    NativeCaller.SetAPPDataPath(getApplicationContext().getFilesDir().getAbsolutePath());
-                } catch (Exception e) {
-
-                }
-            }
-        }).start();
-
-
+    private void init_receiver() {
         //在这里发送广播，expires_in是86400->24小时
         String expires_in = (String) SharedPreferencesUtil.getData(MainGateWayActivity.this, "expires_in", "");
         Intent broadcast = new Intent("com.massky.sraum.broadcast");
@@ -225,7 +173,33 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
 //        registerMessageReceiver_fromApk_Down();
 //        init_notifacation();//通知初始化
         SharedPreferencesUtil.saveData(MainGateWayActivity.this, "loadapk", false);//apk版本正在更新中
+    }
 
+    private void init_jizhiyun_1() {
+        init_jizhiyun = 1;//机智云index
+        dialogUtil = new DialogUtil(this);
+        initPermission();
+//        toggleNotificationListenerService();
+        over_camera_list();//结束wifi摄像头的tag
+    }
+
+    private void init_video() {
+        Intent intent = new Intent();
+        intent.setClass(MainGateWayActivity.this, BridgeService.class);
+        startService(intent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    NativeCaller.PPPPInitialOther("ADCBBFAOPPJAHGJGBBGLFLAGDBJJHNJGGMBFBKHIBBNKOKLDHOBHCBOEHOKJJJKJBPMFLGCPPJMJAPDOIPNL");
+                    Thread.sleep(3000);
+                    Message msg = new Message();
+                    NativeCaller.SetAPPDataPath(getApplicationContext().getFilesDir().getAbsolutePath());
+                } catch (Exception e) {
+
+                }
+            }
+        }).start();
     }
 
     /**
@@ -727,15 +701,22 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
 
     @Override
     protected void onResume() {
+        init_jizhiyun_onresume();
+        super.onResume();
+    }
+
+    /**
+     * 初始化onResume动作
+     */
+    private void init_jizhiyun_onresume() {
         init_jizhi_cloud();//耗时动作，最好都放在onResume里，此时屏幕已经亮了
         isForegrounds = true;
         Log.e("zhu-", "MainfragmentActivity:onResume():isForegrounds:" + isForegrounds);
         init_jlogin();
         boolean netflag = NetUtils.isNetworkConnected(MainGateWayActivity.this);
         if (netflag) {//获取版本号
-            updateApk();
+//            updateApk();
         }
-        super.onResume();
     }
 
     /**

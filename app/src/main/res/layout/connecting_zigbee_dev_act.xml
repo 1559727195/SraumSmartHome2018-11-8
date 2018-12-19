@@ -91,7 +91,7 @@
             app:textIsDisplayable="true"
             app:textSize="15sp" />
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -181,6 +181,6 @@
                 </RelativeLayout>
 
             </LinearLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
     </RelativeLayout>
 </LinearLayout>

@@ -21,24 +21,22 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 import android.widget.Toast;
-
 import com.AddTogenInterface.AddTogglenInterfacer;
-import com.Util.ApiHelper;
-import com.Util.DialogUtil;
-import com.Util.MyOkHttp;
-import com.Util.Mycallback;
-import com.Util.ToastUtil;
-import com.Util.TokenUtil;
-import com.base.Basecactivity;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
-import com.data.User;
 import com.ipcamera.demo.bean.DefenseConstant;
 import com.ipcamera.demo.utils.SensorTimeUtil;
 import com.massky.sraum.R;
+import com.massky.sraum.User;
+import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.MyOkHttp;
+import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.ToastUtil;
+import com.massky.sraum.Util.TokenUtil;
+import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.base.BaseActivity;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,9 +51,10 @@ import java.util.TreeSet;
 
 import butterknife.InjectView;
 
-import static com.massky.sraum.BuFangBaoJingPlanActivity.strDID;
+import static com.ipcamera.demo.SettingSDCardActivity.strDID;
 
-public class SCameraSetPushVideoTimingActivity extends Basecactivity implements
+
+public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
         OnClickListener {
     private LinearLayout timing_backlayout; //返回
     private TextView timing_textView1, timing_textView2; //开始时间结束时间
@@ -118,10 +117,11 @@ public class SCameraSetPushVideoTimingActivity extends Basecactivity implements
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         getDate();
         findview();
-        onEvent();
+//        onEvent();
     }
 
-    private void onEvent() {
+    @Override
+   protected void onEvent() {
         initCustomTimePicker();
         sleep_time_rel.setOnClickListener(this);
         get_up_rel.setOnClickListener(this);
@@ -129,6 +129,11 @@ public class SCameraSetPushVideoTimingActivity extends Basecactivity implements
         endTime = end_time_txt.getText().toString();
         next_step_txt.setOnClickListener(this);
         back.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onData() {
+
     }
 
     private void initCustomTimePicker() {

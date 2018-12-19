@@ -42,6 +42,41 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+
+    <!-- Required  一些系统要求的权限，如访问网络等小苹果 -->
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <!-- SDK 使用权限 -->
+    <!-- SDK 使用权限 -->
+    <!-- 乐鑫配置库中使用的权限（WIFI组播） -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <!-- Required  一些系统要求的权限，如访问网络等小苹果 -->
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.permission.CHANGE_WIFI_STATE " />
+    <uses-feature android:name="android.permission.WAKE_LOCK" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- <uses-permission android:name="android.permission.NET_ADMIN" /> -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".Utils.App"
         android:allowBackup="true"
@@ -50,6 +85,7 @@
         android:roundIcon="@drawable/img_logo"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar">
+
         <activity android:name="com.massky.sraum.MainActivity">
 
         </activity>
@@ -125,16 +161,16 @@
         <activity
             android:name=".activity.SelectPmTwoActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-                <activity
+        <activity
             android:name=".activity.AddZigbeeDeviceScucessActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-                <activity
+        <activity
             android:name=".activity.AddDoorLockDevActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-                <activity
+        <activity
             android:name=".activity.SelectSmartDoorLockTwoActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-                <activity
+        <activity
             android:name=".activity.SelectSmartDoorLockActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
@@ -359,7 +395,7 @@
         </activity>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -614,6 +650,32 @@
             android:name="com.massky.sraum.activity.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.AddWifiDevActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.ConnWifiCameraActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.AddWifiCameraScucessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.ConnWifiActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.AddWifiYaoKongQiScucessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.AddWifiHongWaiScucessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.SelectInfraredForwardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.SelectControlApplianceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
 
         <activity
             android:name="com.massky.sraum.activity.InformationSettingActivity"
@@ -627,6 +689,26 @@
 
         <activity
             android:name="com.massky.sraum.activity.AddAreaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="com.ipcamera.demo.PlayBackTFActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="com.ipcamera.demo.SettingSDCardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="com.ipcamera.demo.SCameraSetPushVideoTimingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="com.ipcamera.demo.SCameraSetSDCardVideoTimingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="com.ipcamera.demo.PlanToVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
@@ -684,6 +766,7 @@
                 <category android:name="com.massky.sraum" />
             </intent-filter>
         </activity>
+
 
         <!-- Required  SDK核心功能-->
         <service
@@ -773,6 +856,11 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="3d45319ce06de8467ec87bce" /> <!--  </>值来自开发者平台取得的AppKey-->
+
+        <!--小苹果的key-->
+        <meta-data
+            android:name="yk_key"
+            android:value="yk15227494527268" />
 
     </application>
 

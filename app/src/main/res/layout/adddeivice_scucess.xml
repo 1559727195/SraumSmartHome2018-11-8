@@ -80,7 +80,7 @@
         <!--android:layout_alignParentRight="true"-->
         <!--android:textSize="14sp"-->
         <!--android:textColor="@color/blue_txt"/>-->
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
@@ -96,7 +96,7 @@
                 android:padding="@dimen/x8"
                 android:textSize="14sp"
                 app:layout_widthPercent="85%"></com.massky.sraum.view.ClearEditText>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
     </LinearLayout>
 
@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/y2"
@@ -152,9 +152,9 @@
                     android:text="设为常用"
                     android:textSize="12sp"></TextView>
             </RelativeLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/y2"
@@ -203,9 +203,9 @@
                     slideswitch:isOpen="true"
                     slideswitch:themeColor="@color/green" />
             </RelativeLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/y2"
@@ -251,9 +251,9 @@
                     android:text="设为常用"
                     android:textSize="12sp"></TextView>
             </RelativeLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/y2"
@@ -302,9 +302,9 @@
                     slideswitch:isOpen="true"
                     slideswitch:themeColor="@color/green" />
             </RelativeLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/y2"
@@ -350,9 +350,9 @@
                     android:text="设为常用"
                     android:textSize="12sp"></TextView>
             </RelativeLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/y2"
@@ -401,9 +401,9 @@
                     slideswitch:isOpen="true"
                     slideswitch:themeColor="@color/green" />
             </RelativeLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/y2"
@@ -449,9 +449,9 @@
                     android:text="设为常用"
                     android:textSize="12sp"></TextView>
             </RelativeLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/y2"
@@ -500,7 +500,7 @@
                     slideswitch:isOpen="true"
                     slideswitch:themeColor="@color/green" />
             </RelativeLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
     </LinearLayout>
 
@@ -510,7 +510,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:orientation="vertical">
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/y2"
@@ -560,7 +560,7 @@
                     slideswitch:isOpen="true"
                     slideswitch:themeColor="@color/green" />
             </RelativeLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -746,7 +746,7 @@
         </LinearLayout>
 
     </LinearLayout>
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -763,5 +763,5 @@
             android:textSize="18sp"
             app:layout_widthPercent="80%" />
 
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 </LinearLayout>

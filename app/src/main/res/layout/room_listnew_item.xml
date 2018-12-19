@@ -10,7 +10,7 @@
     app:leftSwipe="true"
     app:swipeEnable="true">
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -73,7 +73,7 @@
 
                 />
         </RelativeLayout>
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

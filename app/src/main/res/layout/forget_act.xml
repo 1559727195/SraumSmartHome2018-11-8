@@ -46,13 +46,13 @@
 
 
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_widthPercent="90%"
         android:layout_marginTop="15dp">
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -75,7 +75,7 @@
                 app:layout_widthPercent="80%" />
 
 
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -96,9 +96,9 @@
             android:textColor="@color/gray"
             android:text="仅支持中国大陆手机号"
             app:layout_widthPercent="80%"></TextView>
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y40">
@@ -140,5 +140,5 @@
                 android:visibility="gone"
                 app:layout_widthPercent="80%"></TextView>
         </LinearLayout>
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 </LinearLayout>

@@ -88,7 +88,7 @@
             android:layout_marginTop="15dp"
             app:roundWidth_inner = "@dimen/x40"
             app:textSize="15sp"/>
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/y30"
@@ -106,6 +106,6 @@
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/add_zigbee_device_btn"
                 android:text="取消"/>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
     </RelativeLayout>
 </LinearLayout>

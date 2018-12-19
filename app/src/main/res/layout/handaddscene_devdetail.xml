@@ -69,7 +69,7 @@
         android:gravity="center"
         android:text="模式"
         android:textSize="14sp"/>
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="0dp"
         android:layout_weight="0.8"
         android:layout_centerVertical="true"
@@ -127,7 +127,7 @@
                 android:gravity="center"
                 android:text="送风"/>
         </RadioGroup>
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -196,7 +196,7 @@
             android:gravity="center"
             android:text="风速"
             android:textSize="14sp"/>
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="0dp"
             android:layout_weight="0.8"
             android:layout_centerVertical="true"
@@ -253,7 +253,7 @@
                     android:gravity="center"
                     android:text="节能"/>
             </RadioGroup>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -275,7 +275,7 @@
             android:gravity="center"
             android:text="开关"
             android:textSize="14sp"/>
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="0dp"
             android:layout_weight="0.8"
             android:layout_centerVertical="true"
@@ -313,7 +313,7 @@
                     android:text="关"/>
 
             </RadioGroup>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -345,7 +345,7 @@
                 android:gravity="center"
                 android:text="内纱"
                 android:textSize="14sp"/>
-            <android.support.percent.PercentRelativeLayout
+            <androidx.percentlayout.widget.PercentRelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
                 android:layout_centerVertical="true"
@@ -381,7 +381,7 @@
                         android:gravity="center"
                         android:text="关闭"/>
                 </RadioGroup>
-            </android.support.percent.PercentRelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -402,7 +402,7 @@
                 android:gravity="center"
                 android:text="外纱"
                 android:textSize="14sp"/>
-            <android.support.percent.PercentRelativeLayout
+            <androidx.percentlayout.widget.PercentRelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
                 android:layout_centerVertical="true"
@@ -439,7 +439,7 @@
                         android:text="关闭"/>
 
                 </RadioGroup>
-            </android.support.percent.PercentRelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -462,7 +462,7 @@
                 android:paddingRight="@dimen/x10"
                 android:text="阳台灯"
                 android:textSize="14sp"/>
-            <android.support.percent.PercentRelativeLayout
+            <androidx.percentlayout.widget.PercentRelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="0.8"
                 android:layout_centerVertical="true"
@@ -511,7 +511,7 @@
 
 
                 </RadioGroup>
-            </android.support.percent.PercentRelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -531,7 +531,7 @@
         android:paddingBottom="@dimen/y10"
         android:orientation="vertical">
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true">
@@ -578,9 +578,9 @@
                     android:text="切换"
                     android:textColor="@color/dark_gray" />
             </RadioGroup>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -613,7 +613,7 @@
                 android:layout_centerVertical="true"
                 android:progress="30"
                 />
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
     </LinearLayout>
 </LinearLayout>

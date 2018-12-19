@@ -292,7 +292,7 @@
             <!--android:textColor="#F166F1" />-->
     <!--</RelativeLayout>-->
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/delete_rel"
         android:layout_height="match_parent"
@@ -311,7 +311,7 @@
             android:layout_marginBottom="@dimen/y30"
             android:textSize="16sp"
             app:layout_widthPercent="80%" />
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
     <!--<View-->
         <!--android:layout_width="match_parent"-->

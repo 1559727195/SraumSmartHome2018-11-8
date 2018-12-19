@@ -3,13 +3,12 @@ package com.massky.sraum.activity;
 import android.app.Dialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.percent.PercentRelativeLayout;
+import androidx.percentlayout.widget.PercentRelativeLayout;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.bigkoo.pickerview_new.OptionsPickerView;
@@ -21,10 +20,8 @@ import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
-import com.massky.sraum.adapter.MyAreaListOwnerAdapter;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.view.ClearEditText;
-import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 import com.yanzhenjie.statusview.StatusUtils;
 
 import java.util.ArrayList;
@@ -37,8 +34,6 @@ import db.CityBean;
 import db.DBManager;
 import db.ProvinceBean;
 import okhttp3.Call;
-
-import static com.massky.sraum.Utils.ApiHelper.sraum_getAllArea;
 
 /**
  * Created by zhu on 2018/2/12.

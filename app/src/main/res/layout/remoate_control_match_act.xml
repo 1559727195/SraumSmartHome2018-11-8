@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/spand_list_linear"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEDF2"
+    android:orientation="vertical">
+
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:fitsView="@+id/root_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/icon_t_back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/back"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:id="@+id/macrelative_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/p100"
+                    android:layout_centerInParent="true"></RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/mactext_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/p11"
+                        android:text="逐个匹配"
+                        android:textColor="@color/c6f"
+                        android:textSize="@dimen/p26" />
+
+                    <View
+                        android:id="@+id/viewone"
+                        android:layout_width="@dimen/p120"
+                        android:layout_height="2px"
+                        android:layout_below="@+id/mactext_id"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/p3"
+                        android:background="@color/e0c" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:id="@+id/scenerelative_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/p100"
+                    android:layout_centerInParent="true"></RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/scene_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/p11"
+                        android:text="一键匹配"
+                        android:textColor="@color/c6f"
+                        android:textSize="@dimen/p26" />
+
+                    <View
+                        android:id="@+id/viewtwo"
+                        android:layout_width="@dimen/p120"
+                        android:layout_height="2px"
+                        android:layout_below="@+id/scene_id"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/e0c" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:id="@+id/smartrelative_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/p100"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"></RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/smart_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/p11"
+                        android:text="智能匹配"
+                        android:textColor="@color/c6f"
+                        android:textSize="@dimen/p26" />
+
+                    <View
+                        android:id="@+id/viewthree"
+                        android:layout_width="@dimen/p120"
+                        android:layout_height="2px"
+                        android:layout_below="@+id/smart_id"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/e0c" />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
+
+
+</LinearLayout>

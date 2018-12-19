@@ -7,7 +7,29 @@
     <color name="blue_txt">#4DC9C3</color>
     <color name="e30">#303030</color>
     <color name="colorgraystatusbar">#EFEFF2</color>
+    <color name="c6f">#6f6f6f</color>
     <color name="clore3e">#e3e3e3</color>
+
+
+    <color name="red_ff4a57">#ff4a57</color>
+    <color name="c41">#414358</color>
+    <color name="e8e">#8E8E8E</color>
+    <color name="ece">#cecece</color>
+    <color name="e2c">#e2c896</color>
+    <color name="ede">#edecee</color>
+    <color name="e9f">#9f9ea0</color>
+    <color name="e0c">#e0c48e</color>
+    <color name="e5c">#5cb5f6</color>
+    <color name="ec">#ecebed</color>
+    <color name="fo">#F0F0F0</color>
+
+    <color name="eb">#ebeaec</color>
+    <color name="cfc">#FCFCFC</color>
+    <color name="cbe">#BEBEBE</color>
+    <color name="c7b">#7B7B7B</color>
+    <color name="ea">#eaeaea</color>
+
+
 
     <!-- camera -->
     <color name="black">#333333</color>
@@ -192,4 +214,32 @@
     <color name="gold">#E3CC9B</color>
     <color name="gold_color">#E3CC9B</color>
     <color name="black_color">#2C2C2E</color>
+
+
+    <color name="color_alarm_textcolor">#5C5B5B</color>
+    <color name="color_startcode_bg">#2EC6F6</color>
+    <color name="Gray_light_bg">#EEEEEE</color>
+
+    <color name="subtitle_color">#ff494949</color>
+    <color name="color_white">#ffffffff</color>
+    <color name="color_shadow">#ff333333</color>
+    <color name="cache_color_hint">#00000000</color>
+    <color name="color_divider">#ffdddddd</color>
+    <color name="color_black">#ff000000</color>
+    <color name="color_less_black">#ee000000</color>
+    <color name="color_info">#ff7F7F7F</color>
+    <color name="more_subtitle">#ff0044ff</color>
+    <color name="color_blue">#ff0000ff</color>
+    <color name="color_bg_less_shadow">#ff888888</color>
+    <color name="color_green">#ff00dd11</color>
+    <color name="color_grey">#88888888</color>
+    <color name="color_line">#ff444444</color>
+    <color name="color_top_bg">#ff333333</color>
+    <color name="color_grid_pressed">#FF0EAAE4</color>
+    <color name="color_grid_bg">#ff0caae4</color>
+    <color name="color_setting_title_bg">#ff888888</color>
+    <color name="color_less_blue">#ff32aff6</color>
+    <color name="color_ptz_blue">#ff0044aa</color>
+    <color name="button_bg_no">#60ffffff</color>
+    <color name="color_bg">#ff666666</color>
 </resources>

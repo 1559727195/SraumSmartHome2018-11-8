@@ -21,14 +21,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 import android.widget.Toast;
-
-import com.Util.DialogUtil;
-import com.base.Basecactivity;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.ipcamera.demo.bean.DefenseConstant;
 import com.ipcamera.demo.utils.SensorTimeUtil;
 import com.massky.sraum.R;
+import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.base.BaseActivity;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
@@ -43,7 +42,7 @@ import java.util.TreeSet;
 
 import butterknife.InjectView;
 
-public class SCameraSetSDCardVideoTimingActivity extends Basecactivity implements
+public class SCameraSetSDCardVideoTimingActivity extends BaseActivity implements
         OnClickListener {
     private LinearLayout timing_backlayout; //返回
     private TextView timing_textView1, timing_textView2; //开始时间结束时间
@@ -104,10 +103,11 @@ public class SCameraSetSDCardVideoTimingActivity extends Basecactivity implement
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         getDate();
         findview();
-        onEvent();
+//        onEvent();
     }
 
-    private void onEvent() {
+    @Override
+    protected void onEvent() {
         initCustomTimePicker();
         sleep_time_rel.setOnClickListener(this);
         get_up_rel.setOnClickListener(this);
@@ -115,6 +115,11 @@ public class SCameraSetSDCardVideoTimingActivity extends Basecactivity implement
         endTime = end_time_txt.getText().toString();
         next_step_txt.setOnClickListener(this);
         back.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onData() {
+
     }
 
     private void initCustomTimePicker() {

@@ -50,7 +50,7 @@
         <!--android:layout_gravity="center_horizontal"-->
         <!--android:layout_marginTop="50dp"-->
         <!--android:src="@mipmap/ic_launcher" />-->
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/y15"
         android:layout_height="wrap_content">
@@ -62,15 +62,15 @@
         android:layout_centerInParent="true"
         android:textSize="14sp"
         android:text="请输入设备所连路由器的名称和密码"/>
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_widthPercent="90%"
         android:layout_marginTop="30dp">
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/login_per_lay"
@@ -102,7 +102,7 @@
                 android:gravity="left"
                 android:layout_alignParentRight="true"
                 android:text="扫一扫" />
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
         <View
             android:layout_width="0dp"
@@ -113,16 +113,16 @@
             android:layout_below="@+id/login_per_lay"
             app:layout_widthPercent="80%"></View>
 
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_widthPercent="90%"
         android:layout_marginTop="15dp">
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -155,7 +155,7 @@
              android:layout_alignParentRight="true"
                 android:src="@mipmap/eyeclose" />
 
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -164,9 +164,9 @@
             android:layout_marginTop="10dp"
             android:background="@color/gray"
             app:layout_widthPercent="80%"></View>
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp">
@@ -182,5 +182,5 @@
             android:textSize="18sp"
             app:layout_widthPercent="80%" />
 
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 </LinearLayout>

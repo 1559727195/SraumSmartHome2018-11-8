@@ -2,18 +2,15 @@ package com.massky.sraum;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.massky.sraum.Util.AES;
-import com.massky.sraum.Util.ByteUtils;
 import com.massky.sraum.Util.InetUtil;
 import com.massky.sraum.Util.ServerBroadCastUdp;
 
@@ -33,10 +30,8 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static android.R.attr.data;
 import static com.massky.sraum.Util.AES.Decrypt;
 import static com.massky.sraum.Util.AES.Encrypt;
-import static com.massky.sraum.Util.ByteUtils.bytesToHexString;
 
 /**
  * Created by zhu on 2017/11/10.

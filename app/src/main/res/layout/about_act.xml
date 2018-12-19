@@ -91,7 +91,7 @@
                 android:text="扫描下载"/>
         </RelativeLayout>
     </LinearLayout>
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y40"
@@ -108,8 +108,8 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_widthPercent="80%" />
-    </android.support.percent.PercentRelativeLayout>
-    <android.support.percent.PercentRelativeLayout
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y8">
@@ -124,8 +124,8 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_widthPercent="80%" />
-    </android.support.percent.PercentRelativeLayout>
-    <android.support.percent.PercentRelativeLayout
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y8"
@@ -141,5 +141,5 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_widthPercent="80%" />
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 </LinearLayout>

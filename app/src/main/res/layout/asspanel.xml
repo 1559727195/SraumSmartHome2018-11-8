@@ -79,7 +79,7 @@
             android:background="@drawable/relatedpanel_bg"></RelativeLayout>
 
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x20"
@@ -347,7 +347,7 @@
                         android:background="@null" />
                 </RelativeLayout>
             </LinearLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
         <LinearLayout
             android:id="@+id/paneThreeLuTiaoGuang"
@@ -427,7 +427,7 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x20"
@@ -563,6 +563,6 @@
                         android:visibility="gone" />
                 </RelativeLayout>
             </LinearLayout>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
     </RelativeLayout>
 </LinearLayout>

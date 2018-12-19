@@ -47,7 +47,7 @@
             />
     </RelativeLayout>
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y2"
@@ -92,7 +92,7 @@
             android:paddingRight="10dp"
             android:paddingTop="@dimen/y10"
             app:layout_widthPercent="95%"></com.massky.sraum.view.ClearEditText>
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
     <!--<RelativeLayout-->
         <!--android:layout_width="match_parent"-->

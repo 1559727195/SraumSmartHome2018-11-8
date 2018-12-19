@@ -8,14 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.example.swipemenuview.SwipeMenuLayout;
 import com.massky.sraum.R;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class VideoTimingAdapter extends BaseAdapter {
 	private Context mContext;
@@ -64,7 +60,7 @@ public class VideoTimingAdapter extends BaseAdapter {
 		}else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		((SwipeMenuLayout) convertView).setAccountType("1");
+//		((SwipeMenuLayout) convertView).setAccountType("1");
 		Map<Integer, Integer> item = sdtiming.get(position1);
 		int itemplan = item.entrySet().iterator().next().getValue();
 		
@@ -79,31 +75,22 @@ public class VideoTimingAdapter extends BaseAdapter {
 		int plantime = item.entrySet().iterator().next().getValue();
 		sdtiming.get(position1).put(plankey, plantime);
 		//cameraSetSDTiming.editPlanValid(plankey, plantime);
-
-		((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
+		holder.swipe_right_menu.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onMenuClick(View v, int position) {
-				//弹出删除框
+			public void onClick(View v) {
+				//				//弹出删除框
 				if (videoTimingListener != null) {
 					videoTimingListener.delete(position1);
 				}
 			}
+		});
 
+		holder.swipe_context.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onItemClick(View v, int position) {
+			public void onClick(View v) {
 				if (videoTimingListener != null) {
 					videoTimingListener.onItemClick(position1);
 				}
-			}
-
-			@Override
-			public void onInterceptTouch() {
-
-			}
-
-			@Override
-			public void onInterceptTouch_end() {
-
 			}
 		});
 		return convertView;

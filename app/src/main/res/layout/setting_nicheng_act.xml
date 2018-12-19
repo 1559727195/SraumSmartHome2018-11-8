@@ -49,7 +49,7 @@
 
     </RelativeLayout>
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp">
@@ -90,7 +90,7 @@
         <!--android:background="@color/gray"-->
         <!--app:layout_widthPercent="90%"></View>-->
         <!--</android.support.percent.PercentRelativeLayout>-->
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_white_shape">
@@ -122,6 +122,6 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/edit_nicheng"
                 android:src="@drawable/btn_bottom" />
-        </android.support.percent.PercentRelativeLayout>
-    </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 </LinearLayout>

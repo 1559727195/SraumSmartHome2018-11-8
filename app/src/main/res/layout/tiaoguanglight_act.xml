@@ -80,7 +80,7 @@
             android:progressDrawable="@drawable/seekbar"
             android:thumb="@drawable/select_seekbar" />
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:id="@+id/open_tiaoguangdeng"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -94,7 +94,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/icon_cl_open_active" />
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
 </LinearLayout>
 

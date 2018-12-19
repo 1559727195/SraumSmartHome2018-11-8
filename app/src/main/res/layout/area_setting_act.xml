@@ -78,7 +78,7 @@
         android:visibility="gone"
         android:layout_weight="0.2">
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
         >
@@ -94,7 +94,7 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_widthPercent="80%" />
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
     </LinearLayout>
 
 

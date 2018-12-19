@@ -75,7 +75,7 @@
                />
         </RelativeLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/y30"
@@ -93,6 +93,6 @@
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/add_zigbee_device_btn"
                 android:text="下一步"/>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
     </RelativeLayout>
 </LinearLayout>

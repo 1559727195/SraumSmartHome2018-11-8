@@ -1,25 +1,13 @@
 package com.massky.sraum.activity;
 
-import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
-import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.dialog.CommonData;
-import com.dialog.ToastUtils;
 import com.jpush.Constants;
-import com.jpush.ExampleUtil;
 import com.massky.sraum.R;
 import com.massky.sraum.Util.SharedPreferencesUtil;
-import com.massky.sraum.Utils.ApiHelper;
-import com.massky.sraum.Utils.App;
 import com.massky.sraum.base.BaseActivity;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;

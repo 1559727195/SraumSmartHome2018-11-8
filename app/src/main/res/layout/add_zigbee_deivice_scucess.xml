@@ -66,7 +66,7 @@
             android:textColor="@color/black"
             android:textSize="14sp" />
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
@@ -82,11 +82,11 @@
                 android:padding="8dp"
                 android:textSize="14sp"
                 app:layout_widthPercent="65%"></com.massky.sraum.view.ClearLengthEditText>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
     </LinearLayout>
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="80dp">
@@ -100,7 +100,7 @@
             android:textColor="@color/white"
             android:textSize="13sp"
             app:layout_widthPercent="80%" />
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
 
 </LinearLayout>

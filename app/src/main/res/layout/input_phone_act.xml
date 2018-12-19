@@ -46,7 +46,7 @@
             android:src="@mipmap/ic_launcher" />
 
     </RelativeLayout>
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y8">
@@ -81,7 +81,7 @@
                 <!--app:layout_widthPercent="90%"></View>-->
         <!--</android.support.percent.PercentRelativeLayout>-->
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.massky.sraum.view.ClearEditText
@@ -103,9 +103,9 @@
                 app:layout_widthPercent="100%"
                 >
             </com.massky.sraum.view.ClearEditText>
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

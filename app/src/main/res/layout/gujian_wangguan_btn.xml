@@ -90,7 +90,7 @@
                 android:id="@+id/progress_txt"
                 android:textSize="18sp"
                 android:text="45%"></TextView>
-            <android.support.percent.PercentRelativeLayout
+            <androidx.percentlayout.widget.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/y8"
                 android:layout_height="wrap_content">
@@ -106,7 +106,7 @@
                     android:visibility="visible"
                     app:layout_widthPercent="80%"
                     android:id="@+id/progress"/>
-            </android.support.percent.PercentRelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
                 android:text="最新固件版本v1.1.4"></TextView>
         </LinearLayout>
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:id="@+id/upgrade_rel"
             android:layout_width="match_parent"
             android:visibility="gone"
@@ -159,7 +159,7 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_widthPercent="80%" />
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
     </LinearLayout>
 

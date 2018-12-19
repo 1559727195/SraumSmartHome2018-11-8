@@ -46,7 +46,7 @@
     </RelativeLayout>
 
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_widthPercent="80%">
@@ -62,7 +62,7 @@
             android:textSize="14sp"
             app:layout_widthPercent="70%" />
 
-        <android.support.percent.PercentRelativeLayout
+        <androidx.percentlayout.widget.PercentRelativeLayout
             android:id="@+id/login_per_lay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 android:textColorHint="@color/gray"
                 app:layout_widthPercent="80%" />
 
-        </android.support.percent.PercentRelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
 
         <TextView
             android:id="@+id/timebutton_id"
@@ -110,9 +110,9 @@
             android:background="@color/gray"
             app:layout_widthPercent="70%"></View>
 
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y40">
@@ -129,6 +129,6 @@
             app:layout_widthPercent="80%" />
 
 
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
 </LinearLayout>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?><!--用于第一个fragment布局添加-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFF2"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pinpai_pic"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/icon_type_kongtiaomb_90" />
+
+    <TextView
+        android:id="@+id/peipai_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/p17"
+        android:layout_marginRight="@dimen/p17"
+        android:layout_marginTop="15dp"
+        android:text="小米 XIAOMI  电视机"
+        android:textColor="@color/black"
+        android:textSize="@dimen/p25" />
+
+    <androidx.percentlayout.widget.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="0dp"
+            app:layout_widthPercent="90%"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/dottedline"></View>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+
+    <TextView
+        android:id="@+id/yaokong_name_promat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/p17"
+        android:layout_marginRight="@dimen/p17"
+        android:layout_marginTop="10dp"
+        android:text="请将手机对准电视机进行匹配"
+        android:textColor="@color/black"
+        android:textSize="@dimen/p25" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/yaokongqi_linear"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/yaokong_name_promat_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/p17"
+            android:layout_marginRight="@dimen/p17"
+            android:layout_marginTop="10dp"
+            android:text="匹配开始，请保持对准电视机"
+            android:textColor="@color/black"
+            android:textSize="@dimen/p25" />
+        <TextView
+            android:id="@+id/yaokong_name_promat_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/p17"
+            android:layout_marginRight="@dimen/p17"
+            android:layout_marginTop="5dp"
+            android:text="如果电视机打开或关闭"
+            android:textColor="@color/black"
+            android:textSize="@dimen/p25" />
+        <TextView
+            android:id="@+id/yaokong_name_promat_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/p17"
+            android:layout_marginRight="@dimen/p17"
+            android:layout_marginTop="5dp"
+            android:text="表示匹配成功，点击完成"
+            android:textColor="@color/black"
+            android:textSize="@dimen/p25" />
+
+        <TextView
+            android:id="@+id/num_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/p17"
+            android:layout_marginRight="@dimen/p17"
+            android:layout_marginTop="5dp"
+            android:text="1/3"
+            android:textColor="#151515"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/select_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/p17"
+            android:layout_marginRight="@dimen/p17"
+            android:layout_marginTop="5dp"
+            android:text="小米-L43M5-AZ"
+            android:textSize="20sp"
+            android:textColor="#151515" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_img"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/btn_xiangshang"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/delete_img"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/btn_xiangxia"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/p17"
+        android:layout_marginRight="@dimen/p17"
+        android:layout_marginTop="5dp"
+        android:text="长按可以逐个连续匹配"
+        android:textColor="@color/black"
+        android:textSize="@dimen/p25" />
+
+    <androidx.percentlayout.widget.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+        <Button
+            android:id="@+id/next_step_id"
+            app:layout_widthPercent="80%"
+            android:layout_height="@dimen/d30"
+            android:textSize="@dimen/s13"
+            android:text="完成"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/graylinerecra"/>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+</LinearLayout>
+    </ScrollView>
+</LinearLayout>

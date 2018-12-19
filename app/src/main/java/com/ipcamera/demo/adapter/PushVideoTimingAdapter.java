@@ -1,7 +1,9 @@
 package com.ipcamera.demo.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.swipemenuview.SwipeMenuLayout;
 import com.massky.sraum.R;
+import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,45 +85,64 @@ public class PushVideoTimingAdapter extends BaseAdapter {
             String saturday = (String) list_camera_list.get(position1).get("saturday");
             String sunday = (String) list_camera_list.get(position1).get("sunday");
             String weekdays = getWeeks(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
-                holder.tv_timing_week.setText(weekdays);
+            holder.tv_timing_week.setText(weekdays);
 //        int bStarttime = itemplan & 0x7ff;
 //        int bEndTime = (itemplan >> 12) & 0x7ff;
-                holder.tv_timing_time.setText(startTime + "-" + endTime);
-            }
+            holder.tv_timing_time.setText(startTime + "-" + endTime);
+        }
 
 //        int plankey = item.entrySet().iterator().next().getKey();
 //        int plantime = item.entrySet().iterator().next().getValue();
 //        movetiming.get(position1).put(plankey, plantime);
-            ((SwipeMenuLayout) convertView).setAccountType("1");
+//            ((SwipeMenuLayout) convertView).setAccountType("1");
 
-            ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
-                @Override
-                public void onMenuClick(View v, int position) {
-                    //弹出删除框
-                    if (pushVideoTimingListener != null) {
-                        pushVideoTimingListener.delete(position1);
-                    }
+//            ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
+//                @Override
+//                public void onMenuClick(View v, int position) {
+//                    //弹出删除框
+//                    if (pushVideoTimingListener != null) {
+//                        pushVideoTimingListener.delete(position1);
+//                    }
+//                }
+//
+//                @Override
+//                public void onItemClick(View v, int position) {
+//                    if (pushVideoTimingListener != null) {
+//                        pushVideoTimingListener.onItemClick(position1);
+//                    }
+//                }
+//
+//                @Override
+//                public void onInterceptTouch() {
+//
+//                }
+//
+//                @Override
+//                public void onInterceptTouch_end() {
+//
+//                }
+//            });
+        holder.swipe_context.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (pushVideoTimingListener != null) {
+                    pushVideoTimingListener.onItemClick(position1);
                 }
+            }
+        });
 
-                @Override
-                public void onItemClick(View v, int position) {
-                    if (pushVideoTimingListener != null) {
-                        pushVideoTimingListener.onItemClick(position1);
-                    }
+        holder.swipe_right_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //弹出删除框
+                if (pushVideoTimingListener != null) {
+                    pushVideoTimingListener.delete(position1);
                 }
+            }
+        });
 
-                @Override
-                public void onInterceptTouch() {
-
-                }
-
-                @Override
-                public void onInterceptTouch_end() {
-
-                }
-            });
-            return convertView;
-        }
+        return convertView;
+    }
 
     @NonNull
     private String getWeeks(String monday, String tuesday, String wednesday, String thursday, String friday, String saturday, String sunday) {
@@ -214,87 +235,87 @@ public class PushVideoTimingAdapter extends BaseAdapter {
         return weekdays;
     }
 
-    public void setList (List< Map > list_camera_list) {
-            this.list_camera_list = list_camera_list;
-        }
+    public void setList(List<Map> list_camera_list) {
+        this.list_camera_list = list_camera_list;
+    }
 
-        private class ViewHolder {
-            TextView tv_timing_time;
-            TextView tv_timing_week;
-            RelativeLayout swipe_context;
-            LinearLayout swipe_right_menu;
+    private class ViewHolder {
+        TextView tv_timing_time;
+        TextView tv_timing_week;
+        RelativeLayout swipe_context;
+        LinearLayout swipe_right_menu;
 
-        }
+    }
 
-        private String getWeekPlan (int time){
-            String weekdays = "";
-            for (int i = 24; i < 31; i++) {
-                int weeks = (time >> i) & 1;
-                if (weeks == 1) {
-                    switch (i) {
-                        case 24:
-                            weekdays = weekdays
-                                    + mContext.getResources().getString(R.string.plug_seven)
-                                    + " ";
-                            break;
-                        case 25:
-                            weekdays = weekdays
-                                    + mContext.getResources().getString(R.string.plug_one)
-                                    + " ";
-                            break;
-                        case 26:
-                            weekdays = weekdays
-                                    + mContext.getResources().getString(R.string.plug_two)
-                                    + " ";
-                            break;
-                        case 27:
-                            weekdays = weekdays
-                                    + mContext.getResources().getString(R.string.plug_three)
-                                    + " ";
-                            break;
-                        case 28:
-                            weekdays = weekdays
-                                    + mContext.getResources().getString(R.string.plug_four)
-                                    + " ";
-                            break;
-                        case 29:
-                            weekdays = weekdays
-                                    + mContext.getResources().getString(R.string.plug_five)
-                                    + " ";
-                            break;
-                        case 30:
-                            weekdays = weekdays
-                                    + mContext.getResources().getString(R.string.plug_six)
-                                    + " ";
-                            break;
-                        default:
-                            break;
-                    }
+    private String getWeekPlan(int time) {
+        String weekdays = "";
+        for (int i = 24; i < 31; i++) {
+            int weeks = (time >> i) & 1;
+            if (weeks == 1) {
+                switch (i) {
+                    case 24:
+                        weekdays = weekdays
+                                + mContext.getResources().getString(R.string.plug_seven)
+                                + " ";
+                        break;
+                    case 25:
+                        weekdays = weekdays
+                                + mContext.getResources().getString(R.string.plug_one)
+                                + " ";
+                        break;
+                    case 26:
+                        weekdays = weekdays
+                                + mContext.getResources().getString(R.string.plug_two)
+                                + " ";
+                        break;
+                    case 27:
+                        weekdays = weekdays
+                                + mContext.getResources().getString(R.string.plug_three)
+                                + " ";
+                        break;
+                    case 28:
+                        weekdays = weekdays
+                                + mContext.getResources().getString(R.string.plug_four)
+                                + " ";
+                        break;
+                    case 29:
+                        weekdays = weekdays
+                                + mContext.getResources().getString(R.string.plug_five)
+                                + " ";
+                        break;
+                    case 30:
+                        weekdays = weekdays
+                                + mContext.getResources().getString(R.string.plug_six)
+                                + " ";
+                        break;
+                    default:
+                        break;
                 }
             }
-
-            return weekdays;
         }
 
-        private String getTime (int time){
-            if (time < 60) {
-                if (time < 10)
-                    return "00:0" + time;
-                return "00:" + time;
-            }
-            int h = time / 60;
-            int m = time - (h * 60);
-            if (h < 10 && m < 10) {
-                return "0" + h + ":0" + m;
-            } else if (h > 9 && m < 10) {
-                return h + ":0" + m;
-            } else if (h < 10 && m > 9) {
-                return "0" + h + ":" + m;
-            }
+        return weekdays;
+    }
 
-            return h + ":" + m;
-
+    private String getTime(int time) {
+        if (time < 60) {
+            if (time < 10)
+                return "00:0" + time;
+            return "00:" + time;
         }
+        int h = time / 60;
+        int m = time - (h * 60);
+        if (h < 10 && m < 10) {
+            return "0" + h + ":0" + m;
+        } else if (h > 9 && m < 10) {
+            return h + ":0" + m;
+        } else if (h < 10 && m > 9) {
+            return "0" + h + ":" + m;
+        }
+
+        return h + ":" + m;
+
+    }
 
 //        public void addPlan ( int key, int value){
 //            Map<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -344,9 +365,9 @@ public class PushVideoTimingAdapter extends BaseAdapter {
 //            }
 //        }
 
-        public interface PushVideoTimingListener {
-            void delete(int position);
+    public interface PushVideoTimingListener {
+        void delete(int position);
 
-            void onItemClick(int position);
-        }
+        void onItemClick(int position);
     }
+}

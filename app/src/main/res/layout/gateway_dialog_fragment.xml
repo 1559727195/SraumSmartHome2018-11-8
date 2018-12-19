@@ -33,7 +33,7 @@
     </RelativeLayout>
 
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y60">
@@ -55,7 +55,7 @@
            ></ListView>
 
 
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
 
     <RelativeLayout
@@ -68,7 +68,7 @@
             android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
-            <android.support.percent.PercentRelativeLayout
+            <androidx.percentlayout.widget.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp">
@@ -92,7 +92,7 @@
                     android:layout_marginBottom="11dp"
                     android:textColor="#000000" />
 
-            </android.support.percent.PercentRelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

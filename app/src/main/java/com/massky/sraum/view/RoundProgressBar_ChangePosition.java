@@ -109,7 +109,7 @@ public class RoundProgressBar_ChangePosition extends View {
         max = mTypedArray.getInteger(R.styleable.RoundProgressBar_max, 100);
         textIsDisplayable = mTypedArray.getBoolean(R.styleable.RoundProgressBar_textIsDisplayable, true);
         style = mTypedArray.getInt(R.styleable.RoundProgressBar_style, 0);
-        content = (String) mTypedArray.getString(R.styleable.RoundProgressBar_content);
+        content = (String) mTypedArray.getString(R.styleable.RoundProgressBar_content1);
 
         mTypedArray.recycle();
     }

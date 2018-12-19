@@ -1,10 +1,9 @@
 package com.massky.sraum;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.massky.sraum.Util.ByteUtils;
 import com.massky.sraum.Util.InetUtil;
 import com.massky.sraum.Util.MD5Util;
 import com.massky.sraum.Util.NullStringToEmptyAdapterFactory;

@@ -2,10 +2,9 @@ package com.massky.sraum.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.telephony.TelephonyManager;
+
+import androidx.annotation.Nullable;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,7 +23,6 @@ import com.massky.sraum.Util.MycallbackNest;
 import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.Timeuti;
 import com.massky.sraum.Util.ToastUtil;
-import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.myzxingbar.qrcodescanlib.CaptureActivity;

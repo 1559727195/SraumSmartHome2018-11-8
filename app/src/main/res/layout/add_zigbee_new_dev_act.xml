@@ -75,7 +75,7 @@
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        app:content="s"
+        app:content1="s"
         app:roundColor="#DDDDDD"
         app:roundProgressColor="@color/black"
         app:roundWidth="4dp"
@@ -96,7 +96,7 @@
         android:textColor="@color/black"
         android:textSize="12sp" />
 
-    <android.support.percent.PercentRelativeLayout
+    <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp">
@@ -111,6 +111,6 @@
             android:textColor="@color/white"
             android:textSize="13sp"
             app:layout_widthPercent="80%" />
-    </android.support.percent.PercentRelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
 
 </LinearLayout>

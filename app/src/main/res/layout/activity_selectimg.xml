@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.percent.PercentRelativeLayout
+            <androidx.percentlayout.widget.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y35"
                 android:layout_centerVertical="true"
@@ -135,7 +135,7 @@
                 </RadioGroup>
 
 
-            </android.support.percent.PercentRelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -188,7 +188,7 @@
                     android:textSize="16sp"></com.massky.sraum.view.ClearEditText>
             </LinearLayout>
 
-            <android.support.percent.PercentRelativeLayout
+            <androidx.percentlayout.widget.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/y20"
@@ -205,7 +205,7 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_widthPercent="80%" />
-            </android.support.percent.PercentRelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

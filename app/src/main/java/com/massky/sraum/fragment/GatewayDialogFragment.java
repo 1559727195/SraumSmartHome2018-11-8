@@ -33,11 +33,13 @@ import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.activity.AddZigbeeDevActivity;
 import com.massky.sraum.activity.SearchGateWayActivity;
+import com.massky.sraum.activity.SelectSmartDoorLockActivity;
 import com.massky.sraum.activity.SelectZigbeeDeviceActivity;
 import com.massky.sraum.adapter.ShowGatewayListAdapter;
 import com.massky.sraum.myzxingbar.qrcodescanlib.CaptureActivity;
 import com.massky.sraum.tool.Constants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -219,7 +221,19 @@ public class GatewayDialogFragment extends DialogFragment implements View.OnClic
         list_show_rev_item.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                set_gateway(position);
+                final String type = (String) map.get("type");
+                final String gateway_number = (String) gatewayList.get(position).get("number");
+                switch (type) {
+                    case "B201"://智能门锁
+                        Intent intent_position = new Intent(getActivity(), SelectSmartDoorLockActivity.class);
+                        map.put("gateway_number",gateway_number);
+                        intent_position.putExtra("map", (Serializable) map);
+                        startActivity(intent_position);
+                        break;
+                    default:
+                        set_gateway(position);
+                        break;
+                }
             }
         });
     }

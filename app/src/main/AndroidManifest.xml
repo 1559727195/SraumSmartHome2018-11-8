@@ -49,8 +49,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/img_logo"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.NoTitleBar"
-       >
+        android:theme="@android:style/Theme.NoTitleBar">
         <activity android:name="com.massky.sraum.MainActivity">
 
         </activity>
@@ -92,6 +91,62 @@
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
+
+        <activity
+            android:name=".activity.AirLinkageControlActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.EditLinkDeviceResultActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.ExcuteSomeOneSceneActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.LinkageItemYaoKongQiActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.OpenSmartDoorLockActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.SelectiveLinkageActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.SelectiveLinkageDeviceDetailSecondActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.SelectLinkageYaoKongQiActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.SelectPmDataActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.SelectPmOneActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.SelectPmTwoActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+                <activity
+            android:name=".activity.AddZigbeeDeviceScucessActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+                <activity
+            android:name=".activity.AddDoorLockDevActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+                <activity
+            android:name=".activity.SelectSmartDoorLockTwoActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+                <activity
+            android:name=".activity.SelectSmartDoorLockActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.SelectSensorActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.SetSelectLinkActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.UnderWaterActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
 
         <activity
             android:name="com.massky.sraum.activity.ProgressBarActivity"
@@ -238,19 +293,18 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name="com.massky.sraum.activity.AddZigbeeDeviceScucessActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-
-
-        <activity
             android:name="com.massky.sraum.activity.AddNewRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name="com.massky.sraum.activity.RoomListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+        <activity
+            android:name="com.massky.sraum.activity.AndroidOPermissionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -362,6 +416,11 @@
 
         <activity
             android:name="com.massky.sraum.activity.SettingWangGuanActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name="com.massky.sraum.activity.AssociatedpanelActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 

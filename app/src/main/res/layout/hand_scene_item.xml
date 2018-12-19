@@ -18,19 +18,20 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/x5"
-            android:layout_weight="0.15">
+            android:layout_weight="0.05">
             <ImageView
                 android:id="@+id/device_type_pic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:visibility="gone"
                 android:src="@mipmap/ic_launcher" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_weight="0.7"
             android:orientation="vertical"
             >
             <RelativeLayout
@@ -81,6 +82,7 @@
         <Button
             android:layout_width="@dimen/x50"
             android:layout_height="match_parent"
+            android:id="@+id/rename_btn"
             android:text="重命名"
             android:background="@color/blue_txt"
             android:textColor="@android:color/white" />
@@ -92,6 +94,7 @@
             android:layout_width="@dimen/x50"
             android:layout_height="match_parent"
             android:text="编辑"
+            android:id="@+id/edit_btn"
             android:background="#FF9A02"
             android:textColor="@android:color/white" />
     </RelativeLayout>
@@ -103,6 +106,7 @@
             android:layout_height="match_parent"
             android:text="删除"
             android:background="#FF0202"
+            android:id="@+id/delete_btn"
             android:textColor="@android:color/white" />
     </RelativeLayout>
  </LinearLayout>

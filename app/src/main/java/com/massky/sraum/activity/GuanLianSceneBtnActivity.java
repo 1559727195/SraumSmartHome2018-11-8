@@ -5,12 +5,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.massky.sraum.R;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.widget.ApplicationContext;
 import com.yanzhenjie.statusview.StatusUtils;
-
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import butterknife.InjectView;
 
 /**
@@ -24,6 +26,7 @@ public class GuanLianSceneBtnActivity extends BaseActivity{
     ImageView back;
     @InjectView(R.id.rel_scene_set)
     RelativeLayout rel_scene_set;
+    private Serializable list_result = new ArrayList<>();
     @Override
     protected int viewId() {
         return R.layout.guanlian_scene_btn;
@@ -45,15 +48,18 @@ public class GuanLianSceneBtnActivity extends BaseActivity{
         next_step_txt.setOnClickListener(this);
         Intent intent = getIntent();
         if (intent == null) return;
-        String excute = (String) intent.getSerializableExtra("excute");
-        switch (excute) {
-            case "auto"://自动
-                rel_scene_set.setVisibility(View.GONE);
-                break;
-            default:
-                rel_scene_set.setVisibility(View.VISIBLE);
-                break;
-        }
+//        String excute = (String) intent.getSerializableExtra("excute");
+//
+//        switch (excute) {
+//            case "auto"://自动
+//                rel_scene_set.setVisibility(View.GONE);
+//                break;
+//            default:
+//                rel_scene_set.setVisibility(View.VISIBLE);
+//                break;
+//        }
+        list_result =   intent.getSerializableExtra("deviceList");
+
     }
 
     @Override

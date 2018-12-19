@@ -4,20 +4,20 @@
     xmlns:slideswitch="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFF2"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.yanzhenjie.statusview.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#EFEFF2"
+        android:background="@color/green"
         app:fitsView="@+id/root_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#EFEFF2">
+        android:background="@color/green">
 
         <ImageView
             android:id="@+id/back"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="设备添加成功"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <ImageView
@@ -43,8 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
             android:src="@drawable/icon_about" />
     </RelativeLayout>
 
@@ -53,10 +53,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
-        android:paddingBottom="5dp"
         android:paddingLeft="15dp"
+        android:paddingTop="5dp"
         android:paddingRight="15dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="5dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -71,17 +71,17 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
 
-            <com.massky.sraum.Util.ClearLengthEditText
+            <com.massky.sraum.view.ClearLengthEditText
+                android:id="@+id/dev_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/typein"
-                android:id="@+id/dev_name"
                 android:gravity="left"
                 android:hint="输入自定义名称"
                 android:padding="8dp"
                 android:textSize="14sp"
-                app:layout_widthPercent="65%"></com.massky.sraum.Util.ClearLengthEditText>
+                app:layout_widthPercent="65%"></com.massky.sraum.view.ClearLengthEditText>
         </android.support.percent.PercentRelativeLayout>
 
     </LinearLayout>
@@ -89,17 +89,18 @@
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
-        >
+        android:layout_marginTop="80dp">
 
         <Button
             android:id="@+id/btn_login_gateway"
             android:layout_height="@dimen/y30"
-          android:layout_centerInParent="true"
-            android:background="@drawable/graylinerecra"
+            android:layout_centerInParent="true"
+            android:background="@drawable/add_zigbee_device_btn"
             android:text="完成"
+            android:textColor="@color/white"
             android:textSize="13sp"
             app:layout_widthPercent="80%" />
     </android.support.percent.PercentRelativeLayout>
+
 
 </LinearLayout>

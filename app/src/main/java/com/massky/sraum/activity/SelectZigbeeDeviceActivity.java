@@ -2,6 +2,7 @@ package com.massky.sraum.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -260,9 +261,11 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
                     case "A303":
                     case "A401":
                     case "B301":
+                    case "B101":
                     case "A902":
                     case "AD01":
                     case "A501":
+                    case "B201":
 //                    case "A511":
 //                        sraum_setBox_accent(types[position], "normal");
                         sraum_setBox_accent(types[position], "normal");
@@ -276,12 +279,12 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
 //                        sraum_setBox_accent(types[position], "zigbee");
                         sraum_setBox_accent(types[position], "zigbee");
                         break;
-                    case "B201":
+//                    case "B201":
 //                        Intent intent_position = new Intent(SelectZigbeeDeviceActivity.this, SelectSmartDoorLockActivity.class);
 //                        intent_position.putExtra("type", types[position]);
 //                        startActivity(intent_position);
-                        show_gateway_dialog_fragment();
-                        break;
+////                        show_gateway_dialog_fragment();
+//                        break;
                     case "网关":
                         show_dialog_fragment();
                         break;//添加网关

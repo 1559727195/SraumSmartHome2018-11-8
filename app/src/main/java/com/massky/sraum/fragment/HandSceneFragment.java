@@ -17,10 +17,12 @@ import com.massky.sraum.adapter.HandSceneAdapter;
 import com.massky.sraum.base.BaseFragment1;
 import com.massky.sraum.event.MyDialogEvent;
 import com.massky.sraum.view.XListView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.InjectView;
 import okhttp3.Call;
 
@@ -39,6 +41,13 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
     String[] again_elements = {"全屋灯光全开", "全屋灯光全开", "回家模式",
             "离家", "吃饭模式", "看电视", "睡觉", "K歌"};
     private DialogUtil dialogUtil;
+    private List<User.scenelist> scenelist = new ArrayList<>();
+    private List<Map> list = new ArrayList<>();
+    private List<String> listtype = new ArrayList();
+
+    private List<Integer> listint = new ArrayList<>();
+    private List<Integer> listintwo = new ArrayList<>();
+
 
     @Override
     protected void onData() {
@@ -58,17 +67,17 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
     @Override
     public void onResume() {
         super.onResume();
-
+        sraum_getManuallyScenes();
+        common_second();
     }
 
 
     /**
      * 获取手动场景
-     *
      */
     private void sraum_getManuallyScenes() {
         Map map = new HashMap();
-        String areaNumber = (String) SharedPreferencesUtil.getData(getActivity(),"areaNumber","");
+        String areaNumber = (String) SharedPreferencesUtil.getData(getActivity(), "areaNumber", "");
         map.put("areaNumber", areaNumber);
         map.put("token", TokenUtil.getToken(getActivity()));
         if (dialogUtil != null) {
@@ -113,21 +122,86 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
                     @Override
                     public void onSuccess(final User user) {
                         scenelist = user.sceneList;
-                        manuaList = user.manualList;
                         list.clear();
-                        for (User.scenelist ud : user.sceneList) {
-                            listtype.add(ud.sceneStatus);
-                        }
                         for (User.scenelist us : scenelist) {
                             Map map = new HashMap();
                             map.put("type", us.type);
                             map.put("name", us.name);
-                            map.put("sceneStatus", us.sceneStatus);
+                            map.put("number", us.number);
                             list.add(map);
                             setPicture(us.type);
                         }
+                        handSceneAdapter.setList_s(list, listint, listintwo, true);
+                        handSceneAdapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+
+    private void setPicture(String type) {
+        switch (type) {
+            case "1":
+                listint.add(R.drawable.add_scene_homein);
+                listintwo.add(R.drawable.gohome2);
+                break;
+            case "2":
+                listint.add(R.drawable.add_scene_homeout);
+                listintwo.add(R.drawable.leavehome2);
+                break;
+            case "3":
+                listint.add(R.drawable.add_scene_sleep);
+                listintwo.add(R.drawable.sleep2);
+                break;
+            case "4":
+                listint.add(R.drawable.add_scene_nightlamp);
+                listintwo.add(R.drawable.getup_night2);
+                break;
+            case "5":
+                listint.add(R.drawable.add_scene_getup);
+                listintwo.add(R.drawable.getup_morning2);
+                break;
+            case "6":
+                listint.add(R.drawable.add_scene_cup);
+                listintwo.add(R.drawable.rest2);
+                break;
+            case "7":
+                listint.add(R.drawable.add_scene_book);
+                listintwo.add(R.drawable.study2);
+                break;
+            case "8":
+                listint.add(R.drawable.add_scene_moive);
+                listintwo.add(R.drawable.movie2);
+                break;
+            case "9":
+                listint.add(R.drawable.add_scene_meeting);
+                listintwo.add(R.drawable.meeting2);
+                break;
+            case "10":
+                listint.add(R.drawable.add_scene_cycle);
+                listintwo.add(R.drawable.sport2);
+                break;
+            case "11":
+                listint.add(R.drawable.add_scene_noddle);
+                listintwo.add(R.drawable.dinner2);
+                break;
+            case "12":
+                listint.add(R.drawable.add_scene_lampon);
+                listintwo.add(R.drawable.open_all2);
+                break;
+            case "13":
+                listint.add(R.drawable.add_scene_lampoff);
+                listintwo.add(R.drawable.close_all2);
+                break;
+            case "14":
+                listint.add(R.drawable.defaultpic);
+                listintwo.add(R.drawable.defaultpicheck);
+                break;
+            case "101"://101-手动云场景
+            default:
+                listint.add(R.drawable.defaultpic);
+                listintwo.add(R.drawable.defaultpicheck);
+                break;
+        }
     }
 
     @Override
@@ -138,37 +212,14 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
     @Override
     protected void onView(View view) {
         dialogUtil = new DialogUtil(getActivity());
-        list_hand_scene = new ArrayList<>();
-        for (String element : again_elements) {
-            Map map = new HashMap();
-            map.put("name", element);
-            switch (element) {
-                case "全屋灯光全开":
-                    map.put("image", R.drawable.icon_deng_sm);
-                    break;
-                case "回家模式":
-                    map.put("image", R.drawable.icon_huijia_sm);
-                    break;
-                case "离家":
-                    map.put("image", R.drawable.icon_lijia_sm);
-                    break;
-                case "吃饭模式":
-                    map.put("image", R.drawable.icon_chifan_sm);
-                    break;
-                case "看电视":
-                    map.put("image", R.drawable.icon_kandiashi_sm);
-                    break;
-                case "睡觉":
-                    map.put("image", R.drawable.icon_shuijiao_sm);
-                    break;
-                case "K歌":
-                    map.put("image", R.drawable.icon_kge_sm);
-                    break;
-            }
-            list_hand_scene.add(map);
-        }
 
-        handSceneAdapter = new HandSceneAdapter(getActivity(), list_hand_scene);
+        handSceneAdapter = new HandSceneAdapter(getActivity(), list, listint, listintwo, dialogUtil, new HandSceneAdapter.RefreshListener() {
+            @Override
+            public void refresh() {
+                sraum_getManuallyScenes();
+                common_second();
+            }
+        });
         xListView_scan.setAdapter(handSceneAdapter);
         xListView_scan.setPullLoadEnable(false);
         xListView_scan.setXListViewListener(this);
@@ -197,6 +248,8 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
     @Override
     public void onRefresh() {
         onLoad();
+        sraum_getManuallyScenes();
+        common_second();
     }
 
     @Override
@@ -208,4 +261,18 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
             }
         }, 1000);
     }
+
+    /**
+     * 清除联动信息
+     */
+    private void common_second() {
+        SharedPreferencesUtil.saveData(     getActivity(), "linkId", "");
+        SharedPreferencesUtil.saveInfo_List(getActivity(), "list_result", new ArrayList<Map>());
+        SharedPreferencesUtil.saveInfo_List(getActivity(), "list_condition", new ArrayList<Map>());
+        SharedPreferencesUtil.saveData(     getActivity(), "editlink", false);
+        SharedPreferencesUtil.saveInfo_List(getActivity(), "link_information_list", new ArrayList<Map>());
+        SharedPreferencesUtil.saveData(     getActivity(), "add_condition", false);
+    }
+
+
 }

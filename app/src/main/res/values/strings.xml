@@ -1,5 +1,19 @@
 <resources tools:ignore="MissingTranslation" xmlns:tools="http://schemas.android.com/tools">
 
+    <string name="pull_to_refresh">下拉刷新</string>
+    <string name="release_to_refresh">释放立即刷新</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="refresh_succeed">刷新成功</string>
+    <string name="refresh_fail">刷新失败</string>
+    <string name="pullup_to_load">上拉加载更多</string>
+    <string name="release_to_load">释放立即加载</string>
+    <string name="loading">正在加载...</string>
+    <string name="load_succeed">加载成功</string>
+    <string name="load_fail">加载失败</string>
+
+
+
+
     <!--网关详细信息-->
     <!--搜索界面所需字体-->
     <string name="gosearch" translatable="false">继续搜索</string>
@@ -145,13 +159,12 @@
     <string name="tuisongtongzhi">推送通知</string>
     <string name="touyingyi">投影仪</string>
     <string name="yinxiang">音响</string>
+    <string name="wifi_camera">WIFI摄像头</string>
 
     <string name="wifi_hongwai">WIFI红外转发</string>
 
     <string name="cha_zuo">86插座两位</string>
     <string name="cha_zuo_1">入墙式智能插座</string>
-
-
 
     <string name="connect">连接</string>
     <string name="see_mode">预览模式</string>
@@ -161,7 +174,36 @@
     <string name="sd_record">TF卡远程录像</string>
     <string name="out_sensor">退出对码</string>
     <string name="sensorcodeing">对码状态中...</string>
-    <string name="wifi_camera">WIFI摄像头</string>
+
+    <string name="rmone">卧室调光灯</string>
+    <string name="rmtwo">客厅灯</string>
+    <string name="rmthree">卧室空调</string>
+    <string name="rmfour">卧室窗帘</string>
+    <string name="rmfive">卫浴灯</string>
+    <string name="rmsix">卫浴灯</string>
+    <string name="rmseven">客厅空调</string>
+    <string name="rmeight">厨房灯</string>
+    <string name="rmnine">客厅窗帘</string>
+
+    <string name="open_door_lock">打开远程开关至\"on\"</string>
+    <string name="open_door_lock_txt">设备通电状态下，请按步骤操作您的智能锁屏幕</string>
+    <string name="open_door_lock_txt_one">长按\"管理员键\"至屏幕亮起</string>
+    <string name="open_door_lock_txt_two">输入管理员密码，默认888888</string>
+    <string name="open_door_lock_txt_three">进入\"系统设置\"</string>
+    <string name="open_door_lock_txt_four">进入\"安全设置\"</string>
+    <string name="open_door_lock_txt_five">按照下图所示设置并进入\"Zigbee指令\"</string>
+    <string name="open_door_lock_txt_six">选择\"Zigee入网\"</string>
+    <string name="open_door_lock_txt_result">等待加入网关</string>
+
+
+    <string name="aboutone">产品介绍</string>
+    <string name="abouttwo">使用帮助</string>
+    <string name="aboutthree">意见反馈</string>
+    <string name="aboutfour">服务条款</string>
+    <string name="aboutfive">开发人员</string>
+    <string name="aboutsix">版本更新</string>
+    <string name="soft_update_cancel">取消</string>
+    <string name="soft_updating">正在更新</string>
 
 
 </resources>

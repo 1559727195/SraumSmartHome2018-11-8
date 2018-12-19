@@ -55,7 +55,6 @@
     <color name="moccasin">#ffe4b5</color><!--鹿皮色 -->
     <color name="navajowhite">#ffdead</color><!--纳瓦白 -->
     <color name="peachpuff">#ffdab9</color><!--桃色 -->
-    <color name="gold">#ffd700</color><!--金色 -->
     <color name="pink">#ffc0cb</color><!--粉红色 -->
     <color name="lightpink">#ffb6c1</color><!--亮粉红色 -->
     <color name="orange">#ffa500</color><!--橙色 -->
@@ -190,4 +189,7 @@
     <color name="style_divider_color">#C9C7CD</color>
     <color name="block">#60000000</color>
     <color name="zongse_color">#E2C891</color>
+    <color name="gold">#E3CC9B</color>
+    <color name="gold_color">#E3CC9B</color>
+    <color name="black_color">#2C2C2E</color>
 </resources>

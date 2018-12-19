@@ -1,5 +1,7 @@
 package com.massky.sraum;
 
+import android.app.Service;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -65,6 +67,12 @@ public class User {
     public String panelMAC;
     public String manuallyCount;
     public String autoCount;
+    public String deviceStatus;
+    public String panelStatus;
+    public String gatewayMAC;
+    public String boxNumber;
+    public String version;
+    public String versionCode;
 
     public static class roomList {
         public String number;
@@ -76,9 +84,9 @@ public class User {
      * 获取单个房间关联信息（APP->网关）
      */
     public String count;
-    public List<list> list;
+    public List<list_scene> list;
 
-    public static class list {
+    public static class list_scene implements Serializable {
 
         public String type;
         public String online;
@@ -86,6 +94,7 @@ public class User {
         public String name;
         public String status;
         public String fatherName;
+        public String dimmer;
         public String mode;
         public String temperature;
         public String speed;
@@ -96,13 +105,12 @@ public class User {
         public String pm10;
         public String humidity;
         public String alarm;
-
         public String roomNumber;
-
-        public String dimmer;
-
         public String roomName;
-
+        public String panelName;
+        public String boxName;
+        public String panelMac;
+        public String gatewayMac;
     }
 
     /**
@@ -177,6 +185,7 @@ public class User {
   speed：空调或新风或地暖的风速，1-低风，2-中风，3-高风，4-强力，5-送风，
   6-自动*/
     public List<device> deviceList;
+
     public static class device implements Serializable {
         //根据面板id-》去查找设备列表
         public String type;
@@ -192,9 +201,14 @@ public class User {
         public boolean flag;
         public String panelName;
         public String panelMac;
+        public String deviceId;
+        public String boxNumber;
+        public String boxName;
+        public String button;
     }
 
     public List<panellist> panelList;
+
     /*
   * id：面板编号
   mac：面板 MAC 地址
@@ -226,6 +240,7 @@ public class User {
         public String gatewayid;
         public String isUse;
         public String number;
+        public String panelMac;
     }
 
 
@@ -269,6 +284,7 @@ public class User {
     }
 
 
+    public List<scenelist> sceneList;
 
     //gatewayid面板id panelType面板类型
     public static class scenelist {
@@ -281,13 +297,95 @@ public class User {
         public String id;
         public String panelNumber;
         public String buttonNumber;
-        public List<devicesce> deviceList;
         public String sceneId;
         public String sceneName;
         public String sceneType;
         public String boxNumber;
         public String boxName;
-
+        public String number;
     }
 
-}
+
+    public String deviceType;
+    public String eviceStatus;
+    public String deviceName;
+    public String roomNumber;
+    public String roomName;
+    public String isUse;
+
+
+    /**
+     * 按钮列表
+     */
+    public List<button> buttonList;
+
+    public static class button implements Serializable {
+        //根据面板id-》去查找设备列表
+        public String type;
+        public String number;
+        public String name;
+        public String status;
+        public String mode;
+        public String dimmer;
+        public String temperature;
+        public String speed;
+        public String name1;
+        public String name2;
+        public boolean flag;
+        public String panelName;
+        public String panelMac;
+    }
+
+    /**
+     * 设备联动信息
+     */
+    public deviceLinkInfo deviceLinkInfo;
+
+    public static class deviceLinkInfo implements Serializable{
+        public String token;
+        public String deviceId;
+        public String deviceType;
+        public String linkName;
+        public String condition;
+        public String minValue;
+        public String maxValue;
+        public String startTime;
+        public String endTime;
+        public List<deviceList> deviceList;
+        public String deviceName;
+        public String type;
+        public String boxName;
+    }
+
+    /**
+     * 获取门磁等第三方设备
+     */
+    public static class deviceList implements  Serializable{
+        public String name;
+        public String number;
+        public String type;
+        public String status;
+        public String mode;
+        public String dimmer;
+        public String temperature;
+        public String speed;
+        public String boxNumber;
+        public String boxName;
+        public String panelMac;
+        public String gatewayMac;
+    }
+
+
+    /**
+     * 获取我的设备联动,自动场景
+     */
+
+    public List<deviceLinkList> deviceLinkList;
+
+    public static class deviceLinkList {
+        public String id;
+        public String name;
+        public String isUse;
+        public String type;
+    }
+};

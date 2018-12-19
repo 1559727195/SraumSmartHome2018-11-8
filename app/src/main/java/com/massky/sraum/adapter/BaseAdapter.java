@@ -9,7 +9,7 @@ import java.util.List;
 
 /*用于adapter的基础类*/
 public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
-    private List<T> list = new ArrayList<>();
+   public List<T> list = new ArrayList<>();
 
     protected Context context;
 

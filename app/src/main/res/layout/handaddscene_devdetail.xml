@@ -525,7 +525,6 @@
         android:id="@+id/tiaoguangdeng_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:background="@color/white"
         android:layout_marginTop="@dimen/y5"
         android:paddingTop="@dimen/y5"

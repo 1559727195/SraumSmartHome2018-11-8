@@ -27,15 +27,20 @@ import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.activity.AddAutoSceneActivity;
 import com.massky.sraum.activity.AddHandSceneActivity;
+import com.massky.sraum.activity.EditLinkDeviceResultActivity;
 import com.massky.sraum.activity.EditSceneSecondActivity;
+import com.massky.sraum.activity.SelectSensorActivity;
+import com.massky.sraum.activity.SelectiveLinkageActivity;
 import com.massky.sraum.adapter.DynamicFragmentViewPagerAdapter;
 import com.massky.sraum.base.BaseFragment1;
 import com.massky.sraum.event.MyDialogEvent;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,7 +115,7 @@ public class SceneFragment extends BaseFragment1 {
         StatusUtils.setFullToStatusBar(getActivity());  // StatusBar.
 //        initView();
         dialogUtil = new DialogUtil(getActivity());
-//        initControls();
+        initControls();
     }
 
     @Override
@@ -145,9 +150,32 @@ public class SceneFragment extends BaseFragment1 {
                 super.onSuccess(user);
                 manuallyCount = user.manuallyCount;
                 autoCount = user.autoCount;
-                initControls();
+                init_tab_layout();
+
+
             }
         });
+    }
+
+    /**
+     * 初始化tablayout的数据加载
+     */
+    private void init_tab_layout() {
+        //将名称加载tab名字列表，正常情况下，我们应该在values/arrays.xml中进行定义然后调用
+        list_title = new ArrayList<>();
+        manuallyCount = manuallyCount == null ? "0" : manuallyCount;
+        autoCount = autoCount == null ? "0" : autoCount;
+        list_title.add("手动(" + manuallyCount + ")");
+        list_title.add("自动(" + autoCount + ")");
+        tab_FindFragment_title.removeAllTabs();
+        for (int i = 0; i < 2; i++) {
+            tab_FindFragment_title.addTab(tab_FindFragment_title.newTab().setText(list_title.get(i)));
+        }
+
+        fragmentViewPagerAdapter = new DynamicFragmentViewPagerAdapter(getActivity().getSupportFragmentManager(),
+                vp_FindFragment_pager, _fragments, list_title);
+        //viewpager加载adapter
+        vp_FindFragment_pager.setAdapter(fragmentViewPagerAdapter);
     }
 
 
@@ -292,103 +320,6 @@ public class SceneFragment extends BaseFragment1 {
         }
     }
 
-    /**
-     *
-     */
-    private void initView() {//
-
-//        _navItemLayouts = new LinearLayout[2];
-//        _navItemLayouts[0] =  hand_scene_line;
-//        _navItemLayouts[1] =   auto_scene_line;
-//
-//        views = new View[2];
-//        views[0] = hand_scene_view;
-//        views[1] = auto_scene_view;
-//
-//        //
-//        for(int i = 0 ; i < _navItemLayouts.length;i++){
-//            _navItemLayouts[i].setOnClickListener(new LinearLayoutOnClickListener());
-//        }
-
-//        handSceneFragment = HandSceneFragment.newInstance();
-//        autoSceneFragment = AutoSceneFragment.newInstance();//new PropertyFragment () 物业
-//        _fragments.add(handSceneFragment);
-//        _fragments.add(autoSceneFragment);
-    }
-
-//    /**
-//     *
-//     * @param selectedIndex
-//     */
-//    private void refreshFragment(int selectedIndex) {
-//        /**
-//         *  取消动画效果，消除跨页动画（比如0到3会经过1，2页面） viewPager.setCurrentItem(index,false);
-//         *  具备动画效果  viewPager.setCurrentItem(index);
-//         * @param view
-//         */
-//        mContentPager.setCurrentItem(selectedIndex,false);
-//    }
-
-    /**
-     * Android popupwindow在指定控件正下方滑动弹出效果
-     */
-//    private void showPopWindow() {
-//        try {
-//            View view = LayoutInflater.from(getActivity()).inflate(
-//                    R.layout.add_scene_window, null);
-//            //add_hand_scene_txt, add_auto_scene_txt
-//             TextView add_auto_scene_txt = (TextView) view.findViewById(R.id.add_auto_scene_txt);
-//            TextView add_hand_scene_txt = (TextView) view.findViewById(R.id.add_hand_scene_txt);
-//
-//            popupWindow = new PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT,
-//                    WindowManager.LayoutParams.WRAP_CONTENT);
-//            popupWindow.setFocusable(true);
-//            popupWindow.setOutsideTouchable(true);
-//            ColorDrawable cd = new ColorDrawable(0x00ffffff);// 背景颜色全透明
-//            popupWindow.setBackgroundDrawable(cd);
-//            int[] location = new int[2];
-//            add_scene.getLocationOnScreen(location);//获得textview的location位置信息，绝对位置
-//            popupWindow.setAnimationStyle(R.style.style_right_animation);// 动画效果必须放在showAsDropDown()方法上边，否则无效
-//            backgroundAlpha(1.0f);// 设置背景半透明 ,0.0f->1.0f为不透明到透明变化。
-////            popupWindow.showAsDropDown(add_scene,0,dip2px(getActivity(),10));
-//
-//            popupWindow.showAtLocation(add_scene, Gravity.NO_GRAVITY, location[0],location[1]);
-//            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                @Override
-//                public void onDismiss() {
-//                    popupWindow = null;// 当点击屏幕时，使popupWindow消失
-//                    backgroundAlpha(1.0f);// 当点击屏幕时，使半透明效果取消，1.0f为透明
-//                }
-//            });
-//
-//            add_hand_scene_txt.setOnClickListener(new View.OnClickListener() {//while(bool) {postdelay { }}也可以起到定时器的作用
-//                @Override
-//                public void onClick(View v) {
-//                    popupWindow.dismiss();
-//                    startActivity(new Intent(getActivity(),EditSceneSecondActivity.class));
-//                }
-//            });
-//
-//            add_auto_scene_txt.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {//添加自动场景
-//                    popupWindow.dismiss();
-//                    startActivity(new Intent(getActivity(),AddAutoSceneActivity.class));
-//                }
-//            });
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//
-//    // 设置popupWindow背景半透明
-//    public void backgroundAlpha(float bgAlpha) {
-//        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-//        lp.alpha = bgAlpha;// 0.0-1.0
-//        getActivity().getWindow().setAttributes(lp);
-//    }
-
 
     /**
      * Android popupwindow在指定控件正下方滑动弹出效果
@@ -427,7 +358,33 @@ public class SceneFragment extends BaseFragment1 {
                 @Override
                 public void onClick(View v) {
                     popupWindow.dismiss();
-                    startActivity(new Intent(getActivity(), AddHandSceneActivity.class));
+//                    startActivity(new Intent(getActivity(), AddHandSceneActivity.class));
+                    Intent intent = null;
+                    Map map_link = new HashMap();
+                    map_link.put("type", "101");
+                    map_link.put("deviceType", "");
+                    map_link.put("deviceId", "");
+                    map_link.put("name", "手动执行");
+                    map_link.put("action", "执行");
+                    map_link.put("condition", "");
+                    map_link.put("minValue", "");
+                    map_link.put("maxValue", "");
+                    map_link.put("boxName", "");
+                    map_link.put("name1", "手动执行");
+                    boolean add_condition = (boolean) SharedPreferencesUtil.getData(getActivity(), "add_condition", false);
+                    if (add_condition) {
+//            AppManager.getAppManager().removeActivity_but_activity_cls(MainfragmentActivity.class);
+                        AppManager.getAppManager().finishActivity_current(EditLinkDeviceResultActivity.class);
+                        intent = new Intent(getActivity(), EditLinkDeviceResultActivity.class);
+                        intent.putExtra("sensor_map", (Serializable) map_link);
+                        startActivity(intent);
+                    } else {
+                        intent = new Intent(getActivity(),
+                                SelectiveLinkageActivity.class);
+                        intent.putExtra("link_map", (Serializable) map_link);
+                        startActivity(intent);
+                    }
+
                 }
             });
 
@@ -435,7 +392,10 @@ public class SceneFragment extends BaseFragment1 {
                 @Override
                 public void onClick(View v) {//添加自动场景
                     popupWindow.dismiss();
-                    startActivity(new Intent(getActivity(), AddAutoSceneActivity.class));
+//                    startActivity(new Intent(getActivity(), AddAutoSceneActivity.class));
+                    Intent intent = new Intent(getActivity(), SelectSensorActivity.class);
+                    intent.putExtra("type", "100");//自动场景
+                    startActivity(intent);
                 }
             });
         } catch (Exception e) {

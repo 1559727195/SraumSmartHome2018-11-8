@@ -82,7 +82,7 @@ public class SwipeMenuLayout extends ViewGroup {
     //防止多只手指一起滑我的flag 在每次down里判断， touch事件结束清空
     private static boolean isTouching;
 
-    public  static  boolean isopen; //判断Swipemenulayout是否打开，
+    public static boolean isopen; //判断Swipemenulayout是否打开，
     private VelocityTracker mVelocityTracker;//滑动速度变量
     private android.util.Log LogUtils;
 
@@ -438,7 +438,6 @@ public class SwipeMenuLayout extends ViewGroup {
     private void add_new_zone_function(MotionEvent ev) {
         // 平滑关闭Menu
         if (isopen) {
-            if (mOnMenuClickListener != null) mOnMenuClickListener.onItemClick_By_btn(isopen);
             isopen = false;
         } else {//已经关闭，跳转到content界面
 
@@ -529,7 +528,7 @@ public class SwipeMenuLayout extends ViewGroup {
         //展开就加入ViewCache：
         mViewCache = SwipeMenuLayout.this;
         isopen = true;
-
+        if (mOnMenuClickListener != null) mOnMenuClickListener.onItemClick_By_btn(isopen);
         //2016 11 13 add 侧滑菜单展开，屏蔽content长按
         if (null != mContentView) {
             mContentView.setLongClickable(false);
@@ -548,6 +547,7 @@ public class SwipeMenuLayout extends ViewGroup {
             @Override
             public void onAnimationEnd(Animator animation) {
                 isExpand = true;
+                if (mOnMenuClickListener != null) mOnMenuClickListener.onItemClick_By_btn(isExpand);
             }
         });
         mExpandAnim.setDuration(300).start();
@@ -602,7 +602,7 @@ public class SwipeMenuLayout extends ViewGroup {
             @Override
             public void onAnimationEnd(Animator animation) {
                 isExpand = false;
-
+                if (mOnMenuClickListener != null) mOnMenuClickListener.onItemClick_By_btn(isExpand);
             }
         });
         mCloseAnim.setDuration(300).start();
@@ -676,6 +676,7 @@ public class SwipeMenuLayout extends ViewGroup {
      */
     public void quickClose() {
         if (this == mViewCache) {
+            isopen = false;
             //先取消展开动画
             cancelAnim();
             mViewCache.scrollTo(0, 0);//关闭

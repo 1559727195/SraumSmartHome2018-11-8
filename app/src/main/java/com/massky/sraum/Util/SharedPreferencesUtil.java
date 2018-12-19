@@ -2,6 +2,16 @@ package com.massky.sraum.Util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 //用于设置SharedPreferences进行封装
 
 /**
@@ -68,5 +78,128 @@ public class SharedPreferencesUtil {
         }
         return null;
     }
+
+    /**
+     * 获取List<Map></>
+     *
+     * @param context
+     * @param key
+     * @return
+     */
+    public static void remove_current_index(Context context, String key, int position) {
+        List<Map> datas = new ArrayList<>();
+//        SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        String result = (String) getData(context, key, "");
+        try {
+            JSONArray array = new JSONArray(result);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject itemObject = array.getJSONObject(i);
+                Map itemMap = new HashMap<>();
+                JSONArray names = itemObject.names();
+                if (names != null) {
+                    for (int j = 0; j < names.length(); j++) {
+                        String name = names.getString(j);
+                        String value = itemObject.getString(name);
+                        itemMap.put(name, value);
+                    }
+                }
+                datas.add(itemMap);
+            }
+        } catch (JSONException e) {
+
+        }
+        if (datas.size() != 0) {
+            datas.remove(position);
+            saveInfo_List(context, key, datas);
+        }
+    }
+
+
+    /**
+     * 获取List<Map></>
+     *
+     * @param context
+     * @param key
+     * @return
+     */
+    public static List<Map> getInfo_List(Context context, String key) {
+        List<Map> datas = new ArrayList<>();
+//        SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        String result = (String) getData(context, key, "");
+//        ToastUtil.showToast(context, "ss:" + result);
+        try {
+            JSONArray array = new JSONArray(result);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject itemObject = array.getJSONObject(i);
+                Map itemMap = new HashMap<>();
+                JSONArray names = itemObject.names();
+                if (names != null) {
+                    for (int j = 0; j < names.length(); j++) {
+                        String name = names.getString(j);
+                        Object value = itemObject.get(name);
+                        itemMap.put(name, value);
+                    }
+                }
+                datas.add(itemMap);
+            }
+        } catch (JSONException e) {
+
+        }
+        return datas;
+    }
+
+
+    /**
+     * 保存List<Map></>
+     *
+     * @param context
+     * @param key
+     * @param datas
+     */
+    public static void saveInfo_List(Context context, String key, List<Map> datas) {
+
+//        SharedPreferences sharedPreferences = context
+//                .getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        JSONArray mJsonArray = new JSONArray();
+        for (int i = 0; i < datas.size(); i++) {
+            Map itemMap = datas.get(i);
+            Iterator<Map.Entry> iterator = itemMap.entrySet().iterator();
+
+            JSONObject object = new JSONObject();
+
+            while (iterator.hasNext()) {
+                Map.Entry entry = iterator.next();
+                try {
+
+                    String type = entry.getValue().getClass().getSimpleName();
+                    if ("Integer".equals(type)) {
+                        object.put((String) entry.getKey(), (Integer) entry.getValue());
+                    } else if ("Boolean".equals(type)) {
+                        object.put((String) entry.getKey(), (Boolean) entry.getValue());
+                    } else if ("String".equals(type)) {
+                        object.put((String) entry.getKey(), (String) entry.getValue());
+                    } else if ("Float".equals(type)) {
+                        object.put((String) entry.getKey(), (Float) entry.getValue());
+                    } else if ("Long".equals(type)) {
+                        object.put((String) entry.getKey(), (Long) entry.getValue());
+                    }
+                } catch (JSONException e) {
+
+                }
+            }
+            mJsonArray.put(object);
+        }
+
+//        SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sp.edit();
+
+//        editor.putString(key, (String)"34593erufogjsjhgrtu");
+////        editor.putString(key, mJsonArray.toString());
+//        editor.commit();
+        saveData(context, key, mJsonArray.toString());
+    }
+
 
 }

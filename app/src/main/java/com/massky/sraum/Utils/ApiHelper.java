@@ -66,4 +66,24 @@ public class ApiHelper {
     public static String sraum_deviceRelatedRoom = api + "sraum_deviceRelatedRoom";
     public static String sraum_getAllScenesCount = api + "sraum_getAllScenesCount";
     public static String sraum_getManuallyScenes = api + "sraum_getManuallyScenes";
+    public static String sraum_manualSceneControl = api + "sraum_manualSceneControl";
+    public static String sraum_getOneSceneInfo = api + "sraum_getOneSceneInfo";
+    public static String sraum_getLinkController = api + "sraum_getLinkController";
+    public static String sraum_getWifiAppleDeviceInfos = api + "sraum_getWifiAppleDeviceInfos";
+    public static String sraum_getLinkScene = api + "sraum_getLinkScene";
+    public static String sraum_deviceLinkInfo = api + "sraum_deviceLinkInfo";
+    public static String sraum_getLinkSensor = api + "sraum_getLinkSensor";
+    public static String sraum_updateDeviceLink = api + "sraum_updateDeviceLink";
+    public static String sraum_setDeviceLink = api + "sraum_setDeviceLink";
+    public static String sraum_addManuallyScene = api + "sraum_addManuallyScene";
+    public static String sraum_editManuallyScene = api + "sraum_editManuallyScene";
+    public static String sraum_panelRelation = api + "sraum_panelRelation";
+    public static String sraum_getAutoScenes = api + "sraum_getAutoScenes";
+    public static String sraum_reNameManuallyScene = api + "sraum_reNameManuallyScene";
+    public static String sraum_deleteManuallyScene = api + "sraum_deleteManuallyScene";
+    public static String sraum_updateDeviceLinkName = api + "sraum_updateDeviceLinkName";
+    public static String sraum_deleteDeviceLink = api + "sraum_deleteDeviceLink";
+    public static String sraum_setDeviceLinkIsUse = api + "sraum_setDeviceLinkIsUse";
+    public static String UpdateApkUrl ;
+    public static String sraum_getVersion;
 }

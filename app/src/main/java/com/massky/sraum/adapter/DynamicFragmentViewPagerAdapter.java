@@ -7,6 +7,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class DynamicFragmentViewPagerAdapter extends PagerAdapter implements Vie
     private OnExtraPageChangeListener onExtraPageChangeListener; // ViewPager切换页面时的额外功能添加接口
 
     public DynamicFragmentViewPagerAdapter(FragmentManager fragmentManager, ViewPager viewPager, List<Fragment> fragments,
-     List<String> list_title) {
+                                           List<String> list_title) {
         this.mFragmentList = fragments;
         this.mFragmentManager = fragmentManager;
         this.mTitles = list_title;
@@ -40,14 +41,12 @@ public class DynamicFragmentViewPagerAdapter extends PagerAdapter implements Vie
             e.printStackTrace();
         }
 
-       return mTitles.size() != 0 ? mTitles.get(position) : "";
+        return mTitles.size() != 0 ? mTitles.get(position) : "";
     }
 
     // 动态设置我们标题的方法
-    public void setPageTitle(int position, String title)
-    {
-        if(position >= 0 && position < mTitles.size())
-        {
+    public void setPageTitle(int position, String title) {
+        if (position >= 0 && position < mTitles.size()) {
             mTitles.set(position, title);
             notifyDataSetChanged();
         }
@@ -60,7 +59,7 @@ public class DynamicFragmentViewPagerAdapter extends PagerAdapter implements Vie
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view==object;
+        return view == object;
     }
 
     @Override

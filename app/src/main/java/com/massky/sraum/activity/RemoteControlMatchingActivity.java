@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.massky.sraum.R;
 import com.massky.sraum.Util.LogUtil;
 import com.massky.sraum.adapter.FragmentViewPagerAdapter;
+import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.base.Basecfragment;
 import com.massky.sraum.base.Basecfragmentactivity;
 import com.massky.sraum.fragment.EachMatchFragment;
@@ -26,7 +27,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.InjectView;
 
-public class RemoteControlMatchingActivity extends Basecfragmentactivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class RemoteControlMatchingActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     @InjectView(R.id.back)
     ImageView back;
@@ -78,11 +79,17 @@ public class RemoteControlMatchingActivity extends Basecfragmentactivity impleme
             statusView.setBackgroundColor(Color.BLACK);
         }
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
-        onEvent();
+//        onEvent();
     }
 
-    private void onEvent() {
+    @Override
+    protected void onEvent() {
         back.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onData() {
+
     }
 
     @Override

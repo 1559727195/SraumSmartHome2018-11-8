@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:slideswitch="http://schemas.android.com/tools"
+    android:id="@+id/swipemenu_layout"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/white"
+    app:ios="false"
+    app:leftSwipe="true"
+    app:swipeEnable="true">
+
+    <LinearLayout
+        android:id="@+id/swipe_content_linear"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#EFEFF2"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rel_scene_set"
+            android:layout_width="match_parent"
+            android:layout_height="49dp">
+
+            <ImageView
+                android:id="@+id/img_guan_scene"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/panel_scene_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/img_guan_scene"
+                android:text="开关"
+                android:textColor="#2C2C2E"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/gateway_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/panel_scene_name_txt"
+                android:text="网关名称"
+                android:textColor="@color/gray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/execute_scene_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="6dp"
+                android:layout_toLeftOf="@+id/scene_set"
+                android:text="未选择"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/scene_set"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/wode_right_arrow" />
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="25dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/d15"
+                android:background="@drawable/checkbox_new"
+                android:button="@null"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/three_s"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/dottedline" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/rename_btn"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@color/blue_txt"
+                android:text="重命名"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/edit_btn"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="#FF9A02"
+                android:text="重命名"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/delete_btn"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="#FB3C30"
+                android:text="删除"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>

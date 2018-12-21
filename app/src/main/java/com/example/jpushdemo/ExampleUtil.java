@@ -1,4 +1,4 @@
-package com.jpush;
+package com.example.jpushdemo;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -10,7 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
-import android.util.Log;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.util.regex.Matcher;
@@ -34,7 +34,16 @@ public class ExampleUtil {
             return true;
         return false;
     }
-    
+    /**
+     * 只能以 “+” 或者 数字开头；后面的内容只能包含 “-” 和 数字。
+     * */
+    private final static String MOBILE_NUMBER_CHARS = "^[+0-9][-0-9]{1,}$";
+    public static boolean isValidMobileNumber(String s) {
+        if(TextUtils.isEmpty(s)) return true;
+        Pattern p = Pattern.compile(MOBILE_NUMBER_CHARS);
+        Matcher m = p.matcher(s);
+        return m.matches();
+    }
     // 校验Tag Alias 只能是数字,英文字母和中文
     public static boolean isValidTagAndAlias(String s) {
         Pattern p = Pattern.compile("^[\u4E00-\u9FA50-9a-zA-Z_!@#$&*+=.|]+$");
@@ -94,16 +103,31 @@ public class ExampleUtil {
     }
     
 	public static String getImei(Context context, String imei) {
+        String ret = null;
 		try {
 			TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-			imei = telephonyManager.getDeviceId();
+            ret = telephonyManager.getDeviceId();
 		} catch (Exception e) {
-			Log.e(ExampleUtil.class.getSimpleName(), e.getMessage());
+			Logger.e(ExampleUtil.class.getSimpleName(), e.getMessage());
 		}
-		return imei;
+		if (isReadableASCII(ret)){
+            return ret;
+        } else {
+            return imei;
+        }
 	}
+
+    private static boolean isReadableASCII(CharSequence string){
+        if (TextUtils.isEmpty(string)) return false;
+        try {
+            Pattern p = Pattern.compile("[\\x20-\\x7E]+");
+            return p.matcher(string).matches();
+        } catch (Throwable e){
+            return true;
+        }
+    }
+
     public static String getDeviceId(Context context) {
-        String deviceId = JPushInterface.getUdid(context);
-        return deviceId;
+        return JPushInterface.getUdid(context);
     }
 }

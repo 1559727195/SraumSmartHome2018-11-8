@@ -1,4 +1,4 @@
-package com.jpush;
+package com.example.jpushdemo;
 
 import android.util.Log;
 

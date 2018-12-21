@@ -311,7 +311,7 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
         map.put("boxNumber", TokenUtil.getBoxnumber(AddZigbeeDeviceScucessActivity.this));
         map.put("panelNumber", panelNumber);
         map.put("panelName", panelName);
-        MyOkHttp.postMapObject(ApiHelper.sraum_updateDeviceName, map,
+        MyOkHttp.postMapObject(ApiHelper.sraum_addWifiCamera, map,
                 new Mycallback(new AddTogglenInterfacer() {//刷新togglen获取新数据
                     @Override
                     public void addTogglenInterfacer() {

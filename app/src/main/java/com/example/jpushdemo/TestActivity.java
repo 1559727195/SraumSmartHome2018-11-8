@@ -1,4 +1,4 @@
-package com.jpush;
+package com.example.jpushdemo;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,9 +18,13 @@ public class TestActivity extends Activity {
         Intent intent = getIntent();
         if (null != intent) {
 	        Bundle bundle = getIntent().getExtras();
-	        String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
-	        String content = bundle.getString(JPushInterface.EXTRA_ALERT);
-	        tv.setText("Title : " + title + "  " + "Content : " + content);
+            String title = null;
+            String content = null;
+            if(bundle!=null){
+                title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
+                content = bundle.getString(JPushInterface.EXTRA_ALERT);
+            }
+            tv.setText("Title : " + title + "  " + "Content : " + content);
         }
         addContentView(tv, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
     }

@@ -1,5 +1,6 @@
 package com.massky.sraum.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
@@ -28,6 +30,7 @@ import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 import com.yaokan.sdk.wifi.DeviceManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -113,19 +116,24 @@ public class AddWifiCameraScucessActivity extends BaseActivity {
      * 添加 wifi 红外转发设备
      */
     private void sraum_addWifiCamera(final String name) {
-
+    String type = "";
 //        String deviceInfo  = add_bind_dingyue();
         Map map = new HashMap();
+        String areaNumber = (String) SharedPreferencesUtil.getData(AddWifiCameraScucessActivity.this,
+                "areaNumber","");
         dialogUtil.loadDialog();
         map.put("token", TokenUtil.getToken(AddWifiCameraScucessActivity.this));
         switch (wificamera.get("type").toString()) {
             case "101":
                 map.put("type", "AA03");
+                type = "AA03";
                 break;
             case "103":
                 map.put("type", "AA04");
+                type = "AA04";
                 break;
         }
+        map.put("areaNumber", areaNumber);
         map.put("name", name);
         map.put("mac", wificamera.get("strMac"));
         map.put("controllerId", wificamera.get("strDeviceID"));
@@ -138,6 +146,7 @@ public class AddWifiCameraScucessActivity extends BaseActivity {
 //        map.put("strName", strName);
 //        map.put("wifi",wifi_name);
 
+        final String finalType = type;
         MyOkHttp.postMapObject(ApiHelper.sraum_addWifiCamera, map,
                 new Mycallback(new AddTogglenInterfacer() {//刷新togglen获取新数据
                     @Override
@@ -154,18 +163,28 @@ public class AddWifiCameraScucessActivity extends BaseActivity {
                     @Override
                     public void onSuccess(User user) {
                         //成功添加小苹果红外模块
-                        AddWifiCameraScucessActivity.this.finish();
-                        AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+//                        AddWifiCameraScucessActivity.this.finish();
+//                        AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+                        Map map = new HashMap();
+                        map.put("deviceId",wificamera.get("strDeviceID"));
+                        map.put("deviceType", finalType);
+                        map.put("type","2");
+                        Intent intent = new Intent(AddWifiCameraScucessActivity.this, SelectRoomActivity.class);
+                        intent.putExtra("map_deivce", (Serializable) map);
+                        startActivity(intent);
                     }
 
                     @Override
                     public void wrongToken() {
                         super.wrongToken();
+                        ToastUtil.showToast(AddWifiCameraScucessActivity.this,"areaNumber 不正\n" +
+                                "确");
                     }
 
                     @Override
                     public void threeCode() {
                         super.threeCode();
+                        ToastUtil.showToast(AddWifiCameraScucessActivity.this,"名字已存在");
                     }
 
                     @Override
@@ -248,93 +267,6 @@ public class AddWifiCameraScucessActivity extends BaseActivity {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha;// 0.0-1.0
         getWindow().setAttributes(lp);
-    }
-
-    /**
-     * 得到面板信息
-     */
-    private void get_panel_detail() {
-        panelNumber = getIntent().getStringExtra("panelid");
-        //根据panelid去查找相关面板信心
-        //根据panelid去遍历所有面板
-        Bundle bundle = getIntent().getBundleExtra("bundle_panel");
-        deviceList = (List<User.device>) bundle.getSerializable("deviceList");
-        panelType = getIntent().getStringExtra("panelType");
-        panelName = getIntent().getStringExtra("panelName");
-        panelMAC = getIntent().getStringExtra("panelMAC");
-        dev_name.setText(panelName);
-    }
-
-    /**
-     * 更新面板名称
-     *
-     * @param panelName
-     * @param panelNumber
-     */
-    private void sraum_update_panel_name(final String panelName, final String panelNumber) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("token", TokenUtil.getToken(AddWifiCameraScucessActivity.this));
-        map.put("boxNumber", TokenUtil.getBoxnumber(AddWifiCameraScucessActivity.this));
-        map.put("panelNumber", panelNumber);
-        map.put("panelName", panelName);
-        MyOkHttp.postMapObject(ApiHelper.sraum_updatePanelName, map,
-                new Mycallback(new AddTogglenInterfacer() {//刷新togglen获取新数据
-                    @Override
-                    public void addTogglenInterfacer() {
-                        sraum_update_panel_name(panelName, panelNumber);
-                    }
-                }, AddWifiCameraScucessActivity.this, dialogUtil) {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        super.onError(call, e, id);
-//                        AddWifiHongWaiScucessActivity.this.finish();
-                        ToastUtil.showToast(AddWifiCameraScucessActivity.this, "修改名字失败");
-                    }
-
-                    @Override
-                    public void pullDataError() {
-                        ToastUtil.showToast(AddWifiCameraScucessActivity.this, "修改名字失败");
-                    }
-
-
-                    @Override
-                    public void onSuccess(User user) {
-                        super.onSuccess(user);
-                        //
-                        AddWifiCameraScucessActivity.this.finish();
-                        AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
-                    }
-
-                    @Override
-                    public void wrongToken() {
-                        super.wrongToken();
-                    }
-
-                    @Override
-                    public void threeCode() {
-                        super.threeCode();
-                        ToastUtil.showToast(AddWifiCameraScucessActivity.this, panelName + ":" + "面板编号不正确");
-                    }
-
-                    @Override
-                    public void fourCode() {
-                        super.fourCode();
-                        ToastUtil.showToast(AddWifiCameraScucessActivity.this, panelName + ":" + "面板名字已存在");
-                    }
-
-                    @Override
-                    public void wrongBoxnumber() {
-                        ToastUtil.showToast(AddWifiCameraScucessActivity.this, "错误");
-                    }
-                });
-    }
-
-    /**
-     * 保存面板
-     */
-    private void save_panel() {
-        String panelName = dev_name.getText().toString().trim();
-        sraum_update_panel_name(panelName, panelNumber);
     }
 
 }

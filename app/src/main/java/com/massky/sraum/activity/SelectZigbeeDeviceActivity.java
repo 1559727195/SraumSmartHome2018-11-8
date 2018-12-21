@@ -380,7 +380,9 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
         }
         Map<String, String> mapdevice = new HashMap<>();
         mapdevice.put("token", TokenUtil.getToken(SelectZigbeeDeviceActivity.this));
+        String areaNumber = (String) SharedPreferencesUtil.getData(SelectZigbeeDeviceActivity.this,"areaNumber","");
 //        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(SelectSensorActivity.this));
+        mapdevice.put("areaNumber", areaNumber);
         MyOkHttp.postMapString(ApiHelper.sraum_getWifiAppleInfos
                 , mapdevice, new Mycallback(new AddTogglenInterfacer() {
                     @Override

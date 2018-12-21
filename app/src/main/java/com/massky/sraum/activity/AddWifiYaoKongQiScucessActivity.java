@@ -1,5 +1,6 @@
 package com.massky.sraum.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -35,6 +36,7 @@ import com.yaokan.sdk.model.RemoteControl;
 import com.yaokan.sdk.model.YKError;
 import com.yaokan.sdk.wifi.DeviceController;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,7 +136,9 @@ public class AddWifiYaoKongQiScucessActivity extends BaseActivity {
     private void sraum_addWifiApple(final Map map, final String name) {
         dialogUtil.loadDialog();
         map.put("token", TokenUtil.getToken(AddWifiYaoKongQiScucessActivity.this));
+        String areaNumber = (String) SharedPreferencesUtil.getData(AddWifiYaoKongQiScucessActivity.this,"areaNumber","");
         map.put("name", name);
+        map.put("areaNumber", areaNumber);
         MyOkHttp.postMapObject(ApiHelper.sraum_addWifiAppleDevice, map,
                 new Mycallback(new AddTogglenInterfacer() {//刷新togglen获取新数据
                     @Override
@@ -159,6 +163,13 @@ public class AddWifiYaoKongQiScucessActivity extends BaseActivity {
                         //成功添加小苹果红外模块
                         AddWifiYaoKongQiScucessActivity.this.finish();
                         AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+//                        Map map = new HashMap();
+//                        map.put("deviceId",rid);
+//                        map.put("deviceType", type);
+//                        map.put("type","2");
+//                        Intent intent = new Intent(AddWifiYaoKongQiScucessActivity.this, SelectRoomActivity.class);
+//                        intent.putExtra("map_deivce", (Serializable) map);
+//                        startActivity(intent);
                     }
 
                     @Override
@@ -168,12 +179,13 @@ public class AddWifiYaoKongQiScucessActivity extends BaseActivity {
 
                     @Override
                     public void wrongBoxnumber() {
-                        ToastUtil.showToast(AddWifiYaoKongQiScucessActivity.this, "名称已存在");
+                        ToastUtil.showToast(AddWifiYaoKongQiScucessActivity.this, "areaNumber\n" +
+                                "不存在");
                     }
 
                     @Override
                     public void threeCode() {
-                        ToastUtil.showToast(AddWifiYaoKongQiScucessActivity.this, "修改名字失败");
+                        ToastUtil.showToast(AddWifiYaoKongQiScucessActivity.this, "name 已存在");
                     }
 
                     @Override

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#EFEFF2"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/linear_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+   >
+
+        <androidx.percentlayout.widget.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:id="@+id/first_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:gravity="left"
+                android:maxLength="15"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="第一路灯控名称"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp"
+                app:layout_widthPercent="65%"></TextView>
+
+        </androidx.percentlayout.widget.PercentRelativeLayout>
+
+        <androidx.percentlayout.widget.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp">
+
+            <EditText
+                android:id="@+id/edit_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/typein"
+                android:gravity="left|center_vertical"
+                android:hint="输入第一路灯控自定义名称"
+                android:maxLength="15"
+                android:padding="8dp"
+                android:textSize="14sp"
+                app:layout_widthPercent="60%"></EditText>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/edit_one"
+                app:layout_widthPercent="40%">
+
+                <Button
+                    android:id="@+id/button_one_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/d30"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/graylinerecra"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="找设备"
+                    android:textSize="@dimen/s13"
+                    app:layout_widthPercent="30%" />
+
+            </RelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

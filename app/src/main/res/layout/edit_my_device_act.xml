@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:slideswitch="http://schemas.android.com/tools"
+    android:id="@+id/linear_big"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFF2"
+    android:orientation="vertical">
+
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:fitsView="@+id/root_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/icon_t_back" />
+
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="编辑"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/next_step_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:text="保存"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/txt_dev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="设备名称"
+            android:textColor="@color/dark_gray"
+            android:textSize="14sp" />
+
+        <androidx.percentlayout.widget.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/txt_dev">
+
+            <com.massky.sraum.view.ClearLengthEditText
+                android:id="@+id/input_panel_name_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/typein"
+                android:gravity="left"
+                android:hint="输入自定义名称"
+                android:padding="8dp"
+                android:textSize="14sp"
+                app:layout_widthPercent="60%"></com.massky.sraum.view.ClearLengthEditText>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/input_panel_name_edit"
+                app:layout_widthPercent="40%">
+
+                <Button
+                    android:id="@+id/find_panel_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/d30"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/graylinerecra"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="找设备"
+                    android:textSize="@dimen/s13"
+                    app:layout_widthPercent="30%" />
+
+            </RelativeLayout>
+        </androidx.percentlayout.widget.PercentRelativeLayout>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/list_for_air_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <com.massky.sraum.Util.ListViewForScrollView_New
+                android:id="@+id/maclistview_id_condition"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#000000"
+                android:windowSoftInputMode="stateHidden|adjustUnspecified"></com.massky.sraum.Util.ListViewForScrollView_New>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/light_control_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/first_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:maxLength="15"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="第一路灯控名称"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp"
+                    app:layout_widthPercent="65%"></TextView>
+
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp">
+
+                <com.massky.sraum.view.ClearLengthEditText
+                    android:id="@+id/edit_one"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/typein"
+                    android:gravity="left|center_vertical"
+                    android:hint="输入第一路灯控自定义名称"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    app:layout_widthPercent="60%"></com.massky.sraum.view.ClearLengthEditText>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/edit_one"
+                    app:layout_widthPercent="40%">
+
+                    <Button
+                        android:id="@+id/button_one_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/d30"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/graylinerecra"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="找设备"
+                        android:textSize="@dimen/s13"
+                        app:layout_widthPercent="30%" />
+
+                </RelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/second_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:maxLength="15"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="第二路灯控名称"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp"
+                    app:layout_widthPercent="65%"></TextView>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp">
+
+                <com.massky.sraum.view.ClearLengthEditText
+                    android:id="@+id/edit_two"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/typein"
+                    android:gravity="left|center_vertical"
+                    android:hint="输入第二路灯控自定义名称"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    app:layout_widthPercent="60%"></com.massky.sraum.view.ClearLengthEditText>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/edit_two"
+                    app:layout_widthPercent="40%">
+
+                    <Button
+                        android:id="@+id/button_two_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/d30"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/graylinerecra"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="找设备"
+                        android:textSize="@dimen/s13"
+                        app:layout_widthPercent="30%" />
+                </RelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/three_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:maxLength="15"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="第三路灯控名称"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp"
+                    app:layout_widthPercent="65%"></TextView>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp">
+
+                <com.massky.sraum.view.ClearLengthEditText
+                    android:id="@+id/edit_three"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/typein"
+                    android:gravity="left|center_vertical"
+                    android:hint="输入第三路灯控自定义名称"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    app:layout_widthPercent="60%"></com.massky.sraum.view.ClearLengthEditText>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/edit_three"
+                    app:layout_widthPercent="40%">
+
+                    <Button
+                        android:id="@+id/button_three_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/d30"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/graylinerecra"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="找设备"
+                        android:textSize="@dimen/s13"
+                        app:layout_widthPercent="30%" />
+                </RelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/four_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:gravity="left"
+                    android:maxLength="15"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="第四路灯控名称"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp"
+                    app:layout_widthPercent="65%"></TextView>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp">
+
+                <com.massky.sraum.view.ClearLengthEditText
+                    android:id="@+id/edit_four"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/typein"
+                    android:gravity="left|center_vertical"
+                    android:hint="输入第四路灯控自定义名称"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    app:layout_widthPercent="60%"></com.massky.sraum.view.ClearLengthEditText>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/edit_four"
+                    app:layout_widthPercent="40%">
+
+                    <Button
+                        android:id="@+id/button_four_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/d30"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/graylinerecra"
+                        android:paddingLeft="3dp"
+                        android:paddingRight="3dp"
+                        android:text="找设备"
+                        android:textSize="@dimen/s13"
+                        app:layout_widthPercent="30%" />
+                </RelativeLayout>
+            </androidx.percentlayout.widget.PercentRelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

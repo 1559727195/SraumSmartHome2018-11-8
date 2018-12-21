@@ -36,12 +36,12 @@ import com.AddTogenInterface.AddTogglenInterfacer;
 import com.alibaba.fastjson.JSON;
 import com.dialog.CommonData;
 import com.dialog.ToastUtils;
+import com.example.jpushdemo.Constants;
+import com.example.jpushdemo.ExampleUtil;
+import com.example.jpushdemo.Logger;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.ipcamera.demo.BridgeService;
-import com.jpush.Constants;
-import com.jpush.ExampleUtil;
-import com.jpush.Logger;
 import com.larksmart7618.sdk.communication.tools.commen.ToastTools;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
@@ -85,7 +85,7 @@ import io.reactivex.disposables.Disposable;
 import okhttp3.Call;
 import vstc2.nativecaller.NativeCaller;
 
-import static com.jpush.MyReceiver.ACTION_NOTIFICATION_OPENED_MAIN;
+import static com.example.jpushdemo.MyReceiver.ACTION_NOTIFICATION_OPENED_MAIN;
 
 
 /**
@@ -704,6 +704,7 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         init_jizhiyun_onresume();
         super.onResume();
     }
+
 
     /**
      * 初始化onResume动作

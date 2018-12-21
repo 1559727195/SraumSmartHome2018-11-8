@@ -94,4 +94,16 @@ public class ApiHelper {
     public static String sraum_addWifiApple = api + "sraum_addWifiApple";
     public static String sraum_updateWifiAppleName = api + "sraum_updateWifiAppleName";
     public static String sraum_getWifiAppleInfos = api + "sraum_getWifiAppleInfos";
+    public static String sraum_getWifiAppleDeviceStatus = api + "sraum_getWifiAppleDeviceStatus";
+    public static String sraum_setWifiAppleDeviceStatus = api + "sraum_setWifiAppleDeviceStatus";
+    public static String sraum_setLinkSensorPanelIsUse = api + "sraum_setLinkSensorPanelIsUse";
+    public static String sraum_setWifiCameraIsUse = api + "sraum_setWifiCameraIsUse";
+    public static String sraum_updateWifiCameraName = api + "sraum_updateWifiCameraName";
+    public static String sraum_updateWifiAppleDeviceName = api + "sraum_updateWifiAppleDeviceName";
+    public static String sraum_findPanel = api + "sraum_findPanel";
+    public static String sraum_updateDeviceInfo = api + "sraum_updateDeviceInfo";
+    public static String sraum_deleteWifiAppleDevice = api + "sraum_deleteWifiAppleDevice";
+    public static String sraum_getWifiCameraTimeZone = api + "sraum_getWifiCameraTimeZone";
+    public static String sraum_deleteWifiCameraTimeZone = api + "sraum_deleteWifiCameraTimeZone";
+    public static String sraum_deletePanel = api + "sraum_deletePanel";
 }

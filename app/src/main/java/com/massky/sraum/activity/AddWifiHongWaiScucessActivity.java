@@ -1,5 +1,6 @@
 package com.massky.sraum.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.enumration.GizWifiDeviceNetStatus;
@@ -21,6 +23,7 @@ import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
@@ -33,10 +36,13 @@ import com.yaokan.sdk.utils.Logger;
 import com.yaokan.sdk.utils.Utility;
 import com.yaokan.sdk.wifi.DeviceManager;
 import com.yaokan.sdk.wifi.GizWifiCallBack;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.InjectView;
 import okhttp3.Call;
 
@@ -348,10 +354,12 @@ public class AddWifiHongWaiScucessActivity extends BaseActivity {
     private void sraum_addWifiApple(final String name) {
 
 //        String deviceInfo  = add_bind_dingyue();
+        String areaNumber = (String) SharedPreferencesUtil.getData(AddWifiHongWaiScucessActivity.this, "areaNumber", "");
         dialogUtil.loadDialog();
         map_device.put("token", TokenUtil.getToken(AddWifiHongWaiScucessActivity.this));
         map_device.put("name", name);
-        map_device.put("deviceInfo", "1234556");
+//        map_device.put("deviceInfo", "1234556");
+        map_device.put("areaNumber", areaNumber);
 
         MyOkHttp.postMapObject(ApiHelper.sraum_addWifiApple, map_device,
                 new Mycallback(new AddTogglenInterfacer() {//刷新togglen获取新数据
@@ -369,18 +377,28 @@ public class AddWifiHongWaiScucessActivity extends BaseActivity {
                     @Override
                     public void onSuccess(User user) {
                         //成功添加小苹果红外模块
-                        AddWifiHongWaiScucessActivity.this.finish();
-                        AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+//                        AddWifiHongWaiScucessActivity.this.finish();
+//                        AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+                        Map map = new HashMap();
+                        map.put("deviceId",map_device.get("mac"));
+                        map.put("deviceType", "AA02");
+                        map.put("type","2");
+                        Intent intent = new Intent(AddWifiHongWaiScucessActivity.this, SelectRoomActivity.class);
+                        intent.putExtra("map_deivce", (Serializable) map);
+                        startActivity(intent);
                     }
 
                     @Override
                     public void wrongToken() {
                         super.wrongToken();
+                        ToastUtil.showToast(AddWifiHongWaiScucessActivity.this,"2-areaNumber\n" +
+                                "不存在");
                     }
 
                     @Override
                     public void threeCode() {
                         super.threeCode();
+                        ToastUtil.showToast(AddWifiHongWaiScucessActivity.this,"name 已存在");
                     }
 
                     @Override
@@ -595,12 +613,12 @@ public class AddWifiHongWaiScucessActivity extends BaseActivity {
                     public void onError(Call call, Exception e, int id) {
                         super.onError(call, e, id);
 //                        AddWifiHongWaiScucessActivity.this.finish();
-                        ToastUtil.showToast(AddWifiHongWaiScucessActivity.this,"修改名字失败");
+                        ToastUtil.showToast(AddWifiHongWaiScucessActivity.this, "修改名字失败");
                     }
 
                     @Override
                     public void pullDataError() {
-                        ToastUtil.showToast(AddWifiHongWaiScucessActivity.this,"修改名字失败");
+                        ToastUtil.showToast(AddWifiHongWaiScucessActivity.this, "修改名字失败");
                     }
 
 

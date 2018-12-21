@@ -10,6 +10,7 @@ import java.util.List;
  */
 
 public class User {
+    public String UDScavenging;
     /**
      * 搜索网关信息(APP -> 网关)
      */
@@ -73,6 +74,7 @@ public class User {
     public String boxNumber;
     public String version;
     public String versionCode;
+    public String LRScavenging;
 
     public static class roomList {
         public String number;
@@ -111,6 +113,19 @@ public class User {
         public String boxName;
         public String panelMac;
         public String gatewayMac;
+
+
+        //根据面板id-》去查找设备列表
+        public String id;
+        public String startTime;
+        public String endTime;
+        public String monday;
+        public String tuesday;
+        public String wednesday;
+        public String thursday;
+        public String friday;
+        public String saturday;
+        public String sunday;
     }
 
     /**
@@ -238,9 +253,12 @@ public class User {
         public String firmware;
         public String hardware;
         public String gatewayid;
-        public String isUse;
+        public int isUse;
         public String number;
         public String panelMac;
+        public String roomNumber;
+        public String roomName;
+        public String wifi;
     }
 
 
@@ -266,6 +284,8 @@ public class User {
         public String controllerId;
         public String wifi;
         public String isUse;
+        public String roomNumber;
+        public String roomName;
     }
 
     /**

@@ -5,6 +5,7 @@ apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.massky.sraum"
         minSdkVersion 15
@@ -161,6 +162,7 @@ dependencies {
     //androidx.core:core:1.1.0-alpha02
     implementation 'androidx.core:core:1.1.0-alpha02'
     implementation project(':citypickerview')
+    compile 'org.greenrobot:eventbus:3.0.0'
 }
 
 

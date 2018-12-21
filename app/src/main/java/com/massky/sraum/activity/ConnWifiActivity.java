@@ -1,5 +1,6 @@
 package com.massky.sraum.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -29,12 +30,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
-import com.jpush.LocalBroadcastManager;
 import com.massky.sraum.R;
 import com.massky.sraum.Util.EyeUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.base.BaseActivity;
+import com.massky.sraum.fragment.ConfigAppleDialogFragment;
 import com.massky.sraum.fragment.ConfigDialogFragment;
+import com.massky.sraum.receiver.LocalBroadcastManager;
 import com.massky.sraum.view.ClearEditText;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
@@ -65,7 +67,7 @@ public class ConnWifiActivity extends BaseActivity implements IDeviceConfigListe
     ClearEditText edit_wifi;
     @InjectView(R.id.edit_password_gateway)
     ClearEditText edit_password_gateway;
-    private ConfigDialogFragment newFragment;
+    private ConfigAppleDialogFragment newFragment;
     @InjectView(R.id.eyeimageview_id_gateway)
     ImageView eyeimageview_id_gateway;
     private int CONNWIFI = 101;
@@ -392,8 +394,8 @@ public class ConnWifiActivity extends BaseActivity implements IDeviceConfigListe
      */
     private void initDialog() {
         // TODO Auto-generated method stub
-        newFragment = ConfigDialogFragment.newInstance(ConnWifiActivity.this, "", "");//初始化快配和搜索设备dialogFragment
-
+        newFragment = ConfigAppleDialogFragment.newInstance(ConnWifiActivity.this, "", "",null);//初始化快配和搜索设备dialogFragment
+//
         connWifiInterfacer = (ConnWifiInterfacer) newFragment;
     }
 
@@ -401,6 +403,7 @@ public class ConnWifiActivity extends BaseActivity implements IDeviceConfigListe
     /**
      * 显示popupWindow
      */
+    @SuppressLint("WrongConstant")
     private void showPopwindow() {
         // 利用layoutInflater获得View
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);

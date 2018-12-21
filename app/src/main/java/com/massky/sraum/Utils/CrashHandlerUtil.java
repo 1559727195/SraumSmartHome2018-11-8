@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Looper;
 
-import com.jpush.Logger;
+import com.example.jpushdemo.Logger;
 import com.massky.sraum.Util.ToastUtil;
 
 import java.io.PrintWriter;

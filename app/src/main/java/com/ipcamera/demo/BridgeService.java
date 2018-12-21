@@ -174,7 +174,6 @@ public class BridgeService extends Service
 			addCameraInterface.callBackSearchResultData(0, strMac,
 					strName, strDeviceID, strIpAddr, port);
 		}
-
 	}
 
 	// ======================callback==================================================

@@ -184,6 +184,13 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                             mapdevice.put("number", user.gatewayList.get(i).number);
                             mapdevice.put("name", user.gatewayList.get(i).name);
                             mapdevice.put("type", "网关");
+                            mapdevice.put("boxNumber", "");
+                            mapdevice.put("mac", "");
+                            mapdevice.put("isUse", "");
+                            //roomNumber
+                            mapdevice.put("roomNumber", "");
+                            mapdevice.put("roomName", "");
+                            mapdevice.put("wifi", "");
                             list_hand_scene.add(mapdevice);
                             setPicture(user.gatewayList.get(i).type);
                         }
@@ -194,15 +201,29 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                             mapdevice.put("name", user.panelList.get(i).name);
                             mapdevice.put("type", user.panelList.get(i).type);
                             mapdevice.put("boxNumber", user.panelList.get(i).boxNumber);
+                            mapdevice.put("mac", "");
+                            mapdevice.put("isUse", "");
+                            //roomNumber
+                            mapdevice.put("roomNumber","");
+                            mapdevice.put("roomName", "");
+                            mapdevice.put("wifi", "");
                             list_hand_scene.add(mapdevice);
                             setPicture(user.panelList.get(i).type);
                         }
 
                         for (int i = 0; i < user.wifiList.size(); i++) {
                             Map<String, String> mapdevice = new HashMap<>();
-                            mapdevice.put("number", user.wifiList.get(i).number);
+                            mapdevice.put("number", user.wifiList.get(i).id);
                             mapdevice.put("name", user.wifiList.get(i).name);
                             mapdevice.put("type", user.wifiList.get(i).type);
+                            mapdevice.put("isUse",  user.wifiList.get(i).isUse);
+                            mapdevice.put("mac", "");
+                            //roomNumber
+                            mapdevice.put("boxNumber", "");
+                            mapdevice.put("roomNumber", user.wifiList.get(i).roomNumber);
+                            mapdevice.put("roomName", user.wifiList.get(i).roomName);
+                            //wifi
+                            mapdevice.put("wifi", user.wifiList.get(i).wifi);
                             list_hand_scene.add(mapdevice);
                             setPicture(user.wifiList.get(i).type);
                         }

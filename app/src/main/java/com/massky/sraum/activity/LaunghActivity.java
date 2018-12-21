@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.jpush.Constants;
+import com.example.jpushdemo.Constants;
 import com.massky.sraum.R;
 import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.base.BaseActivity;

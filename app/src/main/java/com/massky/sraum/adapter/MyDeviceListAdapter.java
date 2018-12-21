@@ -26,10 +26,12 @@ import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.activity.EditSceneSecondActivity;
 import com.massky.sraum.activity.GuanLianSceneRealBtnActivity;
+import com.massky.sraum.activity.MyDeviceItemActivity;
 import com.massky.sraum.activity.MyDeviceListActivity;
 import com.massky.sraum.view.ClearEditText;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,8 +106,16 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
 
             @Override
             public void onItemClick() {
-                Intent intent = new Intent(context, EditSceneSecondActivity.class);
+
+//                Intent intent = new Intent(context, EditSceneSecondActivity.class);
+//                context.startActivity(intent);
+
+                Intent intent = new Intent(context, MyDeviceItemActivity.class);
+                intent.putExtra("panelItem", (Serializable) list.get(position));
+                intent.putExtra("imgtype", (Serializable) listint.get(position));
                 context.startActivity(intent);
+
+
             }
 
             @Override
@@ -113,6 +123,8 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
                 is_open_to_close = is_open_to_close1;
             }
         });
+
+
 
         final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
 

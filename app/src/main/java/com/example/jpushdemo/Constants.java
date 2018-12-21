@@ -1,4 +1,4 @@
-package com.jpush;
+package com.example.jpushdemo;
 
 /**
  * Created by liangzili on 15/8/3.

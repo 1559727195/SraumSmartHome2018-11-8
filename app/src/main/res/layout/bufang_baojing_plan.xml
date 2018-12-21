@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?><!--用于第一个fragment布局添加-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -22,8 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:paddingRight="40dp"
             android:paddingTop="10dp"
+            android:paddingRight="40dp"
             android:paddingBottom="10dp"
             android:src="@drawable/icon_t_back" />
 
@@ -32,50 +31,58 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="选择遥控家电类型"
+            android:text="移动侦测计划"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/manager_room_txt"
+            android:id="@+id/next_step_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:text="管理"
-            android:textSize="14sp"
-            android:visibility="gone" />
+            android:layout_marginRight="8dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="添加"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
     </RelativeLayout>
-
 
     <ScrollView
         android:id="@+id/list_forscrollview"
         android:layout_width="match_parent"
-        android:layout_marginTop="50dp"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <androidx.percentlayout.widget.PercentRelativeLayout
+
+            <TextView
+                android:id="@+id/panel_txt_promat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="移动侦测报警通知计划"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+            <com.ipcamera.demo.MyListView
+                android:id="@+id/lv_info_plan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:cacheColorHint="#000000"
+                android:divider="#00000000"
+                android:listSelector="@drawable/list_bgnull_selector"
+                android:layout_below="@+id/tv_info_plan"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                >
+            </com.ipcamera.demo.MyListView>
 
-                <com.massky.sraum.widget.ListViewForScrollView
-                    android:id="@+id/mac_wifi_dev_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/p17"
-                    android:layout_marginRight="@dimen/p17"
-                    android:horizontalSpacing="@dimen/p18"
-                    android:listSelector="@null"
-                    android:numColumns="4"
-                    android:verticalSpacing="@dimen/p14" />
-
-            </androidx.percentlayout.widget.PercentRelativeLayout>
         </LinearLayout>
     </ScrollView>
 

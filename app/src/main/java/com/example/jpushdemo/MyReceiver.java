@@ -1,4 +1,4 @@
-package com.jpush;
+package com.example.jpushdemo;
 
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
@@ -6,25 +6,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.AddTogenInterface.AddTogglenInterfacer;
 import com.alibaba.fastjson.JSON;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.LogUtil;
 import com.massky.sraum.Util.MusicUtil;
+import com.massky.sraum.Util.MyOkHttp;
+import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.TokenUtil;
+import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.Utils.SystemUtils;
 import com.massky.sraum.activity.FastEditPanelActivity;
 import com.massky.sraum.activity.MainGateWayActivity;
 import com.massky.sraum.base.BaseActivity;
-import com.massky.sraum.base.BaseFragment1;
-import com.massky.sraum.fragment.HomeFragment;
+import com.massky.sraum.base.Basecfragment;
+import com.massky.sraum.base.Basecfragmentactivity;
 import com.massky.sraum.fragment.SceneFragment;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -125,9 +131,9 @@ public class MyReceiver extends BroadcastReceiver {
                 }
 //
                 Log.e("robin debug", "MyReceive->context:" + context);
-                if (BaseActivity.isForegrounds || BaseFragment1.isForegrounds) {
+                if (BaseActivity.isForegrounds || Basecfragment.isForegrounds || Basecfragmentactivity.isForegrounds) {
                     common_main_tongzhi(context, bundle);//发送广播,可视
-                } else if (BaseActivity.isDestroy || BaseFragment1.isDestroy) {
+                } else if (BaseActivity.isDestroy || Basecfragment.isDestroy || Basecfragmentactivity.isDestroy) {
                     common_tongzhi(context, bundle, "create");//app退出去了，但进程没有被杀死
                     // 说明系统中不存在这个activity，或者说在后台
                 } else { //在后台,去切换到前台，
@@ -189,13 +195,14 @@ public class MyReceiver extends BroadcastReceiver {
             LogUtil.i(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
         }
     }
+
     /**
-     *  判断进程是否存活
+     * 判断进程是否存活
      */
-    public  boolean isProcessExist(Context context, int pid) {
+    public boolean isProcessExist(Context context, int pid) {
 
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> lists ;
+        List<ActivityManager.RunningAppProcessInfo> lists;
         if (am != null) {
             lists = am.getRunningAppProcesses();
             for (ActivityManager.RunningAppProcessInfo appProcess : lists) {
@@ -206,7 +213,6 @@ public class MyReceiver extends BroadcastReceiver {
         }
         return false;
     }
-
 
 
     /**
@@ -244,12 +250,12 @@ public class MyReceiver extends BroadcastReceiver {
     private void processCustomMessage_toMainActivity(Context context, Bundle bundle) {
         String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);//账号已在别处登录！
         String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);////{"type":"2"}
-        if (BaseActivity.isForegrounds || BaseFragment1.isForegrounds) {//app可见时，才发送消息
+        if (BaseActivity.isForegrounds || Basecfragment.isForegrounds || Basecfragmentactivity.isForegrounds) {//app可见时，才发送消息
             Intent msgIntent = new Intent(MainGateWayActivity.MESSAGE_RECEIVED_ACTION);
             msgIntent.putExtra(MainGateWayActivity.KEY_MESSAGE, message);
             JSONObject extraJson = null;
             String type = "";
-            if (!com.jpush.ExampleUtil.isEmpty(extras)) {
+            if (!ExampleUtil.isEmpty(extras)) {
                 try {
                     extraJson = new JSONObject(extras);
                     type = extraJson.getString("type");
@@ -262,7 +268,7 @@ public class MyReceiver extends BroadcastReceiver {
             }
 
             if (type.equals("7")) {
-                LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
+                context.sendBroadcast(msgIntent);
             }
         } else {//app不可见,保存本地
 //			SharedPreferencesUtil.saveData(context,"extras_login",extras);
@@ -317,7 +323,7 @@ public class MyReceiver extends BroadcastReceiver {
             sendBroad(notifactionId, "");
         } else if (notifactionId == 1) {//
             JSONObject extraJson;
-            if (!com.jpush.ExampleUtil.isEmpty(extras)) {//设备状态改变
+            if (!ExampleUtil.isEmpty(extras)) {//设备状态改变
                 // 在extras中增加了字段panelid
                 try {
                     extraJson = new JSONObject(extras);
@@ -334,7 +340,7 @@ public class MyReceiver extends BroadcastReceiver {
 //                        action = MacFragment.ACTION_INTENT_RECEIVER;
 //                        sendBroad(notifactionId, "");
 //                    }
-                        action = HomeFragment.ACTION_INTENT_RECEIVER;
+//                        action = MacFragment.ACTION_INTENT_RECEIVER;
                         sendBroad(notifactionId, "");
 
                         action = FastEditPanelActivity.ACTION_SRAUM_FAST_EDIT;
@@ -351,7 +357,7 @@ public class MyReceiver extends BroadcastReceiver {
         } else if (notifactionId == 8) {//notifactionId = 8 ->设置网关模式，sraum_setBox
             action = ACTION_SRAUM_SETBOX;
             JSONObject extraJson;
-            if (!com.jpush.ExampleUtil.isEmpty(extras)) {
+            if (!ExampleUtil.isEmpty(extras)) {
                 try {
                     extraJson = new JSONObject(extras);
                     String panelid = extraJson.getString("panelid");
@@ -397,7 +403,4 @@ public class MyReceiver extends BroadcastReceiver {
         context.sendBroadcast(mIntent);
     }
 
-
-
 }
-

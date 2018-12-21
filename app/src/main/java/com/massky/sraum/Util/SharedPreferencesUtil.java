@@ -202,4 +202,42 @@ public class SharedPreferencesUtil {
     }
 
 
+    /**
+     * 获取List<Map></>
+     *
+     * @param context
+     * @param key
+     * @return
+     */
+    public static void remove_current_values(Context context, String key, String values, String names_1) {
+        List<Map> datas = new ArrayList<>();
+//        SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        String result = (String) getData(context, key, "");
+        try {
+            JSONArray array = new JSONArray(result);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject itemObject = array.getJSONObject(i);
+                Map itemMap = new HashMap<>();
+                JSONArray names = itemObject.names();
+                if (names != null) {
+                    for (int j = 0; j < names.length(); j++) {
+                        String name = names.getString(j);
+                        String value = itemObject.getString(name);
+                        itemMap.put(name, value);
+                    }
+                }
+                datas.add(itemMap);
+            }
+        } catch (JSONException e) {
+
+        }
+
+        for (int i = 0; i < datas.size(); i++) {
+            if (datas.get(i).get(names_1).equals(values)) {
+                datas.remove(i);
+            }
+        }
+        saveInfo_List(context, key, datas);
+    }
+
 }

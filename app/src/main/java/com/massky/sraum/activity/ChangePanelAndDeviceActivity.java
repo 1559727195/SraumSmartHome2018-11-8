@@ -118,6 +118,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
     private String findpaneltype;
     private boolean upgradete;
     private String boxNumber;
+    private String input_panel_name_edit_txt_str;
 
     @Override
     protected int viewId() {
@@ -508,15 +509,100 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
                 break;
 
             case R.id.btn_login_gateway:
-                    //
+                //
+                switch (panelType) {
+                    case "A201":
+                    case "A202":
+                    case "A203":
+                    case "A204":
+                    case "A301"://
+                    case "A302":
+                    case "A303":
+                    case "A401":
 
-                Map map = new HashMap();
-                map.put("deviceId",panelNumber);
-                map.put("deviceType",panelType);
-                map.put("type","1");
-                Intent intent = new Intent(ChangePanelAndDeviceActivity.this, SelectRoomActivity.class);
-                intent.putExtra("map_deivce", (Serializable) map);
-                startActivity(intent);
+                    case "A311":
+                    case "A312":
+                    case "A313":
+                    case "A321":
+                    case "A322"://
+                    case "A331":
+                        save_panel();
+                        break;
+                    case "A511":
+                    case "A611":
+                    case "A711":
+                        save_air_model();
+                        break;
+                    case "B201":
+                    case "B101":
+                    case "B301":
+                    case "A501":
+                    case "A801":
+                    case "A901":
+                    case "AB01":
+                    case "A902":
+                    case "AB04":
+                    case "AC01":
+                    case "AD01":
+                    case "B001":
+                        dialogUtil.loadDialog();
+                        input_panel_name_edit_txt_str = panelname.getText().toString().trim() == null
+                                || panelname.getText().toString().trim() == "" ? "" : panelname.getText().toString().trim();
+                        if (input_panel_name_edit_txt_str.equals("")) {
+                            ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "设备名称为空");
+                        } else {
+                            if (panelName.equals(input_panel_name_edit_txt_str)) {
+//                                AppManager.getAppManager().removeActivity_but_activity_cls(MainfragmentActivity.class);
+                                updateDeviceInfo();//更新设备信息
+                            } else {
+                                sraum_update_panel_name(input_panel_name_edit_txt_str, panelNumber);//更新面板信息
+                            }
+                        }
+                        break;
+                    case "AA02"://WIFI红外模块
+                        input_panel_name_edit_txt_str = panelname.getText().toString().trim() == null
+                                || panelname.getText().toString().trim() == "" ? "" : panelname.getText().toString().trim();
+                        if (input_panel_name_edit_txt_str.equals("")) {
+                            ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "设备名称为空");
+                        } else {
+
+                            if (panelName.equals(input_panel_name_edit_txt_str)) {
+                                AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+                            } else {
+                                sraum_updateWifiAppleName(panelNumber, input_panel_name_edit_txt_str);
+                            }
+                        }
+                        break;
+                    case "AA03"://WIFI红外模块
+                    case "AA04":
+                        input_panel_name_edit_txt_str = panelname.getText().toString().trim() == null
+                                || panelname.getText().toString().trim() == "" ? "" : panelname.getText().toString().trim();
+                        if (input_panel_name_edit_txt_str.equals("")) {
+                            ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "设备名称为空");
+                        } else {
+                            if (panelName.equals(input_panel_name_edit_txt_str)) {
+                                AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+                            } else {
+                                sraum_updateWifiAppleName(panelNumber, input_panel_name_edit_txt_str);
+                            }
+                        }
+                        break;
+                    case "202":
+                    case "206":
+                        input_panel_name_edit_txt_str = panelname.getText().toString().trim() == null
+                                || panelname.getText().toString().trim() == "" ? "" : panelname.getText().toString().trim();
+                        if (input_panel_name_edit_txt_str.equals("")) {
+                            ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "设备名称为空");
+                        } else {
+                            if (panelName.equals(input_panel_name_edit_txt_str)) {
+                                AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+                            } else {
+                                sraum_updateWifiAppleName(panelNumber, input_panel_name_edit_txt_str);
+                            }
+                        }
+                        break;
+                }
+
                 break;
 
             case R.id.findButton_four://找按钮
@@ -531,6 +617,151 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
             case R.id.findButton_one:
                 sraum_find_button(deviceList.get(3).number);
                 break;
+        }
+    }
+
+    /**
+     * 修改 wifi 红外转发设备名称
+     *
+     * @param
+     */
+    private void sraum_updateWifiAppleName(final String number, final String newName) {
+        Map<String, String> mapdevice = new HashMap<>();
+        mapdevice.put("token", TokenUtil.getToken(this));
+        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this
+                , "areaNumber", "");
+        mapdevice.put("areaNumber", areaNumber);
+        String method = "";
+        switch (panelType) {
+            case "AA02":
+                method = ApiHelper.sraum_updateWifiAppleName;
+                break;
+            case "AA03":
+            case "AA04":
+                method = ApiHelper.sraum_updateWifiCameraName;
+                break;
+            case "202":
+            case "206":
+                method = ApiHelper.sraum_updateWifiAppleDeviceName;
+                break;
+        }
+        mapdevice.put("number", number);
+        mapdevice.put("name", newName);
+//        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(LinkageListActivity.this));
+        MyOkHttp.postMapString(method, mapdevice, new Mycallback(new AddTogglenInterfacer() {
+            @Override
+            public void addTogglenInterfacer() {//刷新togglen数据
+                sraum_updateWifiAppleName(number, newName);
+            }
+        }, ChangePanelAndDeviceActivity.this, dialogUtil) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                super.onError(call, e, id);
+            }
+
+            @Override
+            public void pullDataError() {
+                ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "更新失败");
+            }
+
+            @Override
+            public void emptyResult() {
+                super.emptyResult();
+            }
+
+            @Override
+            public void wrongToken() {
+                super.wrongToken();
+                //重新去获取togglen,这里是因为没有拉到数据所以需要重新获取togglen
+
+            }
+
+            @Override
+            public void fourCode() {
+
+            }
+
+            @Override
+            public void wrongBoxnumber() {
+                super.wrongBoxnumber();
+            }
+
+            @Override
+            public void onSuccess(final User user) {
+                switch (panelType) {
+                    case "AA02":
+                    case "AA03":
+                    case "AA04":
+                        Map map = new HashMap();
+                        map.put("deviceId", panelNumber);
+                        map.put("deviceType", panelType);
+                        map.put("type", "2");
+                        Intent intent = new Intent(ChangePanelAndDeviceActivity.this, SelectRoomActivity.class);
+                        intent.putExtra("map_deivce", (Serializable) map);
+                        startActivity(intent);
+                        break;
+                    case "202":
+                    case "206":
+                        ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "更新成功");
+                        ChangePanelAndDeviceActivity.this.finish();//修改完毕
+                        AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+                        break;
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 保存空调模块
+     */
+    private void save_air_model() {
+        int count_device = deviceList.size();
+        //判断面板和设备名称是否相同，相同就不提交
+        input_panel_name_edit_txt_str = panelname.getText().toString().trim() == null
+                || panelname.getText().toString().trim() == "" ? "" : panelname.getText().toString().trim();
+        List<String> list = new ArrayList<>();
+        list.add(input_panel_name_edit_txt_str);
+        for (int i = 0; i < deviceList.size(); i++) {
+            list.add(deviceList.get(i).name);
+        }
+
+        //遍历面板和设备名称有相同的吗
+        isPanelAndDeviceSame = false;
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = i + 1; j < list.size(); j++) {
+                if ((list.get(i).equals(list.get(j)) && !list.get(i).equals("")
+                        && !list.get(j).equals(""))) {
+                    isPanelAndDeviceSame = true;
+                    break;
+                }
+            }
+        }
+
+        if (!isPanelAndDeviceSame) {
+            for (int i = 0; i < count_device + 1; i++) {
+                if (list.get(i).equals("")) {
+                    isPanelAndDeviceSame = true;
+                }
+            }
+
+            if (isPanelAndDeviceSame) {
+                ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "输入框不能为空");
+            } else {
+                dialogUtil.loadDialog();
+                if (panelName.equals(input_panel_name_edit_txt_str)) {
+//                    AppManager.getAppManager().removeActivity_but_activity_cls(MainfragmentActivity.class);
+                    updateDeviceInfo();//更新设备信息
+                } else {
+                    sraum_update_panel_name(input_panel_name_edit_txt_str, panelNumber);//更新面板信息
+                }
+                //更新面板下的设备列表信息
+//                int count_device = deviceList.size();
+                //updateDeviceInfo();//更新设备信息\
+
+            }
+        } else {
+            ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "所输入内容重复");
         }
     }
 
@@ -696,6 +927,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
 
             if (isPanelAndDeviceSame) {
                 ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "输入框不能为空");
+                return;
             } else {
                 dialogUtil.loadDialog();
                 sraum_update_panel_name(panelName, panelNumber);//更新面板信息
@@ -705,6 +937,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
             }
         } else {
             ToastUtil.showToast(ChangePanelAndDeviceActivity.this, "所输入内容重复");
+            return;
         }
     }
 
@@ -987,7 +1220,13 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
                         }
 //                        ChangePanelAndDeviceActivity.this.finish();//修改完毕
 //                        AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
-                        startActivity(new Intent(ChangePanelAndDeviceActivity.this, SelectRoomActivity.class));
+                        Map map = new HashMap();
+                        map.put("deviceId", panelNumber);
+                        map.put("deviceType", panelType);
+                        map.put("type", "1");
+                        Intent intent = new Intent(ChangePanelAndDeviceActivity.this, SelectRoomActivity.class);
+                        intent.putExtra("map_deivce", (Serializable) map);
+                        startActivity(intent);
                         //添加完，添加完设备区关联房间
                     } else {
                         ToastUtil.showDelToast(ChangePanelAndDeviceActivity.this, customName + ":" + content);
@@ -1026,7 +1265,13 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
 //                        ChangePanelAndDeviceActivity.this.finish();//修改完毕
 //                        AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
                         //添加完设备区关联房间
-                        startActivity(new Intent(ChangePanelAndDeviceActivity.this, SelectRoomActivity.class));
+                        Map map = new HashMap();
+                        map.put("deviceId", panelNumber);
+                        map.put("deviceType", panelType);
+                        map.put("type", "1");
+                        Intent intent = new Intent(ChangePanelAndDeviceActivity.this, SelectRoomActivity.class);
+                        intent.putExtra("map_deivce", (Serializable) map);
+                        startActivity(intent);
                         return;
                     }
                 } else {

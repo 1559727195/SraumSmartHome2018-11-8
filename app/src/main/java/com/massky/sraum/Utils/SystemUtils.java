@@ -1,9 +1,11 @@
-package com.jpush;
+package com.massky.sraum.Utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+
 import java.util.List;
 
 /**
@@ -33,12 +35,12 @@ public class SystemUtils {
         return false;
     }
 
-    public static void startDetailActivity(Context context, String name, String price,
-                                           String detail){
+//    public static void startDetailActivity(Context context, String name, String price,
+//                                           String detail){
 //        Intent intent = new Intent(context, DetailActivity.class);
 //        intent.putExtra("name", name);
 //        intent.putExtra("price", price);
 //        intent.putExtra("detail", detail);
 //        context.startActivity(intent);
-    }
+//    }
 }

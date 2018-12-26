@@ -64,9 +64,6 @@ public class SelectControlApplianceActivity extends BaseActivity {
     protected void onView() {
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         back.setOnClickListener(this);
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         dialogUtil = new DialogUtil(SelectControlApplianceActivity.this);
         adapter_wifi = new SelectWifiDevAdapter(SelectControlApplianceActivity.this, icon_wifi, iconNam_wifi);
         mac_wifi_dev_id.setAdapter(adapter_wifi);

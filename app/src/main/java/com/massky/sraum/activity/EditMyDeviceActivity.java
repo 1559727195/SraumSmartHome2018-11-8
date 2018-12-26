@@ -116,9 +116,7 @@ public class EditMyDeviceActivity extends BaseActivity {
 
     @Override
     protected void onView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
+
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         dialogUtil = new DialogUtil(this);
     }
@@ -145,7 +143,7 @@ public class EditMyDeviceActivity extends BaseActivity {
             type = panelItem_map.get("type").toString();
             name = panelItem_map.get("name").toString();
             number = panelItem_map.get("number").toString();
-            boxNumber = panelItem_map.get("boxNumber").toString();
+            boxNumber = panelItem_map.get("boxNumber") == null ? "" : panelItem_map.get("boxNumber").toString();
             input_panel_name_edit.setText(name);
             setCommon(type);
             switch (type) {
@@ -154,6 +152,7 @@ public class EditMyDeviceActivity extends BaseActivity {
                 case "AA04"://AA02WIFi模块
                 case "202":
                 case "206":
+                case "网关":
 
                     break;
                 default:
@@ -232,7 +231,9 @@ public class EditMyDeviceActivity extends BaseActivity {
             public void onSuccess(final User user) {
                 ToastUtil.showToast(EditMyDeviceActivity.this, "更新成功");
                 EditMyDeviceActivity.this.finish();//修改完毕
-                AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+//                AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+//                AppManager.getAppManager().finishActivity_current(MyDeviceItemActivity.class);
+                AppManager.getAppManager().finishActivity_current(MyDeviceItemActivity.class);
             }
         });
     }
@@ -284,7 +285,9 @@ public class EditMyDeviceActivity extends BaseActivity {
                         } else {
                             if (name.equals(input_panel_name_edit_txt_str)) {
 //                                AppManager.getAppManager().removeActivity_but_activity_cls(MainfragmentActivity.class);
-                                updateDeviceInfo();//更新设备信息
+//                                updateDeviceInfo();//更新设备信息
+                                EditMyDeviceActivity.this.finish();
+                                AppManager.getAppManager().finishActivity_current(MyDeviceItemActivity.class);
                             } else {
                                 sraum_update_panel_name(input_panel_name_edit_txt_str, number, false);//更新面板信息
                             }
@@ -326,9 +329,25 @@ public class EditMyDeviceActivity extends BaseActivity {
                             ToastUtil.showToast(EditMyDeviceActivity.this, "设备名称为空");
                         } else {
                             if (name.equals(input_panel_name_edit_txt_str)) {
-                                AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+//                                AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+                                EditMyDeviceActivity.this.finish();
+                                AppManager.getAppManager().finishActivity_current(MyDeviceItemActivity.class);
                             } else {
                                 sraum_updateWifiAppleName(number, input_panel_name_edit_txt_str);
+                            }
+                        }
+                        break;
+
+                    case "网关":
+                        input_panel_name_edit_txt_str = input_panel_name_edit.getText().toString().trim() == null
+                                || input_panel_name_edit.getText().toString().trim() == "" ? "" : input_panel_name_edit.getText().toString().trim();
+                        if (input_panel_name_edit_txt_str.equals("")) {
+                            ToastUtil.showToast(EditMyDeviceActivity.this, "设备名称为空");
+                        } else {
+                            if (name.equals(input_panel_name_edit_txt_str)) {
+                                AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+                            } else {
+                                sraum_updateGatewayName(number, input_panel_name_edit_txt_str);
                             }
                         }
                         break;
@@ -356,6 +375,81 @@ public class EditMyDeviceActivity extends BaseActivity {
                 sraum_find_panel(number);
                 break;
         }
+    }
+
+    /**
+     * 更新网关的名字
+     *
+     * @param number
+     */
+    private void sraum_updateGatewayName(final String number, final String newName) {
+
+        Map<String, String> mapdevice = new HashMap<>();
+        mapdevice.put("token", TokenUtil.getToken(this));
+        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
+        mapdevice.put("areaNumber", areaNumber);
+        String method = "";
+        switch (type) {
+            case "网关":
+                method = ApiHelper.sraum_updateGatewayName;
+                break;
+        }
+        mapdevice.put("number", number);
+        mapdevice.put("newName", newName);
+//        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(LinkageListActivity.this));
+        MyOkHttp.postMapString(method, mapdevice, new Mycallback(new AddTogglenInterfacer() {
+            @Override
+            public void addTogglenInterfacer() {//刷新togglen数据
+                sraum_updateWifiAppleName(number, newName);
+            }
+        }, EditMyDeviceActivity.this, dialogUtil) {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                super.onError(call, e, id);
+            }
+
+            @Override
+            public void pullDataError() {
+                ToastUtil.showToast(EditMyDeviceActivity.this, "更新失败");
+            }
+
+            @Override
+            public void emptyResult() {
+                super.emptyResult();
+            }
+
+            @Override
+            public void wrongToken() {
+                super.wrongToken();
+                //重新去获取togglen,这里是因为没有拉到数据所以需要重新获取togglen
+
+            }
+
+            @Override
+            public void fourCode() {
+
+            }
+
+            @Override
+            public void threeCode() {
+                ToastUtil.showToast(EditMyDeviceActivity.this, "number 不存在");
+            }
+
+            @Override
+            public void wrongBoxnumber() {
+                super.wrongBoxnumber();
+                ToastUtil.showToast(EditMyDeviceActivity.this, "areaNumber\n" +
+                        "不存在");
+            }
+
+            @Override
+            public void onSuccess(final User user) {
+                ToastUtil.showToast(EditMyDeviceActivity.this, "更新成功");
+                EditMyDeviceActivity.this.finish();//修改完毕
+                AppManager.getAppManager().finishActivity_current(MyDeviceItemActivity.class);
+//                AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+            }
+        });
     }
 
     /**
@@ -1199,12 +1293,16 @@ public class EditMyDeviceActivity extends BaseActivity {
                         super.onSuccess(user);
 //                        ChangePanelAndDeviceActivity.this.finish();
 //                        ToastUtil.showToast(ChangePanelAndDeviceActivity.this, panelName+":"+"面板名字更新成功");
-                        if (!istrue) {
-                            updateDeviceInfo();//更新设备信息
-                        } else {
-                            EditMyDeviceActivity.this.finish();
-                            ToastUtil.showToast(EditMyDeviceActivity.this, "更新成功");
-                        }
+//                        if (!istrue) {
+//                            updateDeviceInfo();//更新设备信息
+//                        } else {
+//                            EditMyDeviceActivity.this.finish();
+//                            ToastUtil.showToast(EditMyDeviceActivity.this, "更新成功");
+//                        }
+                        EditMyDeviceActivity.this.finish();
+//                        AppManager.getAppManager().finishActivity_current(MyDeviceItemActivity.class);
+                        AppManager.getAppManager().finishActivity_current(MyDeviceItemActivity.class);
+                        ToastUtil.showToast(EditMyDeviceActivity.this, "更新成功");
                     }
 
                     @Override
@@ -1349,6 +1447,7 @@ public class EditMyDeviceActivity extends BaseActivity {
             case "206":
             case "AA03":
             case "AA04":
+            case "网关":
                 find_panel_btn.setVisibility(View.GONE);
                 break;
         }

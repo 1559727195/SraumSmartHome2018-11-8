@@ -4,17 +4,19 @@
     android:id="@+id/spand_list_linear"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEDF2"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.yanzhenjie.statusview.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/green"
         app:fitsView="@+id/root_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/green"
         android:layout_height="50dp">
 
         <ImageView
@@ -59,7 +61,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/p11"
                         android:text="逐个匹配"
-                        android:textColor="@color/c6f"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/p26" />
 
                     <View
@@ -69,7 +71,7 @@
                         android:layout_below="@+id/mactext_id"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/p3"
-                        android:background="@color/e0c" />
+                        android:background="@color/white" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -97,7 +99,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/p11"
                         android:text="一键匹配"
-                        android:textColor="@color/c6f"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/p26" />
 
                     <View
@@ -106,7 +108,7 @@
                         android:layout_height="2px"
                         android:layout_below="@+id/scene_id"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/e0c" />
+                        android:background="@color/white" />
                 </RelativeLayout>
 
             </RelativeLayout>

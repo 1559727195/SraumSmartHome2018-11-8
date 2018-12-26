@@ -137,6 +137,7 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
             R.string.zhineng, R.string.pm25, R.string.shuijin, R.string.jixieshou, R.string.cha_zuo_1, R.string.cha_zuo, R.string.wifi_hongwai,
             R.string.wifi_camera, R.string.one_light_control, R.string.two_light_control, R.string.three_light_control
             , R.string.two_dimming_one_control, R.string.two_dimming_two_control, R.string.two_dimming_trhee_control, R.string.keshimenling
+            ,R.string.zhinengwangguan
     };
     private String isUse;
     private int option = ContentCommon.INVALID_OPTION;
@@ -152,6 +153,7 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
     private String strDID = "";
     private String isfrom = "";
     private boolean isFirst;
+    private String boxNumber;
 
     @Override
     protected int viewId() {
@@ -165,15 +167,13 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         dialogUtil = new DialogUtil(this);
         onEvent1();
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         panelItem_map = (Map) getIntent().getSerializableExtra("panelItem");
         Integer imgtype = (Integer) getIntent().getSerializableExtra("imgtype");
         if (panelItem_map != null) {
             device_name_txt.setText(panelItem_map.get("name").toString());
             project_select.setText(panelItem_map.get("name").toString());
             mac_txt.setText(panelItem_map.get("mac").toString());
+            boxNumber = panelItem_map.get("boxNumber").toString();
 //            banben_txt.setText(panelItem_map.get("firmware").toString());
 //            panid_txt.setText(panelItem_map.get("hardware").toString());
             panelNumber = panelItem_map.get("number").toString();
@@ -297,7 +297,9 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
         dialogUtil.loadDialog();
         Map<String, Object> mapbox = new HashMap<String, Object>();
         mapbox.put("token", TokenUtil.getToken(MyDeviceItemActivity.this));
+        String areaNumber = (String) SharedPreferencesUtil.getData(MyDeviceItemActivity.this,"areaNumber","");
         mapbox.put("number", panelNumber);
+        mapbox.put("areaNumber", areaNumber);
         mapbox.put("isUse", isUse);
         MyOkHttp.postMapObject(ApiHelper.sraum_setWifiCameraIsUse, mapbox, new Mycallback(new AddTogglenInterfacer() {
             @Override
@@ -436,7 +438,7 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
                 dev_txt.setText("WIFI");
                 banben_txt.setText(panelItem_map.get("wifi").toString());
                 //controllerId
-                mac_txt.setText(panelItem_map.get("controllerId").toString());
+//                mac_txt.setText(panelItem_map.get("controllerId").toString());
                 break;
 
             case "AA03"://摄像头
@@ -467,6 +469,9 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
                 banben_txt.setText(panelItem_map.get("wifi").toString());
                 //controllerId
                 mac_txt.setText(panelItem_map.get("controllerId").toString());
+                break;
+            case "网关":
+                gateway_id_txt.setText(iconName[33]);
                 break;
         }
     }
@@ -553,7 +558,7 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
                 break;
             case R.id.rel_yaokongqi://跳转到遥控器列表界面
                 intent = new Intent(MyDeviceItemActivity.this, SelectYaoKongQiActivity.class);
-                intent.putExtra("controllerNumber", panelItem_map.get("controllerId").toString());//controllerNumber
+                intent.putExtra("controllerNumber", panelItem_map.get("number").toString());//controllerNumber
                 startActivity(intent);
                 break;
             case R.id.rel_bufang_plan://布防报警计划
@@ -630,14 +635,14 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                sraum_deletepanel(panelNumber, type, dialog);
             }
         });
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sraum_deletepanel(panelNumber, type, dialog);
+                dialog.dismiss();
             }
         });
     }
@@ -648,30 +653,38 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
      * @param
      * @param dialog
      */
-    private void sraum_deletepanel(final String panelNumber, final String type,
+    private void sraum_deletepanel(final String number, final String type,
                                    final Dialog dialog) {
         if (dialogUtil != null)
             dialogUtil.loadDialog();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("token", TokenUtil.getToken(MyDeviceItemActivity.this));
+        Map<String, String> mapdevice = new HashMap<>();
+        String areaNumber = (String) SharedPreferencesUtil.getData(MyDeviceItemActivity.this,"areaNumber","");
+        mapdevice.put("token", TokenUtil.getToken(MyDeviceItemActivity.this));
+        mapdevice.put("areaNumber", areaNumber);
         String send_method = "";
         switch (type) {
             case "AA02":
-                map.put("number", panelNumber);
+                mapdevice.put("number", number);
                 send_method = ApiHelper.sraum_deleteWifiApple;
                 break;//wifi模块
             case "AA03":
-                map.put("number", panelNumber);
+            case "AA04":
+                mapdevice.put("number", number);
                 send_method = ApiHelper.sraum_deleteWifiCamera;
                 break;//wifi模块
             default:
-                map.put("boxNumber", TokenUtil.getBoxnumber(MyDeviceItemActivity.this));
-                map.put("panelNumber", panelNumber);
-                send_method = ApiHelper.sraum_deletePanel;
+                mapdevice.put("gatewayNumber", boxNumber);
+                mapdevice.put("deviceNumber", number);
+                send_method = ApiHelper.sraum_deleteDevice;
+                break;
+            case "网关":
+                mapdevice.put("number", number);
+                send_method = ApiHelper.sraum_deleteGateway;
                 break;
         }
 
-        MyOkHttp.postMapObject(send_method, map,
+
+        MyOkHttp.postMapString(send_method, mapdevice,
                 new Mycallback(new AddTogglenInterfacer() {
                     @Override
                     public void addTogglenInterfacer() {

@@ -87,9 +87,6 @@ public class AddWifiCameraScucessActivity extends BaseActivity {
 
     @Override
     protected void onView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         back.setOnClickListener(this);
         btn_login_gateway.setOnClickListener(this);
         dialogUtil = new DialogUtil(this);

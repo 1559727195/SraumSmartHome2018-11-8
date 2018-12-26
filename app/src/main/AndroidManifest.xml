@@ -211,6 +211,10 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
+            android:name="com.massky.sraum.activity.FastEditPanelActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
             android:name="com.massky.sraum.activity.LaunghActivity"
             android:theme="@style/GuideTheme">
             <intent-filter>
@@ -227,6 +231,18 @@
 
         <activity
             android:name="com.massky.sraum.activity.LaunghSecondActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.MyfamilyActivity"
+
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.AddfamilyActivity"
+
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.AddfamilyActivitytwo"
+
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
@@ -264,6 +280,10 @@
             android:name="com.massky.sraum.activity.SearchGateWayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="com.massky.sraum.activity.WifiAirControlActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name="com.massky.sraum.activity.EditGateWayActivity"
@@ -281,11 +301,14 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".activity.TVShowActivity"></activity>
+        <activity
+            android:name=".activity.TVShowActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.ipcamera.demo.PlayBackTFActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.ipcamera.demo.PlayBackActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -948,6 +971,15 @@
         <!---->
         <!--摄像头-->
         <service android:name="com.ipcamera.demo.BridgeService"></service>
+
+        <service android:name="com.dialog.CommonDialogService"></service>
+
+        <receiver android:name=".Util.MytokenRecever">
+            <intent-filter>
+                <action android:name="com.massky.jinruicenterpark.broadcast.wrongtoken" />
+            </intent-filter>
+        </receiver>
+
 
     </application>
 

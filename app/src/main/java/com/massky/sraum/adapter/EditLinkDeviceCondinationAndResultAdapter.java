@@ -88,7 +88,7 @@ public class EditLinkDeviceCondinationAndResultAdapter extends android.widget.Ba
 //                break;
 //        }
         viewHolderContentType.execute_scene_txt.setText(listint.get(position).get("action").toString());
-        if (listint.get(position).get("boxName").toString().equals("")) {
+        if (listint.get(position).get("boxName") == null || listint.get(position).get("boxName").toString().equals("")) {
             viewHolderContentType.gateway_name_txt.setVisibility(View.GONE);
         } else {
             viewHolderContentType.gateway_name_txt.setText(listint.get(position).get("boxName").toString());

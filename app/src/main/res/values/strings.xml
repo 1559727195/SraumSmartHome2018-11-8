@@ -673,10 +673,38 @@
 
     <string name="kongtiao_panel">空调面板</string>
 
+    <!--我的家人所需要字体-->
+    <string name="myfamily">我的家人</string>
+    <string name="darling">亲爱的家人</string>
+
+    <!--账号管理需要字体-->
+    <string name="aone">用户名</string>
+    <string name="atwo">昵称</string>
+    <string name="athree">性别</string>
+    <string name="afour">生日</string>
+    <string name="afive">手机号</string>
+    <string name="asix">修改密码</string>
+    <string name="aseven">我的家人(0)</string>
+    <string name="sex">男</string>
+    <string name="sexwoman">女</string>
+    <string name="birthday">1996-12-28</string>
+    <string name="phonenumber">11011011011</string>
+    <string name="logout">退出当前账号</string>
 
 
-
-
+    <!--注册界面字体-->
+    <string name="famname">输入家人称呼</string>
+    <string name="famphone">输入家人手机号</string>
+    <string name="phone">输入手机号</string>
+    <string name="checkcode">输入验证码</string>
+    <string name="passord">输入密码</string>
+    <string name="confirm">再次输入密码</string>
+    <string name="read">我已阅读并同意</string>
+    <string name="readafter">《sraum注册协议》</string>
+    <string name="complete">完成注册</string>
+    <string name="next">下一步</string>
+    <string name="completepass">完成</string>
+    <string name="zhinengwangguan">智能网关</string>
 
 
 </resources>

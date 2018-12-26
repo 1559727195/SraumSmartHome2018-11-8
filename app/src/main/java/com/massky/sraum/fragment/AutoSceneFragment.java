@@ -40,6 +40,7 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
     private AutoSceneAdapter autoSceneAdapter;
     private DialogUtil dialogUtil;
     private List<User.deviceLinkList> list = new ArrayList<>();
+    private List<Map> list_atuo_scene = new ArrayList<>();
 
     @Override
     protected void onData() {
@@ -65,7 +66,7 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
     protected void onView(View view) {
         dialogUtil = new DialogUtil(getActivity());
 
-        autoSceneAdapter = new AutoSceneAdapter(getActivity(), list, dialogUtil, new AutoSceneAdapter.RefreshListener() {
+        autoSceneAdapter = new AutoSceneAdapter(getActivity(),list_atuo_scene, dialogUtil, new AutoSceneAdapter.RefreshListener() {
             @Override
             public void refresh() {
 //                get_myDeviceLink();
@@ -169,11 +170,19 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
 
                     @Override
                     public void onSuccess(final User user) {
-                        list.clear();
-//                listtype.clear();
-                        list.addAll(user.deviceLinkList);
-                        autoSceneAdapter.clear();
-                        autoSceneAdapter.addAll(list);//不要new adapter
+
+                        list_atuo_scene = new ArrayList<>();
+                        for (int i = 0; i < user.deviceLinkList.size(); i++) {
+                            Map map = new HashMap();
+                            map.put("id", user.deviceLinkList.get(i).id);
+                            map.put("name", user.deviceLinkList.get(i).name);
+                            map.put("isUse", user.deviceLinkList.get(i).isUse);
+                            map.put("type", user.deviceLinkList.get(i).type);
+                            list_atuo_scene.add(map);
+                        }
+
+                        autoSceneAdapter.addAll(list_atuo_scene);//不要new adapter
+                        autoSceneAdapter.notifyDataSetChanged();
                     }
                 });
     }
@@ -182,12 +191,12 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
      * 清除联动信息
      */
     private void common_second() {
-        SharedPreferencesUtil.saveData(     getActivity(), "linkId", "");
+        SharedPreferencesUtil.saveData(getActivity(), "linkId", "");
         SharedPreferencesUtil.saveInfo_List(getActivity(), "list_result", new ArrayList<Map>());
         SharedPreferencesUtil.saveInfo_List(getActivity(), "list_condition", new ArrayList<Map>());
-        SharedPreferencesUtil.saveData(     getActivity(), "editlink", false);
+        SharedPreferencesUtil.saveData(getActivity(), "editlink", false);
         SharedPreferencesUtil.saveInfo_List(getActivity(), "link_information_list", new ArrayList<Map>());
-        SharedPreferencesUtil.saveData(     getActivity(), "add_condition", false);
+        SharedPreferencesUtil.saveData(getActivity(), "add_condition", false);
     }
 
 }

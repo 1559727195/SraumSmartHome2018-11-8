@@ -4,17 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:slideswitch="http://schemas.android.com/tools"
-    android:background="#EFEFF2"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.yanzhenjie.statusview.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/green"
         app:fitsView="@+id/root_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/green"
         android:layout_height="50dp">
 
         <ImageView
@@ -34,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="录像计划"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp" />
     </RelativeLayout>
     <ScrollView
@@ -266,6 +268,7 @@
             android:layout_height="@dimen/y16"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             android:layout_marginRight="@dimen/x5"
             slideswitch:isOpen="false"
             slideswitch:themeColor="@color/green" />
@@ -643,13 +646,14 @@
 
         <Button
             android:id="@+id/next_step_id"
-            android:layout_height="@dimen/d30"
+            android:layout_height="@dimen/y30"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/graylinerecra"
             android:text="删除设备"
-            android:textSize="@dimen/s13"
+            android:background="@drawable/add_zigbee_device_btn"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             app:layout_widthPercent="80%"
             android:layout_width="wrap_content" />
     </androidx.percentlayout.widget.PercentRelativeLayout>

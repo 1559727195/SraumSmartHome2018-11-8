@@ -126,9 +126,6 @@ public class TVShowActivity extends BaseActivity implements IDeviceControllerLis
                 TVShowActivity.this.finish();
             }
         });
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         dialogUtil = new DialogUtil(this);
         device = (GizWifiDevice) getIntent().getParcelableExtra("GizWifiDevice");
         mapdevice = (Map) getIntent().getSerializableExtra("mapdevice");

@@ -55,6 +55,41 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <RelativeLayout
+                android:id="@+id/add_family_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y30"
+                android:layout_marginTop="@dimen/y5"
+                android:background="#FFFFFF"
+                android:paddingLeft="@dimen/x3">
+
+                <ImageView
+                    android:id="@+id/add_family_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/icon_shebeigongxiang" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_toRightOf="@+id/add_family_img"
+                    android:text="家庭成员"
+                    android:textColor="#171717"
+                    android:textSize="15sp" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/x10"
+                    android:src="@drawable/wode_right_arrow" />
+            </RelativeLayout>
+            <RelativeLayout
                 android:id="@+id/dev_manager_rel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y30"
@@ -470,6 +505,7 @@
                 android:id="@+id/wode_sao_rel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y30"
+                android:visibility="gone"
                 android:background="#FFFFFF"
                 android:paddingLeft="@dimen/x3">
 

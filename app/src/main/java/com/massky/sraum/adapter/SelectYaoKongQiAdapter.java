@@ -150,7 +150,7 @@ public class SelectYaoKongQiAdapter extends android.widget.BaseAdapter {
                 Map map = new HashMap();
                 map.put("type", list.get(position).get("type").toString());
                 map.put("name", list.get(position).get("name").toString());
-                map.put("id", list.get(position).get("number").toString());
+                map.put("number", list.get(position).get("number").toString());
                 Intent intent = new Intent(activity, EditMyDeviceActivity.class);
                 intent.putExtra("panelItem", (Serializable) map);
                 activity.startActivity(intent);

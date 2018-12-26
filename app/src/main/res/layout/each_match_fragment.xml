@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFF2"
+    android:background="@color/white"
     android:orientation="vertical">
     <ScrollView
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         android:layout_marginTop="15dp"
         android:text="小米 XIAOMI  电视机"
         android:textColor="@color/black"
-        android:textSize="@dimen/p25" />
+        android:textSize="12sp" />
 
     <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"
@@ -55,7 +55,7 @@
         android:layout_marginTop="10dp"
         android:text="请将手机对准电视机进行匹配"
         android:textColor="@color/black"
-        android:textSize="@dimen/p25" />
+        android:textSize="12sp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             android:layout_marginTop="10dp"
             android:text="匹配开始，请保持对准电视机"
             android:textColor="@color/black"
-            android:textSize="@dimen/p25" />
+            android:textSize="12sp" />
         <TextView
             android:id="@+id/yaokong_name_promat_two"
             android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
             android:layout_marginTop="5dp"
             android:text="如果电视机打开或关闭"
             android:textColor="@color/black"
-            android:textSize="@dimen/p25" />
+            android:textSize="12sp" />
         <TextView
             android:id="@+id/yaokong_name_promat_three"
             android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
             android:layout_marginTop="5dp"
             android:text="表示匹配成功，点击完成"
             android:textColor="@color/black"
-            android:textSize="@dimen/p25" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/num_txt"
@@ -155,12 +155,15 @@
         <Button
             android:id="@+id/next_step_id"
             app:layout_widthPercent="80%"
-            android:layout_height="@dimen/d30"
-            android:textSize="@dimen/s13"
+            android:layout_height="@dimen/y30"
+            android:background="@drawable/add_zigbee_device_btn"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:text="完成"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/graylinerecra"/>
+            android:layout_marginBottom="@dimen/y15"
+            android:layout_width="wrap_content" />
     </androidx.percentlayout.widget.PercentRelativeLayout>
 </LinearLayout>
     </ScrollView>

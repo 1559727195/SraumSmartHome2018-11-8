@@ -25,6 +25,7 @@ import com.massky.sraum.activity.MainGateWayActivity;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.base.Basecfragment;
 import com.massky.sraum.base.Basecfragmentactivity;
+import com.massky.sraum.fragment.HomeFragment;
 import com.massky.sraum.fragment.SceneFragment;
 
 import org.json.JSONException;
@@ -340,7 +341,7 @@ public class MyReceiver extends BroadcastReceiver {
 //                        action = MacFragment.ACTION_INTENT_RECEIVER;
 //                        sendBroad(notifactionId, "");
 //                    }
-//                        action = MacFragment.ACTION_INTENT_RECEIVER;
+                        action = HomeFragment.ACTION_INTENT_RECEIVER;
                         sendBroad(notifactionId, "");
 
                         action = FastEditPanelActivity.ACTION_SRAUM_FAST_EDIT;

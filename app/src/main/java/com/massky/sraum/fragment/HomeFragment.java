@@ -39,7 +39,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.AddTogenInterface.AddTogglenInterfacer;
-import com.alibaba.fastjson.JSON;
 import com.andview.refreshview.XRefreshView;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.enumration.GizWifiDeviceNetStatus;
@@ -51,7 +50,6 @@ import com.ipcamera.demo.utils.SystemValue;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
-import com.massky.sraum.Util.IntentUtil;
 import com.massky.sraum.Util.LogUtil;
 import com.massky.sraum.Util.MusicUtil;
 import com.massky.sraum.Util.MyOkHttp;
@@ -61,14 +59,13 @@ import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.App;
-import com.massky.sraum.Utils.ParceUtil;
 import com.massky.sraum.activity.AirControlActivity;
 import com.massky.sraum.activity.AlarmDeviceMessageActivity;
 import com.massky.sraum.activity.CurtainWindowActivity;
-import com.massky.sraum.activity.Pm25Activity;
 import com.massky.sraum.activity.SelectZigbeeDeviceActivity;
 import com.massky.sraum.activity.TVShowActivity;
 import com.massky.sraum.activity.TiaoGuangLightActivity;
+import com.massky.sraum.activity.WifiAirControlActivity;
 import com.massky.sraum.adapter.AreaListAdapter;
 import com.massky.sraum.adapter.DetailDeviceHomeAdapter;
 import com.massky.sraum.adapter.HomeDeviceListAdapter;
@@ -104,8 +101,7 @@ import vstc2.nativecaller.NativeCaller;
 
 import static androidx.constraintlayout.widget.StateSet.TAG;
 import static com.massky.sraum.Utils.ParceUtil.*;
-import static com.massky.sraum.fragment.HomeFragment.ACTION_INTENT_RECEIVER_TO_SECOND_PAGE;
-import static com.massky.sraum.fragment.HomeFragment.MACFRAGMENT_PM25;
+import static com.massky.sraum.activity.MainGateWayActivity.MESSAGE_TONGZHI;
 
 /**
  * Created by zhu on 2017/11/30.
@@ -241,10 +237,10 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 case 2:
                     switch (doit_wifi) {
                         case "air":
-                            test_air_control(mapdevice.get("mac").toString());
+                            test_air_control(mapdevice.get("panelMac").toString());
                             break;
                         case "tv":
-                            test_tv(mapdevice.get("mac").toString());
+                            test_tv(mapdevice.get("panelMac").toString());
                             break;
                     }
                     break;
@@ -263,10 +259,10 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                         public void run() {
                             switch (doit_wifi) {
                                 case "air":
-                                    test_air_control(mapdevice.get("mac").toString());
+                                    test_air_control(mapdevice.get("panelMac").toString());
                                     break;
                                 case "tv":
-                                    test_tv(mapdevice.get("mac").toString());
+                                    test_tv(mapdevice.get("panelMac").toString());
                                     break;
                             }
                         }
@@ -275,10 +271,10 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 case 7://下载遥控器码没有反应
                     switch (doit_wifi) {
                         case "air":
-                            test_air_control(mapdevice.get("mac").toString());
+                            test_air_control(mapdevice.get("panelMac").toString());
                             break;
                         case "tv":
-                            test_tv(mapdevice.get("mac").toString());
+                            test_tv(mapdevice.get("panelMac").toString());
                             break;
                     }
                     break;
@@ -307,6 +303,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     };
     private int intfirst_time;
     private MyBroadCast receiver;
+    private Dialog dialog;
 
     /**
      * 发送给MyDeviceItemActivity视频的状态，获取摄像头状态，并返回
@@ -434,6 +431,8 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 mapdevice1.put("name", list.get(position).get("name").toString());
                 mapdevice1.put("panelName", list.get(position).get("panelName") == null ? "" :
                         list.get(position).get("panelName").toString());
+                mapdevice1.put("panelMac", list.get(position).get("panelMac") == null ? "" :
+                        list.get(position).get("panelMac").toString());
 
                 listob.add(mapdevice1);
                 mapalldevice.put("token", TokenUtil.getToken(getActivity()));
@@ -518,7 +517,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                         break;
                     case "202"://电视机
                         mapdevice = mapdevice1;
-                        test_tv(mapdevice.get("mac").toString());
+                        test_tv(mapdevice.get("panelMac").toString());
                         break;
                     case "10":
                         mapdevice = mapdevice1;
@@ -526,7 +525,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                         break;
                     case "206"://WIFI空调
                         mapdevice = mapdevice1;
-                        test_air_control(mapdevice1.get("mac").toString());
+                        test_air_control(mapdevice1.get("panelMac").toString());
                         //special_type_device(mapdevice);
 //                test_pm25();
                         // test_tv();
@@ -548,7 +547,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                         onitem_wifi_shexiangtou(mapdevice);
                         break;
                     default:
-                        curtains_and_light(position, mapalldevice);
+                        curtains_and_light(position, mapdevice1);
                         break;
                 }
             }
@@ -558,21 +557,23 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         mDragGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (singleRoomAssoList.size() > 0)
-                    deivce_number = (String) deviceList.get(position).get("number");//设备编号
-                deivce_type = (String) deviceList.get(position).get("type");//设备编号
-                //这句是选中某个设备
-                switch (roomNumber) {
-                    case "":
+                if (list.size() > 0) {
+                    deivce_number = (String) list.get(position).get("number");//设备编号
+                    deivce_type = (String) list.get(position).get("type");//设备编号
+                    //这句是选中某个设备
+                    switch (roomNumber) {
+                        case "":
 //                        common_setting_linear.setVisibility(View.GONE);
-                        break;
-                    default:
-                        common_setting_linear.setVisibility(View.VISIBLE);
-                        break;
+                            break;
+                        default:
+                            common_setting_linear.setVisibility(View.VISIBLE);
+                            break;
+                    }
+                    dialogUtil.loadViewBottomdialog();
                 }
-                dialogUtil.loadViewBottomdialog();
                 return true;
             }
+
         });
     }
 
@@ -671,7 +672,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 
     /*--------------------------------切换房间选项卡-----------------------------*/
 
-    public void switch_room_dialog(final Context context, Map map) {
+    public void switch_room_dialog(final Context context) {
 
 //        dialogUtil.loadDialog();
         View view = LayoutInflater.from(context).inflate(R.layout.credit_card_num_pop, null);
@@ -680,20 +681,13 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         final TextView xiala_shuaka_txt = (TextView) view.findViewById(R.id.xiala_shuaka_txt);
         Button forget_shuaka_btn = (Button) view.findViewById(R.id.forget_shuaka_btn);
         Button confirm_shuaka_btn = (Button) view.findViewById(R.id.confirm_shuaka_btn);
-        ListView room_select = (ListView) view.findViewById(R.id.room_select);
-
+        final ListView room_select = (ListView) view.findViewById(R.id.room_select);
 
         final List<String> roomNames = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            roomNames.add("房间：" + "i");
+
+        for (int i = 0; i < roomList.size(); i++) {
+            roomNames.add((String) roomList.get(i).get("name"));
         }
-
-
-//        for (int i = 0; i < roomList.size(); i++) {
-//            roomNames.add((String) roomList.get(i).get("name"));
-//        }
-//
-
 
         room_select.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.simple_expandable_list_item_new, roomNames));
         room_select.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -712,7 +706,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         //// ImageView btn_xiala_img;
 
         //显示数据
-        final Dialog dialog = new Dialog(getActivity());
+        dialog = new Dialog(getActivity());
         dialog.setContentView(view);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCancelable(true);
@@ -764,11 +758,22 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
             }
         }
 
+
+        if (current_room_number.equals(roomNumber)) {
+            ToastUtil.showToast(getActivity(), "请移动到别的房间");
+            return;
+        }
         //deivce_number,roomNumber;
         //修改房间关联信息（APP->网关）
-        Map map = new HashMap();
+        Map map = new HashMap();// current_room_number
         map.put("token", TokenUtil.getToken(getActivity()));
-        map.put("roomNumber", roomNumber == null ? "" : roomNumber);
+        map.put("areaNumber", areaNumber);
+        map.put("roomNumberNew", roomNumber);
+        map.put("roomNumberOld", current_room_number);
+        map.put("number", deivce_number);
+        map.put("type", deivce_type);
+
+
 //        map.put("number", deivce_number);
         MyOkHttp.postMapObject(ApiHelper.sraum_updateRoomInfo, map,
                 new Mycallback(new AddTogglenInterfacer() {
@@ -780,15 +785,38 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                     @Override
                     public void onSuccess(User user) {
 //                        project_select.setText(user.name);
+                        if (dialog != null)
+                            dialog.dismiss();
+                        if (dialogUtil != null) dialogUtil.removeviewBottomDialog();
                         //刷新某个房间下的所有设备
                         switch (current_room_number) {
                             case "":
 //                                sraum_getInfos(false, device_type);//获取全部信息（APP->网关）
                                 break;
                             default:
-                                sraum_getOneRoomInfo(current_room_number);
+//                                sraum_getOneRoomInfo(current_room_number);
+                                sraum_getRoomsInfo(areaNumber, "");
                                 break;
                         }
+                    }
+
+                    @Override
+                    public void wrongBoxnumber() {
+                        super.wrongBoxnumber();
+                        ToastUtil.showToast(getActivity(), "areaNumber\n" +
+                                "不存在");
+                    }
+
+                    @Override
+                    public void threeCode() {
+                        super.threeCode();
+                        ToastUtil.showToast(getActivity(), "roomNumberNew 不存在");
+                    }
+
+                    @Override
+                    public void fourCode() {
+                        super.fourCode();
+                        ToastUtil.showToast(getActivity(), "number 不存在");
                     }
                 });
     }
@@ -808,7 +836,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     protected void onView(View view) {
         registerMessageReceiver();
         StatusUtils.setFullToStatusBar(getActivity());  // StatusBar.
-        room_list_show_adapter();
+//        room_list_show_adapter();
         intfirst_time = 1;
         init_first_sraum();
     }
@@ -825,28 +853,25 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     }
 
     private void init_first_sraum() {
-        if (intfirst_time == 1) {
-            intfirst_time = 2;
-            EventBus.getDefault().register(this);
-            init_wifi_camera();
-            registerMessageReceiver();
-            // 遥控云数据接口分装对象对象
-            ykanInterface = new YkanIRInterfaceImpl(getActivity().getApplicationContext());
-            // 遥控云数据接口分装对象对象
-            ykanInterface = new YkanIRInterfaceImpl(getActivity().getApplicationContext());
-            /**
-             * 小苹果初始化
-             */
-            mDeviceManager = DeviceManager
-                    .instanceDeviceManager(getActivity().getApplicationContext());
+        EventBus.getDefault().register(this);
+        init_wifi_camera();
+        registerMessageReceiver();
+        // 遥控云数据接口分装对象对象
+        ykanInterface = new YkanIRInterfaceImpl(getActivity().getApplicationContext());
+        // 遥控云数据接口分装对象对象
+        ykanInterface = new YkanIRInterfaceImpl(getActivity().getApplicationContext());
+        /**
+         * 小苹果初始化
+         */
+        mDeviceManager = DeviceManager
+                .instanceDeviceManager(getActivity().getApplicationContext());
 //        get_wifidevice(0);
-            loginPhone = (String) SharedPreferencesUtil.getData(getActivity(), "loginPhone", "");
-            SharedPreferences preferences = getActivity().getSharedPreferences("sraum" + loginPhone,
-                    Context.MODE_PRIVATE);
-            vibflag = preferences.getBoolean("vibflag", false);
-            musicflag = preferences.getBoolean("musicflag", false);
-            LogUtil.i("这是震动二" + musicflag);
-        }
+        loginPhone = (String) SharedPreferencesUtil.getData(getActivity(), "loginPhone", "");
+        SharedPreferences preferences = getActivity().getSharedPreferences("sraum" + loginPhone,
+                Context.MODE_PRIVATE);
+        vibflag = preferences.getBoolean("vibflag", false);
+        musicflag = preferences.getBoolean("musicflag", false);
+        LogUtil.i("这是震动二" + musicflag);
     }
 
     Runnable updateThread = new Runnable() {
@@ -1066,7 +1091,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                     break;
                 default:
                     break;
-
             }
         }
     };
@@ -1213,8 +1237,8 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 //            in.putExtra(ContentCommon.STR_CAMERA_PWD, strPwd);
 //            String strUser, String strPwd, String strDID
 
-            strUser =mapdevice.get("mode").toString();
-            strDID =  mapdevice.get("dimmer").toString();
+            strUser = mapdevice.get("mode").toString();
+            strDID = mapdevice.get("dimmer").toString();
             strPwd = mapdevice.get("temperature").toString();
 
             handler.sendEmptyMessage(10);//设备已经在线了
@@ -1290,30 +1314,11 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
      * 共同控制
      */
     private void common_control(String doit, String mac) {
-//        doit_wifi = doit;
-//        if (mGizWifiDevice == null) {
-////            getActivity().runOnUiThread(new Runnable() {
-////                @Override
-////                public void run() {
-////                    if(dialogUtil != null) dialogUtil.loadDialog();
-////                }
-////            });
-////            handler.sendEmptyMessage(0);
-////            add_from_net("onclick");
-////            init_giz_wifi_dev("onclick");
-//            init_giz_wifi_dev("onclick", mac);
-//        } else {
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (dialogUtil != null) dialogUtil.removeDialog();
-//                }
-//            });
-//        }
         String apple_name = "";
         for (int i = 0; i < list_hand_scene.size(); i++) {
             if (list_hand_scene.get(i).get("controllerId").equals(mac)) {
                 apple_name = list_hand_scene.get(i).get("name").toString();
+
 
             }
         }
@@ -1342,7 +1347,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 
         Map<String, String> mapdevice = new HashMap<>();
         mapdevice.put("token", TokenUtil.getToken(getActivity()));
-//        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(SelectSensorActivity.this));
+        mapdevice.put("areaNumber",areaNumber);
         MyOkHttp.postMapString(ApiHelper.sraum_getWifiAppleInfos
                 , mapdevice, new Mycallback(new AddTogglenInterfacer() {
                     @Override
@@ -1428,8 +1433,8 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
      * 跳转到空调控制界面
      */
     private void to_control(String doit) {
-        String mac = mapdevice.get("mac").toString();
-        String rid = mapdevice.get("deviceId").toString();
+        String mac = mapdevice.get("panelMac").toString();
+        String rid = mapdevice.get("dimmer").toString();
         boolean issame = false;
         list_remotecontrol_air = SharedPreferencesUtil.getInfo_List(getActivity(), "remoteairlist");
         for (int i = 0; i < list_remotecontrol_air.size(); i++) {
@@ -1472,7 +1477,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 //            ToastUtil.showToast(getActivity(), "设备，null");
             return;
         }
-        Intent intent = new Intent(getActivity(), AirControlActivity.class);
+        Intent intent = new Intent(getActivity(), WifiAirControlActivity.class);
         intent.putExtra("GizWifiDevice", mGizWifiDevice);
         intent.putExtra("mapdevice", (Serializable) mapdevice);
         //remoteControl
@@ -1488,6 +1493,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
      */
     private void toControl_TV(Map mapdevice) {
         if (mGizWifiDevice == null) {
+
 //            ToastUtil.showToast(getActivity(), "设备，null");
             return;
         }
@@ -1616,7 +1622,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 //            if (result.equals("")) {
 //                handler.sendEmptyMessage(7);//
 //            }
-
         }
 
         /**
@@ -1768,17 +1773,14 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
      * curtains and light,窗帘与灯
      *
      * @param position
-     * @param mapalldevice
+     * @param mapdevice1
      */
-    private void curtains_and_light(int position, Map<String, Object> mapalldevice) {
+    private void curtains_and_light(int position, Map<String, Object> mapdevice1) {
         if (list.get(position).get("type").toString().equals("1") || list.get(position).get("type").toString().equals("11")
                 || list.get(position).get("type").toString().equals("16")
                 || list.get(position).get("type").toString().equals("15")
                 || list.get(position).get("type").toString().equals("17")) {
-            String boxstatus = TokenUtil.getBoxstatus(getActivity());
-            if (!boxstatus.equals("0")) {
-                getBoxStatus(mapalldevice, position);
-            }
+            sraum_device_control(position, mapdevice1);
         } else {
             /*窗帘所需要的属性值*/
             Log.e("zhu", "chuanglian:" + "窗帘所需要的属性值");
@@ -1793,52 +1795,35 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         }
     }
 
-    private void getBoxStatus(final Map<String, Object> mapdevice, final int position) {
-        Map<String, String> map = new HashMap<>();
-        map.put("token", TokenUtil.getToken(getActivity()));
-        map.put("boxNumber", TokenUtil.getBoxnumber(getActivity()));
-        dialogUtil.loadDialog();
-        get_mac_fragment(mapdevice, position, map);
-    }
+    /**
+     * sraum_device_control
+     *
+     * @param
+     * @param mapdevice1
+     */
+    private void sraum_device_control(final int position, final Map<String, Object> mapdevice1) {
+        Map<String, Object> mapalldevice = new HashMap<>();
+        List<Map> listobj = new ArrayList<>();
+        Map map = new HashMap();
+        map.put("type", mapdevice1.get("type").toString());
+        map.put("number", mapdevice1.get("number").toString());
+        map.put("name", mapdevice1.get("name").toString());
+        map.put("status", mapdevice1.get("status").toString());
+        map.put("mode", mapdevice1.get("mode").toString());
+        map.put("dimmer", mapdevice1.get("dimmer").toString());
+        map.put("temperature", mapdevice1.get("temperature").toString());
+        map.put("speed", mapdevice1.get("speed").toString());
+        listobj.add(map);
+        mapalldevice.put("token", TokenUtil.getToken(getActivity()));
+        mapalldevice.put("areaNumber", areaNumber);
+        mapalldevice.put("deviceInfo", listobj);
 
-    private void get_mac_fragment(final Map<String, Object> mapdevice, final int position, final Map<String, String> map) {
-        MyOkHttp.postMapString(ApiHelper.sraum_getBoxStatus, map, new Mycallback(new AddTogglenInterfacer() {
-            @Override
-            public void addTogglenInterfacer() {//这个是获取togglen来刷新数据
-                getBoxStatus(mapdevice, position);
-            }
-        }, getActivity(), dialogUtil) {
-            @Override
-            public void onSuccess(User user) {
-                super.onSuccess(user);
-                switch (user.status) {
-                    case "1":
-                    case "17":
-                        sraum_device_control(mapdevice);
-                        break;
-                    case "0":
-                        //网关离线
-                        ToastUtil.showDelToast(getActivity(), "网关处于离线状态");
-                        break;
-                    default:
-                        break;
-                }
-            }
+        MyOkHttp.postMapObject(ApiHelper.sraum_deviceControl, mapalldevice, new
 
-            /**
-             * sraum_device_control
-             * @param
-             */
-            private void sraum_device_control(Map<String, Object> mapdevice) {
-                MyOkHttp.postMapObject(ApiHelper.sraum_deviceControl, mapdevice, new Mycallback(new AddTogglenInterfacer() {
+                Mycallback(new AddTogglenInterfacer() {
                     @Override
                     public void addTogglenInterfacer() {
-                        Map<String, Object> mapalldevice = new HashMap<String, Object>();
-                        mapalldevice.put("token", TokenUtil.getToken(getActivity()));
-                        mapalldevice.put("boxNumber", TokenUtil.getBoxnumber(getActivity()));
-
-                        mapalldevice.put("deviceInfo", listob);
-                        sraum_device_control(mapalldevice);
+                        sraum_device_control(position, mapdevice1);
                     }
                 }, getActivity(), dialogUtil) {
                     @Override
@@ -1879,7 +1864,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                             MusicUtil.stopMusic(getActivity(), "");
                         }
                         listtype.set(position, status);
-                        String string = listtype.get(position);
+
 //                        if (string.equals("1")) {
 //                            itemrela_id.setBackgroundResource(R.drawable.markstarh);
 //                        } else {
@@ -1893,19 +1878,13 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                         super.wrongToken();
                     }
                 });
-            }
-
-            @Override
-            public void wrongToken() {
-                super.wrongToken();
-            }
-        });
     }
+
 
     private int tag = 0;
 
     @Override
-    public void onDestroy() { // ----
+    public void onDestroy() {
         getActivity().unregisterReceiver(mMessageReceiver);
         getActivity().unregisterReceiver(receiver);
         NativeCaller.Free();
@@ -1926,7 +1905,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         mMessageReceiver = new MessageReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_INTENT_RECEIVER);
-        filter.addAction(MESSAGE_TONGZHI_DOOR_FIRST);
+        filter.addAction(MESSAGE_TONGZHI);
         filter.addAction(MESSAGE_TONGZHI_VIDEO_FROM_MYDEVICE);
         getActivity().registerReceiver(mMessageReceiver, filter);
     }
@@ -1941,30 +1920,19 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 if (messflag == 1 || messflag == 3 || messflag == 4 || messflag == 5) {
 //                upload(false);//控制部分，推送刷新；主动推送刷新。
                     Log.e("zhu", "upload(false):" + "upload(false)" + "messflag:" + messflag);
+                    if (current_room_number != null)
+                        sraum_getOneRoomInfo(current_room_number);
                     //控制部分的二级页面进去要同步更新推送的信息显示 （推送的是消息）。
                     sendBroad();
                     //推送过来的
 //                    ToastUtil.showToast(getActivity(), "我控制的设备时推送过来的" + ",messflag:" + messflag);
                 }
-            } else if (intent.getAction().equals(MESSAGE_TONGZHI_DOOR_FIRST)) {//门铃视频预览
+            } else if (intent.getAction().equals(MESSAGE_TONGZHI)) {//门铃视频预览
                 type = (String) intent.getSerializableExtra("type");
-
                 Map mapdevice = new HashMap();
-                mapdevice.put("dimmer", "admin");
+                mapdevice.put("dimmer", (String) intent.getSerializableExtra("uid"));
                 mapdevice.put("temperature", "888888");
-                mapdevice.put("mode", (String) intent.getSerializableExtra("uid"));//
-                //VSTD128380HDAFD
-
-//                mapdevice.put("mode", "VSTD128380HDAFD");//
-//                done(mapdevice.get("dimmer").toString()
-//                        , mapdevice.get("temperature").toString()
-//                        , mapdevice.get("mode").toString());//String strUser,String strPwd,String strDID
-
-//                if (index == 0) {
-//                    videofrom = "macfragment";
-//                    onitem_wifi_shexiangtou(mapdevice);
-//                }
-
+                mapdevice.put("mode", "admin");//
                 switch (type) {
                     case "52"://门铃
                     case "53"://摄像头
@@ -2112,6 +2080,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                                 map.put("flag", "");
                                 map.put("panelName", "");
                                 map.put("deviceId", user.wifiList.get(i).deviceId);
+                                map.put("panelMac", user.wifiList.get(i).panelMac);
                                 list.add(map);
                             }
 
@@ -2147,8 +2116,8 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 break;
             case R.id.common_setting_linear://设为常用
 //                common_setting_image.setImageResource(R.drawable.icon_l_changyong);
-                Map map = getmap_chage_room();
-                switch_room_dialog(getActivity(), map);
+//                Map map = getmap_chage_room();
+                switch_room_dialog(getActivity());
                 break;
             case R.id.rename_scene_linear://重命名
                 showRenameDialog();
@@ -2348,7 +2317,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                                     area_name_txt.setText(current_area_map.get("name").toString()
                                             + "(" + current_area_map.get("roomCount").toString() + ")");
 
-                                    sraum_getRoomsInfo(current_area_map.get("number").toString());
+                                    sraum_getRoomsInfo(current_area_map.get("number").toString(), "");
                                     areaNumber = current_area_map.get("number").toString();
                                     SharedPreferencesUtil.saveData(getActivity(), "areaNumber", areaNumber);
                                     break;
@@ -2410,7 +2379,9 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                         SharedPreferencesUtil.saveData(getActivity(), "areaNumber", areaNumber);
                         area_name_txt.setText(current_area_map.get("name").toString() == null ? "" :
                                 current_area_map.get("name").toString() + "(" + current_area_map.get("roomCount").toString() + ")");
-                        sraum_getRoomsInfo(areaNumber);
+
+                        sraum_getRoomsInfo(areaNumber, "qiehuan");
+                        popupWindow.dismiss();
                     }
 
                     @Override
@@ -2425,8 +2396,9 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
      * 获取区域的所有房间信息
      *
      * @param areaNumber
+     * @param qiehuan
      */
-    private void sraum_getRoomsInfo(final String areaNumber) {
+    private void sraum_getRoomsInfo(final String areaNumber, final String qiehuan) {
 //        if (dialogUtil != null) {
 //            dialogUtil.loadDialog();
 //        }
@@ -2438,7 +2410,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 , mapdevice, new Mycallback(new AddTogglenInterfacer() {
                     @Override
                     public void addTogglenInterfacer() {//刷新togglen数据
-                        sraum_getRoomsInfo(areaNumber);
+                        sraum_getRoomsInfo(areaNumber, qiehuan);
                     }
                 }, getActivity(), dialogUtil) {
                     @Override
@@ -2481,11 +2453,29 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                         }
 
                         //加载默认房间下的设备列表
-                        if (roomList.size() != 0) {
-                            current_room_number = roomList.get(0).get("number").toString();
-                            //
-                            sraum_getOneRoomInfo(roomList.get(0).get("number").toString());
-                            display_room_list(0);
+                        switch (qiehuan) {
+                            case "qiehuan"://区域切换
+                                current_room_number = roomList.get(0).get("number").toString();
+                                sraum_getOneRoomInfo(roomList.get(0).get("number").toString());
+                                display_room_list(0);
+                                break;
+                            default:
+                                if (roomList.size() != 0) {
+                                    if (current_room_number != null) {
+                                        sraum_getOneRoomInfo(current_room_number);
+                                        for (int i = 0; i < roomList.size(); i++) {
+                                            if (roomList.get(i).get("number").toString().equals(current_room_number)) {
+                                                display_room_list(i);
+                                                break;
+                                            }
+                                        }
+                                    } else {
+                                        current_room_number = roomList.get(0).get("number").toString();
+                                        sraum_getOneRoomInfo(roomList.get(0).get("number").toString());
+                                        display_room_list(0);
+                                    }
+                                }
+                                break;
                         }
                     }
 

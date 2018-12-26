@@ -94,6 +94,7 @@ import static com.example.jpushdemo.MyReceiver.ACTION_NOTIFICATION_OPENED_MAIN;
 
 public class MainGateWayActivity extends BaseActivity implements InitYkanListener {
 
+ public static final String MESSAGE_TONGZHI = "com.massky.sraum.message_tongzhi";
     private HomeFragment fragment1;
     private SceneFragment fragment2;
     private MineFragment fragment3;
@@ -459,10 +460,11 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
      * 通知
      * */
     private void sendBroad(String content, String bundle) {
-//        Intent mIntent = new Intent(MESSAGE_TONGZHI);
-//        mIntent.putExtra("uid", bundle == null ? "" : bundle);//    launchIntent.putExtra(Constants.EXTRA_BUNDLE, args);
-//        mIntent.putExtra("type", content);
-//        sendBroadcast(mIntent);
+        setTabSelection(0);
+        Intent mIntent = new Intent(MESSAGE_TONGZHI);
+        mIntent.putExtra("uid", bundle == null ? "" : bundle);//    launchIntent.putExtra(Constants.EXTRA_BUNDLE, args);
+        mIntent.putExtra("type", content);
+        sendBroadcast(mIntent);
     }
 
 
@@ -760,6 +762,7 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         String szImei = (String) SharedPreferencesUtil.getData(MainGateWayActivity.this, "regId", "");
         init_islogin(mobilePhone, szImei);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

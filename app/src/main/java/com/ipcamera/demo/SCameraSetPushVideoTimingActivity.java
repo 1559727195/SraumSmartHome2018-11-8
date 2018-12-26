@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 import android.widget.Toast;
+
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.listener.CustomListener;
@@ -31,12 +32,14 @@ import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.base.BaseActivity;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,7 +54,7 @@ import java.util.TreeSet;
 
 import butterknife.InjectView;
 
-import static com.ipcamera.demo.SettingSDCardActivity.strDID;
+import static com.massky.sraum.activity.BuFangBaoJingPlanActivity.strDID;
 
 
 public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
@@ -110,9 +113,6 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
 
     @Override
     protected void onView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         dialogUtil = new DialogUtil(this);
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         getDate();
@@ -121,7 +121,7 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
     }
 
     @Override
-   protected void onEvent() {
+    protected void onEvent() {
         initCustomTimePicker();
         sleep_time_rel.setOnClickListener(this);
         get_up_rel.setOnClickListener(this);
@@ -780,10 +780,10 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
 
         switch (type) {
             case 0://添加
-                set_camera();
+                set_camera(ApiHelper.sraum_setWifiCameraTimeZone);
                 break;
             case 1://修改
-                edit_camera();
+                edit_camera(ApiHelper.sraum_updateWifiCameraTimeZone);
                 break;
         }
 
@@ -801,9 +801,11 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
     /**
      * 编辑摄像头
      */
-    private void edit_camera() {
+    private void edit_camera(String method) {
         map_camera_time_zone = new HashMap();
         map_camera_time_zone.put("token", TokenUtil.getToken(SCameraSetPushVideoTimingActivity.this));
+        String areaNumber = (String) SharedPreferencesUtil.getData(SCameraSetPushVideoTimingActivity.this, "areaNumber", "");
+        map_camera_time_zone.put("areaNumber", areaNumber);
         map_camera_time_zone.put("number", strDID);
         map_camera_time_zone.put("id", (String) map_item_record.get("number"));
         map_camera_time_zone.put("startTime", startTime);
@@ -811,6 +813,7 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
         map_camera_time_zone.put("monday", "0");
         map_camera_time_zone.put("tuesday", "0");
         map_camera_time_zone.put("wednesday", "0");
+
         map_camera_time_zone.put("thursday", "0");
         map_camera_time_zone.put("friday", "0");
         map_camera_time_zone.put("saturday", "0");
@@ -845,14 +848,16 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
                 }
             }
         }
-        sraum_updateWifiCameraTimeZone(map_camera_time_zone);
+        sraum_updateWifiCameraTimeZone(map_camera_time_zone, method);
     }
 
     /**
      * 添加摄像头录像
      */
-    private void set_camera() {
+    private void set_camera(String method) {
         map_camera_time_zone = new HashMap();
+        String areaNumber = (String) SharedPreferencesUtil.getData(SCameraSetPushVideoTimingActivity.this, "areaNumber", "");
+        map_camera_time_zone.put("areaNumber", areaNumber);
         map_camera_time_zone.put("token", TokenUtil.getToken(SCameraSetPushVideoTimingActivity.this));
         map_camera_time_zone.put("number", strDID);
         map_camera_time_zone.put("startTime", startTime);
@@ -895,21 +900,21 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
             }
         }
 
-        sraum_setWifiCameraTimeZone(map_camera_time_zone);
+        sraum_setWifiCameraTimeZone(map_camera_time_zone,method);
     }
 
     /**
      * 设置摄像头移动侦测布防计划
      */
     private void sraum_updateWifiCameraTimeZone
-    (final Map map) {
+    (final Map map, final String method) {
         dialogUtil.loadDialog();
-        MyOkHttp.postMapObject(ApiHelper.sraum_updateWifiCameraTimeZone
+        MyOkHttp.postMapObject(method
                 , map, new Mycallback(new AddTogglenInterfacer() {
                     @Override
                     public void addTogglenInterfacer() {
 //                sensor_set_protection(isUse);
-                        sraum_updateWifiCameraTimeZone(map);
+                        sraum_updateWifiCameraTimeZone(map, method);
                     }
                 }, SCameraSetPushVideoTimingActivity.this, dialogUtil) {
                     @Override
@@ -937,13 +942,13 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
     /**
      * 设置摄像头移动侦测布防计划
      */
-    private void sraum_setWifiCameraTimeZone(final Map map) {
+    private void sraum_setWifiCameraTimeZone(final Map map, final String method) {
         dialogUtil.loadDialog();
-        MyOkHttp.postMapObject(ApiHelper.sraum_setWifiCameraTimeZone, map, new Mycallback(new AddTogglenInterfacer() {
+        MyOkHttp.postMapObject(method, map, new Mycallback(new AddTogglenInterfacer() {
             @Override
             public void addTogglenInterfacer() {
 //                sensor_set_protection(isUse);
-                sraum_setWifiCameraTimeZone(map);
+                sraum_setWifiCameraTimeZone(map,method);
             }
         }, SCameraSetPushVideoTimingActivity.this, dialogUtil) {
             @Override

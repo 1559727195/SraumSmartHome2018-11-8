@@ -518,6 +518,7 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
                             map_device.put("gatewayMac", user.deviceLinkInfo.deviceList.get(i).gatewayMac);
                             list_result.add(map_device);
                         }
+
                         //添加结果
                         if (list_condition.size() != 0) condition_add.setVisibility(View.GONE);
                         SharedPreferencesUtil.saveInfo_List(EditLinkDeviceResultActivity.this, "list_condition", list_condition);

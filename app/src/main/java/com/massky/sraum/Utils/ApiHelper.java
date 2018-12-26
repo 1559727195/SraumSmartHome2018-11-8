@@ -106,4 +106,11 @@ public class ApiHelper {
     public static String sraum_getWifiCameraTimeZone = api + "sraum_getWifiCameraTimeZone";
     public static String sraum_deleteWifiCameraTimeZone = api + "sraum_deleteWifiCameraTimeZone";
     public static String sraum_deletePanel = api + "sraum_deletePanel";
+    public static String sraum_deleteFamily = api + "sraum_deleteFamily";
+    public static String sraum_getFamily = api + "sraum_getFamily";
+    public static String sraum_addFamily = api + "sraum_addFamily";
+    public static String sraum_checkMemberPhone = api + "sraum_checkMemberPhone";
+    public static String checkMobilePhone = api + "checkMobilePhone";
+    public static String sraum_logout = api + "sraum_logout";
+    public static String sraum_updateGatewayName = api + "sraum_updateGatewayName";
 }

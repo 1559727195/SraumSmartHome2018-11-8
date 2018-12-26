@@ -164,9 +164,6 @@ public class PlayBackTFActivity extends BaseActivity implements
 	@Override
 	protected void onView() {
 		StatusUtils.setFullToStatusBar(this);  // StatusBar.
-		if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-			statusView.setBackgroundColor(Color.BLACK);
-		}
 		dialogUtil = new DialogUtil(this);
 		getDataFromOther();
 //		setContentView(R.layout.playbacktf);

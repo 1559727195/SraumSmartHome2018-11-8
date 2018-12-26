@@ -21,6 +21,7 @@ import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
@@ -62,10 +63,6 @@ public class BuFangBaoJingPlanActivity extends com.massky.sraum.base.BaseActivit
 
     @Override
     protected void onView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
-
         dialogUtil = new DialogUtil(this);
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         getDataFromOther();
@@ -216,7 +213,9 @@ public class BuFangBaoJingPlanActivity extends com.massky.sraum.base.BaseActivit
         dialogUtil.loadDialog();
         Map<String, Object> mapbox = new HashMap<String, Object>();
         mapbox.put("token", TokenUtil.getToken(BuFangBaoJingPlanActivity.this));
+        String areaNumber = (String) SharedPreferencesUtil.getData(BuFangBaoJingPlanActivity.this,"areaNumber","");
         mapbox.put("number", strDID);
+        mapbox.put("areaNumber", areaNumber);
         MyOkHttp.postMapObject(ApiHelper.sraum_getWifiCameraTimeZone, mapbox, new Mycallback(new AddTogglenInterfacer() {
             @Override
             public void addTogglenInterfacer() {

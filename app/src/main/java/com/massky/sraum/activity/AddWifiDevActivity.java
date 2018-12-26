@@ -47,9 +47,6 @@ public class AddWifiDevActivity extends BaseActivity {
         next_step_id.setOnClickListener(this);
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         back.setOnClickListener(this);
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
 
         type = (String) getIntent().getSerializableExtra("type");
         switch (type) {

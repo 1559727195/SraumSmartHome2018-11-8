@@ -4,17 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:slideswitch="http://schemas.android.com/tools"
-    android:background="#EFEFF2"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.yanzhenjie.statusview.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/green"
         app:fitsView="@+id/root_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/green"
         android:layout_height="50dp">
 
         <ImageView
@@ -34,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="SD卡设置"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <TextView
@@ -50,7 +52,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="添加"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp" />
     </RelativeLayout>
 

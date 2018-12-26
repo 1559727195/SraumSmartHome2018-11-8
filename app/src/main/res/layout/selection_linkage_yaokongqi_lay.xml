@@ -3,19 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFF2"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.yanzhenjie.statusview.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:background="@color/green"
         app:fitsView="@+id/root_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/green">
 
         <ImageView
             android:id="@+id/back"
@@ -23,8 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:paddingRight="20dp"
             android:paddingTop="5dp"
+            android:paddingRight="20dp"
             android:paddingBottom="5dp"
             android:src="@drawable/icon_t_back" />
 
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="请选择遥控器"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <TextView
@@ -43,12 +44,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:visibility="gone"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
             android:text="下一步"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -58,11 +59,11 @@
         android:background="#F2F2F2"
         android:gravity="bottom"
         android:padding="8dp"
-        android:visibility="gone"
         android:text="选择智能设备"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 
-    <com.xlistview.PullToRefreshLayout
+    <com.massky.sraum.view.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -71,7 +72,7 @@
         <include layout="@layout/refresh_head" />
         <!-- 支持所有实现Pullable接口的View -->
 
-        <com.pulltorefresh.pullableview.PullableRefreshListView
+        <com.pullableview.PullableRefreshListView
             android:id="@+id/maclistview_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -79,7 +80,7 @@
 
         <include layout="@layout/load_more" />
 
-    </com.xlistview.PullToRefreshLayout>
+    </com.massky.sraum.view.PullToRefreshLayout>
 
 
 </LinearLayout>

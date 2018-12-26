@@ -275,9 +275,6 @@ public class YKCodeAPIActivity extends BaseActivity implements View.OnClickListe
 
 
     private void initView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         sortListView = (ListView) findViewById(R.id.country_lvcountry);
         mDialog = (TextView) findViewById(R.id.dialog);

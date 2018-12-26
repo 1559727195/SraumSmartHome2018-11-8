@@ -15,6 +15,7 @@ import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
@@ -68,6 +69,7 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
     };
     private TextView type_txt;
     private TextView mac_txt;
+    private String boxNumber;
 
 
     @Override
@@ -290,6 +292,7 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
         panelNumber = getIntent().getStringExtra("panelid");
         //根据panelid去查找相关面板信心
         //根据panelid去遍历所有面板
+        boxNumber = getIntent().getStringExtra("boxNumber");
         Bundle bundle = getIntent().getBundleExtra("bundle_panel");
         deviceList = (List<User.device>) bundle.getSerializable("deviceList");
         panelType = getIntent().getStringExtra("panelType");
@@ -299,6 +302,7 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
             dev_name.setText(panelName);
     }
 
+
     /**
      * 更新面板名称
      *
@@ -307,11 +311,13 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
      */
     private void sraum_update_panel_name(final String panelName, final String panelNumber) {
         Map<String, Object> map = new HashMap<>();
+        String areaNumber = (String) SharedPreferencesUtil.getData(AddZigbeeDeviceScucessActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(AddZigbeeDeviceScucessActivity.this));
-        map.put("boxNumber", TokenUtil.getBoxnumber(AddZigbeeDeviceScucessActivity.this));
-        map.put("panelNumber", panelNumber);
-        map.put("panelName", panelName);
-        MyOkHttp.postMapObject(ApiHelper.sraum_addWifiCamera, map,
+        map.put("areaNumber", areaNumber);
+        map.put("gatewayNumber", boxNumber);
+        map.put("deviceNumber", panelNumber);
+        map.put("newName", panelName);
+        MyOkHttp.postMapObject(ApiHelper.sraum_updateDeviceName, map,
                 new Mycallback(new AddTogglenInterfacer() {//刷新togglen获取新数据
                     @Override
                     public void addTogglenInterfacer() {

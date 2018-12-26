@@ -171,8 +171,6 @@ public class GatewayDialogFragment extends DialogFragment implements View.OnClic
 //                , list);
 //        list_show_rev_item.setAdapter(showGatewayListAdapter);
         showAllGateWays();
-
-
     }
 
     /**
@@ -226,7 +224,7 @@ public class GatewayDialogFragment extends DialogFragment implements View.OnClic
                 switch (type) {
                     case "B201"://智能门锁
                         Intent intent_position = new Intent(getActivity(), SelectSmartDoorLockActivity.class);
-                        map.put("gateway_number",gateway_number);
+                        map.put("gateway_number", gateway_number);
                         intent_position.putExtra("map", (Serializable) map);
                         startActivity(intent_position);
                         break;

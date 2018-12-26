@@ -183,10 +183,6 @@ public class SettingSDCardActivity extends BaseActivity implements
 
     @Override
     protected void onView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
-
         dialogUtil = new DialogUtil(this);
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         getDataFromOther();
@@ -1126,6 +1122,8 @@ public class SettingSDCardActivity extends BaseActivity implements
 //                    ToastUtil.showToast(context, "关闭了");
             sdcardBean.setRecord_time_enable(0);
         }
+
+        setSDCardSchedule();
     }
 
 }

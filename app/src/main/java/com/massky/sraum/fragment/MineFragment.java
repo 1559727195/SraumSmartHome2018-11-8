@@ -18,6 +18,7 @@ import com.massky.sraum.activity.AreaSettingActivity;
 import com.massky.sraum.activity.HomeSettingActivity;
 import com.massky.sraum.activity.LoginGateWayActivity;
 import com.massky.sraum.activity.MyDeviceListActivity;
+import com.massky.sraum.activity.MyfamilyActivity;
 import com.massky.sraum.activity.PersonMessageActivity;
 import com.massky.sraum.activity.SettingActivity;
 import com.massky.sraum.activity.ShareDeviceActivity;
@@ -75,6 +76,8 @@ public class MineFragment extends BaseFragment1{
     RelativeLayout room_manager_rel;
     @InjectView(R.id.area_manager_rel)
     RelativeLayout area_manager_rel;
+    @InjectView(R.id.add_family_rel)
+    RelativeLayout add_family_rel;
 
     @Override
     protected void onData() {
@@ -94,6 +97,7 @@ public class MineFragment extends BaseFragment1{
         dev_manager_rel.setOnClickListener(this);
         room_manager_rel.setOnClickListener(this);
         area_manager_rel.setOnClickListener(this);
+        add_family_rel.setOnClickListener(this);
     }
 
     @Override
@@ -177,6 +181,10 @@ public class MineFragment extends BaseFragment1{
                 break;
             case R.id.area_manager_rel://区域设置
                 startActivity(new Intent(getActivity(),AreaSettingActivity.class));
+                break;
+            case R.id.add_family_rel:
+                Intent mintent = new Intent(getActivity(), MyfamilyActivity.class);
+                startActivity(mintent);
                 break;
         }
     }

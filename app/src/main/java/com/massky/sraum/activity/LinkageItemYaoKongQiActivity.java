@@ -52,9 +52,6 @@ public class LinkageItemYaoKongQiActivity extends BaseActivity {
 
     @Override
     protected void onView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         back.setOnClickListener(this);
         next_step_txt.setOnClickListener(this);

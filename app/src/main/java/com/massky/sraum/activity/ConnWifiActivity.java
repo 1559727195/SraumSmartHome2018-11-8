@@ -173,9 +173,6 @@ public class ConnWifiActivity extends BaseActivity implements IDeviceConfigListe
         conn_btn_dev.setOnClickListener(this);
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         back.setOnClickListener(this);
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         onview();
         initWifiConect();
         initWifiName();
@@ -313,8 +310,10 @@ public class ConnWifiActivity extends BaseActivity implements IDeviceConfigListe
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent wifiSettingsIntent = new Intent("android.settings.WIFI_SETTINGS");
+                startActivityForResult(wifiSettingsIntent, CONNWIFI);
                 dialog.dismiss();
-                handler.sendEmptyMessage(0);
+                handler.sendEmptyMessage(1);
             }
         });
 
@@ -322,11 +321,8 @@ public class ConnWifiActivity extends BaseActivity implements IDeviceConfigListe
             @Override
             public void onClick(View v) {
                 //连接wifi的相关代码,跳转到WIFI连接界面
-                Intent wifiSettingsIntent = new Intent("android.settings.WIFI_SETTINGS");
-                startActivityForResult(wifiSettingsIntent, CONNWIFI);
                 dialog.dismiss();
-                handler.sendEmptyMessage(1);
-
+                handler.sendEmptyMessage(0);
             }
         });
     }

@@ -106,9 +106,6 @@ public class HandSceneAdapter extends BaseAdapter {
 
             @Override
             public void onItemClick() {
-//                Intent intent = new Intent(context, EditSceneSecondActivity.class);
-//                intent.putExtra("number",list.get(position).get("number").toString());
-//                context.startActivity(intent);
                 goto_editlink(position);
             }
 

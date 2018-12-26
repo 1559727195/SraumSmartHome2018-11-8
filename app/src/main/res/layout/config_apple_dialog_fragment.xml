@@ -4,10 +4,11 @@
     android:id="@+id/linear"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#EFEFF2"
+    android:background="@color/white"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/green"
         android:layout_height="50dp">
 
         <ImageView
@@ -27,9 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="连接Wi-Fi"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"
-            android:visibility="gone" />
+           />
 
         <TextView
             android:id="@+id/manager_room_txt"

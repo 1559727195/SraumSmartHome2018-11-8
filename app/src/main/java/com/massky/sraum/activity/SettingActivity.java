@@ -8,16 +8,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
+import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.IntentUtil;
+import com.massky.sraum.Util.MyOkHttp;
+import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.SharedPreferencesUtil;
+import com.massky.sraum.Util.TokenUtil;
+import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.permissions.RxPermissions;
 import com.massky.sraum.widget.ApplicationContext;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.InjectView;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -37,7 +48,7 @@ public class SettingActivity extends BaseActivity {
     private Button cancelbtn_id, camera_id, photoalbum;
     private DialogUtil dialogUtil;
     private LinearLayout linear_popcamera;
-//    @InjectView(R.id.account_nicheng)
+    //    @InjectView(R.id.account_nicheng)
 //    RelativeLayout account_nicheng;
     //    @InjectView(R.id.xingbie_pic)
 //    ImageView xingbie_pic;//性别选择图片
@@ -94,22 +105,61 @@ public class SettingActivity extends BaseActivity {
                 SettingActivity.this.finish();
                 break;
             case R.id.home_room_manger_rel:
-                startActivity(new Intent(SettingActivity.this,HomeSettingActivity.class));
+                startActivity(new Intent(SettingActivity.this, HomeSettingActivity.class));
                 break;//家庭和房间管理
             case R.id.infor_setting_rel:
-                startActivity(new Intent(SettingActivity.this,InformationSettingActivity.class));
+                startActivity(new Intent(SettingActivity.this, InformationSettingActivity.class));
                 break;//消息设置
             case R.id.btn_quit_gateway:
 //                ApplicationContext.getInstance().removeActivity();
 //                startActivity(new Intent(SettingActivity.this,LoginCloudActivity.class));
-                SharedPreferencesUtil.saveData(SettingActivity.this, "editFlag", false);
-                SharedPreferencesUtil.saveData(SettingActivity.this, "loginflag", false);
-                IntentUtil.startActivityAndFinishFirst(SettingActivity.this, LoginCloudActivity.class);
-                AppManager.getAppManager().finishAllActivity();
+//                SharedPreferencesUtil.saveData(SettingActivity.this, "editFlag", false);
+//                SharedPreferencesUtil.saveData(SettingActivity.this, "loginflag", false);
+//                IntentUtil.startActivityAndFinishFirst(SettingActivity.this, LoginCloudActivity.class);
+//                AppManager.getAppManager().finishAllActivity();
+                //退出登录
+                logout();
 
                 break;//
         }
     }
+
+
+    private void logout() {
+        //在这里先调
+        //设置网关模式-sraum-setBox
+        Map map = new HashMap();
+//        String phoned = getDeviceId(getActivity());
+        map.put("token", TokenUtil.getToken(SettingActivity.this));
+        if (dialogUtil != null)
+            dialogUtil.loadDialog();
+        MyOkHttp.postMapObject(ApiHelper.sraum_logout, map, new Mycallback(new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {
+                        logout();
+                    }
+                }, SettingActivity.this, dialogUtil) {
+                    @Override
+                    public void onSuccess(User user) {
+                        SharedPreferencesUtil.saveData(SettingActivity.this, "editFlag", false);
+                        SharedPreferencesUtil.saveData(SettingActivity.this, "loginflag", false);
+                        IntentUtil.startActivityAndFinishFirst(SettingActivity.this, LoginCloudActivity.class);
+                        AppManager.getAppManager().finishAllActivity();
+                    }
+
+                    @Override
+                    public void wrongToken() {
+                        super.wrongToken();
+                    }
+
+                    @Override
+                    public void wrongBoxnumber() {
+
+                    }
+                }
+        );
+    }
+
 
     private void init_permissions() {
 

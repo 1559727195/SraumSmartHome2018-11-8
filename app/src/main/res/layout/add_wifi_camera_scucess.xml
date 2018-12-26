@@ -4,20 +4,20 @@
     xmlns:slideswitch="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFF2"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.yanzhenjie.statusview.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#EFEFF2"
+        android:background="@color/green"
         app:fitsView="@+id/root_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#EFEFF2">
+        android:background="@color/green">
 
         <ImageView
             android:id="@+id/back"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="设备添加成功"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
         <ImageView
@@ -93,11 +93,12 @@
 
         <Button
             android:id="@+id/btn_login_gateway"
-            android:layout_height="@dimen/d30"
+            android:layout_height="@dimen/y30"
             android:layout_centerInParent="true"
-            android:background="@drawable/graylinerecra"
+            android:background="@drawable/add_zigbee_device_btn"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:text="完成"
-            android:textSize="@dimen/s13"
             app:layout_widthPercent="80%"
             android:layout_width="match_parent" />
     </androidx.percentlayout.widget.PercentRelativeLayout>

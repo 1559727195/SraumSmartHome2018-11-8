@@ -286,6 +286,7 @@ public class User {
         public String isUse;
         public String roomNumber;
         public String roomName;
+        public String panelMac;
     }
 
     /**
@@ -422,6 +423,15 @@ public class User {
         public String name;
         public String number;
         public String controllerId;
+    }
+
+    public List<familylist> familyList;
+    //家人列表
+    public static class familylist {
+        public String name;
+        public String mobilePhone;
+        public String userid1;
+        public String userid2;
     }
 
 

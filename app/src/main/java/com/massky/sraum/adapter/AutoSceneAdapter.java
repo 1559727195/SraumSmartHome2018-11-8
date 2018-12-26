@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,37 +27,51 @@ import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.activity.EditLinkDeviceResultActivity;
-import com.massky.sraum.activity.EditSceneSecondActivity;
-import com.massky.sraum.activity.SceneSettingActivity;
 import com.massky.sraum.view.ClearEditText;
 import com.massky.sraum.view.PullToRefreshLayout;
 import com.massky.sraum.widget.SlideSwitchButton;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.Call;
 
 /**
  * Created by masskywcy on 2017-05-16.
  */
 
-public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
+public class AutoSceneAdapter extends BaseAdapter {
+    private final Context context;
     private boolean is_open_to_close;
     private DialogUtil dialogUtil;
     private View view;
     private PullToRefreshLayout refreshLayout;
     private RefreshListener refreshListener;
+    private List<Map> list = new ArrayList<>();
 
-    public AutoSceneAdapter(Context context, List<User.deviceLinkList> list, DialogUtil dialogUtil, RefreshListener refreshListener) {
-        super(context, list);
+    public AutoSceneAdapter(Context context, List<Map> list, DialogUtil dialogUtil, RefreshListener refreshListener) {
 //        this.list = list;
         this.dialogUtil = dialogUtil;
         this.refreshListener = refreshListener;
+        this.list = list;
+        this.context = context;
+    }
+
+    @Override
+    public int getCount() {
+        return list.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return list.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
     }
 
     @Override
@@ -73,14 +88,14 @@ public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
             viewHolderContentType.btn_rename = (Button) convertView.findViewById(R.id.btn_rename);
 
             viewHolderContentType.rename_rel = (RelativeLayout) convertView.findViewById(R.id.rename_rel);
-            viewHolderContentType.edit_rel = (RelativeLayout) convertView.findViewById(R.id.edit_rel);
-            viewHolderContentType.delete_rel = (RelativeLayout) convertView.findViewById(R.id.delete_rel);
+            viewHolderContentType.edit_rel = (Button) convertView.findViewById(R.id.edit_rel);
+            viewHolderContentType.delete_rel = (Button) convertView.findViewById(R.id.delete_rel);
             viewHolderContentType.swipe_content_linear = (LinearLayout) convertView.findViewById(R.id.swipe_content_linear);
             convertView.setTag(viewHolderContentType);
         } else {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
-        viewHolderContentType.hand_device_content.setText((String) list.get(position).name);
+        viewHolderContentType.hand_device_content.setText((String) list.get(position).get("name"));
 
 
 //        int element = (Integer) list.get(position).get("image");
@@ -100,7 +115,7 @@ public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
 //                break;//家庭成员
 //        }
 
-        String isUse = list.get(position).isUse;
+        String isUse = list.get(position).get("isUse").toString();
         if (isUse != null) {
             switch (isUse) {
                 case "1":
@@ -117,10 +132,10 @@ public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
             public void slide_switch() {//滑动时，子view滑动时，父view不能滑动
                 if (finalViewHolderContentType.hand_scene_btn.isOpen) {//启用和禁止启用，
 //                    ToastUtil.showToast(context, "打开了");
-                    linkage_setting(list.get(position).id, "1");
+                    linkage_setting(list.get(position).get("id").toString(), "0");
                 } else {
 //                    ToastUtil.showToast(context, "关闭了");
-                    linkage_setting(list.get(position).id, "0");
+                    linkage_setting(list.get(position).get("id").toString(), "1");
                 }
             }
         });
@@ -138,7 +153,7 @@ public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
         viewHolderContentType.btn_rename.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showRenameDialog(list.get(position).id, list.get(position).name, position);
+                showRenameDialog(list.get(position).get("id").toString(), list.get(position).get("name").toString(), position);
                 finalViewHolderContentType.swipemenu_layout.quickClose();
             }
         });
@@ -148,7 +163,7 @@ public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
             @Override
             public void onClick(View v) {
 //                ToastUtil.showToast(context, "删除");
-                showCenterDeleteDialog(list.get(position).id, list.get(position).name);
+                showCenterDeleteDialog(list.get(position).get("id").toString(), list.get(position).get("name").toString());
                 finalViewHolderContentType.swipemenu_layout.quickClose();
             }
         });
@@ -162,23 +177,12 @@ public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
 //                context.startActivity(intent);
             }
         });
-        viewHolderContentType.swipe_content_linear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                context.startActivity(new Intent(context, SceneSettingActivity.class));
-                goto_editlink(position);
-                finalViewHolderContentType.swipemenu_layout.quickClose();
-            }
-        });
 
 
         ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
 
             @Override
             public void onItemClick() {
-//                Intent intent = new Intent(context, EditSceneSecondActivity.class);
-//                context.startActivity(intent);
-//                ToastUtil.showDelToast(context, "被点击");
                 goto_editlink(position);
             }
 
@@ -200,8 +204,8 @@ public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
         Intent intent = new Intent(context, EditLinkDeviceResultActivity.class);
         Map map = new HashMap();
         map.put("link_edit", true);
-        map.put("linkId", list.get(position).id);
-        map.put("linkName", list.get(position).name);
+        map.put("linkId", list.get(position).get("id").toString());
+        map.put("linkName", list.get(position).get("name").toString());
         map.put("type", "100");//自动场景
 //                intent.putExtra("link_edit", true);
 //                intent.putExtra("linkId", list.get(position).id);
@@ -275,7 +279,7 @@ public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
                         continue;
                     }
 
-                    if (var.equals(list.get(position).name)) {//list.get(position).get("number").toString(), list.get(position).get("name").toString()
+                    if (var.equals(list.get(position).get("name").toString())) {//list.get(position).get("number").toString(), list.get(position).get("name").toString()
                         isexist = true;
                     }
                 }
@@ -552,6 +556,18 @@ public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
                 });
     }
 
+    public void clear() {
+        this.list.clear();
+    }
+
+    public void
+
+    addAll(List<Map> list) {
+        this.list.clear();
+        this.list = list;
+
+    }
+
 
     class ViewHolderContentType {
         ImageView device_type_pic;
@@ -561,8 +577,8 @@ public class AutoSceneAdapter extends BaseAdapter<User.deviceLinkList> {
         SwipeMenuLayout swipemenu_layout;
         LinearLayout swipe_content_linear;
         public RelativeLayout rename_rel;
-        public RelativeLayout edit_rel;
-        public RelativeLayout delete_rel;
+        public Button edit_rel;
+        public Button delete_rel;
         public Button btn_rename;
 
     }

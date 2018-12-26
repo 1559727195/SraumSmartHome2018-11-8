@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -168,15 +171,30 @@ public class SceneFragment extends BaseFragment1 {
         autoCount = autoCount == null ? "0" : autoCount;
         list_title.add("手动(" + manuallyCount + ")");
         list_title.add("自动(" + autoCount + ")");
-        tab_FindFragment_title.removeAllTabs();
-        for (int i = 0; i < 2; i++) {
-            tab_FindFragment_title.addTab(tab_FindFragment_title.newTab().setText(list_title.get(i)));
-        }
+//        tab_FindFragment_title.removeAllTabs();
+//        for (int i = 0; i < 2; i++) {
+//            tab_FindFragment_title.addTab(tab_FindFragment_title.newTab().setText(list_title.get(i)));
+//        }
+//
+//        fragmentViewPagerAdapter = new DynamicFragmentViewPagerAdapter(getActivity().getSupportFragmentManager(),
+//                vp_FindFragment_pager, _fragments, list_title);
+//        //viewpager加载adapter
+//        vp_FindFragment_pager.setAdapter(fragmentViewPagerAdapter);
+//
+//        tab_FindFragment_title.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                setIndicator_new(tab_FindFragment_title);
+//            }
+//        });
 
-        fragmentViewPagerAdapter = new DynamicFragmentViewPagerAdapter(getActivity().getSupportFragmentManager(),
-                vp_FindFragment_pager, _fragments, list_title);
-        //viewpager加载adapter
-        vp_FindFragment_pager.setAdapter(fragmentViewPagerAdapter);
+        int tabCount =tab_FindFragment_title.getTabCount();
+        for (int i = 0; i < tabCount; i++) {
+            //这里tab可能为null 根据实际情况处理吧
+            final TabLayout.Tab tab = tab_FindFragment_title.getTabAt(i);
+            //这里使用到反射，拿到Tab对象后获取Class
+            tab.setText(list_title.get(i));
+        }
     }
 
 
@@ -242,10 +260,68 @@ public class SceneFragment extends BaseFragment1 {
         tab_FindFragment_title.post(new Runnable() {
             @Override
             public void run() {
-//                setIndicator(tab_FindFragment_title, 5, 5);
+                setIndicator_new(tab_FindFragment_title);
             }
         });
     }
+
+    /**
+     * 添加tablayout指引器事件监听
+     * @param tab_findFragment_title
+     */
+    private void setIndicator_new(TabLayout tab_findFragment_title) {
+        int tabCount = tab_findFragment_title.getTabCount();
+        for (int i = 0; i < tabCount; i++) {
+            //这里tab可能为null 根据实际情况处理吧
+            final TabLayout.Tab tab = tab_findFragment_title.getTabAt(i);
+            //这里使用到反射，拿到Tab对象后获取Class
+
+            Class c = tab.getClass();
+            try {
+                //c.getDeclaredField 获取私有属性。
+
+                //“mView”是Tab的私有属性名称，类型是 TabView ，TabLayout私有内部类。
+
+                Field field = c.getDeclaredField("view");
+
+                if (field == null) {
+
+                    continue;
+
+                }
+
+                field.setAccessible(true);
+
+                final View view = (View) field.get(tab);
+
+                if (view == null) {
+
+                    continue;
+
+                }
+
+                view.setTag(i);
+
+                view.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+
+                    public void onClick(View v) {
+                        //这里就可以根据业务需求处理事件了。
+                        mCurrentPageIndex = (int) view.getTag();
+                        vp_FindFragment_pager.setCurrentItem(mCurrentPageIndex,false);
+                    }
+                });
+
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     //更新ViewPager的Title信息
     private void upgrate_title() {
@@ -254,6 +330,9 @@ public class SceneFragment extends BaseFragment1 {
                 fragmentViewPagerAdapter.setPageTitle(i, "");
         }
     }
+
+
+    private int index = 0;
 
     private void setPageChangeListener() {
         vp_FindFragment_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -264,7 +343,9 @@ public class SceneFragment extends BaseFragment1 {
             @Override
             public void onPageSelected(int position) {
 //                mCurrentViewPagerName = mChannelNames.get(position);
-                mCurrentPageIndex = position;
+//                mCurrentPageIndex = position;
+
+
             }
 
             @Override

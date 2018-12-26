@@ -18,6 +18,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:layout_weight="0.15">
             <ImageView
                 android:id="@+id/device_type_pic"
@@ -73,12 +74,12 @@
                 <!--android:src="@mipmap/ic_launcher" />-->
             <com.massky.sraum.widget.SlideSwitchButton
                 android:id="@+id/slide_btn"
-                android:layout_width="@dimen/x45"
+                android:layout_width="@dimen/x40"
                 android:layout_height="@dimen/y15"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/x5"
+                android:layout_marginRight="@dimen/x8"
                 android:layout_centerVertical="true"
-                slideswitch:isOpen="true"
+                slideswitch:isOpen="false"
                 slideswitch:themeColor="#f200aa96"/>
         </RelativeLayout>
     </LinearLayout>
@@ -100,22 +101,22 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:id="@+id/edit_rel"
             android:layout_height="match_parent">
             <Button
                 android:layout_width="@dimen/x50"
                 android:layout_height="match_parent"
+                android:id="@+id/edit_rel"
                 android:text="编辑"
                 android:background="#FF9A02"
                 android:textColor="@android:color/white" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:id="@+id/delete_rel"
             android:layout_height="match_parent">
             <Button
                 android:layout_width="@dimen/x50"
                 android:layout_height="match_parent"
+                android:id="@+id/delete_rel"
                 android:text="删除"
                 android:background="#FF0202"
                 android:textColor="@android:color/white" />

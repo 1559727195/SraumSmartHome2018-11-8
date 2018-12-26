@@ -125,7 +125,6 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
         });
 
 
-
         final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
 
 

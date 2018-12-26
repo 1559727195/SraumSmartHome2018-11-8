@@ -99,7 +99,8 @@
             android:text="完成"
             android:textColor="@color/white"
             android:textSize="13sp"
-            app:layout_widthPercent="80%" />
+            app:layout_widthPercent="80%"
+            android:layout_width="wrap_content" />
     </androidx.percentlayout.widget.PercentRelativeLayout>
 
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/white"
-    android:background="#EFEFF2">
+    android:background="@color/white">
     <com.massky.sraum.view.SquareLayout
         android:id="@+id/itemrela_id"
         android:layout_width="wrap_content"

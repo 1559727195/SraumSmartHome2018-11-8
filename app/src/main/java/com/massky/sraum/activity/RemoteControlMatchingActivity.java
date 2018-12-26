@@ -36,13 +36,14 @@ public class RemoteControlMatchingActivity extends BaseActivity implements View.
     private FragmentManager fm;
     private EachMatchFragment eachmatchfragment;
     private OneKeyMatchFragment onekeymatchfragment;
-//    private IntelligentMatchFragment intelligenmatchfragment;
+    //    private IntelligentMatchFragment intelligenmatchfragment;
     private List<Fragment> list = new ArrayList<Fragment>();
     //    private RoomFragment roomFragment;
 
-    private int golden = Color.parseColor("#e0c48e");
-    private int black = Color.parseColor("#6f6f6f");
+    private int golden = Color.parseColor("#FFFFFF");
+    private int black = Color.parseColor("#FFFFFF");
     private FragmentViewPagerAdapter adapter;
+
 
     @InjectView(R.id.viewpager_id)
     ViewPager viewpager_id;
@@ -51,6 +52,9 @@ public class RemoteControlMatchingActivity extends BaseActivity implements View.
     @InjectView(R.id.scenerelative_id)
     RelativeLayout scenerelative_id;
     @InjectView(R.id.smartrelative_id)
+
+
+
     RelativeLayout smartrelative_id;
     @InjectView(R.id.viewthree)
     View viewthree;
@@ -75,9 +79,6 @@ public class RemoteControlMatchingActivity extends BaseActivity implements View.
 
 
     private void initView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
 //        onEvent();
     }

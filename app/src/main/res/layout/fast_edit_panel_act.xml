@@ -1,83 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="#EFEFF2"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/backtitle_id"
-        layout="@layout/backtitle" />
+    <com.yanzhenjie.statusview.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        app:fitsView="@+id/root_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="10dp"
+            android:src="@drawable/icon_t_back" />
+
+        <TextView
+            android:id="@+id/project_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="设备呼唤"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:textSize="14sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="当按下智能开关上任何一个按键后，APP会自动"
         android:textColor="@color/black"
-        android:text="当按下智能开关上任何一个按键后，APP会自动"/>
+        android:textSize="14sp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:layout_gravity="center_horizontal"
-        android:textSize="14sp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="弹出设置界面，请耐心等待"
         android:textColor="@color/black"
-        android:text="弹出设置界面，请耐心等待"/>
-
+        android:textSize="14sp" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_marginTop="200dp"
-        android:layout_gravity="center_horizontal"
-        android:textSize="14sp"
+        android:text="已等待"
         android:textColor="@color/black"
-        android:text="已等待"/>
+        android:textSize="14sp" />
+
     <LinearLayout
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/second"
-            android:text="01"
-            android:textSize="28sp"
+        android:orientation="horizontal">
 
-            android:textColor="#161616"/>
         <TextView
+            android:id="@+id/second"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="分"
+            android:text="01"
+            android:textColor="#161616"
+
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/second_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
             android:layout_toRightOf="@+id/second"
-            android:id="@+id/second_txt"
-            android:textSize="14sp"
-            android:textColor="@color/black"/>
+            android:text="分"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_toRightOf="@+id/second_txt"
-            android:layout_height="wrap_content"
-            android:text="30"
             android:id="@+id/miao"
-            android:textSize="28sp"
-            android:textColor="#161616"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/second_txt"
+            android:text="30"
+            android:textColor="#161616"
+            android:textSize="28sp" />
+
         <TextView
+            android:id="@+id/miao_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/miao"
             android:text="秒"
-            android:id="@+id/miao_txt"
-            android:textSize="14sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

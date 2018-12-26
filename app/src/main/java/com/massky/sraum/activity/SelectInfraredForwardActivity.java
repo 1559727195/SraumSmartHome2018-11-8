@@ -101,9 +101,6 @@ public class SelectInfraredForwardActivity extends BaseActivity implements
 
     @Override
     protected void onView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         dialogUtil = new DialogUtil(this);
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         back.setOnClickListener(this);

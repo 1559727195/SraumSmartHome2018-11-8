@@ -30,6 +30,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.ipcamera.demo.BridgeService;
 import com.ipcamera.demo.utils.SystemValue;
 import com.massky.sraum.R;
@@ -42,12 +43,14 @@ import com.massky.sraum.view.ClearEditText;
 import com.mediatek.demo.smartconnection.JniLoader;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
 import androidx.percentlayout.widget.PercentRelativeLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.InjectView;
@@ -119,9 +122,6 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
         conn_btn_dev.setOnClickListener(this);
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         back.setOnClickListener(this);
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
         init_data();
         onview();
         initWifiConect();
@@ -400,27 +400,6 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
                                     connWifiInterfacer.conn_wifi_over();
                                 }
 
-//                                int index[] = {};
-//                                for (int i = 0; i < list.size(); i++) {
-//                                    for (Map map_new : list_wifi_camera) {
-//                                        if (!list.get(i).get("strMac").equals(map_new.get("strMac"))) {
-//                                            index[i]++;
-//                                            if (index[i] == list.size()) {
-//
-//                                            }
-//                                        } else {
-//                                            index[i]--;
-//                                        }
-//                                    }
-//                                }
-//
-//                                for (int i = 0; i < index.length; i++) {
-//                                    if (index[i] != list.size()) {
-//                                        //在去搜一遍
-//
-//                                        break;
-//                                    }
-//                                }
                                 isOneKey = true;
                                 doit_onekey = "search";
                                 searchCamera();
@@ -842,19 +821,19 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //连接wifi的相关代码,跳转到WIFI连接界面
+                Intent wifiSettingsIntent = new Intent("android.settings.WIFI_SETTINGS");
+                startActivityForResult(wifiSettingsIntent, CONNWIFI);
                 dialog.dismiss();
-                handler.sendEmptyMessage(0);
+                handler.sendEmptyMessage(1);
             }
         });
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //连接wifi的相关代码,跳转到WIFI连接界面
-                Intent wifiSettingsIntent = new Intent("android.settings.WIFI_SETTINGS");
-                startActivityForResult(wifiSettingsIntent, CONNWIFI);
                 dialog.dismiss();
-                handler.sendEmptyMessage(1);
+                handler.sendEmptyMessage(0);
 
             }
         });
@@ -864,7 +843,15 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         initWifiName();
-        one_step_peizhi();//一键配wifi
+        //判断wifi已连接的条件
+        // TODO Auto-generated method stub
+        //获取系统服务
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        //获取状态
+        NetworkInfo.State wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+        if (wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) {
+            one_step_peizhi();//一键配wifi
+        }
     }
 
     /**
@@ -941,6 +928,7 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
 
             @Override
             public void dialogDismiss() {
+                updateListHandler.removeCallbacks(updateThread);
                 if (myWifiThread != null) {
                     blagg = false;
                 }
@@ -954,6 +942,7 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
 
                 NativeCaller.StopSearch();
                 isSearched = false;
+                doit_onekey = "isover";
             }
         });//初始化快配和搜索设备dialogFragment
         connWifiInterfacer = (ConnWifiInterfacer) newFragment;

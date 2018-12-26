@@ -1,5 +1,6 @@
 package com.massky.sraum.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,6 +43,8 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
     XListView xListView_scan;
     @InjectView(R.id.project_select)
     TextView project_select;
+    @InjectView(R.id.next_step_txt)
+    TextView next_step_txt;
     private Handler mHandler = new Handler();
     private MyDeviceListAdapter mydeviceadapter;
     private List<Integer> listint = new ArrayList<>();
@@ -81,6 +84,7 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
     @Override
     protected void onEvent() {
         back.setOnClickListener(this);
+        next_step_txt.setOnClickListener(this);
     }
 
     @Override
@@ -93,6 +97,9 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
         switch (v.getId()) {
             case R.id.back:
                 MyDeviceListActivity.this.finish();
+                break;
+            case R.id.next_step_txt:
+                startActivity(new Intent(MyDeviceListActivity.this,FastEditPanelActivity.class));
                 break;
         }
     }

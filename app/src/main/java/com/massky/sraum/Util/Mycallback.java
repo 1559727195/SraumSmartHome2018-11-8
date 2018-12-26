@@ -1,16 +1,22 @@
 package com.massky.sraum.Util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
+
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.alibaba.fastjson.JSON;
 import com.massky.sraum.User;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.fragment.SceneFragment;
 import com.zhy.http.okhttp.callback.StringCallback;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import okhttp3.Call;
 
 /**
@@ -48,7 +54,15 @@ public class Mycallback extends StringCallback implements ApiResult {
     @Override
     public void onResponse(String response, int id) {
         LogUtil.eLength("这是返回数据", response + "");
-        remove();
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                //已在主线程中，可以更新UI
+                remove();
+            }
+        });
+
         if (TextUtils.isEmpty(response)) {
             emptyResult();
         } else {

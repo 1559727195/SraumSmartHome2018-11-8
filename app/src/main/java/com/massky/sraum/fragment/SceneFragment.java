@@ -38,6 +38,9 @@ import com.massky.sraum.base.BaseFragment1;
 import com.massky.sraum.event.MyDialogEvent;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+import com.ypy.eventbus.EventBus;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -58,16 +61,6 @@ public class SceneFragment extends BaseFragment1 {
     private List<Fragment> _fragments = new ArrayList<>();
     @InjectView(R.id.status_view)
     StatusView statusView;
-    //    @InjectView(R.id.mViewPager)
-//    NoSlideViewPager mContentPager;
-//    @InjectView(R.id.hand_scene_line)
-//    LinearLayout hand_scene_line;
-//    @InjectView(R.id.auto_scene_line)
-//    LinearLayout auto_scene_line;
-//    @InjectView(R.id.hand_scene_view)
-//    View hand_scene_view;
-//    @InjectView(R.id.auto_scene_view)
-//    View auto_scene_view;
     @InjectView(R.id.add_scene)
     ImageView add_scene;
     private LinearLayout[] _navItemLayouts;
@@ -113,21 +106,28 @@ public class SceneFragment extends BaseFragment1 {
     @Override
     protected void onView(View view) {
         StatusUtils.setFullToStatusBar(getActivity());  // StatusBar.
+        EventBus.getDefault().register(this);
 //        initView();
         intfirst = 1;
         dialogUtil = new DialogUtil(getActivity());
+        initControls();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (intfirst == 1) {
-            intfirst = 2;
-            initControls();
-        }
         sraum_getAllScenesCount();
     }
 
+    /**
+     * 获取第二页场景详情
+     */
+    private void get_scene_second_page() {
+        MyEvent event = new MyEvent();
+        event.setMsg("scene_second");
+//...设置event
+        EventBus.getDefault().post(event);
+    }
 
     /**
      * 获取场景数量
@@ -188,7 +188,7 @@ public class SceneFragment extends BaseFragment1 {
 //            }
 //        });
 
-        int tabCount =tab_FindFragment_title.getTabCount();
+        int tabCount = tab_FindFragment_title.getTabCount();
         for (int i = 0; i < tabCount; i++) {
             //这里tab可能为null 根据实际情况处理吧
             final TabLayout.Tab tab = tab_FindFragment_title.getTabAt(i);
@@ -196,7 +196,6 @@ public class SceneFragment extends BaseFragment1 {
             tab.setText(list_title.get(i));
         }
     }
-
 
     @Override
     public void onClick(View v) {
@@ -267,6 +266,7 @@ public class SceneFragment extends BaseFragment1 {
 
     /**
      * 添加tablayout指引器事件监听
+     *
      * @param tab_findFragment_title
      */
     private void setIndicator_new(TabLayout tab_findFragment_title) {
@@ -309,7 +309,7 @@ public class SceneFragment extends BaseFragment1 {
                     public void onClick(View v) {
                         //这里就可以根据业务需求处理事件了。
                         mCurrentPageIndex = (int) view.getTag();
-                        vp_FindFragment_pager.setCurrentItem(mCurrentPageIndex,false);
+                        vp_FindFragment_pager.setCurrentItem(mCurrentPageIndex, false);
                     }
                 });
 
@@ -490,6 +490,36 @@ public class SceneFragment extends BaseFragment1 {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgAlpha;// 0.0-1.0
         getActivity().getWindow().setAttributes(lp);
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            if (intfirst == 1) {
+                intfirst = 2;
+            } else {
+                sraum_getAllScenesCount();
+                get_scene_second_page();
+            }
+        }
+    }
+
+    @Subscribe
+    public void onEvent(MyEvent event) {
+        String status = event.getMsg();
+        switch (status) {
+            case "刷新":
+                sraum_getAllScenesCount();
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
 

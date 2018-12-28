@@ -299,7 +299,6 @@ public class EditMyDeviceActivity extends BaseActivity {
                         if (input_panel_name_edit_txt_str.equals("")) {
                             ToastUtil.showToast(EditMyDeviceActivity.this, "设备名称为空");
                         } else {
-
                             if (name.equals(input_panel_name_edit_txt_str)) {
                                 AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
                             } else {
@@ -357,22 +356,70 @@ public class EditMyDeviceActivity extends BaseActivity {
                 EditMyDeviceActivity.this.finish();
                 break;
             case R.id.button_one_id://找设备
-
-                find_common_dev(deviceList.get(0).number);
+                sraum_find_outer(0);
                 break;
             case R.id.button_two_id://找设备
-                find_common_dev(deviceList.get(1).number);
-
+                sraum_find_outer(1);
                 break;
             case R.id.button_three_id://找设备
-                find_common_dev(deviceList.get(2).number);
-
+                sraum_find_outer(2);
                 break;
             case R.id.button_four_id://找设备
-                find_common_dev(deviceList.get(3).number);
+                sraum_find_outer(3);
                 break;
             case R.id.find_panel_btn://找面板
                 sraum_find_panel(number);
+                break;
+        }
+    }
+
+
+    private void sraum_find_outer(int position) {
+        switch (panelType) {
+            case "A201"://一灯控
+            case "A202"://二灯控
+            case "A311":
+            case "A203"://三灯控
+            case "A312":
+            case "A321":
+            case "A204"://四灯控
+            case "A313":
+            case "A322":
+            case "A331":
+            case "A301"://一键调光，3键灯控  设备4个
+            case "A302"://两键调光，2键灯控
+            case "A303"://三键调光，一键灯控
+                find_device(deviceList.get(position).number);
+                break;
+            case "A401"://设备2个
+                switch (position) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        find_device(deviceList.get(0).number);
+                        break;
+                    case 3:
+                        find_device(deviceList.get(1).number);
+                        break;
+                }
+                break;//窗帘 ，窗帘第八个按钮为八键灯控名称修改
+            case "A501"://空调-设备1个
+            case "A511":
+            case "A601"://新风
+            case "A701"://地暖
+            case "A611"://新风
+            case "A711"://地暖
+            case "A801":
+            case "A901":
+            case "A902":
+            case "AB01":
+            case "AB04":
+            case "B001":
+            case "B201":
+            case "AD01":
+            case "AC01":
+            case "B301":
+                find_device(deviceList.get(position).number);
                 break;
         }
     }
@@ -1219,11 +1266,14 @@ public class EditMyDeviceActivity extends BaseActivity {
      */
     private void sraum_update_others(final String customName, final String deviceNumber, final int index) {
         Map<String, Object> map = new HashMap<>();
+        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(EditMyDeviceActivity.this));
-        map.put("boxNumber", TokenUtil.getBoxnumber(EditMyDeviceActivity.this));
+        map.put("areaNumber", areaNumber);
+        map.put("gatewayNumber", boxNumber);
         map.put("deviceNumber", deviceNumber);
-        map.put("customName", customName);
-        MyOkHttp.postMapObject(ApiHelper.sraum_updateDeviceInfo, map, new Mycallback(new AddTogglenInterfacer() {
+        map.put("newName", customName);
+
+        MyOkHttp.postMapObject(ApiHelper.sraum_updateButtonName, map, new Mycallback(new AddTogglenInterfacer() {
             @Override
             public void addTogglenInterfacer() {
                 sraum_update_others(customName, deviceNumber, index);
@@ -1237,17 +1287,30 @@ public class EditMyDeviceActivity extends BaseActivity {
             @Override
             public void wrongBoxnumber() {
                 super.wrongBoxnumber();
+                ToastUtil.showToast(EditMyDeviceActivity.this, "-areaNumber\n" +
+                        "不存在");
             }
 
             @Override
             public void threeCode() {
                 super.threeCode();
+                //gatewayNumber 不存在
+                ToastUtil.showToast(EditMyDeviceActivity.this, "gatewayNumber 不存在");
             }
 
             @Override
             public void fourCode() {
                 super.fourCode();
+                ToastUtil.showToast(EditMyDeviceActivity.this, "deviceNumber 不存在");
             }
+
+            @Override
+            public void fiveCode() {
+                super.fiveCode();
+                ToastUtil.showToast(EditMyDeviceActivity.this, "type\n" +
+                        "类型不存在");
+            }
+
 
             @Override
             public void onSuccess(User user) {

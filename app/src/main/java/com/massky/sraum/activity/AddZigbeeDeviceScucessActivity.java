@@ -1,5 +1,6 @@
 package com.massky.sraum.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,6 +25,8 @@ import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.view.ClearLengthEditText;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -336,6 +339,13 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
                         //
                         AddZigbeeDeviceScucessActivity.this.finish();
                         AppManager.getAppManager().removeActivity_but_activity_cls(MainGateWayActivity.class);
+                        Map map = new HashMap();
+                        map.put("deviceId", panelNumber);
+                        map.put("deviceType", panelType);
+                        map.put("type", "1");
+                        Intent intent = new Intent(AddZigbeeDeviceScucessActivity.this, SelectRoomActivity.class);
+                        intent.putExtra("map_deivce", (Serializable) map);
+                        startActivity(intent);
                     }
 
                     @Override

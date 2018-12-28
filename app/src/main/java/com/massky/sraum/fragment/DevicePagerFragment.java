@@ -74,14 +74,12 @@ public class DevicePagerFragment extends BaseFragment1  implements XListView.IXL
 
     }
 
-
     public static DevicePagerFragment newInstance(int i) {
         DevicePagerFragment newFragment = new DevicePagerFragment();
         Bundle bundle = new Bundle();
         newFragment.setArguments(bundle);
         return newFragment;
     }
-
 
     private void onLoad() {
         xListView_scan.stopRefresh();
@@ -102,5 +100,10 @@ public class DevicePagerFragment extends BaseFragment1  implements XListView.IXL
                 onLoad();
             }
         }, 1000);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

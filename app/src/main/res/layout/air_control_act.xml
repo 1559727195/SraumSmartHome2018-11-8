@@ -85,20 +85,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y15"
         android:orientation="horizontal">
-
-        <RelativeLayout
-            android:id="@+id/moshi_rel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/btn_moshi" />
-        </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/fengsu_rel"
             android:layout_width="0dp"
@@ -110,6 +96,18 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:src="@drawable/btn_fengsu" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/moshi_rel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/btn_moshi" />
         </RelativeLayout>
 
         <RelativeLayout

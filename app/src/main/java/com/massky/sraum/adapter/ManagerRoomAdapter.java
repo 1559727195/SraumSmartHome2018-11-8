@@ -17,7 +17,6 @@ import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Utils.ApiHelper;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,49 +52,10 @@ public class ManagerRoomAdapter extends BaseAdapter {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
 
-//        String type = (String) list.get(position).get("type");
-//        switch (type) {
-//            case "0":
-//                viewHolderContentType.img_again_autoscene.setVisibility(View.GONE);//
-//                break;
-//            case "1":
-//                viewHolderContentType.img_again_autoscene.setVisibility(View.VISIBLE);//
-//                break;
-//        }
-
-//        String name = (String) ((Map) getList().get(position)).get("name");
-//        switch (name) {
-//            case "客厅":
-//                viewHolderContentType.pic_room_img.setImageResource(R.drawable.icon_keting_sm);
-//                break;
-//            case "儿童房":
-//                viewHolderContentType.pic_room_img.setImageResource(R.drawable.icon_ertongfang_sm);
-//                break;
-//        }
-
         viewHolderContentType.room_name_txt.setText(((Map) getList().get(position)).get("name").toString());
 //        viewHolderContentType.txt_device_num.setText(((Map) getList().get(position)).get("count").toString() + "个设备");
 
         final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
-//        convertView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent intent = new Intent(context, ShangChuanBaoJingActivity.class);
-////                intent.putExtra("id", (Serializable) list.get(position).get("id").toString());
-////                context.startActivity(intent);
-//                for (int i = 0; i < list.size(); i++) {
-//                    list.get(i).put("type", "0");
-//                    if (i == position) {
-//                        if (finalViewHolderContentType.img_again_autoscene.getVisibility() == View.VISIBLE) {
-//                            list.get(i).put("type", "0");
-//                        } else {
-//                            list.get(i).put("type", "1");
-//                        }
-//                    }
-//                }
-//                notifyDataSetChanged();
-//            }
-//        });
         viewHolderContentType.rename_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,12 +86,12 @@ public class ManagerRoomAdapter extends BaseAdapter {
         map.put("command", "sraum_deleteRoom");
         map.put("number", ((Map) getList().get(position)).get("number"));
         MyOkHttp.postMapObject(ApiHelper.sraum_deleteRoom, null,
-              new Mycallback(new AddTogglenInterfacer() {
+                new Mycallback(new AddTogglenInterfacer() {
                     @Override
                     public void addTogglenInterfacer() {
 
                     }
-                },context,null) {
+                }, context, null) {
                     @Override
                     public void onSuccess(User user) {
                         ToastUtil.showToast(context, "删除房间成功");
@@ -161,7 +121,7 @@ public class ManagerRoomAdapter extends BaseAdapter {
                     public void addTogglenInterfacer() {
                         sraum_updateRoomName(map);
                     }
-                },context,null) {
+                }, context, null) {
                     @Override
                     public void onSuccess(User user) {
                         ToastUtil.showToast(context, "修改名字成功");
@@ -172,17 +132,6 @@ public class ManagerRoomAdapter extends BaseAdapter {
     //自定义dialog,自定义重命名dialog
 
     public void showRenameDialog(final Map map) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        // 布局填充器
-//        LayoutInflater inflater = LayoutInflater.from(getActivity());
-//        View view = inflater.inflate(R.layout.user_name_dialog, null);
-//        // 设置自定义的对话框界面
-//        builder.setView(view);
-//
-//        cus_dialog = builder.create();
-//        cus_dialog.show();
-
-
         View view = LayoutInflater.from(context).inflate(R.layout.editscene_dialog, null);
         TextView confirm; //确定按钮
         TextView cancel; //确定按钮

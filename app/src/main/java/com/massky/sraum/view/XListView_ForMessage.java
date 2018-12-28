@@ -8,6 +8,7 @@
  */
 package com.massky.sraum.view;
 
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -21,10 +22,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
+
 import com.massky.sraum.R;
 
 
-public class XListView extends ListView implements OnScrollListener {
+public class XListView_ForMessage extends ListView implements OnScrollListener {
 
 	private float mLastY = -1; // save event y
 	private Scroller mScroller; // used for scroll back
@@ -48,7 +50,7 @@ public class XListView extends ListView implements OnScrollListener {
 	private boolean mEnablePullLoad;
 	private boolean mPullLoading;
 	private boolean mIsFooterReady = false;
-	
+
 	// total list items, used to detect is at the bottom of listview.
 	private int mTotalItemCount;
 
@@ -67,17 +69,17 @@ public class XListView extends ListView implements OnScrollListener {
 	/**
 	 * @param context
 	 */
-	public XListView(Context context) {
+	public XListView_ForMessage(Context context) {
 		super(context);
 		initWithContext(context);
 	}
 
-	public XListView(Context context, AttributeSet attrs) {
+	public XListView_ForMessage(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initWithContext(context);
 	}
 
-	public XListView(Context context, AttributeSet attrs, int defStyle) {
+	public XListView_ForMessage(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initWithContext(context);
 	}
@@ -135,10 +137,6 @@ public class XListView extends ListView implements OnScrollListener {
 		}
 	}
 
-	public void setFootViewHide(){
-		mFooterView.hide();
-		mFooterView.setOnClickListener(null);
-	}
 	/**
 	 * enable or disable pull up load more feature.
 	 * 
@@ -149,14 +147,10 @@ public class XListView extends ListView implements OnScrollListener {
 		if (!mEnablePullLoad) {
 			mFooterView.hide();
 			mFooterView.setOnClickListener(null);
-			//make sure "pull up" don't show a line in bottom when listview with one page 
-			setFooterDividersEnabled(false);
 		} else {
 			mPullLoading = false;
 			mFooterView.show();
 			mFooterView.setState(XListViewFooter.STATE_NORMAL);
-			//make sure "pull up" don't show a line in bottom when listview with one page  
-			setFooterDividersEnabled(true);
 			// both "pull up" and "click" will invoke load more.
 			mFooterView.setOnClickListener(new OnClickListener() {
 				@Override
@@ -164,6 +158,14 @@ public class XListView extends ListView implements OnScrollListener {
 					startLoadMore();
 				}
 			});
+		}
+	}
+
+	public  void setFootViewShow(boolean enable) {
+		if (enable) {
+			mFooterView.show();
+		} else {
+			mFooterView.hide();
 		}
 	}
 
@@ -203,23 +205,10 @@ public class XListView extends ListView implements OnScrollListener {
 		}
 	}
 
-	/**
-	 * hide
-	 *
-	 */
-	public void hider(){
-		mFooterView.hide();
-		mHeaderView.setVisiableHeight(0);
-	}
-
-	public void showr(){
-		mFooterView.show();
-	}
-
 	private void updateHeaderHeight(float delta) {
 		mHeaderView.setVisiableHeight((int) delta
 				+ mHeaderView.getVisiableHeight());
-		if (mEnablePullRefresh && !mPullRefreshing) { // 未处于刷新状态，更新箭头
+		if (mEnablePullRefresh && !mPullRefreshing) { // δ����ˢ��״̬�����¼�ͷ
 			if (mHeaderView.getVisiableHeight() > mHeaderViewHeight) {
 				mHeaderView.setState(XListViewHeader.STATE_READY);
 			} else {
@@ -267,12 +256,15 @@ public class XListView extends ListView implements OnScrollListener {
 //		setSelection(mTotalItemCount - 1); // scroll to bottom
 	}
 
-	private void resetFooterHeight() {
+	/**
+	 * 重置
+	 */
+	public void resetFooterHeight() {
 		int bottomMargin = mFooterView.getBottomMargin();
 		if (bottomMargin > 0) {
 			mScrollBack = SCROLLBACK_FOOTER;
 			mScroller.startScroll(0, bottomMargin, 0, -bottomMargin,
-					SCROLL_DURATION);
+					0);
 			invalidate();
 		}
 	}
@@ -307,6 +299,7 @@ public class XListView extends ListView implements OnScrollListener {
 					&& (mFooterView.getBottomMargin() > 0 || deltaY < 0)) {
 				// last item, already pulled up or want to pull up.
 				updateFooterHeight(-deltaY / OFFSET_RADIO);
+
 			}
 			break;
 		default:
@@ -322,11 +315,10 @@ public class XListView extends ListView implements OnScrollListener {
 					}
 				}
 				resetHeaderHeight();
-			} else if (getLastVisiblePosition() == mTotalItemCount - 1) {
+			}  if (getLastVisiblePosition() == mTotalItemCount - 1) {//去掉了else
 				// invoke load more.
 				if (mEnablePullLoad
-				    && mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA
-				    && !mPullLoading) {
+						&& mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA) {
 					startLoadMore();
 				}
 				resetFooterHeight();
@@ -377,7 +369,13 @@ public class XListView extends ListView implements OnScrollListener {
 		mListViewListener = l;
 	}
 
-	/**
+	public void setFootViewHide() {
+			mFooterView.hide();
+			mFooterView.setOnClickListener(null);
+
+	}
+
+    /**
 	 * you can listen ListView.OnScrollListener or this one. it will invoke
 	 * onXScrolling when header/footer scroll back.
 	 */
@@ -391,6 +389,12 @@ public class XListView extends ListView implements OnScrollListener {
 	public interface IXListViewListener {
 		public void onRefresh();
 
+		public void onLoadMore();
+	}
+	public interface IXListViewListenerRefresh {
+		public void onRefresh();
+	}
+	public interface IXListViewListenerLoad {
 		public void onLoadMore();
 	}
 }

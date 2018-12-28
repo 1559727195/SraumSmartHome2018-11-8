@@ -75,50 +75,23 @@ public class AlarmDeviceMessageActivity extends BaseActivity {
      * @param
      */
     private void initControls() {
-//        add_tab = (Button) view.findViewById(add_tab);
-//        add_tab.setOnClickListener(this);
-//        tab_FindFragment_title = (TabLayout)view.findViewById(tab_FindFragment_title);
-//        vp_FindFragment_pager = (ViewPager)view.findViewById(vp_FindFragment_pager);
-
-        //初始化各fragment
-//        hotRecommendFragment =  Find_hotRecommendFragment.newInstance(0);
-//        hotCollectionFragment = Find_hotCollectionFragment.newInstance(1);
-//        hotMonthFragment =  Find_hotMonthFragment.newInstance(2);
-//        hotToday =Find_hotToday.newInstance(3);
-//
-//        //将fragment装进列表中
-//        list_fragment = new ArrayList<>();
-//        list_fragment.add(hotRecommendFragment);
-//        list_fragment.add(hotCollectionFragment);
-//        list_fragment.add(hotMonthFragment);
-//        list_fragment.add(hotToday);
         list_smart_frag = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 2; i++) {
             Fragment fragment = DevicePagerFragment.newInstance(i);
             list_smart_frag.add(fragment);
         }
 
         //将名称加载tab名字列表，正常情况下，我们应该在values/arrays.xml中进行定义然后调用
         list_title = new ArrayList<>();
-        list_title.add("全部(1)");
-        list_title.add("报警(1)");
-        list_title.add("通知");
-        list_title.add("共享");
-        list_title.add("老人房");
-
+        list_title.add("全部");
+        list_title.add("报警");
         //设置TabLayout的模式
         tab_FindFragment_title.setTabMode(TabLayout.MODE_FIXED);
 //        tab_FindFragment_title.setTabMode(TabLayout.MODE_SCROLLABLE);
         //为TabLayout添加tab名称
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 2; i++) {
             tab_FindFragment_title.addTab(tab_FindFragment_title.newTab().setText(list_title.get(i)));
         }
-//        tab_FindFragment_title.addTab(tab_FindFragment_title.newTab().setText(list_title.get(0)));
-//        tab_FindFragment_title.addTab(tab_FindFragment_title.newTab().setText(list_title.get(1)));
-//        tab_FindFragment_title.addTab(tab_FindFragment_title.newTab().setText(list_title.get(2)));
-//        tab_FindFragment_title.addTab(tab_FindFragment_title.newTab().setText(list_title.get(3)));
-
-//        fAdapter = new Find_Smart_Home_Adapter(getSupportFragmentManager(),list_smart_frag,list_title);
         fragmentViewPagerAdapter = new DynamicFragmentViewPagerAdapter(getSupportFragmentManager(),
                 vp_FindFragment_pager, list_smart_frag, list_title);
         //viewpager加载adapter
@@ -133,17 +106,9 @@ public class AlarmDeviceMessageActivity extends BaseActivity {
         tab_FindFragment_title.post(new Runnable() {
             @Override
             public void run() {
-                setIndicator(tab_FindFragment_title, 5, 5);
+                setIndicator_new(tab_FindFragment_title);
             }
         });
-    }
-
-    //更新ViewPager的Title信息
-    private void upgrate_title() {
-        if (fragmentViewPagerAdapter != null) {
-            for (int i = 0; i < 4; i++)
-                fragmentViewPagerAdapter.setPageTitle(i, "");
-        }
     }
 
     private void setPageChangeListener() {
@@ -167,49 +132,60 @@ public class AlarmDeviceMessageActivity extends BaseActivity {
     }
 
     /**
-     * 通过反射调整TabLayout指引器的宽度
+     * 添加tablayout指引器事件监听
      *
-     * @param tabs
-     * @param leftDip
-     * @param rightDip
+     * @param tab_findFragment_title
      */
-    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+    private void setIndicator_new(TabLayout tab_findFragment_title) {
+        int tabCount = tab_findFragment_title.getTabCount();
+        for (int i = 0; i < tabCount; i++) {
+            //这里tab可能为null 根据实际情况处理吧
+            final TabLayout.Tab tab = tab_findFragment_title.getTabAt(i);
+            //这里使用到反射，拿到Tab对象后获取Class
 
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+            Class c = tab.getClass();
+            try {
+                //c.getDeclaredField 获取私有属性。
 
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
+                //“mView”是Tab的私有属性名称，类型是 TabView ，TabLayout私有内部类。
 
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            final View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
-            child.setTag(i);
-            child.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = (Integer) child.getTag();
-//                    vp_FindFragment_pager.setCurrentItem(position,false);
-                    Log.e("robin debug","position:" + position);//监听viewpager+Tablayout -》item点击事件
+                Field field = c.getDeclaredField("view");
+
+                if (field == null) {
+
+                    continue;
+
                 }
-            });
+
+                field.setAccessible(true);
+
+                final View view = (View) field.get(tab);
+
+                if (view == null) {
+
+                    continue;
+
+                }
+
+                view.setTag(i);
+
+                view.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+
+                    public void onClick(View v) {
+                        //这里就可以根据业务需求处理事件了。
+                        mCurrentPageIndex = (int) view.getTag();
+                        vp_FindFragment_pager.setCurrentItem(mCurrentPageIndex, true);
+                    }
+                });
+
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

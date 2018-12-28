@@ -76,9 +76,7 @@ public class AirLinkageControlActivity extends BaseActivity implements
 
     @Override
     protected void onView() {
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            statusView.setBackgroundColor(Color.BLACK);
-        }
+
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
 //        String type = (String) getIntent().getSerializableExtra("type");
         air_control_map = (Map) getIntent().getSerializableExtra("air_control_map");

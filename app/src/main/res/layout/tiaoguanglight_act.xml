@@ -53,14 +53,14 @@
 
         <com.zanelove.aircontrolprogressbar.ColorArcProgressBar
             android:id="@+id/bar1"
-            android:layout_width="@dimen/x100"
-            android:layout_height="@dimen/y100"
+            android:layout_width="@dimen/x60"
+            android:layout_height="@dimen/x60"
             android:layout_gravity="center_horizontal"
             app:back_color="@android:color/darker_gray"
             android:layout_marginTop="@dimen/y20"
-            app:back_width="@dimen/x10"
+            app:back_width="@dimen/x5"
             app:front_color1="@color/colorAccent"
-            app:front_width="@dimen/x10"
+            app:front_width="@dimen/x5"
             app:is_need_content="true"
             app:is_need_title="false"
             app:is_need_unit="false"

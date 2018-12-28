@@ -74,7 +74,6 @@ public class SelectiveLinkageDeviceDetailSecondActivity extends BaseActivity imp
     private String panelMAC;
     private String gatewayMAC;
 
-
     /**
      * 空调
      *

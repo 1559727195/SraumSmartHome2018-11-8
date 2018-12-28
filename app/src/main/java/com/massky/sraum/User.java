@@ -75,6 +75,8 @@ public class User {
     public String version;
     public String versionCode;
     public String LRScavenging;
+    public String messageTitle;
+    public String eventTime;
 
     public static class roomList {
         public String number;
@@ -434,6 +436,21 @@ public class User {
         public String userid2;
     }
 
+
+    /**
+     * 分页获取消息列表
+     */
+
+    public List<messageList> messageList;
+
+    public static class messageList implements Serializable {
+        public String id;
+        public String messageType;
+        public String messageTitle;
+        public String deviceName;
+        public String readStatus;
+        public String eventTime;
+    }
 
 
 };

@@ -59,15 +59,15 @@
         android:text="外纱"
         android:textColor="@color/gray"
         android:textSize="12sp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
+        android:id="@+id/radio_group_out"
         android:paddingBottom="@dimen/y8"
         android:paddingTop="@dimen/y8"
-        android:visibility="gone">
+        >
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/icon_cl_open_active" />
+                android:src="@drawable/icon_cl_open" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -90,7 +90,116 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/icon_cl_zanting_active" />
+                android:src="@drawable/icon_cl_zanting" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_cl_close" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/x8"
+        android:id="@+id/name2_txt"
+        android:text="内纱"
+        android:textColor="@color/gray"
+        android:textSize="12sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:id="@+id/radio_group_in"
+        android:paddingBottom="@dimen/y8"
+        android:paddingTop="@dimen/y8"
+        >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_cl_open" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_cl_zanting" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_cl_close" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/x8"
+        android:text="一键操作"
+        android:textColor="@color/gray"
+        android:textSize="12sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:id="@+id/radio_group_all"
+        android:paddingBottom="@dimen/y8"
+        android:paddingTop="@dimen/y8"
+        >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_cl_open" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_cl_zanting" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -107,149 +216,5 @@
 
     </LinearLayout>
 
-    <RadioGroup
-        android:id="@+id/radio_group_out"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp">
-
-        <RadioButton
-            android:id="@+id/order_process"
-            style="@style/main_tab_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:drawableTop="@drawable/curtain_tab_1"
-            android:gravity="center"
-            android:textSize="14sp" />
-
-        <RadioButton
-            android:id="@+id/order_query"
-            style="@style/main_tab_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:checked="false"
-            android:drawableTop="@drawable/curtain_tab_2"
-            android:gravity="center"
-            android:textSize="14sp" />
-
-        <RadioButton
-            android:id="@+id/merchant_manager"
-            style="@style/main_tab_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:checked="false"
-            android:drawableTop="@drawable/curtain_tab_3"
-            android:gravity="center"
-            android:textSize="14sp" />
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/x8"
-        android:id="@+id/name2_txt"
-        android:text="内纱"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
-
-    <RadioGroup
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/radio_group_in"
-        android:background="@color/white"
-        android:checkedButton="@+id/radio_group_in"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp">
-
-        <RadioButton
-            style="@style/main_tab_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:drawableTop="@drawable/curtain_tab_1"
-            android:gravity="center"
-            android:textSize="14sp" />
-
-        <RadioButton
-            style="@style/main_tab_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:checked="false"
-            android:drawableTop="@drawable/curtain_tab_2"
-            android:gravity="center"
-            android:textSize="14sp" />
-
-        <RadioButton
-            style="@style/main_tab_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:checked="false"
-            android:drawableTop="@drawable/curtain_tab_3"
-            android:gravity="center"
-            android:textSize="14sp" />
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/x8"
-        android:text="一键操作"
-        android:textColor="@color/gray"
-        android:textSize="12sp" />
-
-    <RadioGroup
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/radio_group_all"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:checkedButton="@+id/order_process"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp">
-
-        <RadioButton
-            style="@style/main_tab_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:drawableTop="@drawable/curtain_tab_1"
-            android:gravity="center"
-            android:textSize="14sp" />
-
-        <RadioButton
-            style="@style/main_tab_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:checked="false"
-            android:drawableTop="@drawable/curtain_tab_2"
-            android:gravity="center"
-            android:textSize="14sp" />
-
-        <RadioButton
-            style="@style/main_tab_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.0"
-            android:checked="false"
-            android:drawableTop="@drawable/curtain_tab_3"
-            android:gravity="center"
-            android:textSize="14sp" />
-    </RadioGroup>
 
 </LinearLayout>

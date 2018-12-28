@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
@@ -20,7 +19,6 @@ import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.view.ClearEditText;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -68,7 +68,6 @@ public class HomeSettingActivity extends BaseActivity implements XListView.IXLis
         add_room.setOnClickListener(this);
     }
 
-
     /**
      * 获取所有区域
      */

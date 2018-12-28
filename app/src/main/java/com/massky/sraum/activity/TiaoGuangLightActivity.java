@@ -12,10 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.AddTogenInterface.AddTogglenInterfacer;
-import com.alibaba.fastjson.JSON;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
@@ -24,25 +22,20 @@ import com.massky.sraum.Util.LogUtil;
 import com.massky.sraum.Util.MusicUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
-import com.massky.sraum.Util.MycallbackNest;
 import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.base.BaseActivity;
-import com.massky.sraum.receiver.ApiTcpReceiveHelper;
-import com.massky.sraum.service.MyService;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.zanelove.aircontrolprogressbar.ColorArcProgressBar;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.InjectView;
-import okhttp3.Call;
 
 import static com.massky.sraum.fragment.HomeFragment.ACTION_INTENT_RECEIVER_TO_SECOND_PAGE;
 
@@ -118,12 +111,12 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
         roomNumber = bundle.getString("roomNumber");//当前房间编号
 
         mapalldevice = (Map<String, Object>) bundle.getSerializable("mapalldevice");
-
         if (mapalldevice != null) {
-            status = (String) mapalldevice.get("status");
+            statusflag = (String) bundle.getString("status");
             dimmer = (String) mapalldevice.get("dimmer");
             bar1.setCurrentValues(Integer.parseInt(dimmer));
             id_seekBar.setProgress(Integer.parseInt(dimmer));
+            doit_open();
         }
     }
 
@@ -140,14 +133,7 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         Log.e("zhu", "onProgressChanged: " + progress);
-        if (addflag) {
-//            .setText(progress + "");
-            bar1.setCurrentValues(progress);
-        } else {
-//            tempimage_id.setText((16 + progress) + "");
-            bar1.setCurrentValues(progress + 16);
-        }
-//        Log.e("zhu", "tempimage_id.setText: " + tempimage_id.getText().toString());
+        bar1.setCurrentValues(progress);
     }
 
     @Override
@@ -159,9 +145,9 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
     public void onStopTrackingTouch(SeekBar seekBar) {
         LogUtil.i("停止滑动", "onStopTrackingTouch: ");
         //停止滑动是的状态
-        mapflag = false;
         if (statusbo) {
-            getMapdevice();//控制
+            statusflag = "1";
+            getMapdevice("slop");//控制
         }
     }
 
@@ -210,6 +196,7 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
                                         if (dimmer != null && !dimmer.equals("")) {
                                             bar1.setCurrentValues(Integer.parseInt(dimmer));
                                             id_seekBar.setProgress(Integer.parseInt(dimmer));
+                                            doit_open();
                                         }
                                     }
                                     if (d.status.equals("0")) {
@@ -229,7 +216,6 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
                     }
                 });
     }
-
 
     @Override
     protected void onDestroy() {
@@ -253,99 +239,61 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
     }
 
     //控制设备
-    private void getMapdevice() {
+    private void getMapdevice(String slop) {
         Map<String, Object> mapalldevice = new HashMap<String, Object>();
         List<Map<String, Object>> listob = new ArrayList<Map<String, Object>>();
         Map<String, Object> mapdevice = new HashMap<String, Object>();
         switch (type) {
             //调光灯
             case "2":
-//                dimmer = tempimage_id.getText().toString();
-                dimmer = bar1.getcurrentvalue();
+                dimmer = id_seekBar.getProgress() + "";
+                dimmer = removeTrim(dimmer);
+                Float item = Float.parseFloat(dimmer);
+                dimmer = "" + Math.round(item);
                 temperature = modeflag = "";
                 windflag = "";
                 break;
         }
-
         mapdevice.put("type", type);
+        mapdevice.put("status", statusflag);
         mapdevice.put("number", number);
-
-        if (mapflag) {
-            mapdevice.put("status", statusflag);
-        } else {
-            mapdevice.put("status", "1");
-        }
-
-        Log.e("zhu", "dimmer:" + dimmer);
+        mapdevice.put("name", name);
         mapdevice.put("dimmer", dimmer);
         mapdevice.put("mode", modeflag);
         mapdevice.put("temperature", temperature);
         mapdevice.put("speed", windflag);
-        listob.add(mapdevice);
+        sraum_device_control(mapdevice, slop);
+    }
+
+
+    public String removeTrim(String str) {
+        if (str.indexOf(".") > 0) {
+            str = str.replaceAll("0+?$", "");//去掉多余的0
+            str = str.replaceAll("[.]$", "");//如最后一位是.则去掉
+        }
+        return str;
+    }
+
+    private void sraum_device_control(final Map<String, Object> mapdevice1, final String slop) {
+        Map<String, Object> mapalldevice = new HashMap<>();
+        List<Map> listobj = new ArrayList<>();
+        Map map = new HashMap();
+        map.put("type", mapdevice1.get("type").toString());
+        map.put("number", mapdevice1.get("number").toString());
+        map.put("name", mapdevice1.get("name").toString());
+        map.put("status", statusflag);
+        map.put("mode", mapdevice1.get("mode").toString());
+        map.put("dimmer", mapdevice1.get("dimmer").toString());
+        map.put("temperature", mapdevice1.get("temperature").toString());
+        map.put("speed", mapdevice1.get("speed").toString());
+        listobj.add(map);
         mapalldevice.put("token", TokenUtil.getToken(TiaoGuangLightActivity.this));
         mapalldevice.put("areaNumber", areaNumber);
-        mapalldevice.put("deviceInfo", listob);
-        LogUtil.eLength("真正传入", JSON.toJSONString(mapalldevice));
-        getBoxStatus(mapalldevice);
-    }
-
-    private void getBoxStatus(final Map<String, Object> mapdevice) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("token", TokenUtil.getToken(TiaoGuangLightActivity.this));
-        map.put("boxNumber", boxnumber);
-        dialogUtil.loadDialog();
-        getBoxStatus_read(mapdevice, map);
-    }
-
-    /**
-     * getBoxStatus_read
-     *
-     * @param mapdevice
-     * @param map
-     */
-    private void getBoxStatus_read(final Map<String, Object> mapdevice, final Map<String, Object> map) {
-        MyOkHttp.postMapObjectnest(ApiHelper.sraum_getBoxStatus, map, new MycallbackNest(new AddTogglenInterfacer() {
-            @Override
-            public void addTogglenInterfacer() {//刷新togglen获取的数据
-                Map<String, Object> map = new HashMap<>();
-                map.put("token", TokenUtil.getToken(TiaoGuangLightActivity.this));
-                map.put("boxNumber", boxnumber);
-                getBoxStatus_read(mapdevice, map);
-            }
-        }, TiaoGuangLightActivity.this, dialogUtil) {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                super.onError(call, e, id);
-                ToastUtil.showDelToast(TiaoGuangLightActivity.this, "网络连接超时");
-            }
-
-            @Override
-            public void onSuccess(User user) {
-                switch (user.status) {
-                    case "1":
-                        sraum_device_control(mapdevice);
-                        break;
-                    case "0":
-                        //网关离线
-                        ToastUtil.showDelToast(TiaoGuangLightActivity.this, "网关处于离线状态");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-    }
-
-    private void sraum_device_control(Map<String, Object> mapdevice) {
-        List<Map> list = (List<Map>) mapdevice.get("deviceInfo");
-        Log.e("zhu", "mapdevice->diming:" + list.get(0).get("dimmer"));
-        MyOkHttp.postMapObject(ApiHelper.sraum_deviceControl, mapdevice, new Mycallback(new AddTogglenInterfacer() {
+        mapalldevice.put("deviceInfo", listobj);
+        MyOkHttp.postMapObject(ApiHelper.sraum_deviceControl, mapalldevice, new Mycallback(new AddTogglenInterfacer() {
             @Override
             public void addTogglenInterfacer() {
-                Map<String, Object> map = new HashMap<>();
-                map.put("token", TokenUtil.getToken(TiaoGuangLightActivity.this));
-                map.put("boxNumber", boxnumber);
-                sraum_device_control(map);
+                sraum_device_control(mapdevice1, slop);
 
             }
         }, TiaoGuangLightActivity.this, dialogUtil) {
@@ -374,35 +322,11 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
             @Override
             public void onSuccess(User user) {
                 super.onSuccess(user);
-
-                LogUtil.eLength("查看", mapflag + "");
-                if (mapflag) {
-                    if (statusflag.equals("1")) {
-                        //调光灯开关状态
-                        LogUtil.eLength("方法走起", "是否走了");
-//                        openbtn_tiao_guang.setImageResource(R.drawable.guan_white_word);
-//                        //空调开关状态
-//                        switchrelative.setBackgroundResource(R.drawable.hsmall_black);
-//                        statusopen.setImageResource(R.drawable.hairclose_word);
-                        openbtn_tiao_guang.setImageResource(R.drawable.icon_cl_close);
-                        statusflag = "0";
-                        statusbo = true;
-                    } else {
-                        //调光灯开关状态
-                        LogUtil.eLength("确实走了", "是否走了");
-//                                    dimmerrelative.setBackgroundResource(R.drawable.hsmall_circle);
-//                                    dimmerimageview.setImageResource(R.drawable.hopen);
-//                        openbtn_tiao_guang.setImageResource(R.drawable.open_black_word);
-//                        //空调开关状态
-//                        switchrelative.setBackgroundResource(R.drawable.hsmall_circle);
-//                        statusopen.setImageResource(R.drawable.hopen);
-                        openbtn_tiao_guang.setImageResource(R.drawable.icon_cl_open_active);
-
-                        statusflag = "1";
-                        statusbo = false;
-                    }
+                switch (slop) {
+                    case "onclick":
+                        doit_open();
+                        break;
                 }
-
                 if (vibflag) {
                     Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(200);
@@ -415,6 +339,19 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
             }
 
         });
+    }
+
+    private void doit_open() {
+        if (statusflag.equals("1")) {
+            openbtn_tiao_guang.setImageResource(R.drawable.icon_cl_open_active);
+            statusflag = "0";
+            statusbo = true;
+        } else {
+            //调光灯开关状态
+            openbtn_tiao_guang.setImageResource(R.drawable.icon_cl_close);
+            statusflag = "1";
+            statusbo = false;
+        }
     }
 
 
@@ -431,8 +368,7 @@ public class TiaoGuangLightActivity extends BaseActivity implements SeekBar.OnSe
                 break;
             //调光的开关状态
             case R.id.openbtn_tiao_guang:
-                mapflag = true;
-                getMapdevice();
+                getMapdevice("onclick");
                 break;
         }
     }

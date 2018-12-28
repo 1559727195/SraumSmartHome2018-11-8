@@ -3,7 +3,6 @@ package com.massky.sraum.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
@@ -17,6 +16,9 @@ import com.massky.sraum.adapter.HandSceneAdapter;
 import com.massky.sraum.base.BaseFragment1;
 import com.massky.sraum.event.MyDialogEvent;
 import com.massky.sraum.view.XListView;
+import com.ypy.eventbus.EventBus;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +49,7 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
 
     private List<Integer> listint = new ArrayList<>();
     private List<Integer> listintwo = new ArrayList<>();
+    private int first_add;
 
 
     @Override
@@ -69,8 +72,25 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
         super.onResume();
         sraum_getManuallyScenes();
         common_second();
+        if (first_add == 1) {
+            first_add = 2;
+        } else {
+            MyEvent event = new MyEvent();
+            event.setMsg("刷新");
+//...设置event
+            EventBus.getDefault().post(event);
+        }
     }
 
+    @Subscribe
+    public void onEvent(MyEvent event) {
+        String status = event.getMsg();
+        switch (status) {
+            case "scene_second":
+                sraum_getManuallyScenes();
+                break;
+        }
+    }
 
     /**
      * 获取手动场景
@@ -212,18 +232,22 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
     @Override
     protected void onView(View view) {
         dialogUtil = new DialogUtil(getActivity());
-
+        EventBus.getDefault().register(this);
         handSceneAdapter = new HandSceneAdapter(getActivity(), list, listint, listintwo, dialogUtil, new HandSceneAdapter.RefreshListener() {
             @Override
             public void refresh() {
                 sraum_getManuallyScenes();
                 common_second();
+                MyEvent event = new MyEvent();
+                event.setMsg("刷新");
+                EventBus.getDefault().post(event);
             }
         });
         xListView_scan.setAdapter(handSceneAdapter);
         xListView_scan.setPullLoadEnable(false);
         xListView_scan.setXListViewListener(this);
         xListView_scan.setFootViewHide();
+        first_add = 1;
     }
 
     @Override
@@ -266,13 +290,18 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
      * 清除联动信息
      */
     private void common_second() {
-        SharedPreferencesUtil.saveData(     getActivity(), "linkId", "");
+        SharedPreferencesUtil.saveData(getActivity(), "linkId", "");
         SharedPreferencesUtil.saveInfo_List(getActivity(), "list_result", new ArrayList<Map>());
         SharedPreferencesUtil.saveInfo_List(getActivity(), "list_condition", new ArrayList<Map>());
-        SharedPreferencesUtil.saveData(     getActivity(), "editlink", false);
+        SharedPreferencesUtil.saveData(getActivity(), "editlink", false);
         SharedPreferencesUtil.saveInfo_List(getActivity(), "link_information_list", new ArrayList<Map>());
-        SharedPreferencesUtil.saveData(     getActivity(), "add_condition", false);
+        SharedPreferencesUtil.saveData(getActivity(), "add_condition", false);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
 }

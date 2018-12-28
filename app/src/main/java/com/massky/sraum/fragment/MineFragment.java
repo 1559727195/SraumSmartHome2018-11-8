@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import com.king.photo.activity.MessageSendActivity;
 import com.massky.sraum.R;
 import com.massky.sraum.Util.DialogUtil;
@@ -31,20 +32,21 @@ import com.massky.sraum.permissions.RxPermissions;
 import com.massky.sraum.tool.Constants;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.InjectView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-
 /**
  * Created by zhu on 2017/11/30.
  */
 
-public class MineFragment extends BaseFragment1{
+public class MineFragment extends BaseFragment1 {
     private List<Map> list_alarm = new ArrayList<>();
     private int currentpage = 1;
     private Handler mHandler = new Handler();
@@ -61,7 +63,7 @@ public class MineFragment extends BaseFragment1{
     @InjectView(R.id.wangguan_list_rel)
     RelativeLayout wangguan_list_rel;
     @InjectView(R.id.sugestion_rel)
-    RelativeLayout  sugestion_rel;
+    RelativeLayout sugestion_rel;
     @InjectView(R.id.wode_sao_rel)
     RelativeLayout wode_sao_rel;
     @InjectView(R.id.system_infor_rel)
@@ -149,13 +151,13 @@ public class MineFragment extends BaseFragment1{
         switch (v.getId()) {
             case R.id.headportrait://头像选择
 //                dialogUtil.loadViewBottomdialog();
-                startActivity(new Intent(getActivity(),PersonMessageActivity.class));
+                startActivity(new Intent(getActivity(), PersonMessageActivity.class));
                 break;
             case R.id.wode_device_share_rel:
-                startActivity(new Intent(getActivity(),ShareDeviceActivity.class));
+                startActivity(new Intent(getActivity(), ShareDeviceActivity.class));
                 break;//设备共享
             case R.id.wangguan_list_rel://网关列表
-                startActivity(new Intent(getActivity(),WangGuanListActivity.class));
+                startActivity(new Intent(getActivity(), WangGuanListActivity.class));
                 break;
             case R.id.sugestion_rel:
                 startActivity(new Intent(getActivity(), MessageSendActivity.class));
@@ -168,19 +170,19 @@ public class MineFragment extends BaseFragment1{
                 startActivity(new Intent(getActivity(), SystemMessageActivity.class));
                 break;//系统消息
             case R.id.about_rel:
-                    startActivity(new Intent(getActivity(), AboutActivity.class));
+                startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;//关于
             case R.id.setting_rel:
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;//设置
             case R.id.dev_manager_rel://设备列表
-                startActivity(new Intent(getActivity(),MyDeviceListActivity.class));
+                startActivity(new Intent(getActivity(), MyDeviceListActivity.class));
                 break;
             case R.id.room_manager_rel://房间管理
-                startActivity(new Intent(getActivity(),HomeSettingActivity.class));
+                startActivity(new Intent(getActivity(), HomeSettingActivity.class));
                 break;
             case R.id.area_manager_rel://区域设置
-                startActivity(new Intent(getActivity(),AreaSettingActivity.class));
+                startActivity(new Intent(getActivity(), AreaSettingActivity.class));
                 break;
             case R.id.add_family_rel:
                 Intent mintent = new Intent(getActivity(), MyfamilyActivity.class);

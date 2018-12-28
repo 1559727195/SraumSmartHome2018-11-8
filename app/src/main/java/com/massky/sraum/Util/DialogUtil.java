@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.massky.sraum.R;
 
+import java.util.logging.Handler;
+
 /**
  * Created by masskywcy on 2016-08-31.
  */
@@ -43,7 +45,19 @@ public class DialogUtil {
     }
 
     /*用于加载progressbar dialog*/
-    public Dialog loadDialog() {
+    public void loadDialog() {
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                show_progress();
+            }
+        });
+    }
+
+    /**
+     * 在主线程展示progress
+     */
+    private void show_progress() {
         if (progressDialog == null) {
             progressDialog = new Dialog(context, R.style.progress_dialog);
         }
@@ -59,7 +73,6 @@ public class DialogUtil {
         msg.setVisibility(View.GONE);
         msg.setText("卖力加载中");
         progressDialog.show();
-        return progressDialog;
     }
 
     public void setCanCanCel(boolean istrue) {

@@ -1072,8 +1072,8 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
             map_device.put("mode", list_result.get(i).get("mode"));
             map_device.put("temperature", list_result.get(i).get("temperature"));
             map_device.put("speed", list_result.get(i).get("speed"));
-            map_device.put("panelMac", list_result.get(i).get("panelMac"));
-            map_device.put("gatewayMac", list_result.get(i).get("gatewayMac"));
+            map_device.put("panelMac", list_result.get(i).get("panelMac") == null? "" :list_result.get(i).get("panelMac"));
+            map_device.put("gatewayMac", list_result.get(i).get("gatewayMac") == null ? "" :list_result.get(i).get("gatewayMac"));
             list.add(map_device);
         }
         map.put("deviceList", list);

@@ -23,7 +23,7 @@ android {
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 //        multiDexEnabled true//设置
         // 为支持多dex输出模式
-//        multiDexEnabled true
+        multiDexEnabled true
     }
 
     buildTypes {

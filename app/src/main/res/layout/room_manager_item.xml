@@ -7,8 +7,8 @@
     android:background="@color/white"
     android:clickable="true"
     app:ios="false"
-    app:leftSwipe="true"
-    app:swipeEnable="true">
+    app:leftSwipe="false"
+    app:swipeEnable="false">
 
     <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"

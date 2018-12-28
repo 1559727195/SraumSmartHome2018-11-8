@@ -17,6 +17,9 @@ import com.massky.sraum.adapter.AutoSceneAdapter;
 import com.massky.sraum.base.BaseFragment1;
 import com.massky.sraum.event.MyDialogEvent;
 import com.massky.sraum.view.XListView;
+import com.ypy.eventbus.EventBus;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +44,7 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
     private DialogUtil dialogUtil;
     private List<User.deviceLinkList> list = new ArrayList<>();
     private List<Map> list_atuo_scene = new ArrayList<>();
+    private int first_add;
 
     @Override
     protected void onData() {
@@ -65,7 +69,7 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
     @Override
     protected void onView(View view) {
         dialogUtil = new DialogUtil(getActivity());
-
+        EventBus.getDefault().register(this);
         autoSceneAdapter = new AutoSceneAdapter(getActivity(),list_atuo_scene, dialogUtil, new AutoSceneAdapter.RefreshListener() {
             @Override
             public void refresh() {
@@ -73,12 +77,17 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
 //                common_second();
                 sraum_getAutoScenes();
                 common_second();
+                MyEvent event = new MyEvent();
+                event.setMsg("刷新");
+
+                EventBus.getDefault().post(event);
             }
         });
         xListView_scan.setAdapter(autoSceneAdapter);
         xListView_scan.setPullLoadEnable(false);
         xListView_scan.setXListViewListener(this);
         xListView_scan.setFootViewHide();
+        first_add = 1;
     }
 
     @Override
@@ -119,6 +128,14 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
         super.onResume();
         sraum_getAutoScenes();
         common_second();
+        if (first_add == 1) {
+            first_add = 2;
+        } else {
+            MyEvent event = new MyEvent();
+            event.setMsg("刷新");
+//...设置event
+            EventBus.getDefault().post(event);
+        }
     }
 
     /**
@@ -199,4 +216,21 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
         SharedPreferencesUtil.saveData(getActivity(), "add_condition", false);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe
+    public void onEvent(MyEvent event) {
+        String status = event.getMsg();
+        switch (status) {
+            case "scene_second":
+                sraum_getAutoScenes();
+                break;
+        }
+
+    }
 }

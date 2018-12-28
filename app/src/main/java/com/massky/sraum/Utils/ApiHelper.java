@@ -42,7 +42,9 @@ public class ApiHelper {
     public static String sraum_isLogin = api + "sraum_isLogin";
     public static String sraum_getAllArea = api + "sraum_getAllArea";
     public static String sraum_changeArea = api + "sraum_changeArea";
-    public static String sraum_deviceControl = api + "sraum_deviceControl";
+    public static String
+
+            sraum_deviceControl = api + "sraum_deviceControl";
     public static String sraum_getAllDevice = api + "sraum_getAllDevice";
     public static String sraum_getBoxStatus = api + "sraum_getBoxStatus";
     public static String sraum_getAllPanel = api + "sraum_getAllPanel";
@@ -113,4 +115,8 @@ public class ApiHelper {
     public static String checkMobilePhone = api + "checkMobilePhone";
     public static String sraum_logout = api + "sraum_logout";
     public static String sraum_updateGatewayName = api + "sraum_updateGatewayName";
+    public static String sraum_getMessage = api + "sraum_getMessage";
+    public static String sraum_deleteMessage = api + "sraum_deleteMessage";
+    public static String sraum_setReadStatus = api + "sraum_setReadStatus";
+    public static String sraum_getMessageById = api + "sraum_getMessageById";
 }

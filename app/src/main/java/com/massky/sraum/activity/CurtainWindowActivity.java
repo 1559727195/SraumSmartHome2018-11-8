@@ -10,9 +10,12 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.alibaba.fastjson.JSON;
 import com.massky.sraum.R;
@@ -32,10 +35,12 @@ import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.receiver.ApiTcpReceiveHelper;
 import com.massky.sraum.service.MyService;
 import com.yanzhenjie.statusview.StatusUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.InjectView;
 import okhttp3.Call;
 
@@ -61,13 +66,11 @@ public class CurtainWindowActivity extends BaseActivity {
     @InjectView(R.id.name2_txt)
     TextView name2_txt;
     @InjectView(R.id.radio_group_out)
-    RadioGroup radio_group_out;
+    LinearLayout radio_group_out;
     @InjectView(R.id.radio_group_in)
-    RadioGroup radio_group_in;
+    LinearLayout radio_group_in;
     @InjectView(R.id.radio_group_all)
-    RadioGroup radio_group_all;
-    @InjectView(R.id.order_process)
-    RadioButton order_process;
+    LinearLayout radio_group_all;
     private String loginPhone;
     private boolean vibflag;
     private boolean musicflag;
@@ -103,8 +106,6 @@ public class CurtainWindowActivity extends BaseActivity {
 //        init_receiver_control();
         registerMessageReceiver();
         init_event();
-//        change_status_toui("4", "8");
-
     }
 
 
@@ -126,7 +127,7 @@ public class CurtainWindowActivity extends BaseActivity {
             if (intent.getAction().equals(ACTION_INTENT_RECEIVER_TO_SECOND_PAGE)) {
                 Log.e("zhu", "LamplightActivity:" + "LamplightActivity");
                 //控制部分的二级页面进去要同步更新推送的信息显示 （推送的是消息）。
-                upload();
+//                upload();
             }
         }
     }
@@ -181,164 +182,134 @@ public class CurtainWindowActivity extends BaseActivity {
                     flagtwo = "2";
                     flagthree = "2";
 //                    radio_group_out.getChildCount();
-                    common_select(2);
+                    common_select("全关");
 
                     break;
                 case "1"://全开
                     flagone = "1";
                     flagtwo = "1";
                     flagthree = "1";
-                    common_select(0);
+                    common_select("全开");
                     break;
                 //暂停
                 case "2"://
                     flagone = "1";
                     flagtwo = "1";
                     flagthree = "1";
-                    common_select(1);
+                    common_select("暂停");
                     break;
                 //3-组 1 开组 2 关
                 case "3":
                     flagone = "1";
                     flagtwo = "3";
                     flagthree = "0";
-
-                    common_select_second(0, 2);
-
+                    common_select("组1开组2关");
                     break;
                 //4-组 1 开组 2 暂停
                 case "4":
                     flagone = "1";
                     flagtwo = "2";
                     flagthree = "0";
-                    common_select_second(0, 1);
-
-
+                    common_select("组1开组2暂停");
                     break;
                 //5-组 1 关组 2 开
                 case "5":
                     flagone = "3";
                     flagtwo = "1";
                     flagthree = "0";
-                    common_select_second(2, 0);
-
-
+                    common_select("组1关组2开");
                     break;
                 //6-组 1 关组 2 暂停
                 case "6":
                     flagone = "3";
                     flagtwo = "2";
                     flagthree = "0";
-
-                    common_select_second(2, 1);
-
+                    common_select("组1关组2暂停");
                     break;
                 //7-组 1 暂停 组 2 关
                 case "7":
                     flagone = "2";
                     flagtwo = "3";
                     flagthree = "0";
-
-                    common_select_second(1, 2);
-
+                    common_select("组1暂停组2关");
                     break;
                 //8-组 1 暂停组 2 开
                 case "8":
                     flagone = "2";
                     flagtwo = "1";
                     flagthree = "0";
-
-                    common_select_second(1, 0);
-
+                    common_select("组1暂停组2开");
                     break;
             }
-            switchState(flagone, flagtwo, flagthree);
         }
     }
+
 
     /**
      * 根据状态码status，显示相应UI
-     *
-     * @param i2
-     * @param i3
      */
-    private void common_select_second(int i2, int i3) {
-        for (int i = 0; i < 3; i++) {
-            RadioButton radioButton_out = (RadioButton) radio_group_out.getChildAt(i);
-            radioButton_out.setChecked(false);
-            if (i == i2) {
-                radioButton_out.setChecked(true);
-            }
-        }
+    private void common_select(String item) {
+        common();
+        switch (item) {
+            case "全开":
+                ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(0)).getChildAt(0)).setImageResource(R.drawable.icon_cl_open_active);
+                ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(0)).getChildAt(0)).setImageResource(R.drawable.icon_cl_open_active);
+                ((ImageView) ((RelativeLayout) radio_group_all.getChildAt(0)).getChildAt(0)).setImageResource(R.drawable.icon_cl_open_active);
+                break;
+            case "全关":
+                ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(2)).getChildAt(0)).setImageResource(R.drawable.icon_cl_close_active);
+                ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(2)).getChildAt(0)).setImageResource(R.drawable.icon_cl_close_active);
+                ((ImageView) ((RelativeLayout) radio_group_all.getChildAt(2)).getChildAt(0)).setImageResource(R.drawable.icon_cl_close_active);
+                break;
 
-        for (int i = 0; i < 3; i++) {
-            RadioButton radioButton_in = (RadioButton) radio_group_in.getChildAt(i);
-            radioButton_in.setChecked(false);
-            if (i == i3) {
-                radioButton_in.setChecked(true);
-            }
-        }
+            case "暂停":
+                ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(1)).getChildAt(0)).setImageResource(R.drawable.icon_cl_zanting_active);
+                ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(1)).getChildAt(0)).setImageResource(R.drawable.icon_cl_zanting_active);
+                ((ImageView) ((RelativeLayout) radio_group_all.getChildAt(1)).getChildAt(0)).setImageResource(R.drawable.icon_cl_zanting_active);
+                break;
+            case "组1开组2关":
+                ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(0)).getChildAt(0)).setImageResource(R.drawable.icon_cl_open_active);
+                ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(2)).getChildAt(0)).setImageResource(R.drawable.icon_cl_close_active);
+                break;
+            case "组1开组2暂停":
+                ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(0)).getChildAt(0)).setImageResource(R.drawable.icon_cl_open_active);
+                ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(1)).getChildAt(0)).setImageResource(R.drawable.icon_cl_zanting_active);
+                break;
+            case "组1关组2开":
+                ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(2)).getChildAt(0)).setImageResource(R.drawable.icon_cl_close_active);
+                ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(0)).getChildAt(0)).setImageResource(R.drawable.icon_cl_open_active);
+                break;
+            case "组1关组2暂停":
+                ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(2)).getChildAt(0)).setImageResource(R.drawable.icon_cl_close_active);
+                ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(1)).getChildAt(0)).setImageResource(R.drawable.icon_cl_zanting_active);
+                break;
+            case "组1暂停组2关":
+                ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(1)).getChildAt(0)).setImageResource(R.drawable.icon_cl_zanting_active);
+                ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(2)).getChildAt(0)).setImageResource(R.drawable.icon_cl_close_active);
+                break;
+            case "组1暂停组2开":
+                ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(1)).getChildAt(0)).setImageResource(R.drawable.icon_cl_zanting_active);
+                ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(0)).getChildAt(0)).setImageResource(R.drawable.icon_cl_open_active);
+                break;
 
-        for (int i = 0; i < 3; i++) {
-            RadioButton radioButton_all = (RadioButton) radio_group_all.getChildAt(i);
-            radioButton_all.setChecked(false);
-//                        if (i == 1) {
-//                            radioButton_all.setChecked(true);
-//                        }
         }
     }
 
-    /**
-     * 根据状态码status，显示相应UI
-     *
-     * @param i2
-     */
-    private void common_select(int i2) {
-        for (int i = 0; i < 3; i++) {
-            RadioButton radioButton_out = (RadioButton) radio_group_out.getChildAt(i);
-            radioButton_out.setChecked(false);
-            RadioButton radioButton_in = (RadioButton) radio_group_in.getChildAt(i);
-            radioButton_in.setChecked(false);
-            RadioButton radioButton_all = (RadioButton) radio_group_all.getChildAt(i);
-            radioButton_all.setChecked(false);
-            if (i == i2) {
-                radioButton_out.setChecked(true);
-                radioButton_in.setChecked(true);
-                radioButton_all.setChecked(true);
-            }
-        }
+    private void common() {
+        ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(0)).getChildAt(0)).setImageResource(R.drawable.icon_cl_open);
+        ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(1)).getChildAt(0)).setImageResource(R.drawable.icon_cl_zanting);
+        ((ImageView) ((RelativeLayout) radio_group_out.getChildAt(2)).getChildAt(0)).setImageResource(R.drawable.icon_cl_close);
+
+        ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(0)).getChildAt(0)).setImageResource(R.drawable.icon_cl_open);
+        ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(1)).getChildAt(0)).setImageResource(R.drawable.icon_cl_zanting);
+        ((ImageView) ((RelativeLayout) radio_group_in.getChildAt(2)).getChildAt(0)).setImageResource(R.drawable.icon_cl_close);
+
+
+        ((ImageView) ((RelativeLayout) radio_group_all.getChildAt(0)).getChildAt(0)).setImageResource(R.drawable.icon_cl_open);
+        ((ImageView) ((RelativeLayout) radio_group_all.getChildAt(1)).getChildAt(0)).setImageResource(R.drawable.icon_cl_zanting);
+        ((ImageView) ((RelativeLayout) radio_group_all.getChildAt(2)).getChildAt(0)).setImageResource(R.drawable.icon_cl_close);
     }
 
-    /*窗帘各个开关状态设置*/
-    private void switchState(String flagone, String flagtwo, String flagthree) {
-        //进行清空各个操作
-        statusClear();
-        if (flagone.equals("1")) {
-//            curopenrelative_id.setBackgroundResource(R.drawable.hsmall_black);
-//            curimage_id.setImageResource(R.drawable.hairopen_word_white);
-        } else if (flagone.equals("2")) {
-//            curoffrelative_id.setBackgroundResource(R.drawable.hsmall_black);
-//            curoffima_id.setImageResource(R.drawable.hairclose_word);
-        }
-        if (flagtwo.equals("1")) {
-//            curopenrelativetwo_id.setBackgroundResource(R.drawable.hsmall_black);
-//            curimagetwo_id.setImageResource(R.drawable.hairopen_word_white);
-        } else if (flagtwo.equals("2")) {
-//            curoffrelativetwo_id.setBackgroundResource(R.drawable.hsmall_black);
-//            curoffimatwo_id.setImageResource(R.drawable.hairclose_word);
-        }
-        if (flagthree.equals("1")) {
-//            curopenrelativethree_id.setBackgroundResource(R.drawable.hsmall_black);
-//            curimagethree_id.setImageResource(R.drawable.hairopen_word_white);
-        } else if (flagthree.equals("2")) {
-//            curoffrelativethree_id.setBackgroundResource(R.drawable.hsmall_black);
-//            curoffimathree_id.setImageResource(R.drawable.hairclose_word);
-        } else if (flagthree.equals("4")) {
-            //暂停
-//            sucrela.setBackgroundResource(R.drawable.hsmall_black);
-//            sucrelaimage.setImageResource(R.drawable.hairpause_word_white);
-        }
-    }
 
     private void statusClear() {
         if (whriteone) {
@@ -358,13 +329,10 @@ public class CurtainWindowActivity extends BaseActivity {
     /**
      * 初始化监听事件
      */
-    private int radio_out_index;
-    private int radio_in_index;
-    private int radio_all_index;
 
     private void init_event() {
         for (int i = 0; i < radio_group_out.getChildCount(); i++) {//外纱
-            final RadioButton child = (RadioButton) radio_group_out.getChildAt(i);
+            final RelativeLayout child = (RelativeLayout) radio_group_out.getChildAt(i);
             child.setTag(i);
             child.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -386,7 +354,7 @@ public class CurtainWindowActivity extends BaseActivity {
         }
 
         for (int i = 0; i < radio_group_in.getChildCount(); i++) {//内纱
-            final RadioButton child = (RadioButton) radio_group_in.getChildAt(i);
+            final RelativeLayout child = (RelativeLayout) radio_group_in.getChildAt(i);
             child.setTag(i);
             child.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -408,7 +376,7 @@ public class CurtainWindowActivity extends BaseActivity {
         }
 
         for (int i = 0; i < radio_group_all.getChildCount(); i++) {//全部
-            final RadioButton child = (RadioButton) radio_group_all.getChildAt(i);
+            final RelativeLayout child = (RelativeLayout) radio_group_all.getChildAt(i);
             child.setTag(i);
             child.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -432,12 +400,6 @@ public class CurtainWindowActivity extends BaseActivity {
 
     //控制设备
     private void getMapdevice() {
-        Map<String, Object> mapalldevice = new HashMap<String, Object>();
-        List<Map<String, Object>> listob = new ArrayList<Map<String, Object>>();
-        Map<String, Object> mapdevice = new HashMap<String, Object>();
-
-        mapdevice.put("type", type);
-        mapdevice.put("number", number);
         //两个特别全开全关设置
         if (type.equals("4")) {
             statusm = "";
@@ -489,19 +451,8 @@ public class CurtainWindowActivity extends BaseActivity {
                 default:
                     break;
             }
-            mapdevice.put("status", statusm);
+            sraum_device_control();
         }
-        Log.e("zhu", "dimmer:" + dimmer);
-        mapdevice.put("dimmer", dimmer);
-        mapdevice.put("mode", modeflag);
-        mapdevice.put("temperature", temperature);
-        mapdevice.put("speed", windflag);
-        listob.add(mapdevice);
-        mapalldevice.put("token", TokenUtil.getToken(CurtainWindowActivity.this));
-        mapalldevice.put("boxNumber", boxnumber);
-        mapalldevice.put("deviceInfo", listob);
-        LogUtil.eLength("真正传入", JSON.toJSONString(mapalldevice));
-        getBoxStatus(mapalldevice);
     }
 
     /***
@@ -528,105 +479,76 @@ public class CurtainWindowActivity extends BaseActivity {
         return statusm;
     }
 
-    private void getBoxStatus(final Map<String, Object> mapdevice) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("token", TokenUtil.getToken(CurtainWindowActivity.this));
-        map.put("boxNumber", boxnumber);
-        dialogUtil.loadDialog();
-        getBoxStatus_read(mapdevice, map);
-    }
+    private void sraum_device_control() {
+        Map<String, Object> mapalldevice1 = new HashMap<>();
+        List<Map> listobj = new ArrayList<>();
+        Map map = new HashMap();
+        map.put("type", mapalldevice.get("type").toString());
+        map.put("number", mapalldevice.get("number").toString());
+        map.put("name", mapalldevice.get("name").toString());
+        map.put("status", statusm);
+        map.put("mode", mapalldevice.get("mode").toString());
+        map.put("dimmer", mapalldevice.get("dimmer").toString());
+        map.put("temperature", mapalldevice.get("temperature").toString());
+        map.put("speed", mapalldevice.get("speed").toString());
+        listobj.add(map);
+        mapalldevice1.put("token", TokenUtil.getToken(CurtainWindowActivity.this));
+        mapalldevice1.put("areaNumber", areaNumber);
+        mapalldevice1.put("deviceInfo", listobj);
 
-    /**
-     * getBoxStatus_read
-     *
-     * @param mapdevice
-     * @param map
-     */
-    private void getBoxStatus_read(final Map<String, Object> mapdevice, final Map<String, Object> map) {
-        MyOkHttp.postMapObjectnest(ApiHelper.sraum_getBoxStatus, map, new MycallbackNest(new AddTogglenInterfacer() {
+        MyOkHttp.postMapObject(ApiHelper.sraum_deviceControl, mapalldevice1, new Mycallback(new AddTogglenInterfacer() {
             @Override
-            public void addTogglenInterfacer() {//刷新togglen获取的数据
-                Map<String, Object> map = new HashMap<>();
-                map.put("token", TokenUtil.getToken(CurtainWindowActivity.this));
-                map.put("boxNumber", boxnumber);
-                getBoxStatus_read(mapdevice, map);
+            public void addTogglenInterfacer() {
+                sraum_device_control();
             }
         }, CurtainWindowActivity.this, dialogUtil) {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                super.onError(call, e, id);
-                ToastUtil.showDelToast(CurtainWindowActivity.this, "网络连接超时");
-            }
-
-            @Override
-            public void onSuccess(User user) {
-                switch (user.status) {
-                    case "1":
-                        sraum_device_control(mapdevice);
-                        break;
-                    case "0":
-                        //网关离线
-                        ToastUtil.showDelToast(CurtainWindowActivity.this, "网关处于离线状态");
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            private void sraum_device_control(Map<String, Object> mapdevice) {
-                List<Map> list = (List<Map>) mapdevice.get("deviceInfo");
-                Log.e("zhu", "mapdevice->diming:" + list.get(0).get("dimmer"));
-                MyOkHttp.postMapObject(ApiHelper.sraum_deviceControl, mapdevice, new Mycallback(new AddTogglenInterfacer() {
-                    @Override
-                    public void addTogglenInterfacer() {
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("token", TokenUtil.getToken(CurtainWindowActivity.this));
-                        map.put("boxNumber", boxnumber);
-                        sraum_device_control(map);
-
-                    }
-                }, CurtainWindowActivity.this, dialogUtil) {
-
-                    @Override
-                    public void wrongToken() {
-                        super.wrongToken();
-                    }
-
-                    @Override
-                    public void wrongBoxnumber() {
-                        ToastUtil.showToast(CurtainWindowActivity.this, "操作失败");
-                    }
-
-                    @Override
-                    public void defaultCode() {
-                        ToastUtil.showToast(CurtainWindowActivity.this, "操作失败");
-                    }
-
-                    @Override
-                    public void pullDataError() {
-                        ToastUtil.showToast(CurtainWindowActivity.this, "操作失败");
-                    }
-
-                    @Override
-                    public void onSuccess(User user) {
-                        super.onSuccess(user);
-                        change_status_toui(type, statusm == null ? "" : statusm);
-                        if (vibflag) {
-                            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                            vibrator.vibrate(200);
-                        }
-                        if (musicflag) {
-                            MusicUtil.startMusic(CurtainWindowActivity.this, 1, "");
-                        } else {
-                            MusicUtil.stopMusic(CurtainWindowActivity.this, "");
-                        }
-                    }
-                });
-            }
 
             @Override
             public void wrongToken() {
                 super.wrongToken();
+            }
+
+            @Override
+            public void wrongBoxnumber() {
+                ToastUtil.showToast(CurtainWindowActivity.this, "areaNumber\n" +
+                        "不存在");
+            }
+
+            @Override
+            public void fourCode() {
+                super.fourCode();
+                ToastUtil.showToast(CurtainWindowActivity.this, "控制失败");
+            }
+
+            @Override
+            public void threeCode() {
+                super.threeCode();
+                ToastUtil.showToast(CurtainWindowActivity.this, "deviceInfo 不正确");
+            }
+
+            @Override
+            public void defaultCode() {
+                ToastUtil.showToast(CurtainWindowActivity.this, "操作失败");
+            }
+
+            @Override
+            public void pullDataError() {
+                ToastUtil.showToast(CurtainWindowActivity.this, "操作失败");
+            }
+
+            @Override
+            public void onSuccess(User user) {
+                super.onSuccess(user);
+                change_status_toui(type, statusm);
+                if (vibflag) {
+                    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(200);
+                }
+                if (musicflag) {
+                    MusicUtil.startMusic(CurtainWindowActivity.this, 1, "");
+                } else {
+                    MusicUtil.stopMusic(CurtainWindowActivity.this, "");
+                }
             }
         });
     }
@@ -648,14 +570,11 @@ public class CurtainWindowActivity extends BaseActivity {
         name1 = bundle.getString("name1");
         name2 = bundle.getString("name2");
         name = bundle.getString("name");
-
+        status = bundle.getString("status");
         areaNumber = bundle.getString("areaNumber");
         roomNumber = bundle.getString("roomNumber");//当前房间编号
-
         mapalldevice = (Map<String, Object>) bundle.getSerializable("mapalldevice");
-
         if (mapalldevice != null) {
-            status = (String) mapalldevice.get("status");
             type = (String) mapalldevice.get("type");
             //初始化窗帘参数
             change_status_toui(type, status);

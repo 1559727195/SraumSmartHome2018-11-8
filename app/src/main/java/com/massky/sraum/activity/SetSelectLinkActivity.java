@@ -334,12 +334,11 @@ public class SetSelectLinkActivity extends BaseActivity {
             map_device.put("mode", list_result.get(i).get("mode"));
             map_device.put("temperature", list_result.get(i).get("temperature"));
             map_device.put("speed", list_result.get(i).get("speed"));
-            map_device.put("panelMac", list_result.get(i).get("panelMAC"));
-            map_device.put("gatewayMac", list_result.get(i).get("gatewayMAC"));
+            map_device.put("panelMac", list_result.get(i).get("panelMAC") == null ? "" : list_result.get(i).get("panelMAC"));
+            map_device.put("gatewayMac", list_result.get(i).get("gatewayMAC") == null ? "" : list_result.get(i).get("gatewayMAC"));
             list.add(map_device);
         }
         map.put("deviceList", list);
-
         dialogUtil.loadDialog();
         MyOkHttp.postMapObject(apiname, map,
                 new Mycallback(new AddTogglenInterfacer() {

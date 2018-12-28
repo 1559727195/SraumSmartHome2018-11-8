@@ -41,34 +41,17 @@ public class MyAreaListAdapter extends BaseAdapter {
         if (null == convertView) {
             viewHolderContentType = new ViewHolderContentType();
             convertView = LayoutInflater.from(context).inflate(R.layout.myarealist_item, null);
-//            viewHolderContentType.device_type_pic = (ImageView) convertView.findViewById(R.id.device_type_pic);
-//            viewHolderContentType.hand_device_content = (TextView) convertView.findViewById(R.id.hand_device_content);
             viewHolderContentType.swipe_context = (LinearLayout) convertView.findViewById(R.id.swipe_context);
             viewHolderContentType.area_name_txt = (TextView) convertView.findViewById(R.id.area_name_txt);
             viewHolderContentType.rename_btn = (Button) convertView.findViewById(R.id.rename_btn);
-
+            viewHolderContentType.swipemenu_layout = (SwipeMenuLayout) convertView.findViewById(R.id.swipemenu_layout);
             convertView.setTag(viewHolderContentType);
         } else {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
 
-//        int element = (Integer) list.get(position).get("image");
-//        viewHolderContentType.device_type_pic.setImageResource(element);
-//        viewHolderContentType.hand_device_content.setText(list.get(position).get("name").toString());
-//
         viewHolderContentType.area_name_txt.setText(list.get(position).get("name").toString());
-//        viewHolderContentType.swipe_context.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-////                Intent intent = new Intent(context, ManagerRoomActivity.class);
-////                intent.putExtra("areaNumber", list.get(position).get("number").toString());
-////                context.startActivity(intent);
-//            }
-//        });
-
         ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
-
 
             @Override
             public void onItemClick() {
@@ -82,6 +65,7 @@ public class MyAreaListAdapter extends BaseAdapter {
                 is_open_to_close = is_open_to_close1;
             }
         });
+        viewHolderContentType.swipemenu_layout.setLeftSwipe(false);
         viewHolderContentType.rename_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,22 +82,12 @@ public class MyAreaListAdapter extends BaseAdapter {
         TextView hand_gateway_content;
         Button rename_btn;
         LinearLayout swipe_context;
+        SwipeMenuLayout swipemenu_layout;
     }
 
     //自定义dialog,自定义重命名dialog
 
     public void showRenameDialog() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        // 布局填充器
-//        LayoutInflater inflater = LayoutInflater.from(getActivity());
-//        View view = inflater.inflate(R.layout.user_name_dialog, null);
-//        // 设置自定义的对话框界面
-//        builder.setView(view);
-//
-//        cus_dialog = builder.create();
-//        cus_dialog.show();
-
-
         View view = LayoutInflater.from(context).inflate(R.layout.editscene_dialog, null);
         TextView confirm; //确定按钮
         TextView cancel; //确定按钮

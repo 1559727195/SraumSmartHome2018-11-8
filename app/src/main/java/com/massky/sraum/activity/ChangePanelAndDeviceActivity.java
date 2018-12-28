@@ -247,7 +247,6 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
         panelMAC = getIntent().getStringExtra("panelMAC");
         findpaneltype = getIntent().getStringExtra("findpaneltype");
         panelname.setText(panelName);
-
     }
 
     /**
@@ -255,7 +254,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
      *
      * @param type
      */
-    private void show_device_from_panel(String type) { //
+    private void show_device_from_panel(String type) {
         switch (type) {
             case "A201"://一灯控
                 show_one_item();
@@ -606,16 +605,66 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
                 break;
 
             case R.id.findButton_four://找按钮
-                sraum_find_button(deviceList.get(0).number);
+                sraum_find_outer(3);
                 break;
             case R.id.findButton_three:
-                sraum_find_button(deviceList.get(1).number);
+                sraum_find_outer(2);
                 break;
             case R.id.findButton_two:
-                sraum_find_button(deviceList.get(2).number);
+                sraum_find_outer(1);
                 break;
             case R.id.findButton_one:
-                sraum_find_button(deviceList.get(3).number);
+                sraum_find_outer(0);
+                break;
+        }
+    }
+
+    private void sraum_find_outer(int position) {
+        switch (panelType) {
+            case "A201"://一灯控
+            case "A202"://二灯控
+            case "A311":
+            case "A203"://三灯控
+            case "A312":
+            case "A321":
+            case "A204"://四灯控
+            case "A313":
+            case "A322":
+            case "A331":
+            case "A301"://一键调光，3键灯控  设备4个
+            case "A302"://两键调光，2键灯控
+            case "A303"://三键调光，一键灯控
+                sraum_find_button(deviceList.get(position).number);
+                break;
+            case "A401"://设备2个
+                switch (position) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        sraum_find_button(deviceList.get(0).number);
+                        break;
+                    case 3:
+                        sraum_find_button(deviceList.get(1).number);
+                        break;
+                }
+                break;//窗帘 ，窗帘第八个按钮为八键灯控名称修改
+            case "A501"://空调-设备1个
+            case "A511":
+            case "A601"://新风
+            case "A701"://地暖
+            case "A611"://新风
+            case "A711"://地暖
+            case "A801":
+            case "A901":
+            case "A902":
+            case "AB01":
+            case "AB04":
+            case "B001":
+            case "B201":
+            case "AD01":
+            case "AC01":
+            case "B301":
+                sraum_find_button(deviceList.get(position).number);
                 break;
         }
     }
@@ -673,7 +722,6 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
             public void wrongToken() {
                 super.wrongToken();
                 //重新去获取togglen,这里是因为没有拉到数据所以需要重新获取togglen
-
             }
 
             @Override
@@ -710,7 +758,6 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
             }
         });
     }
-
 
     /**
      * 保存空调模块
@@ -1021,14 +1068,17 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
                 break;//窗帘 ，窗帘第八个按钮为八键灯控名称修改
 
             case "A501"://空调-设备1个
+            case "A511":
                 updateDeviceInfo(onekey_device_txt.getText().toString().trim(), "", "",
                         deviceList.get(0).number, "", 0);
                 break;
             case "A601"://新风
+            case "A611":
                 updateDeviceInfo(onekey_device_txt.getText().toString().trim(), "", "",
                         deviceList.get(0).number, "", 0);
                 break;
             case "A701"://地暖
+            case "A711":
                 updateDeviceInfo(onekey_device_txt.getText().toString().trim(), "", "",
                         deviceList.get(0).number, "", 0);
                 break;
@@ -1142,7 +1192,6 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
 
     private void sraum_update_s(final String customName, final String name1, final String name2, final String deviceNumber, final String chuanglian, final int index) {
         Map<String, Object> map = new HashMap<>();
-
         String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(ChangePanelAndDeviceActivity.this));
         map.put("areaNumber", areaNumber);

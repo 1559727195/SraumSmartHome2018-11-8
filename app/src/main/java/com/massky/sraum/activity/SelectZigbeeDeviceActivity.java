@@ -64,6 +64,7 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
             R.drawable.icon_type_yijiandk_90, R.drawable.icon_type_liangjiandk_90,
             R.drawable.icon_type_sanjiandk_90, R.drawable.icon_type_sijiandk_90, R.drawable.icon_type_yilutiaoguang_90,
             R.drawable.icon_type_lianglutiaoguang_90, R.drawable.icon_type_sanlutiaoguang_90, R.drawable.icon_type_chuanglianmb_90,
+            R.drawable.icon_type_kongtiao_90,
             R.drawable.icon_type_menci_90, R.drawable.icon_type_rentiganying_90,
             R.drawable.icon_type_toa_90, R.drawable.icon_type_yanwucgq_90, R.drawable.icon_type_tianranqibjq_90,
             R.drawable.icon_type_jinjianniu_90, R.drawable.icon_type_zhinengmensuo_90, R.drawable.icon_type_pm25,
@@ -72,7 +73,7 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
 
     //"B301"暂时为多功能模块
     private String[] types = {
-            "A201", "A202", "A203", "A204", "A301", "A302", "A303", "A401",
+            "A201", "A202", "A203", "A204", "A301", "A302", "A303", "A401", "A501",
             "A801", "A901", "A902", "AB01", "AB04", "B001", "B201", "AD01", "AC01", "B301", "B101", "网关"
     };
 
@@ -95,7 +96,7 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
     };
     private int[] iconNam_wifi = {R.string.hongwai, R.string.yaokongqi, R.string.shexiangtou, R.string.keshimenling};//, R.string.pm_mofang
     private int[] iconName = {R.string.yijianlight, R.string.liangjianlight, R.string.sanjianlight, R.string.sijianlight,
-            R.string.yilutiaoguang1, R.string.lianglutiaoguang1, R.string.sanlutiao1, R.string.window_panel1
+            R.string.yilutiaoguang1, R.string.lianglutiaoguang1, R.string.sanlutiao1, R.string.window_panel1, R.string.kongtiao_panel
             , R.string.menci, R.string.rentiganying, R.string.jiuzuo, R.string.yanwu, R.string.tianranqi, R.string.jinjin_btn,
             R.string.zhineng, R.string.pm25, R.string.shuijin, R.string.duogongneng, R.string.cha_zuo_2, R.string.wangguan
     };

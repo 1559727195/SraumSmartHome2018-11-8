@@ -69,6 +69,8 @@ public abstract class BaseFragment1 extends Fragment implements View.OnClickList
         }
     }
 
+
+
     private void lazyLoad() {
         //如果没有加载过就加载，否则就不再加载了
         if (!isLoadData) {
@@ -77,6 +79,10 @@ public abstract class BaseFragment1 extends Fragment implements View.OnClickList
         }
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

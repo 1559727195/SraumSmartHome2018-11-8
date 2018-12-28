@@ -58,6 +58,7 @@ public class VolumeView extends View {
     private float textSize = dipToPx(10);
     private int volback_color;
     private int textcolor1;
+    private boolean onClickable;
 
 
     public VolumeView(Context context) {
@@ -224,7 +225,6 @@ public class VolumeView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(width, height);
-
     }
 
     @Override
@@ -255,4 +255,16 @@ public class VolumeView extends View {
         return (int) (dip * density + 0.5f * (dip >= 0 ? 1 : -1));
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (onClickable) {
+            return super.dispatchTouchEvent(event);
+        } else {
+            return onClickable;
+        }
+    }
+
+    public void setVolumeCliable(boolean isonClick) {
+        this.onClickable = isonClick;
+    }
 }

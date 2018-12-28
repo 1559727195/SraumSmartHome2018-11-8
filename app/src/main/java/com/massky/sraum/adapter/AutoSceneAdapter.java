@@ -97,24 +97,16 @@ public class AutoSceneAdapter extends BaseAdapter {
         }
         viewHolderContentType.hand_device_content.setText((String) list.get(position).get("name"));
 
-
-//        int element = (Integer) list.get(position).get("image");
-//        viewHolderContentType.device_type_pic.setImageResource(element);
         final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
-//
-//        //成员，业主accountType->addrelative_id
-//        String accountType = (String) SharedPreferencesUtil.getData(context, "accountType", "");
-//        switch (accountType) {
-//            case "1":
-//                viewHolderContentType.swipe_content_linear.setEnabled(true);
-//                finalViewHolderContentType.swipemenu_layout.setLeftSwipe(true);
-//                break;//业主
-//            case "2":
-//                viewHolderContentType.swipe_content_linear.setEnabled(false);
-//                finalViewHolderContentType.swipemenu_layout.setLeftSwipe(false);
-//                break;//家庭成员
-//        }
-
+        String accountType = (String) SharedPreferencesUtil.getData(context, "accountType", "");
+        switch (accountType) {
+            case "1":
+                viewHolderContentType.swipemenu_layout.setSwipeEnable(true);
+                break;//业主
+            case "2":
+                viewHolderContentType.swipemenu_layout.setSwipeEnable(false);
+                break;//家庭成员
+        }
         String isUse = list.get(position).get("isUse").toString();
         if (isUse != null) {
             switch (isUse) {

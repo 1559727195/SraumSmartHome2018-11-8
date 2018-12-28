@@ -99,6 +99,15 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
 
         viewHolderContentType.device_type_pic.setImageResource(listint.get(position));
         viewHolderContentType.hand_device_content.setText(list.get(position).get("name").toString());
+
+        switch (accountType) {
+            case "1":
+                viewHolderContentType.swipe_layout.setLeftSwipe(true);
+                break;
+            case "2":
+                viewHolderContentType.swipe_layout.setLeftSwipe(false);
+                break;
+        }
         final ViewHolderContentType finalViewHolderContentType1 = viewHolderContentType;
 
         ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {

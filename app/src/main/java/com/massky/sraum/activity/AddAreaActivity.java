@@ -3,7 +3,9 @@ package com.massky.sraum.activity;
 import android.app.Dialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import androidx.percentlayout.widget.PercentRelativeLayout;
+
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,7 +108,8 @@ public class AddAreaActivity extends BaseActivity {
                 AddAreaActivity.this.finish();
                 break;
             case R.id.add_home_rel:
-                pvOptions.show();
+                if (pvOptions != null)
+                    pvOptions.show();
                 break;//选择地址
             case R.id.hostory_back_txt:
                 AddAreaActivity.this.finish();

@@ -101,6 +101,15 @@ public class HandSceneAdapter extends BaseAdapter {
                     break;
             }
 
+        String accountType = (String) SharedPreferencesUtil.getData(context, "accountType", "");
+        switch (accountType) {
+            case "1":
+                viewHolderContentType.swipe_layout.setSwipeEnable(true);
+                break;//业主
+            case "2":
+                viewHolderContentType.swipe_layout.setSwipeEnable(false);
+                break;//家庭成员
+        }
         ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
 
 

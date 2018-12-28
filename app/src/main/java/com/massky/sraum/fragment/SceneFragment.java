@@ -85,7 +85,16 @@ public class SceneFragment extends BaseFragment1 {
 
     @Override
     protected void onData() {
-
+        //成员，业主accountType->addrelative_id
+        String accountType = (String) SharedPreferencesUtil.getData(getActivity(), "accountType", "");
+        switch (accountType) {
+            case "1":
+                add_scene.setVisibility(View.VISIBLE);
+                break;//业主
+            case "2":
+                add_scene.setVisibility(View.GONE);
+                break;//家庭成员
+        }
     }
 
     @Override

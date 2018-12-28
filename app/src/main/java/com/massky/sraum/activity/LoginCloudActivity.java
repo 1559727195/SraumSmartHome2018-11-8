@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.alibaba.fastjson.JSON;
 import com.massky.sraum.R;
@@ -31,9 +32,12 @@ import com.massky.sraum.tool.Constants;
 import com.massky.sraum.view.ClearEditText;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import butterknife.InjectView;
+import cn.jpush.android.api.JPushInterface;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import okhttp3.Call;
@@ -101,7 +105,10 @@ public class LoginCloudActivity extends BaseActivity {
 
     @Override
     protected void onData() {
-
+        String loginPhone = (String) SharedPreferencesUtil.getData(LoginCloudActivity.this, "loginPhone", "");
+        if (loginPhone != null) {
+            usertext_id.setText(loginPhone);
+        }
     }
 
     private void init_permissions() {
@@ -249,12 +256,22 @@ public class LoginCloudActivity extends BaseActivity {
 //        }
 //        String szImei = TelephonyMgr.getDeviceId();
         String regId = (String) SharedPreferencesUtil.getData(LoginCloudActivity.this, "regId", "");
+        if (regId.equals("")) {
+            regId = JPushInterface.getRegistrationID(LoginCloudActivity.this);
+            SharedPreferencesUtil.saveData(LoginCloudActivity.this, "regId", regId);
+        }
+
+        if (regId.equals("")) {
+            ToastUtil.showToast(LoginCloudActivity.this, "数据解析错误");
+            return null;
+        }
         map.put("token", user.token);
         map.put("regId", regId);
         map.put("phoneId", regId);
         LogUtil.eLength("查看数据", JSON.toJSONString(map));
         return map;
     }
+    //
 
     /**
      * 登录
@@ -288,10 +305,17 @@ public class LoginCloudActivity extends BaseActivity {
                 IntentUtil.startActivityAndFinishFirst(LoginCloudActivity.this, MainGateWayActivity.class);
             }
 
+
             @Override
             public void wrongToken() {
-                super.wrongToken();
-                ToastUtil.showDelToast(LoginCloudActivity.this, "登录失败");
+                super.wrongToken();//继承父类，实现父类的方法
+                ToastUtil.showDelToast(LoginCloudActivity.this, "登录失败，账号未注册");
+            }
+
+            @Override
+            public void wrongBoxnumber() {
+                super.wrongBoxnumber();
+                ToastUtil.showDelToast(LoginCloudActivity.this, "账号或密码错误");
             }
         });
     }

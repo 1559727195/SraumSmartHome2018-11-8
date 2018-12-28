@@ -24,11 +24,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import butterknife.InjectView;
 import okhttp3.Call;
 
-import static com.massky.sraum.Utils.ApiHelper.sraum_getOneRoomInfo;
 
 /**
  * Created by zhu on 2017/11/30.

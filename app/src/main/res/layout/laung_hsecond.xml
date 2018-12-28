@@ -31,7 +31,7 @@
         android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
-        android:text="控制家里的灯光，空调，窗帘，，门锁，监控..."/>
+        android:text="控制家里的灯光,空调,窗,门锁,监控..."/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

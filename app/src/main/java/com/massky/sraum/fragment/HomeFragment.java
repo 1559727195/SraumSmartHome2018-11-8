@@ -165,8 +165,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     private String areaNumber;
     private Map mapdevice = new HashMap();
     public static final String MESSAGE_TONGZHI_VIDEO_FROM_MYDEVICE = "com.sraum.massky.from.mydevice";
-
-
     private WifiManager manager = null;
     private MyWifiThread myWifiThread = null;
     private static final int SEARCH_TIME = 3000;
@@ -179,7 +177,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     private String videofrom = "";
     public static String MACFRAGMENT_PM25 = "com.fragment.pm25";
     private Map video_item = new HashMap();//来自devicefragment
-
     private RemoteControl remoteControl;
     private GizWifiDevice mGizWifiDevice = null;
     private List<Map> list_remotecontrol_air = new ArrayList<>();
@@ -192,18 +189,15 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     private int index_click;
     private String deviceInfo = "";
     private List<Map> list_hand_scene = new ArrayList<>();
-
     private boolean blagg = false;
     private Intent intentbrod = null;
     private WifiInfo info = null;
     private String type = "";
-
     private String strUser;
     private String strDID;
     private String strPwd;
     private int inde_video = 1;
     private List<Map> list = new ArrayList<>();
-
 
     /**
      * 小苹果绑定列表
@@ -291,7 +285,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                     }
                     break;
                 case 11://连接失败，在去连
-                    switch (videofrom) {//      videofrom = "macfragment";
+                    switch (videofrom) {
                         case "macfragment":
                             onitem_wifi_shexiangtou(mapdevice);
                             break;
@@ -306,20 +300,17 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     private int intfirst_time;
     private MyBroadCast receiver;
     private Dialog dialog;
+    private String authType;//（1 业主 2 成员）
 
     /**
      * 发送给MyDeviceItemActivity视频的状态，获取摄像头状态，并返回
      */
     private void tongzhi_to_video(String status) {
-//        Intent mIntent = new Intent(MESSAGE_TONGZHI_VIDEO_TO_MYDEVICE);
-//        mIntent.putExtra("status", (Serializable) status);
-//        getActivity().sendBroadcast(mIntent);
         MyEvent event = new MyEvent();
         event.setMsg(status);
 //...设置event
         EventBus.getDefault().post(event);
     }
-
 
     /**
      * macfragment video ok
@@ -363,6 +354,17 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 Context.MODE_PRIVATE);
         vibflag = preferences.getBoolean("vibflag", false);
         musicflag = preferences.getBoolean("musicflag", false);
+
+        //成员，业主accountType->addrelative_id
+        String accountType = (String) SharedPreferencesUtil.getData(getActivity(), "accountType", "");
+        switch (accountType) {
+            case "1":
+                add_device.setVisibility(View.VISIBLE);
+                break;//业主
+            case "2":
+                add_device.setVisibility(View.GONE);
+                break;//家庭成员
+        }
     }
 
     /**
@@ -1950,7 +1952,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 switch (type) {
                     case "52"://门铃
                     case "53"://摄像头
-                        door_rill(context, mapdevice);
+                        door_rill(mapdevice);
                         break;
                 }
             } else if (intent.getAction().equals(MESSAGE_TONGZHI_VIDEO_FROM_MYDEVICE)) {//来自设备页获取摄像头状态的通知
@@ -1965,27 +1967,17 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     /**
      * 门禁报警
      *
-     * @param context
      * @param mapdevice
      */
-    private void door_rill(Context context, Map mapdevice) {
-        int index = (int) SharedPreferencesUtil.getData(context, "tongzhi_time", 1);
-        index--;
-        SharedPreferencesUtil.saveData(context, "tongzhi_time", index);
-        if (index == 0) {
-            videofrom = "macfragment";
-            onitem_wifi_shexiangtou(mapdevice);
-        }
+    private void door_rill(Map mapdevice) {
+        videofrom = "macfragment";
+        onitem_wifi_shexiangtou(mapdevice);
     }
 
     private void sendBroad() {
         Intent mIntent = new Intent(ACTION_INTENT_RECEIVER_TO_SECOND_PAGE);
         getActivity().sendBroadcast(mIntent);
-
-
-//        //MACFRAGMENT_PM25
     }
-
 
     private void sendBroad_pm25(Map map) {
         Intent mIntent_pm25 = new Intent(MACFRAGMENT_PM25);
@@ -2142,7 +2134,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 dialogUtil.removeviewBottomDialog();
                 break;
             case R.id.back_rel://设备消息(1)
-                startActivity(new Intent(getActivity(),MessageActivity.class));
+                startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.all_room_rel:// 获取全部信息（APP->网关）,sraum_getInfos所有设备，所有房间标按妞下的所有设备
 
@@ -2330,7 +2322,9 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 
                                     sraum_getRoomsInfo(current_area_map.get("number").toString(), "");
                                     areaNumber = current_area_map.get("number").toString();
+                                    authType = current_area_map.get("authType").toString();//（1 业主 2 成员）
                                     SharedPreferencesUtil.saveData(getActivity(), "areaNumber", areaNumber);
+                                    SharedPreferencesUtil.saveData(getActivity(), "authType", authType);
                                     break;
                                 }
                             }

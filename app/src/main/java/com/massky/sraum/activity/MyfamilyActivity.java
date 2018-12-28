@@ -69,10 +69,10 @@ public class MyfamilyActivity extends BaseActivity implements PullToRefreshLayou
         //addfamcircle
         switch (accountType) {
             case "1":
-                addfamcircle.setVisibility(View.VISIBLE);
+                manager_room_txt.setVisibility(View.VISIBLE);
                 break;//    break;//主机，业主-写死
             case "2":
-                addfamcircle.setVisibility(View.GONE);
+                manager_room_txt.setVisibility(View.GONE);
                 break;//从机，成员
         }
     }

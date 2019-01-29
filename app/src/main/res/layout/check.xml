@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:layout_below="@+id/dtext_id"
-        android:layout_marginTop="65px"
+        android:layout_marginTop="@dimen/y20"
         android:background="#E0E0E0" />
 
     <Button

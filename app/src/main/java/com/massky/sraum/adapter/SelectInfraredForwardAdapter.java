@@ -22,6 +22,7 @@ import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.view.ClearEditText;
+import com.massky.sraum.view.ClearLengthEditText;
 import com.massky.sraum.widget.SlideSwitchButton;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
@@ -161,7 +162,7 @@ public class SelectInfraredForwardAdapter extends android.widget.BaseAdapter {
 //        final TextView content; //内容
         cancel = (TextView) view.findViewById(R.id.call_cancel);
         confirm = (TextView) view.findViewById(R.id.call_confirm);
-        final ClearEditText edit_password_gateway = (ClearEditText) view.findViewById(R.id.edit_password_gateway);
+        final ClearLengthEditText edit_password_gateway = (ClearLengthEditText) view.findViewById(R.id.edit_password_gateway);
         edit_password_gateway.setText(name);
         edit_password_gateway.setSelection(edit_password_gateway.getText().length());
 //        tv_title = (TextView) view.findViewById(R.id.tv_title);

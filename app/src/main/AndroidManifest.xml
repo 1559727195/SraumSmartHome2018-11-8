@@ -525,6 +525,11 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
+            android:name="com.massky.sraum.activity.ChangeWangGuanpassActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
             android:name="com.massky.sraum.activity.DeviceListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
@@ -690,6 +695,10 @@
             android:name="com.massky.sraum.activity.HistoryBackActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="com.massky.sraum.activity.HistoryMessageDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name="com.massky.sraum.activity.SystemMessageActivity"
@@ -753,7 +762,16 @@
             android:name="com.massky.sraum.activity.HomeSettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <!--//DeviceSettingActivity-->
+        <activity
+            android:name="com.massky.sraum.activity.DeviceSettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
+        <activity
+            android:name="com.massky.sraum.activity.FamilySettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.massky.sraum.activity.AddAreaActivity"
             android:screenOrientation="portrait"
@@ -780,6 +798,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
+        <activity
+            android:name="com.massky.sraum.activity.GuJianWangGuanNewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.MyDeviceItemActivity"
             android:screenOrientation="portrait"
@@ -853,6 +875,13 @@
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false"
             android:theme="@style/MyDialogStyle"></activity>
+        <activity
+            android:name=".activity.ProductActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.YinSiActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
 
         <!-- Required SDK核心功能-->
         <activity
@@ -985,6 +1014,13 @@
         <receiver android:name=".Util.MytokenRecever">
             <intent-filter>
                 <action android:name="com.massky.jinruicenterpark.broadcast.wrongtoken" />
+            </intent-filter>
+        </receiver>
+
+
+        <receiver android:name="webapp.download.ApkInstallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
 

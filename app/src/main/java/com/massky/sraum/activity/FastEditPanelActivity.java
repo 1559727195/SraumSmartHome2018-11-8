@@ -60,6 +60,7 @@ public class FastEditPanelActivity extends BaseActivity {
     @InjectView(R.id.miao)
     TextView miao;
     private String gateway_number = "";
+    private String areaNumber;
 
     @Override
     protected int viewId() {
@@ -71,6 +72,7 @@ public class FastEditPanelActivity extends BaseActivity {
         back.setOnClickListener(this);
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
 //                addscroll.setVisibility(View.GONE);
+        areaNumber = (String) getIntent().getSerializableExtra("areaNumber");
         registerMessageReceiver();
         init_timer();
     }
@@ -205,7 +207,7 @@ public class FastEditPanelActivity extends BaseActivity {
      */
     private void getPanel_devices(final String panelid) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(FastEditPanelActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(FastEditPanelActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(FastEditPanelActivity.this));
         map.put("areaNumber", areaNumber);
         map.put("boxNumber", gateway_number);
@@ -252,6 +254,10 @@ public class FastEditPanelActivity extends BaseActivity {
                                 case "A322":
                                 case "A331":
                                 case "A401"://设备2个
+                                case "A411":
+                                case "A412":
+                                case "A413":
+                                case "A414":
                                 case "A501"://设备2个
                                 case "A601"://设备2个
                                 case "A701"://设备2个
@@ -296,6 +302,7 @@ public class FastEditPanelActivity extends BaseActivity {
                             intent.putExtra("panelMAC", panelMAC);
                             intent.putExtra("bundle_panel", bundle);
                             intent.putExtra("findpaneltype", "fastedit");
+                            intent.putExtra("areaNumber",areaNumber);
                             startActivity(intent);
 //                                    FastEditPanelActivity.this.finish();
                             is_index = false;

@@ -25,6 +25,7 @@ import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.activity.EditMyDeviceActivity;
 import com.massky.sraum.view.ClearEditText;
+import com.massky.sraum.view.ClearLengthEditText;
 import com.massky.sraum.widget.SlideSwitchButton;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
@@ -48,11 +49,13 @@ public class SelectYaoKongQiAdapter extends android.widget.BaseAdapter {
     private Activity activity;//上下文
     DialogUtil dialogUtil;
     RefreshListener refreshListener;
+    private  String areaNumber;
+    private String authType;
     // 用来控制CheckBox的选中状况
     private static HashMap<Integer, Boolean> isSelected = new HashMap<>();
 
     public SelectYaoKongQiAdapter(Activity context, List<Map> list, List<Integer> listint, List<Integer> listintwo, DialogUtil dialogUtil,
-                                  RefreshListener refreshListener) {
+                                  String areaNumber, String authType,RefreshListener refreshListener) {
         this.list = list;
         this.listint = listint;
         this.listintwo = listintwo;
@@ -60,6 +63,8 @@ public class SelectYaoKongQiAdapter extends android.widget.BaseAdapter {
         this.activity = context;
         this.dialogUtil = dialogUtil;
         this.refreshListener = refreshListener;
+        this.areaNumber = areaNumber;
+        this.authType = authType;
     }
 //
 //    // 初始化isSelected的数据
@@ -106,8 +111,8 @@ public class SelectYaoKongQiAdapter extends android.widget.BaseAdapter {
         } else {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
-
-        viewHolderContentType.panel_scene_name_txt.setText((String) list.get(position).get("name"));
+        viewHolderContentType.panel_scene_name_txt.setText((String) list.get(position).get("device_name")
+        +"(" + list.get(position).get("roomName") + ")");
         viewHolderContentType.gateway_name_txt.setText("");
         viewHolderContentType.img_guan_scene.setImageResource(listint.get(position));
 
@@ -149,9 +154,12 @@ public class SelectYaoKongQiAdapter extends android.widget.BaseAdapter {
             public void onClick(View v) {
                 Map map = new HashMap();
                 map.put("type", list.get(position).get("type").toString());
-                map.put("name", list.get(position).get("name").toString());
+                map.put("name", list.get(position).get("device_name").toString());
                 map.put("number", list.get(position).get("number").toString());
+                map.put("roomName", list.get(position).get("roomName").toString());
                 Intent intent = new Intent(activity, EditMyDeviceActivity.class);
+                intent.putExtra("areaNumber", areaNumber);
+                intent.putExtra("authType", authType);
                 intent.putExtra("panelItem", (Serializable) map);
                 activity.startActivity(intent);
             }
@@ -181,7 +189,7 @@ public class SelectYaoKongQiAdapter extends android.widget.BaseAdapter {
 //        final TextView content; //内容
         cancel = (TextView) view.findViewById(R.id.call_cancel);
         confirm = (TextView) view.findViewById(R.id.call_confirm);
-        final ClearEditText edit_password_gateway = (ClearEditText) view.findViewById(R.id.edit_password_gateway);
+        final ClearLengthEditText edit_password_gateway = (ClearLengthEditText) view.findViewById(R.id.edit_password_gateway);
         edit_password_gateway.setText(name);
         edit_password_gateway.setSelection(edit_password_gateway.getText().length());
 //        tv_title = (TextView) view.findViewById(R.id.tv_title);

@@ -80,13 +80,9 @@ public class WifiAirControlActivity extends BaseActivity implements IDeviceContr
     @InjectView(R.id.icon_zuoyou)
     ImageView icon_zuoyou;
 
-
     private GizWifiDevice device;
-
     private HashMap<String, KeyCode> codeDatas = new HashMap<String, KeyCode>();
-
     private DeviceController driverControl = null;
-
     private Map mapdevice = new HashMap();
     private YkanIRInterfaceImpl ykanInterface;
     private String TAG = "robin debug";
@@ -141,6 +137,7 @@ public class WifiAirControlActivity extends BaseActivity implements IDeviceContr
         number = mapdevice.get("number").toString();
         type = mapdevice.get("type").toString();
         remoteControl_map_air = (Map) getIntent().getSerializableExtra("map_rcommand");
+        status = mapdevice.get("status").toString();
     }
 
     /**
@@ -712,7 +709,6 @@ public class WifiAirControlActivity extends BaseActivity implements IDeviceContr
 
         @Override
         public void run() {
-
             final Message message = mHandler.obtainMessage();
             switch (viewId) {
                 case "upload":

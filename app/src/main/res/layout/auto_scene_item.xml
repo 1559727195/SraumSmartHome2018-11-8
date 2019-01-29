@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:id="@+id/swipemenu_layout"
-    android:layout_height="@dimen/y30"
     xmlns:slideswitch="http://schemas.android.com/tools"
+    android:id="@+id/swipemenu_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y30"
     android:background="@color/white"
     app:ios="false"
     app:leftSwipe="true"
     app:swipeEnable="true">
 
     <LinearLayout
+        android:id="@+id/swipe_content_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipe_content_linear"
         android:orientation="horizontal">
+
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            android:layout_weight="0.15">
+            android:layout_weight="0.15"
+            android:visibility="gone">
+
             <ImageView
                 android:id="@+id/device_type_pic"
                 android:layout_width="wrap_content"
@@ -34,25 +36,27 @@
             android:layout_weight="0.6"
             android:orientation="vertical"
             android:padding="@dimen/x10">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true">
+
                 <TextView
+                    android:id="@+id/hand_device_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="全屋灯光全开"
-                    android:id="@+id/hand_device_content"
                     android:textColor="#171717"
                     android:textSize="15sp" />
                 <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="云场景"-->
-                    <!--android:id="@+id/hand_gateway_content"-->
-                    <!--android:layout_below="@+id/hand_device_content"-->
-                    <!--android:textColor="@color/gray"-->
-                    <!--android:textSize="14sp" />-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="云场景"-->
+                <!--android:id="@+id/hand_gateway_content"-->
+                <!--android:layout_below="@+id/hand_device_content"-->
+                <!--android:textColor="@color/gray"-->
+                <!--android:textSize="14sp" />-->
             </RelativeLayout>
 
         </RelativeLayout>
@@ -62,63 +66,75 @@
             android:layout_height="match_parent"
             android:layout_weight="0.25">
             <!--<Button-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:id="@+id/hand_scene_btn"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:text="执行"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:background="@drawable/execute_scene_shape"-->
-                <!--android:textSize="14sp"-->
-                <!--android:src="@mipmap/ic_launcher" />-->
-            <com.massky.sraum.widget.SlideSwitchButton
+            <!--android:layout_width="wrap_content"-->
+            <!--android:id="@+id/hand_scene_btn"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:text="执行"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:background="@drawable/execute_scene_shape"-->
+            <!--android:textSize="14sp"-->
+            <!--android:src="@mipmap/ic_launcher" />-->
+            <com.massky.sraum.widget.SlideSwitchForSwitchDeleteButton
                 android:id="@+id/slide_btn"
                 android:layout_width="@dimen/x40"
                 android:layout_height="@dimen/y15"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/x8"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/x8"
                 slideswitch:isOpen="false"
-                slideswitch:themeColor="#f200aa96"/>
+                slideswitch:isShowScroll="false"
+                slideswitch:themeColor="#f200aa96" />
         </RelativeLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
         <RelativeLayout
-            android:layout_width="wrap_content"
             android:id="@+id/rename_rel"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <Button
-                android:layout_width="@dimen/x50"
-                android:layout_height="match_parent"
                 android:id="@+id/btn_rename"
-                android:text="重命名"
+                android:layout_width="@dimen/x50"
+                android:layout_height="match_parent"
+                android:textSize="12sp"
                 android:background="@color/blue_txt"
+                android:text="重命名"
                 android:textColor="@android:color/white" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <Button
-                android:layout_width="@dimen/x50"
-                android:layout_height="match_parent"
                 android:id="@+id/edit_rel"
-                android:text="编辑"
+                android:layout_width="@dimen/x50"
+                android:layout_height="match_parent"
                 android:background="#FF9A02"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:text="编辑"
                 android:textColor="@android:color/white" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <Button
+                android:id="@+id/delete_rel"
                 android:layout_width="@dimen/x50"
                 android:layout_height="match_parent"
-                android:id="@+id/delete_rel"
-                android:text="删除"
+                android:textSize="12sp"
                 android:background="#FF0202"
+                android:text="删除"
                 android:textColor="@android:color/white" />
         </RelativeLayout>
     </LinearLayout>

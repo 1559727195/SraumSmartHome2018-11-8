@@ -16,6 +16,7 @@ import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.view.ClearEditText;
+import com.massky.sraum.view.ClearLengthEditText;
 import com.massky.sraum.widget.ApplicationContext;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
@@ -39,7 +40,7 @@ public class AddNewRoomActivity extends BaseActivity {
     private String name;
     private String areaNumber;
     @InjectView(R.id.edit_password_gateway)
-    ClearEditText edit_password_gateway;
+    ClearLengthEditText edit_password_gateway;
     private String doit;
 
     @Override

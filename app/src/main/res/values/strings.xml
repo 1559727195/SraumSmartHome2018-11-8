@@ -12,6 +12,12 @@
     <string name="load_fail">加载失败</string>
     <string name="password">密码</string>
 
+    <!--修改密码界面-->
+    <string name="changepassword">修改密码</string>
+    <string name="originalpassword">原密码</string>
+    <string name="newpassword">新密码</string>
+    <string name="againpassword">再次输入密码</string>
+
 
 
     <!--网关详细信息-->
@@ -705,6 +711,10 @@
     <string name="next">下一步</string>
     <string name="completepass">完成</string>
     <string name="zhinengwangguan">智能网关</string>
+    <string name="one_curtain_zero_light">一窗帘</string>
+    <string name="one_curtain_one_light">一窗帘一灯控</string>
+    <string name="one_curtain_two_light">一窗帘二灯控</string>
+    <string name="two_curtain">二窗帘</string>
 
 
 </resources>

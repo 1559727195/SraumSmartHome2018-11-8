@@ -84,6 +84,14 @@
         android:layout_marginLeft="@dimen/p100"
         android:layout_marginRight="@dimen/p100"
         android:background="@color/ea" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c6f"
+        android:layout_marginLeft="@dimen/p100"
+        android:layout_marginTop="@dimen/y8"
+        android:textSize="14sp"
+        android:text="邀请成功后，登录密码默认为手机号的后6位"/>
 
     <Button
         android:id="@+id/famtwobtn_id"

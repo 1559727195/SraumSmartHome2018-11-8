@@ -3,6 +3,7 @@ package com.massky.sraum.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.IntentUtil;
 import com.massky.sraum.Util.MusicUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
@@ -26,10 +28,13 @@ import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.activity.AssociatedpanelActivity;
 import com.massky.sraum.activity.EditLinkDeviceResultActivity;
 import com.massky.sraum.activity.EditSceneActivity;
 import com.massky.sraum.activity.EditSceneSecondActivity;
+import com.massky.sraum.activity.SetSelectLinkActivity;
 import com.massky.sraum.view.ClearEditText;
+import com.massky.sraum.view.ClearLengthEditText;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 import com.wheel.widget.TosAdapterView;
 
@@ -51,11 +56,11 @@ public class HandSceneAdapter extends BaseAdapter {
     private List<Integer> listint = new ArrayList<>();
     private List<Integer> listintwo = new ArrayList<>();
     DialogUtil dialogUtil;
-    private  RefreshListener refreshListener;
+    private RefreshListener refreshListener;
 
     public HandSceneAdapter(Context context, List<Map> list,
                             List<Integer> listint,
-                            List<Integer> listintwo, DialogUtil dialogUtil,RefreshListener refreshListener) {
+                            List<Integer> listintwo, DialogUtil dialogUtil, RefreshListener refreshListener) {
         super(context, list);
         this.list = list;
         this.listint = listint;
@@ -90,19 +95,21 @@ public class HandSceneAdapter extends BaseAdapter {
         viewHolderContentType.hand_device_content.setText(list.get(position).get("name").toString());
 
         final ViewHolderContentType finalViewHolderContentType1 = viewHolderContentType;
-        String type = list.get(position).get("name").toString();
+        String type = list.get(position).get("type").toString();
         if (type != null)
             switch (type) {
-                case "100":
+                case "101":
                     viewHolderContentType.hand_gateway_content.setText("云场景");
+                    viewHolderContentType.edit_btn.setVisibility(View.GONE);
                     break;
                 default:
                     viewHolderContentType.hand_gateway_content.setText("网关场景");
+                    viewHolderContentType.edit_btn.setVisibility(View.VISIBLE);
                     break;
             }
 
-        String accountType = (String) SharedPreferencesUtil.getData(context, "accountType", "");
-        switch (accountType) {
+        String authType = (String) SharedPreferencesUtil.getData(context, "authType", "");
+        switch (authType) {
             case "1":
                 viewHolderContentType.swipe_layout.setSwipeEnable(true);
                 break;//业主
@@ -138,7 +145,16 @@ public class HandSceneAdapter extends BaseAdapter {
         viewHolderContentType.edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goto_editlink(position);
+//                goto_editlink(position);
+                //去关联面板
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("sceneName", list.get(position).get("name").toString());
+                bundle1.putString("sceneType", "1");
+                bundle1.putString("boxNumber", list.get(position).get("boxNumber").toString());
+                bundle1.putString("panelType", list.get(position).get("panelType").toString());
+                bundle1.putString("panelNumber", list.get(position).get("panelNumber").toString());
+                bundle1.putString("buttonNumber", list.get(position).get("buttonNumber").toString());
+                IntentUtil.startActivity(context, AssociatedpanelActivity.class, bundle1);
                 finalViewHolderContentType2.swipe_layout.quickClose();
             }
         });
@@ -158,7 +174,7 @@ public class HandSceneAdapter extends BaseAdapter {
                 if (!is_open_to_close) {//SwipeLayout是否在打开到关闭的过程
                     sraum_manualSceneControl(list.get(position).get("number").toString());
 //                    finalViewHolderContentType.hand_scene_btn.setImageResource(R.drawable.icon_root);
-                    ToastUtil.showToast(context,"click");
+//                    ToastUtil.showToast(context, "click");
                 }
             }
         });
@@ -179,14 +195,14 @@ public class HandSceneAdapter extends BaseAdapter {
 //        cus_dialog.show();
 
 
-        View view = LayoutInflater.from(context).inflate(R.layout.editscene_dialog, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.edit_handscene_dialog, null);
         final TextView confirm; //确定按钮
         TextView cancel; //确定按钮
         TextView tv_title;
 //        final TextView content; //内容
         cancel = (TextView) view.findViewById(R.id.call_cancel);
         confirm = (TextView) view.findViewById(R.id.call_confirm);
-        final ClearEditText edit_password_gateway = (ClearEditText) view.findViewById(R.id.edit_password_gateway);
+        final ClearLengthEditText edit_password_gateway = (ClearLengthEditText) view.findViewById(R.id.edit_password_gateway);
         edit_password_gateway.setText(name);
         edit_password_gateway.setSelection(edit_password_gateway.getText().length());
 //        tv_title = (TextView) view.findViewById(R.id.tv_title);
@@ -273,8 +289,9 @@ public class HandSceneAdapter extends BaseAdapter {
         confirm = (TextView) view.findViewById(R.id.call_confirm);
         tv_title = (TextView) view.findViewById(R.id.tv_title);//name_gloud
         name_gloud = (TextView) view.findViewById(R.id.name_gloud);
-        name_gloud.setVisibility(View.VISIBLE);
-        name_gloud.setText(name);
+//        name_gloud.setVisibility(View.VISIBLE);
+//        name_gloud.setText(name);
+        tv_title.setText(name);
 //        tv_title.setText("是否拨打119");
 //        content.setText(message);
         //显示数据
@@ -316,46 +333,45 @@ public class HandSceneAdapter extends BaseAdapter {
      */
     private void linkage_delete(final String linkId, final Dialog dialog) {
         Map<String, String> mapdevice = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(context,"areaNumber","");
+        String areaNumber = (String) SharedPreferencesUtil.getData(context, "areaNumber", "");
         mapdevice.put("token", TokenUtil.getToken(context));
         mapdevice.put("areaNumber", areaNumber);
         mapdevice.put("number", linkId);
 //        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(LinkageListActivity.this));
         MyOkHttp.postMapString(ApiHelper.sraum_deleteManuallyScene
                 , mapdevice, new Mycallback(new AddTogglenInterfacer() {
-            @Override
-            public void addTogglenInterfacer() {//刷新togglen数据
-                linkage_delete(linkId, dialog);
-            }
-        }, context, dialogUtil) {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                super.onError(call, e, id);
-            }
+                    @Override
+                    public void addTogglenInterfacer() {//刷新togglen数据
+                        linkage_delete(linkId, dialog);
+                    }
+                }, context, dialogUtil) {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        super.onError(call, e, id);
+                    }
 
-            @Override
-            public void pullDataError() {
-                super.pullDataError();
-            }
+                    @Override
+                    public void pullDataError() {
+                        super.pullDataError();
+                    }
 
-            @Override
-            public void emptyResult() {
-                super.emptyResult();
-            }
+                    @Override
+                    public void emptyResult() {
+                        super.emptyResult();
+                    }
 
-            @Override
-            public void wrongToken() {
-                super.wrongToken();
-                //重新去获取togglen,这里是因为没有拉到数据所以需要重新获取togglen
+                    @Override
+                    public void wrongToken() {
+                        super.wrongToken();
+                        //重新去获取togglen,这里是因为没有拉到数据所以需要重新获取togglen
+                    }
 
-            }
-
-            @Override
-            public void wrongBoxnumber() {
-                super.wrongBoxnumber();
-                ToastUtil.showToast(context,"areaNumber\n" +
-                        "不存在");
-            }
+                    @Override
+                    public void wrongBoxnumber() {
+                        super.wrongBoxnumber();
+                        ToastUtil.showToast(context, "areaNumber\n" +
+                                "不存在");
+                    }
 
                     @Override
                     public void threeCode() {
@@ -365,17 +381,17 @@ public class HandSceneAdapter extends BaseAdapter {
 
                     @Override
                     public void fourCode() {
-                        ToastUtil.showToast(context,"删除失败");
+                        ToastUtil.showToast(context, "删除失败");
                     }
 
                     @Override
-            public void onSuccess(final User user) {
-                dialog.dismiss();
+                    public void onSuccess(final User user) {
+                        dialog.dismiss();
 //                refreshLayout.autoRefresh();
-                if (refreshListener != null)
-                    refreshListener.refresh();
-            }
-        });
+                        if (refreshListener != null)
+                            refreshListener.refresh();
+                    }
+                });
     }
 
     /**
@@ -386,7 +402,7 @@ public class HandSceneAdapter extends BaseAdapter {
      */
     private void linkage_rename(final String linkId, final String newName, final Dialog dialog) {
         Map<String, String> mapdevice = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(context,"areaNumber","");
+        String areaNumber = (String) SharedPreferencesUtil.getData(context, "areaNumber", "");
         mapdevice.put("token", TokenUtil.getToken(context));
         mapdevice.put("number", linkId);
         mapdevice.put("newName", newName);
@@ -395,7 +411,7 @@ public class HandSceneAdapter extends BaseAdapter {
         MyOkHttp.postMapString(ApiHelper.sraum_reNameManuallyScene, mapdevice, new Mycallback(new AddTogglenInterfacer() {
             @Override
             public void addTogglenInterfacer() {//刷新togglen数据
-             linkage_rename(linkId,newName,dialog);
+                linkage_rename(linkId, newName, dialog);
             }
         }, context, dialogUtil) {
             @Override
@@ -446,7 +462,6 @@ public class HandSceneAdapter extends BaseAdapter {
             }
         });
     }
-
 
 
     /**

@@ -104,6 +104,7 @@ public class AddZigbeeDevActivity extends BaseActivity {
     private List<User.panellist> panelList = new ArrayList<>();
     private String type = "";
     private String gateway_number;
+    private String areaNumber;
 
     @Override
     protected int viewId() {
@@ -375,6 +376,10 @@ public class AddZigbeeDevActivity extends BaseActivity {
                                 case "A322":
                                 case "A331":
                                 case "A401"://设备2个
+                                case "A411":
+                                case "A412":
+                                case "A413":
+                                case "A414":
                                 case "A501"://设备2个
                                 case "A601"://设备2个
                                 case "A701"://设备2个
@@ -423,6 +428,7 @@ public class AddZigbeeDevActivity extends BaseActivity {
                             intent.putExtra("panelMAC", panelMAC);
                             intent.putExtra("bundle_panel", bundle);
                             intent.putExtra("findpaneltype", "wangguan_status");
+                            intent.putExtra("areaNumber",areaNumber);
                             startActivity(intent);
                             AddZigbeeDevActivity.this.finish();
                         }
@@ -467,6 +473,10 @@ public class AddZigbeeDevActivity extends BaseActivity {
             case "A302":
             case "A303":
             case "A401":
+            case "A411":
+            case "A412":
+            case "A413":
+            case "A414":
             case "B101":
             case "B201":
             case "B301":
@@ -526,7 +536,7 @@ public class AddZigbeeDevActivity extends BaseActivity {
      */
     private void getPanel_devices(final String panelid) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(AddZigbeeDevActivity.this, "areaNumber", "");
+        areaNumber = (String) SharedPreferencesUtil.getData(AddZigbeeDevActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(AddZigbeeDevActivity.this));
         map.put("areaNumber", areaNumber);
         map.put("boxNumber", gateway_number);
@@ -571,6 +581,10 @@ public class AddZigbeeDevActivity extends BaseActivity {
                             case "A322":
                             case "A331":
                             case "A401"://设备2个
+                            case "A411":
+                            case "A412":
+                            case "A413":
+                            case "A414":
                             case "A511"://空调-设备1个
                             case "A611"://新风
                             case "A711"://地暖

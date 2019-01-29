@@ -52,11 +52,45 @@
             android:background="@drawable/xxdivider" />
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="60dp"
+    <!--<Button-->
+        <!--android:id="@+id/btnDelete"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@color/red_ff4a57"-->
+        <!--android:text="删除"-->
+        <!--android:textColor="@android:color/white" />-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/red_ff4a57"
-        android:text="删除"
-        android:textColor="@android:color/white" />
+        android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/rename_btn"
+            android:layout_width="@dimen/x50"
+            android:layout_height="match_parent"
+            android:background="#FF9A02"
+            android:text="重命名"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="@dimen/x50"
+            android:layout_height="match_parent"
+            android:background="#FF0202"
+            android:text="删除"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+    </LinearLayout>
+
+
 </com.mcxtzhang.swipemenulib.SwipeMenuLayout>

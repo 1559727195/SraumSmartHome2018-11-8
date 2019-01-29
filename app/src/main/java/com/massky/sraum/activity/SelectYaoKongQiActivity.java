@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
 import com.gizwits.gizwifisdk.enumration.GizWifiDeviceNetStatus;
@@ -39,11 +38,11 @@ import com.yaokan.sdk.utils.Utility;
 import com.yaokan.sdk.wifi.DeviceManager;
 import com.yaokan.sdk.wifi.GizWifiCallBack;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import butterknife.InjectView;
 import okhttp3.Call;
 
@@ -86,6 +85,8 @@ public class SelectYaoKongQiActivity extends BaseActivity implements
     List<GizWifiDevice> wifiDevices = new ArrayList<GizWifiDevice>();
     private List<String> deviceNames = new ArrayList<String>();
     private String controllerNumber = "";
+    private String areaNumber;
+    private String authType;
 
 
     @Override
@@ -102,6 +103,7 @@ public class SelectYaoKongQiActivity extends BaseActivity implements
         next_step_txt.setOnClickListener(this);
         maclistview_id.setOnItemClickListener(this);
         refresh_view.setOnRefreshListener(this);
+        areaNumber  = (String) getIntent().getSerializableExtra("areaNumber");
 //        refresh_view.autoRefresh();
 //        onData();
         mDeviceManager = DeviceManager
@@ -268,12 +270,13 @@ public class SelectYaoKongQiActivity extends BaseActivity implements
     @Override
     protected void onData() {
         controllerNumber = (String) getIntent().getSerializableExtra("controllerNumber");
+        authType = (String) getIntent().getSerializableExtra("authType");
         getOtherDevices("");
         list_hand_scene = new ArrayList<>();
 
 
         selectexcutesceneresultadapter = new SelectYaoKongQiAdapter(SelectYaoKongQiActivity.this,
-                list_hand_scene, listint, listintwo, dialogUtil, new SelectYaoKongQiAdapter.RefreshListener() {
+                list_hand_scene, listint, listintwo, dialogUtil,areaNumber,authType, new SelectYaoKongQiAdapter.RefreshListener() {
 
             @Override
             public void refresh() {
@@ -391,10 +394,11 @@ public class SelectYaoKongQiActivity extends BaseActivity implements
                         listintwo.clear();
                         for (int i = 0; i < user.deviceList.size(); i++) {
                             Map<String, String> mapdevice = new HashMap<>();
-                            mapdevice.put("name", user.deviceList.get(i).name);
+                            mapdevice.put("device_name", user.deviceList.get(i).device_name);
                             mapdevice.put("number", user.deviceList.get(i).number);
                             mapdevice.put("type", user.deviceList.get(i).type);
                             mapdevice.put("deviceId", user.deviceList.get(i).deviceId);
+                            mapdevice.put("roomName", user.deviceList.get(i).roomName);
                             list_hand_scene.add(mapdevice);
                             setPicture(user.deviceList.get(i).type);
                         }

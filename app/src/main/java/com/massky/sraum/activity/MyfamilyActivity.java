@@ -1,10 +1,12 @@
 package com.massky.sraum.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.InjectView;
 import okhttp3.Call;
 
@@ -43,13 +46,18 @@ public class MyfamilyActivity extends BaseActivity implements PullToRefreshLayou
     @InjectView(R.id.manager_room_txt)
     TextView manager_room_txt;
 
+    @InjectView(R.id.project_select)
+    TextView project_select;
+
     private MyfamilyAdapter adapter;
     private DialogUtil dialogUtil;
     //进行判断是否进行创建刷新
     private boolean isFirstIn = true;
     private List<User.familylist> list = new ArrayList<>();
-    private  PullToRefreshLayout pullToRefreshLayout;
+    private PullToRefreshLayout pullToRefreshLayout;
     private String accountType;
+    private String authType;
+    private String areaNumber;
 
 
     @Override
@@ -65,9 +73,10 @@ public class MyfamilyActivity extends BaseActivity implements PullToRefreshLayou
         addfamcircle.setOnClickListener(this);
         manager_room_txt.setOnClickListener(this);
         LogUtil.i("第二次查看");
-        accountType = (String) SharedPreferencesUtil.getData(MyfamilyActivity.this, "accountType", "");
+        areaNumber = (String) getIntent().getSerializableExtra("areaNumber");
+        authType = (String) getIntent().getSerializableExtra("authType");
         //addfamcircle
-        switch (accountType) {
+        switch (authType) {
             case "1":
                 manager_room_txt.setVisibility(View.VISIBLE);
                 break;//    break;//主机，业主-写死
@@ -102,8 +111,8 @@ public class MyfamilyActivity extends BaseActivity implements PullToRefreshLayou
     private void sraum_get_famliy(final PullToRefreshLayout pullToRefreshLayout) {
         Map<String, Object> map = new HashMap<>();
         map.put("token", TokenUtil.getToken(MyfamilyActivity.this));
-        String areaNumber = (String) SharedPreferencesUtil.getData(MyfamilyActivity.this,
-                "areaNumber","");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(MyfamilyActivity.this,
+//                "areaNumber","");
         map.put("areaNumber", areaNumber);
         MyOkHttp.postMapObject(ApiHelper.sraum_getFamily, map, new Mycallback(new AddTogglenInterfacer() {
             @Override
@@ -148,13 +157,14 @@ public class MyfamilyActivity extends BaseActivity implements PullToRefreshLayou
                 list.clear();
                 list.addAll(user.familyList);
                 if (isFirstIn) {
-                    adapter = new MyfamilyAdapter(MyfamilyActivity.this, list, TokenUtil.getToken(MyfamilyActivity.this), dialogUtil
-                    ,accountType);
+                    adapter = new MyfamilyAdapter(MyfamilyActivity.this, list, authType, areaNumber, TokenUtil.getToken(MyfamilyActivity.this), dialogUtil
+                            , accountType);
                     myfamlistview.setAdapter(adapter);
                     isFirstIn = false;
                 } else {
                     adapter.notifyDataSetChanged();
                 }
+                project_select.setText("家人列表(" + list.size() + ")");
             }
         });
     }
@@ -163,12 +173,14 @@ public class MyfamilyActivity extends BaseActivity implements PullToRefreshLayou
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.back:
-
                 MyfamilyActivity.this.finish();
                 break;
             case R.id.addfamcircle:
             case R.id.manager_room_txt:
-                IntentUtil.startActivity(MyfamilyActivity.this, AddfamilyActivity.class);
+                Intent intent = new Intent(MyfamilyActivity.this, AddfamilyActivity.class);
+                intent.putExtra("areaNumber", areaNumber);
+                startActivity(intent);
+//                IntentUtil.startActivity(MyfamilyActivity.this, AddfamilyActivity.class);
                 break;
         }
     }

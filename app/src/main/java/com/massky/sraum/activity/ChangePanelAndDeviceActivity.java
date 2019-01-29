@@ -119,6 +119,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
     private boolean upgradete;
     private String boxNumber;
     private String input_panel_name_edit_txt_str;
+    private String areaNumber;
 
     @Override
     protected int viewId() {
@@ -166,16 +167,21 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
     private void panel_and_device_information() {
         switch (panelType) {
             case "A201"://一灯控
+            case "A411"://1窗帘0灯
                 onekey_device_txt.setText(deviceList.get(0).name);
                 break;
             case "A202"://二灯控
             case "A311":
+            case "A412"://1窗帘1灯
+            case "A414"://2窗帘0灯
                 onekey_device_txt.setText(deviceList.get(0).name);
                 twokey_device_txt.setText(deviceList.get(1).name);
+
                 break;
             case "A203"://三灯控
             case "A312":
             case "A321":
+            case "A413"://1窗帘2灯
                 onekey_device_txt.setText(deviceList.get(0).name);
                 twokey_device_txt.setText(deviceList.get(1).name);
                 threekey_device_txt.setText(deviceList.get(2).name);
@@ -246,6 +252,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
         panelName = getIntent().getStringExtra("panelName");
         panelMAC = getIntent().getStringExtra("panelMAC");
         findpaneltype = getIntent().getStringExtra("findpaneltype");
+        areaNumber = getIntent().getStringExtra("areaNumber");
         panelname.setText(panelName);
     }
 
@@ -254,16 +261,30 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
      *
      * @param type
      */
-    private void show_device_from_panel(String type) {
+    private void show_device_from_panel(String type) { //
         switch (type) {
             case "A201"://一灯控
                 show_one_item();
                 onekey_device.setText("一路灯控名称");
                 break;
+            case "A411":
+                show_one_item();
+                onekey_device.setText("一路窗帘名称");
+                break;
             case "A202"://二灯控
                 show_two_item();
                 onekey_device.setText("一路灯控名称");
                 twokey_device.setText("二路灯控名称");
+                break;
+            case "A412":
+                show_two_item();
+                onekey_device.setText("一路窗帘名称");
+                twokey_device.setText("一路灯控名称");
+                break;
+            case "A414":
+                show_two_item();
+                onekey_device.setText("一路窗帘名称");
+                twokey_device.setText("二路窗帘名称");
                 break;
             case "A311"://二灯控
                 show_two_item();
@@ -273,6 +294,12 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
             case "A312"://二灯控
                 show_three_item();
                 onekey_device.setText("一路调光名称");
+                twokey_device.setText("一路灯控名称");
+                threekey_device.setText("二路灯控名称");
+                break;
+            case "A413":
+                show_three_item();
+                onekey_device.setText("一路窗帘名称");
                 twokey_device.setText("一路灯控名称");
                 threekey_device.setText("二路灯控名称");
                 break;
@@ -677,8 +704,8 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
     private void sraum_updateWifiAppleName(final String number, final String newName) {
         Map<String, String> mapdevice = new HashMap<>();
         mapdevice.put("token", TokenUtil.getToken(this));
-        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this
-                , "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this
+//                , "areaNumber", "");
         mapdevice.put("areaNumber", areaNumber);
         String method = "";
         switch (panelType) {
@@ -743,6 +770,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
                         Map map = new HashMap();
                         map.put("deviceId", panelNumber);
                         map.put("deviceType", panelType);
+                        map.put("areaNumber", areaNumber);
                         map.put("type", "2");
                         Intent intent = new Intent(ChangePanelAndDeviceActivity.this, SelectRoomActivity.class);
                         intent.putExtra("map_deivce", (Serializable) map);
@@ -819,7 +847,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
 
     private void sraum_find_panel() {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this, "areaNumber", "");
         map.put("areaNumber", areaNumber);
         map.put("gatewayNumber", boxNumber);
         map.put("deviceNumber", panelNumber);
@@ -861,7 +889,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
      */
     private void sraum_find_button(String buttonNumber) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this, "areaNumber", "");
         map.put("areaNumber", areaNumber);
         map.put("gatewayNumber", boxNumber);
         map.put("deviceNumber", panelNumber);
@@ -994,12 +1022,15 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
     private void updateDeviceInfo() {
         switch (panelType) {
             case "A201"://一灯控
+            case "A411"://1窗帘0灯
                 onekey_device_txt_str = onekey_device_txt.getText().toString().trim();
                 device_index = 0;
                 control_device_name_change_one(onekey_device_txt_str, 0);
                 break;
             case "A202"://二灯控
             case "A311"://二灯控
+            case "A412"://1窗帘1灯
+            case "A414"://2窗帘0灯
                 onekey_device_txt_str = onekey_device_txt.getText().toString().trim();
                 twokey_device_txt_str = twokey_device_txt.getText().toString().trim();
                 device_index = 1;
@@ -1008,6 +1039,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
             case "A203"://三灯控
             case "A312"://二灯控
             case "A321"://二灯控
+            case "A413"://1窗帘2灯
                 onekey_device_txt_str = onekey_device_txt.getText().toString().trim();
                 twokey_device_txt_str = twokey_device_txt.getText().toString().trim();
                 threekey_device_txt_str = threekey_device_txt.getText().toString().trim();
@@ -1068,17 +1100,14 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
                 break;//窗帘 ，窗帘第八个按钮为八键灯控名称修改
 
             case "A501"://空调-设备1个
-            case "A511":
                 updateDeviceInfo(onekey_device_txt.getText().toString().trim(), "", "",
                         deviceList.get(0).number, "", 0);
                 break;
             case "A601"://新风
-            case "A611":
                 updateDeviceInfo(onekey_device_txt.getText().toString().trim(), "", "",
                         deviceList.get(0).number, "", 0);
                 break;
             case "A701"://地暖
-            case "A711":
                 updateDeviceInfo(onekey_device_txt.getText().toString().trim(), "", "",
                         deviceList.get(0).number, "", 0);
                 break;
@@ -1192,7 +1221,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
 
     private void sraum_update_s(final String customName, final String name1, final String name2, final String deviceNumber, final String chuanglian, final int index) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(ChangePanelAndDeviceActivity.this));
         map.put("areaNumber", areaNumber);
         map.put("gatewayNumber", boxNumber);
@@ -1272,6 +1301,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
                         Map map = new HashMap();
                         map.put("deviceId", panelNumber);
                         map.put("deviceType", panelType);
+                        map.put ("areaNumber", areaNumber);
                         map.put("type", "1");
                         Intent intent = new Intent(ChangePanelAndDeviceActivity.this, SelectRoomActivity.class);
                         intent.putExtra("map_deivce", (Serializable) map);
@@ -1317,6 +1347,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
                         Map map = new HashMap();
                         map.put("deviceId", panelNumber);
                         map.put("deviceType", panelType);
+                        map.put ("areaNumber", areaNumber);
                         map.put("type", "1");
                         Intent intent = new Intent(ChangePanelAndDeviceActivity.this, SelectRoomActivity.class);
                         intent.putExtra("map_deivce", (Serializable) map);
@@ -1337,7 +1368,7 @@ public class ChangePanelAndDeviceActivity extends BaseActivity {
 
     private void sraum_update_panel_name(final String panelName, final String panelNumber) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(ChangePanelAndDeviceActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(ChangePanelAndDeviceActivity.this));
         map.put("areaNumber", areaNumber);
         map.put("gatewayNumber", boxNumber);

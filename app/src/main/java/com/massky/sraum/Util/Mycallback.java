@@ -6,17 +6,14 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
-
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.alibaba.fastjson.JSON;
 import com.massky.sraum.User;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.fragment.SceneFragment;
 import com.zhy.http.okhttp.callback.StringCallback;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import okhttp3.Call;
 
 /**
@@ -172,7 +169,7 @@ public class Mycallback extends StringCallback implements ApiResult {
     public void wrongBoxnumber() {
         SharedPreferencesUtil.saveData(context, "boxstatus", "");
         SharedPreferencesUtil.saveData(context, "boxnumber", "");
-        ToastUtil.showDelToast(context, "网关不存在");
+//        ToastUtil.showDelToast(context, "网关不存在");
     }
 
     @Override

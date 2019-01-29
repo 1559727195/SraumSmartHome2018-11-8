@@ -18,16 +18,16 @@
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
-        android:id="@+id/name_gloud"
+        android:id="@+id/tv_title"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:visibility="gone"
         android:text="提示"
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="16sp"/>
+
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/name_gloud"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/y10"
         android:layout_marginBottom="@dimen/y30"

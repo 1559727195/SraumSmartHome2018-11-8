@@ -77,6 +77,9 @@ public class User {
     public String LRScavenging;
     public String messageTitle;
     public String eventTime;
+    public String boxName;
+    public String currentVersion;
+    public String newVersion;
 
     public static class roomList {
         public String number;
@@ -222,6 +225,8 @@ public class User {
         public String boxNumber;
         public String boxName;
         public String button;
+        public String roomName;
+        public String device_name;
     }
 
     public List<panellist> panelList;
@@ -261,6 +266,7 @@ public class User {
         public String roomNumber;
         public String roomName;
         public String wifi;
+        public String gatewayMac;
     }
 
 
@@ -452,5 +458,49 @@ public class User {
         public String eventTime;
     }
 
+    public userinfo userInfo;
+    /*获得个人信息
+    * customName：自定义用户名
+        nickName：昵称
+        avatar：头像
+        gender：性别
+        birthDay：生日
+        mobilePhone：手机号
+        family：家庭成员数量*/
+    public static class userinfo implements Serializable {
+        public String userId;
+        public String nickname;
+        public String avatar;
+        public String gender;
+        public String mode;
+        public String birthDay;
+        public String mobilePhone;
+        public String family;
+        public String nickName;
+    }
 
+
+    public List<opinion> opinionList;
+    /**
+     * 获取意见反馈记录
+     */
+    public static class opinion implements Serializable {
+        public String id;
+        public String content;
+        public String dt;
+        public String type;
+    }
+
+
+    /**
+     * 获取意见反馈记录
+     */
+    public  opinionInfo opinionInfo;
+    public static class opinionInfo implements Serializable {
+        public String id;
+        public String content;
+        public String dt;
+        public String type;
+        public String  img;
+    }
 };

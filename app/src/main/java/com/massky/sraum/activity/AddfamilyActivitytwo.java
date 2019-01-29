@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
@@ -20,7 +19,6 @@ import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.base.BaseActivity;
 import com.yanzhenjie.statusview.StatusUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 import butterknife.InjectView;
@@ -41,6 +39,7 @@ public class AddfamilyActivitytwo extends BaseActivity {
     ImageView back;
     private String mobilePhone, familyName;
     private DialogUtil dialogUtil;
+    private String areaNumber;
 
     @Override
     protected int viewId() {
@@ -54,6 +53,7 @@ public class AddfamilyActivitytwo extends BaseActivity {
         Bundle bundle = IntentUtil.getIntentBundle(AddfamilyActivitytwo.this);
         mobilePhone = bundle.getString("mobilePhone");
         familyName = bundle.getString("familyName");
+        areaNumber = bundle.getString("areaNumber");
         familytwoedit.setText(mobilePhone);
         nametwoedit.setText(familyName);
         back.setOnClickListener(this);
@@ -85,7 +85,7 @@ public class AddfamilyActivitytwo extends BaseActivity {
     private void add_family_act() {
         Map<String, Object> map = new HashMap<>();
         map.put("token", TokenUtil.getToken(AddfamilyActivitytwo.this));
-        String areaNumber = (String) SharedPreferencesUtil.getData(AddfamilyActivitytwo.this,"areaNumber","");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(AddfamilyActivitytwo.this, "areaNumber", "");
         map.put("mobilePhone", mobilePhone);
         map.put("familyName", familyName);
         map.put("areaNumber", areaNumber);
@@ -113,17 +113,29 @@ public class AddfamilyActivitytwo extends BaseActivity {
                 } else {
                     ToastUtil.showDelToast(AddfamilyActivitytwo.this, "名字重复");
                 }
-
             }
 
             @Override
             public void wrongBoxnumber() {
-                ToastUtil.showDelToast(AddfamilyActivitytwo.this, "账号已经是您的家属");
+                ToastUtil.showDelToast(AddfamilyActivitytwo.this, "areaNumber\n" +
+                        "不存在");
             }
 
             @Override
             public void wrongToken() {
                 super.wrongToken();
+            }
+
+            @Override
+            public void threeCode() {
+                super.threeCode();
+                ToastUtil.showDelToast(AddfamilyActivitytwo.this, "mobilePhone 错误");
+            }
+
+            @Override
+            public void fourCode() {
+                super.fourCode();
+                ToastUtil.showDelToast(AddfamilyActivitytwo.this, "familyName 错误");
             }
         });
     }

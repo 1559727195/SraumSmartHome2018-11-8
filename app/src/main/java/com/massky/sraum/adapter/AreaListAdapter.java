@@ -41,14 +41,16 @@ public class AreaListAdapter extends BaseAdapter {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
 
-        switch (position % 2) {
-            case 0:
-                viewHolderContentType.area_linear_item.setBackgroundColor(context.getResources().getColor(R.color.dark_light));
-                break;
-            case 1:
+        switch (list.get(position).get("sign") == null ? "" : list.get(position).get("sign").toString()) {
+            case "1":
                 viewHolderContentType.area_linear_item.setBackgroundColor(context.getResources().getColor(R.color.dark_deep));
                 break;
+            case "0":
+                viewHolderContentType.area_linear_item.setBackgroundColor(context.getResources().getColor(R.color.dark_light));
+                break;
         }
+
+
         viewHolderContentType.area_item_txt.setText(list.get(position).get("name").toString());
 
         return convertView;

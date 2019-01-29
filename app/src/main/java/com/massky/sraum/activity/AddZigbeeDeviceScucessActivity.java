@@ -73,6 +73,7 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
     private TextView type_txt;
     private TextView mac_txt;
     private String boxNumber;
+    private String areaNumber;
 
 
     @Override
@@ -301,6 +302,7 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
         panelType = getIntent().getStringExtra("panelType");
         panelName = getIntent().getStringExtra("panelName");
         panelMAC = getIntent().getStringExtra("panelMAC");
+        areaNumber = getIntent().getStringExtra("areaNumber");
         if (panelName != null)
             dev_name.setText(panelName);
     }
@@ -314,7 +316,7 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
      */
     private void sraum_update_panel_name(final String panelName, final String panelNumber) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(AddZigbeeDeviceScucessActivity.this, "areaNumber", "");
+//        final String areaNumber = (String) SharedPreferencesUtil.getData(AddZigbeeDeviceScucessActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(AddZigbeeDeviceScucessActivity.this));
         map.put("areaNumber", areaNumber);
         map.put("gatewayNumber", boxNumber);
@@ -343,6 +345,7 @@ public class AddZigbeeDeviceScucessActivity extends BaseActivity {
                         map.put("deviceId", panelNumber);
                         map.put("deviceType", panelType);
                         map.put("type", "1");
+                        map.put("areaNumber",areaNumber);
                         Intent intent = new Intent(AddZigbeeDeviceScucessActivity.this, SelectRoomActivity.class);
                         intent.putExtra("map_deivce", (Serializable) map);
                         startActivity(intent);

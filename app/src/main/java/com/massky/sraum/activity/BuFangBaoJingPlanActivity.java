@@ -55,6 +55,7 @@ public class BuFangBaoJingPlanActivity extends com.massky.sraum.base.BaseActivit
     @InjectView(R.id.back)
     ImageView back;
     private List<Map> list_camera_list = new ArrayList<>();//录像列表
+    private String areaNumber;
 
     @Override
     protected int viewId() {
@@ -92,6 +93,7 @@ public class BuFangBaoJingPlanActivity extends com.massky.sraum.base.BaseActivit
         Intent intent = getIntent();
         strDID = intent.getStringExtra(ContentCommon.STR_CAMERA_ID);
         strPWD = intent.getStringExtra(ContentCommon.STR_CAMERA_PWD);
+        areaNumber  = (String) getIntent().getSerializableExtra("areaNumber");
 
     }
 
@@ -122,6 +124,7 @@ public class BuFangBaoJingPlanActivity extends com.massky.sraum.base.BaseActivit
                 it.putExtra("type", 1);//编辑
                 Map item = list_camera_list.get(position);
                 it.putExtra("map_item_record", (Serializable) item);
+                it.putExtra("areaNumber",areaNumber);
 //                it.putExtra("value", itemplan);
 //                it.putExtra("key", itemplanKey);
                 startActivityForResult(it, 1);
@@ -194,6 +197,7 @@ public class BuFangBaoJingPlanActivity extends com.massky.sraum.base.BaseActivit
                 Intent intent1 = new Intent(BuFangBaoJingPlanActivity.this,
                         SCameraSetPushVideoTimingActivity.class);
                 intent1.putExtra("type", 0);
+                intent1.putExtra("areaNumber",areaNumber);
                 startActivityForResult(intent1, 0);
                 break;
         }
@@ -213,7 +217,7 @@ public class BuFangBaoJingPlanActivity extends com.massky.sraum.base.BaseActivit
         dialogUtil.loadDialog();
         Map<String, Object> mapbox = new HashMap<String, Object>();
         mapbox.put("token", TokenUtil.getToken(BuFangBaoJingPlanActivity.this));
-        String areaNumber = (String) SharedPreferencesUtil.getData(BuFangBaoJingPlanActivity.this,"areaNumber","");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(BuFangBaoJingPlanActivity.this,"areaNumber","");
         mapbox.put("number", strDID);
         mapbox.put("areaNumber", areaNumber);
         MyOkHttp.postMapObject(ApiHelper.sraum_getWifiCameraTimeZone, mapbox, new Mycallback(new AddTogglenInterfacer() {

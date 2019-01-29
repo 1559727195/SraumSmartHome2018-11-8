@@ -36,15 +36,14 @@ public class WangGuanDetailItemActivity extends BaseActivity {
     RelativeLayout basic_information;
     @InjectView(R.id.status_view)
     StatusView statusView;
-    @InjectView(R.id.device_list)
-    RelativeLayout device_list;
+//    @InjectView(R.id.device_list)
+//    RelativeLayout device_list;
     @InjectView(R.id.btn_cancel_wangguan)
     Button btn_cancel_wangguan;
     @InjectView(R.id.gujian_upgrade_rel)
     RelativeLayout gujian_upgrade_rel;
     @InjectView(R.id.scene_list_rel)
     RelativeLayout scene_list_rel;
-
 
     @Override
     protected int viewId() {
@@ -65,7 +64,7 @@ public class WangGuanDetailItemActivity extends BaseActivity {
         delete_rel.setOnClickListener(this);
         wangguan_set_rel.setOnClickListener(this);
         basic_information.setOnClickListener(this);
-        device_list.setOnClickListener(this);
+//        device_list.setOnClickListener(this);
         btn_cancel_wangguan.setOnClickListener(this);
         gujian_upgrade_rel.setOnClickListener(this);
         scene_list_rel.setOnClickListener(this);

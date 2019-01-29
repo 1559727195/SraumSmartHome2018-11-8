@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:slideswitch="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:slideswitch="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -16,8 +16,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/green"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/green">
 
         <ImageView
             android:id="@+id/back"
@@ -39,624 +39,775 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-    <RelativeLayout
-        android:id="@+id/wangguan_set_rel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="3dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
-
-        <ImageView
-            android:id="@+id/wangguan_set"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/wangguan_set"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <TextView
-
-                android:id="@+id/device_name_txt"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/wangguan_set_rel"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="水浸传感器"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+                android:layout_marginTop="5dp"
+                android:paddingLeft="3dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
-            <TextView
-                android:id="@+id/gateway_id_txt"
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/wangguan_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/wangguan_set"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:id="@+id/device_name_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="水浸传感器"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/gateway_id_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text=""
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/bg_you" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4px"
+                android:layout_marginLeft="@dimen/p17"
+                android:layout_marginRight="@dimen/p17"
+                android:background="@drawable/bg_dash_line"
+                android:layerType="software" />
+            <LinearLayout
+                android:id="@+id/base_linear"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text=""
-                android:textSize="14sp" />
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/basic_information"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="状态"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:id="@+id/status_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:text="离线"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/view_bufang"
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:background="@drawable/bg_dash_line"
+                    android:layerType="software"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rel_bufang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="布防"
+                        android:textColor="#000000" />
+
+                    <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:src="@drawable/bg_you" />-->
+
+                    <com.massky.sraum.widget.SlideSwitchButton
+                        android:id="@+id/slide_btn"
+                        android:layout_width="@dimen/x40"
+                        android:layout_height="@dimen/y16"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/x5"
+                        slideswitch:isOpen="false"
+                        slideswitch:themeColor="@color/green" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/view_bufang_baojing"
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:background="@drawable/bg_dash_line"
+                    android:layerType="software"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rel_bufang_baojing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="移动侦测布防"
+                        android:textColor="#000000" />
+
+                    <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:src="@drawable/bg_you" />-->
+                    <com.massky.sraum.widget.SlideSwitchButton
+                        android:id="@+id/slide_btn_baojing"
+                        android:layout_width="@dimen/x40"
+                        android:layout_height="@dimen/y16"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/x5"
+                        slideswitch:isOpen="false"
+                        slideswitch:themeColor="@color/green" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/view_bufang_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:background="@drawable/bg_dash_line"
+                    android:layerType="software"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rel_bufang_plan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="移动侦测计划"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/bg_you" />
+
+
+                    <com.massky.sraum.widget.SlideSwitchButton
+                        android:id="@+id/slide_btn_plan"
+                        android:layout_width="@dimen/x40"
+                        android:layout_height="@dimen/y16"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/x5"
+                        android:visibility="gone"
+                        slideswitch:isOpen="false"
+                        slideswitch:themeColor="@color/green" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/view_sd_set"
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:background="@drawable/bg_dash_line"
+                    android:layerType="software"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rel_sd_set"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="SD卡设置"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/bg_you" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/view_sdcard_remotevideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:background="@drawable/bg_dash_line"
+                    android:layerType="software"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rel_sdcard_remotevideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="SD卡录像回放"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/bg_you" />
+                </RelativeLayout>
+
+
+                <View
+                    android:id="@+id/view_yaokongqi"
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:background="@drawable/bg_dash_line"
+                    android:layerType="software"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/rel_yaokongqi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="遥控器"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/bg_you" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/device_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="房间"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@+id/room_img_you"
+                        android:text="客厅"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/room_img_you"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/bg_you" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:background="@drawable/bg_dash_line"
+                    android:layerType="software" />
+
+                <RelativeLayout
+                    android:id="@+id/scene_list_rel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
+                    />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:text="其他信息"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:id="@+id/other_jiantou"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/bg_you" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:background="@drawable/bg_dash_line"
+                    android:layerType="software" />
+
+                <androidx.percentlayout.widget.PercentRelativeLayout
+                    android:id="@+id/list_gujian_rel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:id="@+id/first_rel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        app:layout_widthPercent="80%">
+
+                        <TextView
+                            android:id="@+id/dev_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="设备版本"
+                            android:textColor="#000000" />
+
+
+                        <TextView
+                            android:id="@+id/banben_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:text="v1.1.1"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/view_first"
+                        android:layout_width="match_parent"
+                        android:layout_height="4px"
+                        android:layout_below="@+id/first_rel"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/bg_dash_line"
+                        android:layerType="software"
+                        app:layout_widthPercent="95%" />
+
+                    <RelativeLayout
+                        android:id="@+id/second_rel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view_first"
+                        android:layout_centerHorizontal="true"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        app:layout_widthPercent="80%">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="MAC"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:id="@+id/mac_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:text="29:91:AB:93:11"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/view_second"
+                        android:layout_width="match_parent"
+                        android:layout_height="4px"
+                        android:layout_below="@+id/second_rel"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/bg_dash_line"
+                        android:layerType="software"
+                        app:layout_widthPercent="95%" />
+
+                    <RelativeLayout
+                        android:id="@+id/third_rel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view_second"
+                        android:layout_centerHorizontal="true"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:visibility="gone"
+                        app:layout_widthPercent="80%">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="PAN ID"
+                            android:textColor="#000000" />
+
+
+                        <TextView
+                            android:id="@+id/panid_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:text="0xFFFF"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/view_third"
+                        android:layout_width="match_parent"
+                        android:layout_height="4px"
+                        android:layout_below="@+id/third_rel"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/bg_dash_line"
+                        android:layerType="software"
+                        android:visibility="gone"
+                        app:layout_widthPercent="95%" />
+
+                    <RelativeLayout
+                        android:id="@+id/four_rel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view_third"
+                        android:layout_centerHorizontal="true"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:visibility="gone"
+                        app:layout_widthPercent="80%">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:text="信道"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:id="@+id/xindao_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:text="1"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/view_four"
+                        android:layout_width="match_parent"
+                        android:layout_height="4px"
+                        android:layout_below="@+id/four_rel"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/bg_dash_line"
+                        android:layerType="software"
+                        android:visibility="gone"
+                        app:layout_widthPercent="95%" />
+
+                </androidx.percentlayout.widget.PercentRelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wangguan_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+
+
+                <RelativeLayout
+                    android:id="@+id/basic_information_wangguan"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y30"
+                    android:background="#FFFFFF"
+                    android:paddingLeft="@dimen/x3">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/x10"
+                        android:text="基本信息"
+                        android:textColor="#000000" />
+                    <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+                    <!--android:layout_width="40dp"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:id="@+id/touxiang_select"-->
+                    <!--android:src="@drawable/account_touxiang"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@drawable/wode_right_arrow" />
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:background="@drawable/bg_dash_line"
+                    android:layerType="software" />
+
+                <RelativeLayout
+                    android:id="@+id/gujian_upgrade_rel"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y30"
+                    android:background="#FFFFFF"
+                    android:paddingLeft="@dimen/x3">
+                    />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/x10"
+                        android:text="固件更新"
+                        android:textColor="#000000" />
+                    <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+                    <!--android:layout_width="40dp"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:id="@+id/touxiang_select"-->
+                    <!--android:src="@drawable/account_touxiang"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@drawable/wode_right_arrow" />
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:id="@+id/view_gujian_upgrade"
+                    android:background="@drawable/bg_dash_line"
+                    android:layerType="software" />
+
+                <RelativeLayout
+                    android:id="@+id/change_password_rel"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y30"
+                    android:background="#FFFFFF"
+                    android:paddingLeft="@dimen/x3">
+                    />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/x10"
+                        android:text="修改网关密码"
+                        android:textColor="#000000" />
+                    <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+                    <!--android:layout_width="40dp"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:id="@+id/touxiang_select"-->
+                    <!--android:src="@drawable/account_touxiang"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/x10"
+                        android:src="@drawable/wode_right_arrow" />
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4px"
+                    android:layout_marginLeft="@dimen/p17"
+                    android:layout_marginRight="@dimen/p17"
+                    android:background="@drawable/bg_dash_line"
+                    android:id="@+id/view_change_pass"
+                    android:layerType="software" />
+
+            </LinearLayout>
+
+            <androidx.percentlayout.widget.PercentRelativeLayout
+                android:id="@+id/delete_device_rel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp">
+
+                <Button
+                    android:id="@+id/next_step_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/y30"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/add_zigbee_device_btn"
+                    android:text="删除设备"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_widthPercent="80%" />
+            </androidx.percentlayout.widget.PercentRelativeLayout>
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/bg_you" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:layout_marginLeft="@dimen/p17"
-        android:layout_marginRight="@dimen/p17"
-        android:background="@drawable/bg_dash_line"
-        android:layerType="software" />
-
-    <RelativeLayout
-        android:id="@+id/basic_information"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="状态"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/status_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:text="离线"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/view_bufang"
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:layout_marginLeft="@dimen/p17"
-        android:layout_marginRight="@dimen/p17"
-        android:background="@drawable/bg_dash_line"
-        android:layerType="software"
-        android:visibility="gone" />
-
-    <RelativeLayout
-        android:id="@+id/rel_bufang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="布防"
-            android:textColor="#000000" />
-
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:src="@drawable/bg_you" />-->
-
-        <com.massky.sraum.widget.SlideSwitchButton
-            android:id="@+id/slide_btn"
-            android:layout_width="@dimen/x40"
-            android:layout_height="@dimen/y16"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x5"
-            slideswitch:isOpen="false"
-            slideswitch:themeColor="@color/green" />
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/view_bufang_baojing"
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:layout_marginLeft="@dimen/p17"
-        android:layout_marginRight="@dimen/p17"
-        android:background="@drawable/bg_dash_line"
-        android:layerType="software"
-        android:visibility="gone" />
-
-    <RelativeLayout
-        android:id="@+id/rel_bufang_baojing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="移动侦测布防"
-            android:textColor="#000000" />
-
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:src="@drawable/bg_you" />-->
-        <com.massky.sraum.widget.SlideSwitchButton
-            android:id="@+id/slide_btn_baojing"
-            android:layout_width="@dimen/x40"
-            android:layout_height="@dimen/y16"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x5"
-            slideswitch:isOpen="false"
-            slideswitch:themeColor="@color/green" />
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/view_bufang_plan"
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:layout_marginLeft="@dimen/p17"
-        android:layout_marginRight="@dimen/p17"
-        android:background="@drawable/bg_dash_line"
-        android:layerType="software"
-        android:visibility="gone" />
-
-    <RelativeLayout
-        android:id="@+id/rel_bufang_plan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="移动侦测计划"
-            android:textColor="#000000" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/bg_you" />
-
-
-        <com.massky.sraum.widget.SlideSwitchButton
-            android:id="@+id/slide_btn_plan"
-            android:layout_width="@dimen/x40"
-            android:layout_height="@dimen/y16"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone"
-            android:layout_marginRight="@dimen/x5"
-            slideswitch:isOpen="false"
-            slideswitch:themeColor="@color/green" />
-
-
-    </RelativeLayout>
-    <View
-        android:id="@+id/view_sd_set"
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:layout_marginLeft="@dimen/p17"
-        android:layout_marginRight="@dimen/p17"
-        android:background="@drawable/bg_dash_line"
-        android:visibility="gone"
-        android:layerType="software" />
-
-    <RelativeLayout
-        android:id="@+id/rel_sd_set"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingTop="12dp"
-        android:visibility="gone"
-        android:paddingBottom="12dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="SD卡设置"
-            android:textColor="#000000" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/bg_you" />
-    </RelativeLayout>
-    <View
-        android:id="@+id/view_sdcard_remotevideo"
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:layout_marginLeft="@dimen/p17"
-        android:layout_marginRight="@dimen/p17"
-        android:background="@drawable/bg_dash_line"
-        android:visibility="gone"
-        android:layerType="software" />
-
-    <RelativeLayout
-        android:id="@+id/rel_sdcard_remotevideo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingTop="12dp"
-        android:visibility="gone"
-        android:paddingBottom="12dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="SD卡录像回放"
-            android:textColor="#000000" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/bg_you" />
-    </RelativeLayout>
-
-
-    <View
-        android:id="@+id/view_yaokongqi"
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:layout_marginLeft="@dimen/p17"
-        android:layout_marginRight="@dimen/p17"
-        android:background="@drawable/bg_dash_line"
-        android:layerType="software"
-        android:visibility="gone" />
-
-    <RelativeLayout
-        android:id="@+id/rel_yaokongqi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="遥控器"
-            android:textColor="#000000" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/bg_you" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/device_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="房间"
-            android:textColor="#000000" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/room_img_you"
-            android:text="客厅"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
-
-        <ImageView
-            android:id="@+id/room_img_you"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/bg_you" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:layout_marginLeft="@dimen/p17"
-        android:layout_marginRight="@dimen/p17"
-        android:background="@drawable/bg_dash_line"
-        android:layerType="software" />
-
-    <RelativeLayout
-        android:id="@+id/scene_list_rel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp">
-        />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="其他信息"
-            android:textColor="#000000" />
-
-        <ImageView
-            android:id="@+id/other_jiantou"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/bg_you" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4px"
-        android:layout_marginLeft="@dimen/p17"
-        android:layout_marginRight="@dimen/p17"
-        android:background="@drawable/bg_dash_line"
-        android:layerType="software" />
-
-    <androidx.percentlayout.widget.PercentRelativeLayout
-        android:id="@+id/list_gujian_rel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-
-        <RelativeLayout
-            android:id="@+id/first_rel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            app:layout_widthPercent="80%">
-
-            <TextView
-                android:id="@+id/dev_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="设备版本"
-                android:textColor="#000000" />
-
-
-            <TextView
-                android:id="@+id/banben_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:text="v1.1.1"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-        <View
-            android:id="@+id/view_first"
-            android:layout_width="match_parent"
-            android:layout_height="4px"
-            android:layout_below="@+id/first_rel"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_dash_line"
-            android:layerType="software"
-            app:layout_widthPercent="95%" />
-
-        <RelativeLayout
-            android:id="@+id/second_rel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/view_first"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            app:layout_widthPercent="80%">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="MAC"
-                android:textColor="#000000" />
-
-            <TextView
-                android:id="@+id/mac_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:text="29:91:AB:93:11"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-        <View
-            android:id="@+id/view_second"
-            android:layout_width="match_parent"
-            android:layout_height="4px"
-            android:layout_below="@+id/second_rel"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_dash_line"
-            android:layerType="software"
-            app:layout_widthPercent="95%" />
-
-        <RelativeLayout
-            android:id="@+id/third_rel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/view_second"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:visibility="gone"
-            app:layout_widthPercent="80%">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="PAN ID"
-                android:textColor="#000000" />
-
-
-            <TextView
-                android:id="@+id/panid_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:text="0xFFFF"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-        <View
-            android:id="@+id/view_third"
-            android:layout_width="match_parent"
-            android:layout_height="4px"
-            android:layout_below="@+id/third_rel"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_dash_line"
-            android:layerType="software"
-            android:visibility="gone"
-            app:layout_widthPercent="95%" />
-
-        <RelativeLayout
-            android:id="@+id/four_rel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/view_third"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:visibility="gone"
-            app:layout_widthPercent="80%">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="信道"
-                android:textColor="#000000" />
-
-            <TextView
-                android:id="@+id/xindao_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:text="1"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-        <View
-            android:id="@+id/view_four"
-            android:layout_width="match_parent"
-            android:layout_height="4px"
-            android:layout_below="@+id/four_rel"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/bg_dash_line"
-            android:layerType="software"
-            android:visibility="gone"
-            app:layout_widthPercent="95%" />
-
-    </androidx.percentlayout.widget.PercentRelativeLayout>
-
-    <androidx.percentlayout.widget.PercentRelativeLayout
-        android:id="@+id/delete_device_rel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp">
-
-        <Button
-            android:id="@+id/next_step_id"
-            android:layout_height="@dimen/y30"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:text="删除设备"
-            android:background="@drawable/add_zigbee_device_btn"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_widthPercent="80%"
-            android:layout_width="wrap_content" />
-    </androidx.percentlayout.widget.PercentRelativeLayout>
-    </LinearLayout>
     </ScrollView>
 </LinearLayout>

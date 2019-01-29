@@ -2,6 +2,7 @@ package com.massky.sraum.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,16 +10,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.activity.MyDeviceItemActivity;
 import com.massky.sraum.view.ClearEditText;
+import com.massky.sraum.view.ClearLengthEditText;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +67,18 @@ public class RoomListNewAdapter extends BaseAdapter {
 
         viewHolderContentType.room_name_txt.setText(((Map) getList().get(position)).get("name").toString());
 
+        String authType = ((Map) getList().get(position)).get("authType").toString();
+
+        switch (authType) {
+            case "1":
+                viewHolderContentType.swipemenu_layout.setSwipeEnable(true);
+                break;
+            case "2":
+                viewHolderContentType.swipemenu_layout.setSwipeEnable(false);
+                break;
+        }
+
+
         final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
         viewHolderContentType.rename_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +95,7 @@ public class RoomListNewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 finalViewHolderContentType.swipemenu_layout.quickClose();
+
                 showCenterDeleteDialog(((Map) getList().get(position)).get("name").toString(),
                         ((Map) getList().get(position)).get("number").toString(), areaNumber);
             }
@@ -248,7 +268,7 @@ public class RoomListNewAdapter extends BaseAdapter {
         cancel = (TextView) view.findViewById(R.id.call_cancel);
         confirm = (TextView) view.findViewById(R.id.call_confirm);
         tv_title = (TextView) view.findViewById(R.id.tv_title);
-        final ClearEditText edit_password_gateway = (ClearEditText) view.findViewById(R.id.edit_password_gateway);
+        final ClearLengthEditText edit_password_gateway = (ClearLengthEditText) view.findViewById(R.id.edit_password_gateway);
         edit_password_gateway.setText(name);
         edit_password_gateway.setSelection(edit_password_gateway.getText().length());
 //        tv_title.setText("name");

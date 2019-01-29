@@ -57,6 +57,7 @@
         android:layout_marginTop="5dp"
         android:paddingLeft="@dimen/x8"
         android:id="@+id/home_room_manger_rel"
+        android:visibility="gone"
         android:background="#FFFFFF"
         android:layout_height="50dp">
         <ImageView
@@ -267,8 +268,8 @@
 
         <com.massky.sraum.widget.SlideSwitchButton
             android:id="@+id/slide_btn"
-            android:layout_width="@dimen/x55"
-            android:layout_height="@dimen/y18"
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/y15"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/x5"
             android:layout_centerVertical="true"
@@ -303,8 +304,8 @@
             android:text="震动"/>
 
         <com.massky.sraum.widget.SlideSwitchButton
-            android:layout_width="@dimen/x55"
-            android:layout_height="@dimen/y18"
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/y15"
             android:layout_centerVertical="true"
             slideswitch:isOpen="true"
             slideswitch:themeColor="#f200aa96"
@@ -339,8 +340,8 @@
             android:text="获取地理位置"/>
 
         <com.massky.sraum.widget.SlideSwitchButton
-            android:layout_width="@dimen/x55"
-            android:layout_height="@dimen/y18"
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/y15"
             android:layout_centerVertical="true"
             slideswitch:isOpen="true"
             slideswitch:themeColor="#f200aa96"
@@ -407,6 +408,10 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/wode_right_arrow"/>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
 
     <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"

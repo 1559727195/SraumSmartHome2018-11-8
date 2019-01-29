@@ -96,6 +96,7 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
     TextView back;
     private Map map_camera_time_zone;
     private Map map_item_record = new HashMap();//移动侦测某item
+    private String areaNumber;
 
 //	@Override
 //	protected void onCreate(Bundle savedInstanceState) {
@@ -251,6 +252,7 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
         // TODO Auto-generated method stub
         Intent it = getIntent();
         type = it.getIntExtra("type", 0);
+        areaNumber = (String) it.getSerializableExtra("areaNumber");
 //        absValue = it.getIntExtra("value", 0);
 //        value = Math.abs(absValue);
 //        key = it.getIntExtra("key", 0);
@@ -804,7 +806,7 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
     private void edit_camera(String method) {
         map_camera_time_zone = new HashMap();
         map_camera_time_zone.put("token", TokenUtil.getToken(SCameraSetPushVideoTimingActivity.this));
-        String areaNumber = (String) SharedPreferencesUtil.getData(SCameraSetPushVideoTimingActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(SCameraSetPushVideoTimingActivity.this, "areaNumber", "");
         map_camera_time_zone.put("areaNumber", areaNumber);
         map_camera_time_zone.put("number", strDID);
         map_camera_time_zone.put("id", (String) map_item_record.get("number"));
@@ -856,7 +858,7 @@ public class SCameraSetPushVideoTimingActivity extends BaseActivity implements
      */
     private void set_camera(String method) {
         map_camera_time_zone = new HashMap();
-        String areaNumber = (String) SharedPreferencesUtil.getData(SCameraSetPushVideoTimingActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(SCameraSetPushVideoTimingActivity.this, "areaNumber", "");
         map_camera_time_zone.put("areaNumber", areaNumber);
         map_camera_time_zone.put("token", TokenUtil.getToken(SCameraSetPushVideoTimingActivity.this));
         map_camera_time_zone.put("number", strDID);

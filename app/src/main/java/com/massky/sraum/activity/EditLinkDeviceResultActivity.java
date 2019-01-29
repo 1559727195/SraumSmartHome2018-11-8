@@ -31,6 +31,7 @@ import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.adapter.EditLinkDeviceCondinationAndResultAdapter;
 import com.massky.sraum.base.BaseActivity;
+import com.pullableview.PullableRefreshListView;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
@@ -84,6 +85,7 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
     TextView end_time_txt;
     @InjectView(R.id.time_select_linear)
     LinearLayout time_select_linear;
+
     private DialogUtil dialogUtil;
     private Map device_map = new HashMap();
     private Map sensor_map = new HashMap();//传感器map
@@ -102,6 +104,9 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
     private boolean add_condition;
     private boolean link_first;
     private String type = "";
+
+    private EditLinkDeviceCondinationAndResultAdapter editLinkDeviceCondinationAndResultAdapter_asscoted;
+    private List<Map> list_asscoted;
     //    private  List<Map> list_link = new ArrayList<>();
 
     @Override
@@ -132,7 +137,6 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
 
     }
 
-
     void onEvent1() {
         editLinkDeviceCondinationAndResultAdapter_condition = new EditLinkDeviceCondinationAndResultAdapter(EditLinkDeviceResultActivity.this,
                 list_condition, new EditLinkDeviceCondinationAndResultAdapter.ExcutecuteListener() {
@@ -148,6 +152,7 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
 
             }
         });
+
         maclistview_id_condition.setAdapter(editLinkDeviceCondinationAndResultAdapter_condition);
         editLinkDeviceCondinationAndResultAdapter_result = new EditLinkDeviceCondinationAndResultAdapter(EditLinkDeviceResultActivity.this,
                 list_result, new EditLinkDeviceCondinationAndResultAdapter.ExcutecuteListener() {
@@ -172,9 +177,7 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
         get_up_rel.setOnClickListener(this);
         startTime = start_time_txt.getText().toString();
         endTime = end_time_txt.getText().toString();
-
     }
-
 
     void onData1() {
         link_information = (Map) getIntent().getSerializableExtra("link_information");
@@ -202,7 +205,8 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
             end_time_txt.setText(endTime);
             link_first = (boolean) SharedPreferencesUtil.getData(EditLinkDeviceResultActivity.this, "link_first", false);
             type = (String) link_information.get("type") == null ? "" : (String) link_information.get("type");
-            if (link_first) { //第一次编辑联动
+            if (link_first) { //第一
+                // 次编辑联动
                 switch (type) {
                     case "101":
                         link_edit_from_shoudongbutton(linkId);
@@ -297,8 +301,6 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
 
                     }
                 }, EditLinkDeviceResultActivity.this, dialogUtil) {
-
-
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         super.onError(call, e, id);
@@ -313,7 +315,6 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
                         map.put("deviceType", "");
                         map.put("deviceName", "");
                         map.put("name1", "");
-
                         map.put("deviceId", "");
 //                        map.put("linkName", user.deviceLinkInfo.linkName);
                         map.put("condition", "");
@@ -342,7 +343,6 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
                         list_condition.clear();
                         list_result.clear();
                         list_condition.add(map);
-
 
                         for (User.list_scene udsce : user.list) {
                             Map map_device = new HashMap();
@@ -642,7 +642,10 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
                 action = init_action_kongtiao("3", (String) map.get("status"), (String) map.get("mode"), (String) map.get("speed"), (String) map.get("temperature"));
                 break;
             case "4":
-                action = init_action_curtain((String) map.get("status"));
+                action = init_action_curtain((String) map.get("status"), "4");
+                break;
+            case "18":
+                action = init_action_curtain((String) map.get("status"), "18");
                 break;
             case "5":
                 action = init_action_kongtiao("5", (String) map.get("status"), (String) map.get("mode"), (String) map.get("speed"), (String) map.get("temperature"));
@@ -666,8 +669,49 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
     /**
      * 窗帘
      */
-    private String init_action_curtain(String status) {
+    /**
+     * 窗帘
+     */
+    private String init_action_curtain(String status, String type) {
         String action = "";
+        switch (type) {
+            case "4":
+                action = old_curtain_window(status, action);
+                break;
+            case "18":
+                action = new_curtain_window(status, action);
+                break;
+        }
+        return action;
+    }
+
+    /**
+     * A411-A414
+     *
+     * @param status
+     * @param action
+     * @return
+     */
+    private String new_curtain_window(String status, String action) {
+        switch (status) {
+            case "0":
+                action = "关闭";
+                break;
+            case "1":
+                action = "打开";
+                break;
+        }
+        return action;
+    }
+
+    /**
+     * A401
+     *
+     * @param status
+     * @param action
+     * @return
+     */
+    private String old_curtain_window(String status, String action) {
         switch (status) {
             case "0":
                 action = "全部关闭";
@@ -860,8 +904,10 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
             case R.id.back://点击取消弹出框
                 switch (back.getText().toString()) {
                     case "返回":
-                        common_second();
-                        EditLinkDeviceResultActivity.this.finish();
+//                        common_second();
+//                        EditLinkDeviceResultActivity.this.finish();
+//                        AppManager.getAppManager().finishActivity_current(EditLinkDeviceResultActivity.class);
+                        common();
                         break;
                     case "取消":
                         showCenterDeleteDialog();
@@ -1072,8 +1118,8 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
             map_device.put("mode", list_result.get(i).get("mode"));
             map_device.put("temperature", list_result.get(i).get("temperature"));
             map_device.put("speed", list_result.get(i).get("speed"));
-            map_device.put("panelMac", list_result.get(i).get("panelMac") == null? "" :list_result.get(i).get("panelMac"));
-            map_device.put("gatewayMac", list_result.get(i).get("gatewayMac") == null ? "" :list_result.get(i).get("gatewayMac"));
+            map_device.put("panelMac", list_result.get(i).get("panelMac") == null ? "" : list_result.get(i).get("panelMac"));
+            map_device.put("gatewayMac", list_result.get(i).get("gatewayMac") == null ? "" : list_result.get(i).get("gatewayMac"));
             list.add(map_device);
         }
         map.put("deviceList", list);
@@ -1349,8 +1395,10 @@ public class EditLinkDeviceResultActivity extends BaseActivity {
 //        showCenterDeleteDialog();
         switch (back.getText().toString()) {
             case "返回":
-                common_second();
-                EditLinkDeviceResultActivity.this.finish();
+//                common_second();
+//                EditLinkDeviceResultActivity.this.finish();
+                common();
+
                 break;
             case "取消":
                 showCenterDeleteDialog();

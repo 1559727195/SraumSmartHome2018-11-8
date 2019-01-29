@@ -52,9 +52,10 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
     private Context context;//上下文
     private String accountType;
     private RefreshListener refreshListener;
+    private  String authType = "";
+    private  String areaNumber;
 
-
-    public MyDeviceListAdapter(Context context, List<Map> list, List<Integer> listint, List<Integer> listintwo, String accountType, RefreshListener refreshListener) {
+    public MyDeviceListAdapter(Context context, List<Map> list, List<Integer> listint, List<Integer> listintwo, String authType, String accountType, String areaNumber, RefreshListener refreshListener) {
 
         this.list = list;
         this.listint = listint;
@@ -62,6 +63,8 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
         this.context = context;
         this.accountType = accountType;
         this.refreshListener = refreshListener;
+        this.authType = authType;
+        this.areaNumber = areaNumber;
     }
 
     @Override
@@ -99,16 +102,34 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
 
         viewHolderContentType.device_type_pic.setImageResource(listint.get(position));
         viewHolderContentType.hand_device_content.setText(list.get(position).get("name").toString());
-
-        switch (accountType) {
+//        final String authType = (String) SharedPreferencesUtil.getData(context, "authType", "");
+        switch (authType) {
             case "1":
-                viewHolderContentType.swipe_layout.setLeftSwipe(true);
+                viewHolderContentType.swipe_layout.setSwipeEnable(true);
                 break;
             case "2":
-                viewHolderContentType.swipe_layout.setLeftSwipe(false);
+                viewHolderContentType.swipe_layout.setSwipeEnable(false);
                 break;
         }
         final ViewHolderContentType finalViewHolderContentType1 = viewHolderContentType;
+        viewHolderContentType.swipe_context.setOnClickListener(new View.OnClickListener() {//事件被SwipeLayout释放后执行，
+            @Override
+            public void onClick(View view) {
+
+                switch (authType) {
+                    case "1":
+                        break;
+                    case "2":
+                        Intent intent = new Intent(context, MyDeviceItemActivity.class);
+                        intent.putExtra("panelItem", (Serializable) list.get(position));
+                        intent.putExtra("imgtype", (Serializable) listint.get(position));
+                        intent.putExtra("areaNumber", areaNumber);
+                        intent.putExtra("authType", authType);
+                        context.startActivity(intent);
+                        break;
+                }
+            }
+        });
 
         ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
 
@@ -122,9 +143,9 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
                 Intent intent = new Intent(context, MyDeviceItemActivity.class);
                 intent.putExtra("panelItem", (Serializable) list.get(position));
                 intent.putExtra("imgtype", (Serializable) listint.get(position));
+                intent.putExtra("areaNumber", areaNumber);
+                intent.putExtra("authType", authType);
                 context.startActivity(intent);
-
-
             }
 
             @Override
@@ -149,10 +170,8 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
                                 list.get(position).get("boxNumber").toString());
             }
         });
-
         return convertView;
     }
-
 
     //自定义dialog,centerDialog删除对话框
     public void showCenterDeleteDialog(final String name, final String number, final String type, final String boxNumber) {
@@ -197,8 +216,8 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String areaNumber = (String) SharedPreferencesUtil.getData(context, "areaNumber", "");
+//
+//                String areaNumber = (String) SharedPreferencesUtil.getData(context, "areaNumber", "");
 
                 sraum_deleteDevice(areaNumber, number, type, boxNumber);
                 dialog.dismiss();
@@ -307,7 +326,6 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
         ImageView hand_scene_btn;
         LinearLayout swipe_context;
         SwipeMenuLayout swipe_layout;
-
     }
 
     public interface RefreshListener {

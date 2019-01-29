@@ -15,10 +15,12 @@ import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.IntentUtil;
+import com.massky.sraum.Util.LengthUtil;
 import com.massky.sraum.Util.LogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.SharedPreferencesUtil;
+import com.massky.sraum.Util.StringUtils;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
@@ -191,7 +193,7 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
         pafourbtn_sanlu.setOnClickListener(this);
         back.setOnClickListener(this);
         titlecenId.setText("关联面板");
-        getData(0);
+        getData(1);
         replacePanel();
     }
 
@@ -261,59 +263,72 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                             }
                         }
                         panelList.removeAll(panelListnew);
-                        boolean flag = true;
-                        User.panellist upone = panelList.get(0);
-                        for (int i = 0; i < panelList.size(); i++) {
-                            User.panellist up = panelList.get(i);
-                            checkList.add(false);
-                            if (panelNumber.equals(up.id)) {//说明该面板已经关联了该场景，置顶该面板
-                                flag = false;
-                                panelid = up.id;
-                                panelList.set(0, up);
-                                panelList.set(i, upone);//替换位置
-                                LogUtil.eLength("改变图片", "数据问题");
+                        boolean flag = false;
+                        if(panelList.size() != 0) {
+                            User.panellist upone = panelList.get(0);
+                            for (int i = 0; i < panelList.size(); i++) {
+                                User.panellist up = panelList.get(i);
+                                checkList.add(false);
+                                if (panelNumber.equals(up.id)) {//说明该面板已经关联了该场景，置顶该面板
+                                    flag = true;
+                                    panelid = up.id;
+                                    panelList.set(0, up);
+                                    panelList.set(i, upone);//替换位置
+                                    LogUtil.eLength("改变图片", "数据问题");
 //                                panelrela.setVisibility(View.VISIBLE);//主布局显示
-                                setPicture(up.type, up.button5Type, pafivebtn, 5);//pafivebtn为下面第五个relativelayout里面的图片
-                                setPicture(up.type, up.button6Type, pasixbtn, 6);
-                                setPicture(up.type, up.button7Type, pasevenbtn, 7);
-                                setPicture(up.type, up.button8Type, paeightbtn, 8);
-                                setLinear(up.type);
-                                pafivetext.setText(up.button5Name);
-                                pasixtext.setText(up.button6Name);
-                                paseventext.setText(up.button7Name);
-                                paeighttext.setText(up.button8Name);
-                                setFlag(up.button5Type, up.button6Type, up.button7Type, up.button8Type);
-                                switch (index) {
-                                    case 1:
-                                        checkList.set(0, true);
-                                        break;
-                                }
-
-                            } else {
+                                    setPicture(up.type, up.button5Type, pafivebtn, 5);//pafivebtn为下面第五个relativelayout里面的图片
+                                    setPicture(up.type, up.button6Type, pasixbtn, 6);
+                                    setPicture(up.type, up.button7Type, pasevenbtn, 7);
+                                    setPicture(up.type, up.button8Type, paeightbtn, 8);
+                                    setLinear(up.type);
+                                    pafivetext.setText(LengthUtil.doit_spit_str(up.button5Name == null ? "" :
+                                            up.button5Name));
+                                    pasixtext.setText(LengthUtil.doit_spit_str(up.button6Name == null ? "" :
+                                            up.button6Name));
+                                    paseventext.setText(LengthUtil.doit_spit_str(up.button7Name == null ? "" :
+                                            up.button7Name));
+                                    paeighttext.setText(LengthUtil.doit_spit_str(up.button8Name == null ? "" :
+                                            up.button8Name));
+                                    setFlag(up.button5Type, up.button6Type, up.button7Type, up.button8Type);
+                                    switch (index) {
+                                        case 1:
+                                            checkList.set(0, true);
+                                            break;
+                                    }
+                                } else {
 //                                checkList.add(false);
-                                switch (index) {
-                                    case 1:
-                                        checkList.set(i, false);
-                                        break;
+                                    switch (index) {
+                                        case 1:
+                                            checkList.set(i, false);
+                                            break;
+                                    }
                                 }
                             }
                         }
-//                        for (int i = 0; i < checkList.size(); i++) {
-//                            if (flag) {
-//                                checkList.set(i, false);
-//                            } else {
-//                                if (i == 0) {
-////                                    checkList.set(0, true);
-//                                } else {
-//                                    checkList.set(i, false);
-//                                }
-//                            }
-//                        }
+
+                        if (flag) {//该场景关联了面板，实现如果该场景未关联该面板的按钮，则面板框不显示，面板不被选中（待实现）
+                            panelrela.setVisibility(View.VISIBLE);//主布局显示
+                        } else {
+                            panelrela.setVisibility(View.GONE);//主布局显示
+                        }
+
                         adapter = new AsccociatedpanelAdapter(AssociatedpanelActivity.this, panelList, checkList);
                         panelistview.setAdapter(adapter);
+
+//
+//                        switch (index) {
+//                            case 1:
+//                                onitemclick(0);
+//                                break;
+//                        }
                         switch (index) {
                             case 1:
-                                onitemclick(0);
+                                for (int i = 0; i < checkList.size(); i++) {
+                                    if (checkList.get(i)) {
+                                        onitemclick(0);
+                                        break;
+                                    }
+                                }
                                 break;
                         }
                     }
@@ -338,11 +353,13 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                 LogUtil.eLength("这是进入A201", "看看操作");
                 break;
             case "A202":
+            case "A411":
             case "A311":
                 panelineartwo.setVisibility(View.VISIBLE);
                 LogUtil.eLength("这是进入A202", "进入了");
                 break;
             case "A203":
+            case "A412":
             case "A312":
             case "A321":
                 panelinearthree.setVisibility(View.VISIBLE);
@@ -353,6 +370,8 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
             case "A313":
             case "A322":
             case "A331":
+            case "A413":
+            case "A414":
                 panelinearfour.setVisibility(View.VISIBLE);
                 break;
             case "A303"://三路调光
@@ -390,21 +409,23 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
         } else {
             flagimageight = "3";
         }
+        String scenename = LengthUtil.doit_spit_str(sceneName == null ? "" :
+                sceneName);
         switch (buttonNumber) {
             case "5":
-                pafivetext.setText(sceneName);
+                pafivetext.setText(scenename);
                 flagimagefive = "2";
                 break;
             case "6":
-                pasixtext.setText(sceneName);
+                pasixtext.setText(scenename);
                 flagimagesix = "2";
                 break;
             case "7":////说明该面板7按钮已经关联了该场景，置顶该面板-flagimageseven = "2";
-                paseventext.setText(sceneName);
+                paseventext.setText(scenename);
                 flagimageseven = "2";
                 break;
             case "8":
-                paeighttext.setText(sceneName);
+                paeighttext.setText(scenename);
                 flagimageight = "2";
                 break;
         }
@@ -413,6 +434,9 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
 
     @Override
     public void onClick(View v) {
+        String scenename =
+                LengthUtil.doit_spit_str(sceneName == null?"":
+        sceneName);
         switch (v.getId()) {
             case R.id.ptlitone:
                 ToastUtil.showToast(AssociatedpanelActivity.this, "不可以设置场景");
@@ -495,7 +519,7 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                             flagimagefive = "2";
                             buttonNumber = "5";
                             panelNumber = panelid;
-                            pafivetext.setText(sceneName);
+                            pafivetext.setText(scenename);
                             panelRelation(panelNumber);
                             break;
                         case "2":
@@ -504,10 +528,16 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                             panelRelation("0");
                             break;
                         case "3":
-                            belowtext_id.setText("确定从 " +
-                                    pafivetext.getText().toString() + " 替换成 " + sceneName + " 吗？");
-                            btnflag = "5";
-                            dialogUtilview.loadViewdialog();
+                            if ( StringUtils.replaceBlank(pafivetext.getText().toString()).equals(sceneName)) {
+                                flagimagefive = "1";
+                                buttonNumber = "0";
+                                panelRelation("0");
+                            } else {
+                                belowtext_id.setText("确定从 " +
+                                        StringUtils.replaceBlank(pafivetext.getText().toString()) + " 替换成 " + sceneName + " 吗？");
+                                btnflag = "5";
+                                dialogUtilview.loadViewdialog();
+                            }
                             break;
                         default:
                             break;
@@ -526,7 +556,7 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                             flagimagesix = "2";
                             buttonNumber = "6";
                             panelNumber = panelid;
-                            pasixtext.setText(sceneName);
+                            pasixtext.setText(scenename);
                             panelRelation(panelNumber);
                             break;
                         case "2":
@@ -536,10 +566,17 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                             panelRelation("0");
                             break;
                         case "3":
-                            belowtext_id.setText("确定从 " +
-                                    pasixtext.getText().toString() + " 替换成 " + sceneName + " 吗？");
-                            btnflag = "6";
-                            dialogUtilview.loadViewdialog();
+                            if (StringUtils.replaceBlank(pasixtext.getText().toString()).equals(sceneName)) {
+                                LogUtil.eLength("取消行为", "取消数据");
+                                flagimagesix = "1";
+                                buttonNumber = "0";
+                                panelRelation("0");
+                            } else {
+                                belowtext_id.setText("确定从 " +
+                                        StringUtils.replaceBlank(pasixtext.getText().toString()) + " 替换成 " + sceneName + " 吗？");
+                                btnflag = "6";
+                                dialogUtilview.loadViewdialog();
+                            }
                             break;
                         default:
                             break;
@@ -557,7 +594,7 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                             flagimageseven = "2";
                             buttonNumber = "7";
                             panelNumber = panelid;
-                            paseventext.setText(sceneName);
+                            paseventext.setText(scenename);
                             panelRelation(panelNumber);
                             break;
                         case "2"://取消该面板关联的场景
@@ -567,10 +604,17 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                             panelRelation("0");
                             break;
                         case "3"://将该面板按钮7关联的场景切换为最近场景
-                            belowtext_id.setText("确定从 " +
-                                    paseventext.getText().toString() + " 替换成 " + sceneName + " 吗？");
-                            btnflag = "7";
-                            dialogUtilview.loadViewdialog();
+                            if ( StringUtils.replaceBlank(paseventext.getText().toString()).equals(sceneName)) {
+                                LogUtil.eLength("直接取消状态", "取消行为");
+                                flagimageseven = "1";
+                                buttonNumber = "0";
+                                panelRelation("0");
+                            } else {
+                                belowtext_id.setText("确定从 " +
+                                        StringUtils.replaceBlank(paseventext.getText().toString()) + " 替换成 " + sceneName + " 吗？");
+                                btnflag = "7";
+                                dialogUtilview.loadViewdialog();
+                            }
                             break;
                         default:
                             break;
@@ -588,7 +632,7 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                             flagimageight = "2";
                             buttonNumber = "8";
                             panelNumber = panelid;
-                            paeighttext.setText(sceneName);
+                            paeighttext.setText(scenename);
                             panelRelation(panelNumber);
                             break;
                         case "2":
@@ -598,10 +642,17 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                             panelRelation("0");
                             break;
                         case "3":
-                            belowtext_id.setText("确定从 " +
-                                    paeighttext.getText().toString() + " 替换成 " + sceneName + " 吗？");
-                            btnflag = "8";
-                            dialogUtilview.loadViewdialog();
+                            if ( StringUtils.replaceBlank(paeighttext.getText().toString()).equals(sceneName)) {
+                                LogUtil.eLength("相等传输数据", "传入");
+                                flagimageight = "1";
+                                buttonNumber = "0";
+                                panelRelation("0");
+                            } else {
+                                belowtext_id.setText("确定从 " +
+                                        StringUtils.replaceBlank(paeighttext.getText().toString())+ " 替换成 " + sceneName + " 吗？");
+                                btnflag = "8";
+                                dialogUtilview.loadViewdialog();
+                            }
                             break;
                         default:
                             break;
@@ -670,10 +721,14 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
         LogUtil.eLength("查看name", fivename + "那么" + sixname + "数据" +
                 sevenname + "查看" + eightname + "你看呢");
         compareName(fivename, sixname, sevenname, eightname);
-        pafivetext.setText(fivename);
-        pasixtext.setText(sixname);
-        paseventext.setText(sevenname);
-        paeighttext.setText(eightname);
+        pafivetext.setText((LengthUtil.doit_spit_str(fivename == null? "" :
+                fivename)));
+        pasixtext.setText((LengthUtil.doit_spit_str(sixname == null? "" :
+                sixname)));
+        paseventext.setText((LengthUtil.doit_spit_str(sevenname == null? "" :
+                sevenname)));
+        paeighttext.setText((LengthUtil.doit_spit_str(eightname == null? "" :
+                eightname)));
         LogUtil.eLength("点击数据", type + "查看数据" + button5Type + "12" + button6Type + "34" +
                 button7Type + "45" + button8Type + "67");
         checkPosition(position);
@@ -692,12 +747,14 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
                 break;
             case "A202":
             case "A311":
+            case "A411"://1窗帘相当于两个按钮
                 panelineartwo.setVisibility(View.VISIBLE);
                 LogUtil.eLength("这是进入A202", "进入了");
                 break;
             case "A203":
             case "A312":
             case "A321":
+            case "A412"://1窗帘相当于两个按钮
                 panelinearthree.setVisibility(View.VISIBLE);
                 LogUtil.eLength("这是进入A203", "看看操作");
 //                paonerela.setVisibility(View.GONE);
@@ -706,6 +763,8 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
             case "A313":
             case "A322":
             case "A331":
+            case "A413"://1窗帘相当于两个按钮
+            case "A414":
                 panelinearfour.setVisibility(View.VISIBLE);
                 break;
             case "A301":
@@ -804,65 +863,64 @@ public class AssociatedpanelActivity extends BaseActivity implements AdapterView
     private void setPicture(String panel_type, String type, ImageView button, int index) {//buttonType是按钮关联的场景类型
         LogUtil.eLength("这是类型数据", type + "查看类型");
         button.setVisibility(View.VISIBLE);
-        if (type != null) {
-            switch (type) {
-                case "1":
-                    button.setImageResource(R.drawable.add_scene_homein);
-                    break;
-                case "2":
-                    button.setImageResource(R.drawable.add_scene_homeout);
-                    break;
-                case "3":
-                    button.setImageResource(R.drawable.add_scene_sleep);
-                    break;
-                case "4":
-                    button.setImageResource(R.drawable.add_scene_nightlamp);
-                    break;
-                case "5":
-                    button.setImageResource(R.drawable.add_scene_getup);
-                    break;
-                case "6":
-                    button.setImageResource(R.drawable.add_scene_cup);
-                    break;
-                case "7":
-                    button.setImageResource(R.drawable.add_scene_book);
-                    break;
-                case "8":
-                    button.setImageResource(R.drawable.add_scene_moive);
-                    break;
-                case "9":
-                    button.setImageResource(R.drawable.add_scene_meeting);
-                    break;
-                case "10":
-                    button.setImageResource(R.drawable.add_scene_cycle);
-                    break;
-                case "11":
-                    button.setImageResource(R.drawable.add_scene_noddle);
-                    break;
-                case "12":
-                    button.setImageResource(R.drawable.add_scene_lampon);
-                    break;
-                case "13":
-                    button.setImageResource(R.drawable.add_scene_lampoff);
-                    break;
-                case "14":
-                    button.setImageResource(R.drawable.defaultpic);
-                    break;
-                default://没有设置场景
-                    switch (panel_type) {
-                        case "A303":
-                            if (index != 8) {
-                                button.setImageResource(R.drawable.light_turn_off);
-                            } else {
-                                button.setVisibility(View.GONE);
-                            }
-                            break;
-                        default:
-                            button.setVisibility(View.GONE);
-                            break;
-                    }
-                    break;
-            }
-        }
+//        if (type != null) {
+//            switch (type) {
+//                case "1":
+//                    button.setImageResource(R.drawable.add_scene_homein);
+//                    break;
+//                case "2":
+//                    button.setImageResource(R.drawable.add_scene_homeout);
+//                    break;
+//                case "3":
+//                    button.setImageResource(R.drawable.add_scene_sleep);
+//                    break;
+//                case "4":
+//                    button.setImageResource(R.drawable.add_scene_nightlamp);
+//                    break;
+//                case "5":
+//                    button.setImageResource(R.drawable.add_scene_getup);
+//                    break;
+//                case "6":
+//                    button.setImageResource(R.drawable.add_scene_cup);
+//                    break;
+//                case "7":
+//                    button.setImageResource(R.drawable.add_scene_book);
+//                    break;
+//                case "8":
+//                    button.setImageResource(R.drawable.add_scene_moive);
+//                    break;
+//                case "9":
+//                    button.setImageResource(R.drawable.add_scene_meeting);
+//                    break;
+//                case "10":
+//                    button.setImageResource(R.drawable.add_scene_cycle);
+//                    break;
+//                case "11":
+//                    button.setImageResource(R.drawable.add_scene_noddle);
+//                    break;
+//                case "12":
+//                    button.setImageResource(R.drawable.add_scene_lampon);
+//                    break;
+//                case "13":
+//                    button.setImageResource(R.drawable.add_scene_lampoff);
+//                    break;
+//                case "14":
+//                    button.setImageResource(R.drawable.defaultpic);
+//                    break;
+//                default://没有设置场景
+//                    switch (panel_type) {
+//                        case "A303":
+//                            if (index != 8) {
+//                                button.setImageResource(R.drawable.light_turn_off);
+//                            } else {
+//                                button.setVisibility(View.GONE);
+//                            }
+//                            break;
+//                        default:
+//                            button.setVisibility(View.GONE);
+//                            break;
+//                    }
+//                    break;
+//            }
     }
 }

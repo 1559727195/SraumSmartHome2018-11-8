@@ -7,15 +7,14 @@ package com.massky.sraum.Utils;
 public class ApiHelper {
     //    public static String api = "http://192.168.0.1/cgi-bin/sraum-test";
     //https://app.sraum.com/SmartHome/api/v2/xxxxx
-
+//            public static String api = "https://app.sraum.com/SmartHome/";//正式：
     //https://test.sraum.com/SmartHome/api/v2/xxxxx接口地址
     public static String api = "https://test.sraum.com/SmartHome/api/v2/";
-    //    public static String api = "https://app.sraum.com/SmartHome/api/v2/";
+    //public static String api = "https://app.sraum.com/SmartHome/api/v2/";
     public static String sraum_register = api + "sraum_register";
     public static String sraum_getToken = api + "sraum_getToken";
     public static String sraum_checkMobilePhone = api + "sraum_checkMobilePhone";
     public static String sraum_login = api + "sraum_login";
-
     public static String Sraum_SearchGateway = "sraum_searchGateway";
     //sraum_setGatewayTime
     public static String Sraum_SetGatewayTime = "sraum_setGatewayTime";
@@ -38,13 +37,11 @@ public class ApiHelper {
     public static String sraum_addRoom = api + "sraum_addRoom";
     public static String sraum_updateRoomName = api + "sraum_updateRoomName";
     public static String sraum_deleteRoom = api + "sraum_deleteRoom";
-    public static String sraum_getGatewayInfo = api;
+    public static String sraum_getGatewayInfo = api + "sraum_getGatewayInfo";
     public static String sraum_isLogin = api + "sraum_isLogin";
     public static String sraum_getAllArea = api + "sraum_getAllArea";
     public static String sraum_changeArea = api + "sraum_changeArea";
-    public static String
-
-            sraum_deviceControl = api + "sraum_deviceControl";
+    public static String sraum_deviceControl = api + "sraum_deviceControl";
     public static String sraum_getAllDevice = api + "sraum_getAllDevice";
     public static String sraum_getBoxStatus = api + "sraum_getBoxStatus";
     public static String sraum_getAllPanel = api + "sraum_getAllPanel";
@@ -86,8 +83,8 @@ public class ApiHelper {
     public static String sraum_updateDeviceLinkName = api + "sraum_updateDeviceLinkName";
     public static String sraum_deleteDeviceLink = api + "sraum_deleteDeviceLink";
     public static String sraum_setDeviceLinkIsUse = api + "sraum_setDeviceLinkIsUse";
-    public static String UpdateApkUrl ;
-    public static String sraum_getVersion;
+    public static String UpdateApkUrl = "https://massky-download.oss-cn-hangzhou.aliyuncs.com/";
+    public static String sraum_getVersion = api + "sraum_getVersion";
     public static String sraum_updateWifiCameraTimeZone = api + "sraum_updateWifiCameraTimeZone";
     public static String sraum_setWifiCameraTimeZone = api + "sraum_setWifiCameraTimeZone";
     public static String sraum_addWifiCamera = api + "sraum_addWifiCamera";
@@ -119,4 +116,15 @@ public class ApiHelper {
     public static String sraum_deleteMessage = api + "sraum_deleteMessage";
     public static String sraum_setReadStatus = api + "sraum_setReadStatus";
     public static String sraum_getMessageById = api + "sraum_getMessageById";
+    public static String sraum_getAccountInfo = api + "sraum_getAccountInfo";
+    public static String sraum_updateAccountInfo = api + "sraum_updateAccountInfo";
+    public static String sraum_updateAvatar = api + "sraum_updateAvatar";
+    public static String sraum_updateUserId = api + "sraum_updateUserId";
+    public static String sraum_setComplaint = api + "sraum_setComplaint";
+    public static String sraum_getComplaint = api + "sraum_getComplaint";
+    public static String sraum_updateFamilyName = api + "sraum_updateFamilyName";
+    public static String sraum_getGatewayUpdate = api + "sraum_getGatewayUpdate";
+    public static String sraum_updateGateway = api + "sraum_updateGateway";
+    public static String sraum_updateGatewayPassword = api + "sraum_updateGatewayPassword";
+    public static String sraum_getComplaintById = api + "sraum_getComplaintById";
 }

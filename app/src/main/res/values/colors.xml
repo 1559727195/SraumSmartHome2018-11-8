@@ -22,6 +22,7 @@
     <color name="e5c">#5cb5f6</color>
     <color name="ec">#ecebed</color>
     <color name="fo">#F0F0F0</color>
+    <color name="dark_bg_70p">#bb000000</color>
 
     <color name="eb">#ebeaec</color>
     <color name="cfc">#FCFCFC</color>
@@ -242,4 +243,6 @@
     <color name="color_ptz_blue">#ff0044aa</color>
     <color name="button_bg_no">#60ffffff</color>
     <color name="color_bg">#ff666666</color>
+    <color name="dark">#000000</color>
+    <color name="dark_gray_new">#AAAAAB</color>
 </resources>

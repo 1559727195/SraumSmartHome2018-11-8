@@ -97,6 +97,7 @@ public class SelectiveLinkageDeviceDetailSecondActivity extends BaseActivity imp
         //  intent.putExtra("boxName", (Serializable) listbox.get(position));
         boxName = (String) getIntent().getSerializableExtra("boxName");
         boxNumber = (String) getIntent().getSerializableExtra("boxNumber");
+        gatewayMAC =  (String) getIntent().getSerializableExtra("gatewayMac");
         if (panelName != null) project_select.setText(panelName);
         getData(true);
         selectexcutesceneresultadapter = new SelectLinkageItemSecondAdapter(SelectiveLinkageDeviceDetailSecondActivity.this,
@@ -228,6 +229,10 @@ public class SelectiveLinkageDeviceDetailSecondActivity extends BaseActivity imp
                 panel_txt_promat.setText("执行开关");
                 break;
             case "A401":
+            case "A411":
+            case "A412":
+            case "A413":
+            case "A414":
                 curtain_window();
                 panel_txt_promat.setText("执行开关");
                 break;
@@ -350,6 +355,9 @@ public class SelectiveLinkageDeviceDetailSecondActivity extends BaseActivity imp
                     common("", "内纱", "4", i);
                     common("", "外纱", "4", i);
                     common("", "全部", "4", i);
+                    break;
+                case "18":
+                    common("", deviceActionList.get(i).get("name").toString(), "18", i);
                     break;
             }
         }
@@ -501,6 +509,10 @@ public class SelectiveLinkageDeviceDetailSecondActivity extends BaseActivity imp
                 back_onclick(position, view);
                 break;
             case "A401"://窗帘的话
+            case "A411"://
+            case "A412"://
+            case "A413"://
+            case "A414"://
                 back_onclick_window(position);
                 break;
             case "A511"://列表
@@ -571,6 +583,7 @@ public class SelectiveLinkageDeviceDetailSecondActivity extends BaseActivity imp
 
                 break;
             case "4":
+            case "18":
 //                init_device_upgrade_action(index_device, "status", map.get("status").toString());
                 send_map_to_second(list_map.get(position));
                 break;

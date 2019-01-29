@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.massky.sraum.R;
 import com.massky.sraum.activity.EditSceneSecondActivity;
+import com.massky.sraum.activity.HistoryBackActivity;
+import com.massky.sraum.activity.HistoryMessageDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +24,9 @@ import java.util.Map;
  */
 
 public class HistoryBackAdapter extends BaseAdapter {
-    private List<Map> list = new ArrayList<>();
 
     public HistoryBackAdapter(Context context, List<Map> list) {
         super(context, list);
-        this.list = list;
     }
 
     @Override
@@ -35,37 +35,52 @@ public class HistoryBackAdapter extends BaseAdapter {
         if (null == convertView) {
             viewHolderContentType = new ViewHolderContentType();
             convertView = LayoutInflater.from(context).inflate(R.layout.history_back_item, null);
-//            viewHolderContentType.device_type_pic = (ImageView) convertView.findViewById(R.id.device_type_pic);
-//            viewHolderContentType.hand_device_content = (TextView) convertView.findViewById(R.id.hand_device_content);
-//            viewHolderContentType.swipe_context = (LinearLayout) convertView.findViewById(R.id.swipe_context);
-//            viewHolderContentType.hand_gateway_content = (TextView) convertView.findViewById(R.id.hand_gateway_content);
-//            viewHolderContentType. hand_scene_btn = (Button) convertView.findViewById(R.id. hand_scene_btn);
+            viewHolderContentType.device_type_pic = (ImageView) convertView.findViewById(R.id.device_type_pic);
+            viewHolderContentType.hand_device_content = (TextView) convertView.findViewById(R.id.hand_device_content);
+            viewHolderContentType.swipe_context = (LinearLayout) convertView.findViewById(R.id.swipe_context);
+            viewHolderContentType.hand_gateway_content = (TextView) convertView.findViewById(R.id.hand_gateway_content);
+            viewHolderContentType.hand_scene_btn = (TextView) convertView.findViewById(R.id.hand_scene_btn);
+
 
             convertView.setTag(viewHolderContentType);
         } else {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
 
-//        int element = (Integer) list.get(position).get("image");
-//        viewHolderContentType.device_type_pic.setImageResource(element);
-//        viewHolderContentType.hand_device_content.setText(list.get(position).get("name").toString());
-//
-//        viewHolderContentType.swipe_context.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, EditSceneSecondActivity.class);
-//                context.startActivity(intent);
-//            }
-//        });
+
+        String type = ((Map) getList().get(position)).get("type").toString();
+        switch (type) {
+            case "1":
+                viewHolderContentType.hand_device_content.setText("功能建议");
+                break;
+            case "2":
+                viewHolderContentType.hand_device_content.setText("性能问题");
+                break;
+            case "3":
+                viewHolderContentType.hand_device_content.setText("其他");
+                break;
+        }
+
+        viewHolderContentType.hand_gateway_content.setText(((Map) getList().get(position)).get("content").toString());
+        viewHolderContentType.hand_scene_btn.setText(((Map) getList().get(position)).get("dt").toString());
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, HistoryMessageDetailActivity.class);
+                intent.putExtra("id",  ((Map) getList().get(position)).get("id").toString());
+                context.startActivity(intent);
+            }
+        });
+
         return convertView;
     }
 
     class ViewHolderContentType {
-       ImageView device_type_pic;
-       TextView  hand_device_content;
-       TextView  hand_gateway_content;
-       Button    hand_scene_btn;
-       LinearLayout swipe_context;
+        ImageView device_type_pic;
+        TextView hand_device_content;
+        TextView hand_gateway_content;
+        TextView hand_scene_btn;
+        LinearLayout swipe_context;
 
     }
 }

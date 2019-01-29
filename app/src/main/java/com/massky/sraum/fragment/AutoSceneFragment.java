@@ -2,6 +2,7 @@ package com.massky.sraum.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 
 import com.AddTogenInterface.AddTogglenInterfacer;
@@ -70,16 +71,20 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
     protected void onView(View view) {
         dialogUtil = new DialogUtil(getActivity());
         EventBus.getDefault().register(this);
-        autoSceneAdapter = new AutoSceneAdapter(getActivity(),list_atuo_scene, dialogUtil, new AutoSceneAdapter.RefreshListener() {
+        autoSceneAdapter = new AutoSceneAdapter(getActivity(), list_atuo_scene, dialogUtil, new AutoSceneAdapter.RefreshListener() {
             @Override
             public void refresh() {
 //                get_myDeviceLink();
 //                common_second();
-                sraum_getAutoScenes();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sraum_getAutoScenes();
+                    }
+                }).start();
                 common_second();
                 MyEvent event = new MyEvent();
                 event.setMsg("刷新");
-
                 EventBus.getDefault().post(event);
             }
         });
@@ -126,7 +131,13 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
     @Override
     public void onResume() {
         super.onResume();
-        sraum_getAutoScenes();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sraum_getAutoScenes();
+            }
+        }).start();
+
         common_second();
         if (first_add == 1) {
             first_add = 2;
@@ -146,9 +157,9 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
         String areaNumber = (String) SharedPreferencesUtil.getData(getActivity(), "areaNumber", "");
         map.put("areaNumber", areaNumber);
         map.put("token", TokenUtil.getToken(getActivity()));
-        if (dialogUtil != null) {
-            dialogUtil.loadDialog();
-        }
+//        if (dialogUtil != null) {
+//            dialogUtil.loadDialog();
+//        }
 
 //        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(SelectSensorActivity.this));
         MyOkHttp.postMapString(ApiHelper.sraum_getAutoScenes
@@ -198,11 +209,31 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
                             list_atuo_scene.add(map);
                         }
 
-                        autoSceneAdapter.addAll(list_atuo_scene);//不要new adapter
-                        autoSceneAdapter.notifyDataSetChanged();
+                        handler.sendEmptyMessage(0);
                     }
                 });
     }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    if (list_atuo_scene.size() == 0) {
+                        xListView_scan.setVisibility(View.GONE);
+                    } else {
+                        xListView_scan.setVisibility(View.VISIBLE);
+                    }
+
+                    autoSceneAdapter.addAll(list_atuo_scene);//不要new adapter
+                    autoSceneAdapter.notifyDataSetChanged();
+                    break;
+                case 1:
+
+                    break;
+            }
+        }
+    };
 
     /**
      * 清除联动信息
@@ -228,9 +259,13 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
         String status = event.getMsg();
         switch (status) {
             case "scene_second":
-                sraum_getAutoScenes();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sraum_getAutoScenes();
+                    }
+                }).start();
                 break;
         }
-
     }
 }

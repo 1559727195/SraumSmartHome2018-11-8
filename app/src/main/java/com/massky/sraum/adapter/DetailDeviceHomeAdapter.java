@@ -82,7 +82,6 @@ public class DetailDeviceHomeAdapter extends android.widget.BaseAdapter {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
 
-
         final ViewHolderContentType mHolder = viewHolderContentType;
         mHolder.device_name.setText(list.get(position).get("name")== null ?
         "": list.get(position).get("name").toString());
@@ -93,213 +92,218 @@ public class DetailDeviceHomeAdapter extends android.widget.BaseAdapter {
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
                     mHolder.status_txt.setText("开");//#E2C891
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_quankai_40_active);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_deng_active);
                 } else {
                     mHolder.status_txt.setText("关");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_deng_40);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_deng);
                 }
                 break;
             case "2":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_tiaoguang_40_active);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_tiaoguang_70);
                     mHolder.status_txt.setText("开");//#E2C891
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                 } else {
-//                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_tiaoguang_40);
+//                    mHolder.itemrela_id.setBackgro
+// undResource(R.drawable.markh);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_tiaoguang_70_sy);
                     mHolder.status_txt.setText("关");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
             case "3":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_kongtiao_40_active);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_kongtiaomb_70);
                     mHolder.status_txt.setText("开");//#E2C891
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_kongtiao_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_kongtiaomb_70_sy);
                     mHolder.status_txt.setText("关");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
 
                 break;
             case "4":
+            case "18":
                 String curstatus = list.get(position).get("status").toString();
                 if (curstatus.equals("1") || curstatus.equals("3") || curstatus.equals("4")
                         || curstatus.equals("4") || curstatus.equals("5") || curstatus.equals("8")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("开");//#E2C891
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_chuanglian_40_active);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_chuanglianmb_70);
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
                     mHolder.status_txt.setText("关");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_chuanglian_40);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_chuanglianmb_70_sy);
                 }
                 break;
             case "5":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("开");//#E2C891
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_xinfengmokuai_70);
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
                     mHolder.status_txt.setText("关");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_xinfengmokuai_70_sy);
                 }
-                mHolder.imageitem_id.setImageResource(R.drawable.freshair);
                 break;
             case "6":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("开");//#E2C891
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_dinuanmokuai_70);
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
                     mHolder.status_txt.setText("关");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_dinuanmokuai_70_sy);
                 }
-                mHolder.imageitem_id.setImageResource(R.drawable.floorheating);
                 break;
 
 
             case "7":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_menci_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_menci_70);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("打开");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_menci_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_menci_70_sy);
                     mHolder.status_txt.setText("关闭");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
             case "8":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_rentiganying_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_rentiganying_70);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("有人");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_rentiganying_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_rentiganying_70_sy);
                     mHolder.status_txt.setText("正常");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
 
                 break;
             case "9":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_shuijin_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_shuijin_70);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("报警");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
                     mHolder.imageitem_id.setImageResource(R.drawable.icon_shuijin_40);
                     mHolder.status_txt.setText("正常");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_shuijin_70_sy);
                 }
 
                 break;
             case "10":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_pm25_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_pm25_70);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
 //                    mHolder.status_txt.setText("报警");//#E2C891
                     mHolder.status_txt.setText(list.get(position).get("dimmer").toString());//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_pm25_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_pm25_70_sy);
 //                    mHolder.status_txt.setText("正常");
                     mHolder.status_txt.setText(list.get(position).get("dimmer").toString());//#E2C891
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
             case "11":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_jinjianniu_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_jinjianniu_70);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("报警");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_jinjianniu_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_jinjianniu_70_sy);
                     mHolder.status_txt.setText("正常");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
             case "12":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_rucebjq_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_toa_70);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("报警");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_rucebjq_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_toa_70_sy);
                     mHolder.status_txt.setText("正常");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
             case "13":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_yanwubjq_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_yanwucgq_70);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("报警");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_yanwubjq_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_yanwucgq_70_sy);
                     mHolder.status_txt.setText("正常");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
             case "14":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_ranqibjq_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_tianranqibjq_70);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("报警");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_ranqibjq_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_tianranqibjq_70_sy);
                     mHolder.status_txt.setText("正常");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
             case "15":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_zhinengmensuo_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_zhinengmensuo_70);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("打开");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_zhinengmensuo_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_zhinengmensuo_70_sy);
                     mHolder.status_txt.setText("关闭");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
             case "16":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_jixieshou_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_jixieshou_70);
                     mHolder.status_txt.setText("打开");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 } else {
                     //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_jixieshou_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_jixieshou_70_sy);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("关闭");//#E2C891
                 }
                 break;
@@ -307,15 +311,15 @@ public class DetailDeviceHomeAdapter extends android.widget.BaseAdapter {
             case "17":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_kaiguan_socket_40_active);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_zhinengchazuo_70);
                     mHolder.status_txt.setText("开");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
 //                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
                 } else {
                     //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_kaiguan_socket_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_zhinengchazuo_70_sy);
                     mHolder.status_txt.setText("关");//#E2C891
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
 
@@ -324,43 +328,57 @@ public class DetailDeviceHomeAdapter extends android.widget.BaseAdapter {
             case "206":
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_yaokongqi_40_active);
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_yaokongqi_70);
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("开");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_yaokongqi_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_yaokongqi_70_sy);
                     mHolder.status_txt.setText("关");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
             case "101"://wifi摄像头
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_shexiangtou_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_shexiangtou_70);
 //                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("正常");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_shexiangtou_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_shexiangtou_70_sy);
                     mHolder.status_txt.setText("断线");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
 
             case "103"://wifi摄像头
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_keshimenling_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_keshimenling_70);
 //                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
                     mHolder.status_txt.setText("正常");//#E2C891
                 } else {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
-                    mHolder.imageitem_id.setImageResource(R.drawable.icon_keshimenling_40);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_type_keshimenling_70_sy);
                     mHolder.status_txt.setText("断线");
-                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.e30));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
+                }
+                break;
+            case "100"://手动场景
+                if (list.get(position).get("status").toString().equals("1")) {
+//                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_changjing);
+//                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.zongse_color));
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark));
+                    mHolder.status_txt.setText("开");//#E2C891
+                } else {
+//                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markh);
+                    mHolder.imageitem_id.setImageResource(R.drawable.icon_changjing);
+                    mHolder.status_txt.setText("开");
+                    mHolder.status_txt.setTextColor(context.getResources().getColor(R.color.dark_gray_new));
                 }
                 break;
 

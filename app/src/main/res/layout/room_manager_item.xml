@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:id="@+id/per_content_lay"
         android:paddingLeft="@dimen/x10"
         android:paddingRight="@dimen/x10"
    >
@@ -69,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-
+                android:visibility="gone"
                 />
         </RelativeLayout>
     </androidx.percentlayout.widget.PercentRelativeLayout>

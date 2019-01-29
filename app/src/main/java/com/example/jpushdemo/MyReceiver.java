@@ -8,8 +8,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-
-import com.AddTogenInterface.AddTogglenInterfacer;
 import com.alibaba.fastjson.JSON;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.LogUtil;
@@ -27,19 +25,17 @@ import com.massky.sraum.base.Basecfragment;
 import com.massky.sraum.base.Basecfragmentactivity;
 import com.massky.sraum.fragment.HomeFragment;
 import com.massky.sraum.fragment.SceneFragment;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import cn.jpush.android.api.JPushInterface;
-
+import static com.massky.sraum.activity.GuJianWangGuanNewActivity.UPDATE_GRADE_BOX;
 import static com.massky.sraum.activity.MainGateWayActivity.ACTION_SRAUM_SETBOX;
-import static com.massky.sraum.activity.MainGateWayActivity.UPDATE_GRADE_BOX;
+
 
 
 /**
@@ -248,7 +244,7 @@ public class MyReceiver extends BroadcastReceiver {
         context.startActivity(i_charge);
     }
 
-    private void processCustomMessage_toMainActivity(Context context, Bundle bundle) {
+    private void processCustomMessage_toMainActivity(Context context1, Bundle bundle) {
         String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);//账号已在别处登录！
         String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);////{"type":"2"}
         if (BaseActivity.isForegrounds || Basecfragment.isForegrounds || Basecfragmentactivity.isForegrounds) {//app可见时，才发送消息

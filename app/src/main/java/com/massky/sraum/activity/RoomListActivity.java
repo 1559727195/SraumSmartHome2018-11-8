@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.google.gson.GsonBuilder;
 import com.massky.sraum.R;
@@ -24,10 +25,12 @@ import com.massky.sraum.receiver.ApiTcpReceiveHelper;
 import com.massky.sraum.view.XListView;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.InjectView;
 
 /**
@@ -56,6 +59,7 @@ public class RoomListActivity extends BaseActivity implements XListView.IXListVi
     private List<Map> roomsInfos = new ArrayList<>();
     private String areaNumber;
     private String doit;
+    private String authType;
 
     @Override
     protected int viewId() {
@@ -87,6 +91,15 @@ public class RoomListActivity extends BaseActivity implements XListView.IXListVi
     protected void onResume() {
         super.onResume();
         get_allroominfo();
+//        authType = (String) SharedPreferencesUtil.getData(RoomListActivity.this, "authType", "");
+        switch (authType) {
+            case "1":
+                add_room.setVisibility(View.VISIBLE);
+                break;
+            case "2":
+                add_room.setVisibility(View.GONE);
+                break;
+        }
     }
 
     private void get_allroominfo() {
@@ -111,6 +124,7 @@ public class RoomListActivity extends BaseActivity implements XListView.IXListVi
                             map.put("number", user.roomList.get(i).number);
                             map.put("name", user.roomList.get(i).name);
                             map.put("count", user.roomList.get(i).count);
+                            map.put("authType",authType);
                             roomsInfos.add(map);
                         }
 
@@ -138,15 +152,16 @@ public class RoomListActivity extends BaseActivity implements XListView.IXListVi
     @Override
     protected void onData() {
         doit = (String) getIntent().getSerializableExtra("doit");
-        switch (doit == null ? "":doit) {
+        switch (doit == null ? "" : doit) {
             case "sraum_deviceRelatedRoom":
                 areaNumber = (String) SharedPreferencesUtil.getData(RoomListActivity.this, "areaNumber", "");
+                authType = (String) SharedPreferencesUtil.getData(RoomListActivity.this, "authType", "");
                 break;
             default:
                 areaNumber = (String) getIntent().getSerializableExtra("areaNumber");
+                authType = (String) getIntent().getSerializableExtra("authType");
                 break;
         }
-
     }
 
     @Override

@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.OkHttpClient;
+import webapp.config.SystemParams;
 
 
 /**
@@ -53,6 +54,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
         _instance = this;
 //        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
+        SystemParams.init(this);
         CrashHandlerUtil.getInstance().init_crash(_instance);
         //用于判断log值是否打印
         LogUtil.isDebug = true;

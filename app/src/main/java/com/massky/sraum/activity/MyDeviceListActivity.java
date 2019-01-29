@@ -53,6 +53,7 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
     private DialogUtil dialogUtil;
     private String areaNumber;
     private String boxnumber;
+    private String authType;
 
     @Override
     protected int viewId() {
@@ -64,12 +65,14 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         dialogUtil = new DialogUtil(this);
         accountType = (String) SharedPreferencesUtil.getData(MyDeviceListActivity.this, "accountType", "");
-        areaNumber = (String) SharedPreferencesUtil.getData(MyDeviceListActivity.this, "areaNumber", "");
+//        areaNumber = (String) SharedPreferencesUtil.getData(MyDeviceListActivity.this, "areaNumber", "");
+        areaNumber = (String) getIntent().getSerializableExtra("areaNumber");
+        authType = (String) getIntent().getSerializableExtra("authType");
         boxnumber = (String) SharedPreferencesUtil.getData(MyDeviceListActivity.this, "boxnumber", "");
         list_hand_scene = new ArrayList<>();
 
         mydeviceadapter = new MyDeviceListAdapter(MyDeviceListActivity.this, list_hand_scene,
-                listint, listintwo, accountType, new MyDeviceListAdapter.RefreshListener() {
+                listint, listintwo, authType, accountType, areaNumber, new MyDeviceListAdapter.RefreshListener() {
             @Override
             public void refresh() {
                 onResumes();//界面出现之后，调数据刷新
@@ -79,6 +82,17 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
         xListView_scan.setPullLoadEnable(false);
         xListView_scan.setFootViewHide();
         xListView_scan.setXListViewListener(this);
+
+        if (authType != null) {
+            switch (authType) {
+                case "1":
+                    next_step_txt.setVisibility(View.VISIBLE);
+                    break;
+                case "2":
+                    next_step_txt.setVisibility(View.GONE);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -89,7 +103,6 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
 
     @Override
     protected void onData() {
-
     }
 
     @Override
@@ -99,7 +112,9 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                 MyDeviceListActivity.this.finish();
                 break;
             case R.id.next_step_txt:
-                startActivity(new Intent(MyDeviceListActivity.this,FastEditPanelActivity.class));
+                Intent intent = new Intent(MyDeviceListActivity.this, FastEditPanelActivity.class);
+                intent.putExtra("areaNumber", areaNumber);
+                startActivity(intent);
                 break;
         }
     }
@@ -199,7 +214,7 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                             mapdevice.put("roomName", "");
                             mapdevice.put("wifi", "");
                             list_hand_scene.add(mapdevice);
-                            setPicture(user.gatewayList.get(i).type);
+                            setPicture("网关");
                         }
 
                         for (int i = 0; i < user.panelList.size(); i++) {
@@ -211,7 +226,7 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                             mapdevice.put("mac", "");
                             mapdevice.put("isUse", "");
                             //roomNumber
-                            mapdevice.put("roomNumber","");
+                            mapdevice.put("roomNumber", "");
                             mapdevice.put("roomName", "");
                             mapdevice.put("wifi", "");
                             list_hand_scene.add(mapdevice);
@@ -223,7 +238,7 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                             mapdevice.put("number", user.wifiList.get(i).id);
                             mapdevice.put("name", user.wifiList.get(i).name);
                             mapdevice.put("type", user.wifiList.get(i).type);
-                            mapdevice.put("isUse",  user.wifiList.get(i).isUse);
+                            mapdevice.put("isUse", user.wifiList.get(i).isUse);
                             mapdevice.put("mac", "");
                             //roomNumber
                             mapdevice.put("boxNumber", "");
@@ -234,8 +249,7 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                             list_hand_scene.add(mapdevice);
                             setPicture(user.wifiList.get(i).type);
                         }
-
-                        project_select.setText("我的设备(" + list_hand_scene.size() + ")");
+                        project_select.setText("设备列表(" + list_hand_scene.size() + ")");
                         mydeviceadapter.setLists(list_hand_scene, listint, listintwo);
                         mydeviceadapter.notifyDataSetChanged();
                         switch (doit) {
@@ -280,6 +294,10 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                 listintwo.add(R.drawable.dimminglights);
                 break;
             case "A401":
+            case "A411":
+            case "A412":
+            case "A413":
+            case "A414":
                 listint.add(R.drawable.home_curtain);
                 listintwo.add(R.drawable.home_curtain);
                 break;
@@ -324,10 +342,10 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                 listint.add(R.drawable.icon_kaiguan_socket_40);
                 listintwo.add(R.drawable.icon_kaiguan_socket_40);
                 break;
-            case "B102"://86插座两位
+//            case "B102"://86插座两位
             case "网关":
-                listint.add(R.drawable.defaultpic);
-                listintwo.add(R.drawable.defaultpic);
+                listint.add(R.drawable.icon_type_wangguan_40);
+                listintwo.add(R.drawable.icon_type_wangguan_40);
                 //-----
                 break;
             case "B201":

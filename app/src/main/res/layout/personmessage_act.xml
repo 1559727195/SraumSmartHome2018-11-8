@@ -221,67 +221,6 @@
             android:layout_toRightOf="@+id/wode_xingbie"
             android:layout_marginLeft="5dp"
             android:text="性别"/>
-        <!--<FrameLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_height="wrap_content">-->
-            <!--<com.massky.sraumsmarthome.widget.SlideSwitchButton-->
-                <!--android:id="@+id/slide_btn"-->
-                <!--android:layout_width="60dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--slideswitch:isOpen="true"-->
-                <!--slideswitch:themeColor="#f200aa96"/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="left|center_vertical"-->
-                <!--android:id="@+id/txt_nan"-->
-                <!--android:textColor="#FFFFFF"-->
-                <!--android:textSize="16sp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:text="男"/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_gravity="right|center_vertical"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:id="@+id/txt_nv"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="#FFFFFF"-->
-                <!--android:textSize="16sp"-->
-                <!--android:visibility="gone"-->
-                <!--android:text="女"/>-->
-        <!--</FrameLayout>-->
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:id="@+id/xingbie_pic"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:layout_toLeftOf="@+id/xingbie_select"-->
-            <!--android:src="@mipmap/ic_launcher"-->
-            <!--/>-->
-
-
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:id="@+id/xingbie_select"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_marginRight="10dp"-->
-            <!--android:src="@mipmap/ic_launcher"/>-->
-
-        <!--<com.massky.sraumsmarthome.widget.SlideSwitchButton-->
-            <!--android:id="@+id/slide_btn"-->
-            <!--android:layout_width="@dimen/x55"-->
-            <!--android:layout_height="@dimen/y18"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_marginRight="@dimen/x5"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--slideswitch:isOpen="true"-->
-            <!--slideswitch:themeColor="#f200aa96"/>-->
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -291,8 +230,8 @@
             android:layout_height="wrap_content">
             <com.massky.sraum.widget.SlideSwitchButton
                 android:id="@+id/slide_btn"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/x50"
+                android:layout_height="@dimen/y15"
                 slideswitch:isOpen="true"
                 slideswitch:themeColor="#f200aa96"/>
             <TextView
@@ -301,7 +240,7 @@
                 android:layout_gravity="left|center_vertical"
                 android:id="@+id/txt_nan"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
+                android:textSize="12sp"
                 android:layout_marginLeft="10dp"
                 android:text="男"/>
             <TextView
@@ -311,11 +250,10 @@
                 android:id="@+id/txt_nv"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
+                android:textSize="12sp"
                 android:visibility="gone"
                 android:text="女"/>
         </FrameLayout>
-
 
     </RelativeLayout>
     <View
@@ -409,15 +347,14 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/wode_right_arrow"/>
     </RelativeLayout>
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:background="@color/gray"></View>-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="#FFFFFF"
         android:id="@+id/change_phone"
-        android:layout_marginTop="@dimen/y8"
         android:paddingLeft="@dimen/x8"
         android:layout_height="50dp">
         <ImageView
@@ -456,5 +393,8 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/wode_right_arrow"/>
     </RelativeLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
 </LinearLayout>

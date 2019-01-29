@@ -10,7 +10,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Looper;
+
 import androidx.core.view.MotionEventCompat;
+
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,19 +49,22 @@ public class SlideSwitchButton extends View {
     private SlideListener listener;
     private SlideSwitch slideswitch;
     boolean srcoll = false;
+    boolean isshowSroll;
 
     public SlideSwitchButton(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
     public SlideSwitchButton(Context context, AttributeSet attrs, int defStyleAttr) {
+
         super(context, attrs, defStyleAttr);
         listener = null;
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.slideswitch);
         if (typedArray != null) {
-            themeColor = typedArray.getColor(R.styleable.slideswitch_themeColor, Color.parseColor("#ff00ee00"));
+            themeColor = typedArray.getColor(R.styleable.slideswitch_themeColor, Color.parseColor("#ff00ee00"));//
+//            isshowSroll = typedArray.getBoolean(R.styleable.slideswitch_isShowScroll, true);
             isOpen = typedArray.getBoolean(R.styleable.slideswitch_isOpen, false);
             typedArray.recycle();
         }
@@ -109,51 +114,31 @@ public class SlideSwitchButton extends View {
      */
     @Override
     protected void onDraw(Canvas canvas) {
-        //绘制底层背景
-        mPaint.setColor(Color.LTGRAY);
+//        //绘制底层背景
+//        mPaint.setColor(Color.LTGRAY);//#BFCFC2
+//        mOutRect.set(0, 0, widthSize, heightSize);
+//        canvas.drawRoundRect(mOutRect, mOutRadius, mOutRadius, mPaint);
+//
+//        //绘制改变透明度后的背景
+//        mPaint.setColor(themeColor);
+//        mPaint.setAlpha(mAlpha);//mPaint,mAlpha = 0时为完全透明
+//        canvas.drawRoundRect(mOutRect, mOutRadius, mOutRadius, mPaint);
+//        mPaint.setAlpha(mAlpha);//mPaint,mAlpha = 0时为完全透明
         mOutRect.set(0, 0, widthSize, heightSize);
-        canvas.drawRoundRect(mOutRect, mOutRadius, mOutRadius, mPaint);
-        //绘制改变透明度后的背景
-        mPaint.setColor(themeColor);
-        mPaint.setAlpha(mAlpha);//mPaint
-        canvas.drawRoundRect(mOutRect, mOutRadius, mOutRadius, mPaint);
+        if (isOpen) {
+            //绘制改变透明度后的背景
+            mPaint.setColor(Color.parseColor("#38CC9A"));//#f200aa96
+            canvas.drawRoundRect(mOutRect, mOutRadius, mOutRadius, mPaint);
+        } else {
+            //绘制底层背景
+            mPaint.setColor(Color.LTGRAY);//#BFCFC2
+            canvas.drawRoundRect(mOutRect, mOutRadius, mOutRadius, mPaint);
+        }
+
         //绘制滑动的圆圈
         mPaint.setColor(Color.WHITE);
         canvas.drawCircle(changingValue + mInnerRadius, PADDING + mInnerRadius, mInnerRadius, mPaint);
     }
-
-//    @Override
-//    public boolean onInterceptTouchEvent(MotionEvent e) {
-//        int y = (int) e.getRawY();
-//        int x = (int) e.getRawX();
-//        boolean resume = false;
-//        switch (e.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                // 发生down事件时,记录y坐标
-//                mLastMotionY = y;
-//                mLastMotionX = x;
-//                resume = false;
-//                break;
-//            case MotionEvent.ACTION_MOVE:
-//                // deltaY > 0 是向下运动,< 0是向上运动
-//                int deltaY = y - mLastMotionY;
-//                int deleaX = x - mLastMotionX;
-//
-//                if (Math.abs(deleaX) > Math.abs(deltaY)) {
-//                    resume = false;
-//                } else {
-//                    //当前正处于滑动
-//                    if (isRefreshViewScroll(deltaY)) {
-//                        resume = true;
-//                    }
-//                }
-//                break;
-//            case MotionEvent.ACTION_UP:
-//            case MotionEvent.ACTION_CANCEL:
-//                break;
-//        }
-//        return resume;
-//    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -172,16 +157,16 @@ public class SlideSwitchButton extends View {
                 srcoll = false;
                 break;
             case MotionEvent.ACTION_MOVE://MotionEvent.ACTION_MOVE被执行的话，则说明是滑动，SlideSwitchButton不执行任何动作；
-//                int eventLastX = (int) event.getRawX();
-//                int distance = eventLastX - eventStartX;// -
-//                int movePoint = distance + mStartValue;
-//                movePoint = (movePoint > maxValue ? maxValue : movePoint);
-//                movePoint = (movePoint < minValue ? minValue : movePoint);
-//                if (movePoint >= minValue && movePoint <= maxValue) {
-//                    changingValue = movePoint;
-//                    mAlpha = (int) (255 * (float) movePoint / (float) maxValue);
-//                    invalidateView();
-//                }
+                    int eventLastX = (int) event.getRawX();
+                    int distance = eventLastX - eventStartX;// -
+                    int movePoint = distance + mStartValue;
+                    movePoint = (movePoint > maxValue ? maxValue : movePoint);
+                    movePoint = (movePoint < minValue ? minValue : movePoint);
+                    if (movePoint >= minValue && movePoint <= maxValue) {
+                        changingValue = movePoint;
+                        mAlpha = (int) (255 * (float) movePoint / (float) maxValue);
+                        invalidateView();
+                    }
                 srcoll = true;
                 break;
             case MotionEvent.ACTION_UP:

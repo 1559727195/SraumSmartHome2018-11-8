@@ -28,14 +28,18 @@ import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.activity.EditLinkDeviceResultActivity;
 import com.massky.sraum.view.ClearEditText;
+import com.massky.sraum.view.ClearLengthEditText;
 import com.massky.sraum.view.PullToRefreshLayout;
 import com.massky.sraum.widget.SlideSwitchButton;
+import com.massky.sraum.widget.SlideSwitchForSwitchDeleteButton;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import okhttp3.Call;
 
 /**
@@ -83,7 +87,7 @@ public class AutoSceneAdapter extends BaseAdapter {
             viewHolderContentType.device_type_pic = (ImageView) convertView.findViewById(R.id.device_type_pic);
             viewHolderContentType.hand_device_content = (TextView) convertView.findViewById(R.id.hand_device_content);
 //            viewHolderContentType.hand_gateway_content = (TextView) convertView.findViewById(R.id.hand_gateway_content);
-            viewHolderContentType.hand_scene_btn = (SlideSwitchButton) convertView.findViewById(R.id.slide_btn);
+            viewHolderContentType.hand_scene_btn = (SlideSwitchForSwitchDeleteButton) convertView.findViewById(R.id.slide_btn);
             viewHolderContentType.swipemenu_layout = (SwipeMenuLayout) convertView.findViewById(R.id.swipemenu_layout);
             viewHolderContentType.btn_rename = (Button) convertView.findViewById(R.id.btn_rename);
 
@@ -98,8 +102,8 @@ public class AutoSceneAdapter extends BaseAdapter {
         viewHolderContentType.hand_device_content.setText((String) list.get(position).get("name"));
 
         final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
-        String accountType = (String) SharedPreferencesUtil.getData(context, "accountType", "");
-        switch (accountType) {
+        String authType = (String) SharedPreferencesUtil.getData(context, "authType", "");
+        switch (authType) {
             case "1":
                 viewHolderContentType.swipemenu_layout.setSwipeEnable(true);
                 break;//业主
@@ -119,7 +123,7 @@ public class AutoSceneAdapter extends BaseAdapter {
             }
         }
 
-        viewHolderContentType.hand_scene_btn.setSlideSwitchListener(new SlideSwitchButton.SlideSwitch() {
+        viewHolderContentType.hand_scene_btn.setSlideSwitchListener(new SlideSwitchForSwitchDeleteButton.SlideSwitch() {
             @Override
             public void slide_switch() {//滑动时，子view滑动时，父view不能滑动
                 if (finalViewHolderContentType.hand_scene_btn.isOpen) {//启用和禁止启用，
@@ -227,7 +231,7 @@ public class AutoSceneAdapter extends BaseAdapter {
 //        final TextView content; //内容
         cancel = (TextView) view.findViewById(R.id.call_cancel);
         confirm = (TextView) view.findViewById(R.id.call_confirm);
-        final ClearEditText edit_password_gateway = (ClearEditText) view.findViewById(R.id.edit_password_gateway);
+        final ClearLengthEditText edit_password_gateway = (ClearLengthEditText) view.findViewById(R.id.edit_password_gateway);
         edit_password_gateway.setText(name);
         edit_password_gateway.setSelection(edit_password_gateway.getText().length());
 //        tv_title = (TextView) view.findViewById(R.id.tv_title);
@@ -315,7 +319,7 @@ public class AutoSceneAdapter extends BaseAdapter {
         tv_title = (TextView) view.findViewById(R.id.tv_title);//name_gloud
         name_gloud = (TextView) view.findViewById(R.id.name_gloud);
         name_gloud.setVisibility(View.VISIBLE);
-        name_gloud.setText(name);
+        tv_title.setText(name);
 //        tv_title.setText("是否拨打119");
 //        content.setText(message);
         //显示数据
@@ -465,14 +469,21 @@ public class AutoSceneAdapter extends BaseAdapter {
 
                     @Override
                     public void wrongBoxnumber() {
-                        super.wrongBoxnumber();
+                        ToastUtil.showToast(context,"areaNumber不正确");
+                    }
+
+                    @Override
+                    public void threeCode() {
+                        ToastUtil.showToast(context,"linkId 错误");
                     }
 
                     @Override
                     public void onSuccess(final User user) {
 //                refreshLayout.autoRefresh();
-                        if (refreshListener != null)
-                            refreshListener.refresh();
+                        ToastUtil.showToast(context,"操作成功");
+
+//                        if (refreshListener != null)
+//                            refreshListener.refresh();
                     }
                 });
     }
@@ -565,7 +576,7 @@ public class AutoSceneAdapter extends BaseAdapter {
         ImageView device_type_pic;
         TextView hand_device_content;
         //       TextView  hand_gateway_content;
-        SlideSwitchButton hand_scene_btn;
+        SlideSwitchForSwitchDeleteButton hand_scene_btn;
         SwipeMenuLayout swipemenu_layout;
         LinearLayout swipe_content_linear;
         public RelativeLayout rename_rel;

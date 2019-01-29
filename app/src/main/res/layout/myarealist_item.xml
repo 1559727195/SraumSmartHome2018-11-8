@@ -1,83 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/y30"
     android:id="@+id/swipemenu_layout"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
     android:background="@color/white"
     android:clickable="true"
     app:ios="false"
     app:leftSwipe="true"
     app:swipeEnable="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/swipe_context"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:paddingLeft="@dimen/x5">
-
-            <TextView
-                android:id="@+id/area_name_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x8"
-                android:layout_toRightOf="@+id/pic_room_img"
-                android:text="我的家"
-                android:textColor="@color/dark_gray"
-                android:textSize="14sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:orientation="vertical">
-
+     >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/linear_content"
+            android:layout_height="49dp">
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.45"
+                android:paddingLeft="@dimen/x5">
 
                 <TextView
-                    android:id="@+id/txt_device_num"
+                    android:id="@+id/area_name_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x8"
+                    android:layout_toRightOf="@+id/pic_room_img"
+                    android:text="我的家"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/txt_device_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="5个房间"
+                        android:textColor="@color/gray"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:paddingRight="@dimen/x10">
+
+                <ImageView
+                    android:id="@+id/hand_scene_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="5个房间"
-                    android:visibility="gone"
-                    android:textColor="@color/gray"
-                    android:textSize="12sp" />
+                    android:src="@drawable/wode_right_arrow"
+                    android:visibility="gone" />
             </RelativeLayout>
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.15"
-            android:paddingRight="@dimen/x10">
-
-            <ImageView
-                android:id="@+id/hand_scene_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/wode_right_arrow" />
-        </RelativeLayout>
-    </LinearLayout>
+        <View
+            android:id="@+id/three_s"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/linear_content"
+            android:background="@drawable/bg_dash_line_new" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
@@ -96,9 +110,9 @@
             android:layout_height="match_parent">
 
             <Button
+                android:id="@+id/delete_btn"
                 android:layout_width="@dimen/x50"
                 android:layout_height="match_parent"
-                android:id="@+id/delete_btn"
                 android:background="#FF0202"
                 android:text="删除"
                 android:textColor="@android:color/white" />

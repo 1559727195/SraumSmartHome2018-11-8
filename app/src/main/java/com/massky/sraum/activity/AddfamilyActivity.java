@@ -18,11 +18,9 @@ import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.view.ClearEditText;
 import com.yanzhenjie.statusview.StatusUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 import butterknife.InjectView;
-import cn.forward.androids.utils.StatusBarUtil;
 
 /**
  * Created by xufuchao on 2017-02-21.
@@ -76,6 +74,7 @@ public class AddfamilyActivity extends BaseActivity {
                 String familyName = nameedit.getText().toString();
                 bundle.putString("mobilePhone", mobilePhone);
                 bundle.putString("familyName", familyName);
+                bundle.putString("areaNumber",getIntent().getSerializableExtra("areaNumber").toString());
                 if (!mobilePhone.equals("") && !familyName.equals("")) {
                     if (mobilePhone.length() > 5) {
                         dialogUtil.loadDialog();
@@ -108,7 +107,7 @@ public class AddfamilyActivity extends BaseActivity {
 
                     @Override
                     public void wrongToken() {
-                        ToastUtil.showToast(AddfamilyActivity.this,"手机号已存在");
+                        ToastUtil.showToast(AddfamilyActivity.this,"手机号不正确");
                     }
                 });
     }

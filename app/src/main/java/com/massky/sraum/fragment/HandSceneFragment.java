@@ -2,7 +2,9 @@ package com.massky.sraum.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
+
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
@@ -24,14 +26,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.InjectView;
 import okhttp3.Call;
-
 
 /**
  * Created by zhu on 2017/11/30.
  */
-
 public class HandSceneFragment extends BaseFragment1 implements XListView.IXListViewListener {
     @InjectView(R.id.xListView_scan)
     XListView xListView_scan;
@@ -49,26 +50,27 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
     private List<Integer> listintwo = new ArrayList<>();
     private int first_add;
 
-
     @Override
     protected void onData() {
-
     }
 
     @Override
     protected void onEvent() {
-
     }
 
     @Override
     public void onEvent(MyDialogEvent eventData) {
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        sraum_getManuallyScenes();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sraum_getManuallyScenes();
+            }
+        }).start();
         common_second();
         if (first_add == 1) {
             first_add = 2;
@@ -80,12 +82,32 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
         }
     }
 
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (list.size() == 0) {
+                xListView_scan.setVisibility(View.GONE);
+            } else {
+                xListView_scan.setVisibility(View.VISIBLE);
+            }
+
+            handSceneAdapter.setList_s(list, listint, listintwo, true);
+            handSceneAdapter.notifyDataSetChanged();
+        }
+    };
+
+
     @Subscribe
     public void onEvent(MyEvent event) {
         String status = event.getMsg();
         switch (status) {
             case "scene_second":
-                sraum_getManuallyScenes();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sraum_getManuallyScenes();
+                    }
+                }).start();
                 break;
         }
     }
@@ -98,9 +120,9 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
         String areaNumber = (String) SharedPreferencesUtil.getData(getActivity(), "areaNumber", "");
         map.put("areaNumber", areaNumber);
         map.put("token", TokenUtil.getToken(getActivity()));
-        if (dialogUtil != null) {
-            dialogUtil.loadDialog();
-        }
+//        if (dialogUtil != null) {
+//            dialogUtil.loadDialog();
+//        }
 
 //        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(SelectSensorActivity.this));
         MyOkHttp.postMapString(ApiHelper.sraum_getManuallyScenes
@@ -146,15 +168,19 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
                             map.put("type", us.type);
                             map.put("name", us.name);
                             map.put("number", us.number);
+                            map.put("boxNumber", us.boxNumber);
+                            map.put("panelNumber", us.panelNumber);
+                            map.put("panelType", us.panelType);
+                            //buttonNumber
+                            map.put("buttonNumber", us.buttonNumber);
                             list.add(map);
                             setPicture(us.type);
                         }
-                        handSceneAdapter.setList_s(list, listint, listintwo, true);
-                        handSceneAdapter.notifyDataSetChanged();
+
+                        handler.sendEmptyMessage(0);
                     }
                 });
     }
-
 
     private void setPicture(String type) {
         switch (type) {
@@ -234,7 +260,12 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
         handSceneAdapter = new HandSceneAdapter(getActivity(), list, listint, listintwo, dialogUtil, new HandSceneAdapter.RefreshListener() {
             @Override
             public void refresh() {
-                sraum_getManuallyScenes();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sraum_getManuallyScenes();
+                    }
+                }).start();
                 common_second();
                 MyEvent event = new MyEvent();
                 event.setMsg("刷新");
@@ -270,7 +301,12 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
     @Override
     public void onRefresh() {
         onLoad();
-        sraum_getManuallyScenes();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sraum_getManuallyScenes();
+            }
+        }).start();
         common_second();
     }
 

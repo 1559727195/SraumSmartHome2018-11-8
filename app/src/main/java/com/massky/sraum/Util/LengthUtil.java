@@ -1,5 +1,8 @@
 package com.massky.sraum.Util;
 
+import android.util.Log;
+import android.widget.Toast;
+
 /**
  * Created by zhu on 2018/9/19.
  */
@@ -39,5 +42,34 @@ public class LengthUtil {
         }
 
         return numbers * 2 + characters;
+    }
+
+    /**
+     * 分割字符串显示
+     * @param s
+     * @return
+     */
+    public static String doit_spit_str(String s) {
+        int characters = 0;
+        int numbers = 0;
+        String str = "";
+        for (int i = 0; i < s.toCharArray().length; i++) {
+            if (isChinese(s.toCharArray()[i])) {
+                numbers++;
+            } else {
+                characters++;
+            }
+            if (numbers * 2 + characters >= 6) {
+                String first = s.substring(0, i + 1);
+                String splits = s.substring(i + 1);
+                str = first + "\n" + splits;
+                break;
+            }
+        }
+
+        if (numbers * 2 + characters < 6) {
+            str = s;
+        }
+        return str;
     }
 }

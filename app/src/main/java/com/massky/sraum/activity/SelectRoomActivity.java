@@ -60,8 +60,8 @@ public class SelectRoomActivity extends BaseActivity implements XListView.IXList
     private Map map_device = new HashMap();
     private List<Map> roomList = new ArrayList<>();
     private DialogUtil dialogUtil;
-    private String areaNumber;
     private int position;
+    private String areaNumber;
 
     @Override
     protected int viewId() {
@@ -73,6 +73,11 @@ public class SelectRoomActivity extends BaseActivity implements XListView.IXList
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         dialogUtil = new DialogUtil(this);
         map_device = (Map) getIntent().getSerializableExtra("map_deivce");
+        if (map_device != null)
+            areaNumber = map_device.get("areaNumber").toString();
+        if (areaNumber == null) {
+            areaNumber = (String) SharedPreferencesUtil.getData(SelectRoomActivity.this, "areaNumber", "");
+        }
         room_list_show_adapter();
         xListView_scan.setPullLoadEnable(false);
         xListView_scan.setFootViewHide();
@@ -199,7 +204,7 @@ public class SelectRoomActivity extends BaseActivity implements XListView.IXList
 
     @Override
     protected void onData() {
-        areaNumber = (String) SharedPreferencesUtil.getData(SelectRoomActivity.this, "areaNumber", "");
+//        areaNumber = (String) SharedPreferencesUtil.getData(SelectRoomActivity.this, "areaNumber", "");
     }
 
     @Override
@@ -211,7 +216,7 @@ public class SelectRoomActivity extends BaseActivity implements XListView.IXList
             case R.id.manager_room_txt://下一步
                 Intent intent = new Intent(SelectRoomActivity.this
                         , RoomListActivity.class);
-                intent.putExtra("doit","sraum_deviceRelatedRoom");
+                intent.putExtra("doit", "sraum_deviceRelatedRoom");
                 startActivity(intent);
                 break;
             case R.id.save_select_room:
@@ -268,7 +273,7 @@ public class SelectRoomActivity extends BaseActivity implements XListView.IXList
         }
 
         map_device.put("token", TokenUtil.getToken(SelectRoomActivity.this));
-        map_device.put("areaNumber", areaNumber);
+//        map_device.put("areaNumber", areaNumber);
         map_device.put("roomNumber", roomNumber);
 //        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(SelectSensorActivity.this));
         MyOkHttp.postMapString(ApiHelper.sraum_deviceRelatedRoom

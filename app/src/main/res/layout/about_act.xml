@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/img_app"/>
+                android:src="@drawable/sraum2_down"/>
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
@@ -76,7 +76,7 @@
                 android:layout_centerInParent="true"
                 android:textSize="14sp"
                 android:textColor="@color/gray"
-               android:text="v2.1.1"/>
+               android:text="v2.0.1"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
@@ -98,7 +98,7 @@
     >
 
         <Button
-            android:id="@+id/btn_cancel_wangguan"
+            android:id="@+id/btn_common_problems"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -118,6 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:id="@+id/btn_privacy_policy"
             android:height="@dimen/y30"
             android:background="@drawable/add_zigbee_device_btn"
             android:text="隐私政策"
@@ -135,6 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:id="@+id/check_btn_version"
             android:height="@dimen/y30"
             android:background="@drawable/add_zigbee_device_btn"
             android:text="检查更新"

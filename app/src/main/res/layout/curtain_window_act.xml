@@ -166,6 +166,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/x8"
         android:text="一键操作"
+        android:id="@+id/one_key_txt"
         android:textColor="@color/gray"
         android:textSize="12sp" />
     <LinearLayout

@@ -3,6 +3,7 @@ package com.massky.sraum.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ import com.ipcamera.demo.utils.ContentCommon;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.IntentUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.SharedPreferencesUtil;
@@ -34,12 +37,15 @@ import com.massky.sraum.widget.SlideSwitchButton;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 import com.ypy.eventbus.EventBus;
+
 import org.greenrobot.eventbus.Subscribe;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import androidx.percentlayout.widget.PercentRelativeLayout;
 import butterknife.InjectView;
 import vstc2.nativecaller.NativeCaller;
@@ -125,6 +131,23 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
     @InjectView(R.id.rel_sdcard_remotevideo)
     RelativeLayout rel_sdcard_remotevideo;
 
+    @InjectView(R.id.base_linear)
+    LinearLayout base_linear;
+    @InjectView(R.id.wangguan_linear)
+    LinearLayout wangguan_linear;
+
+    @InjectView(R.id.basic_information_wangguan)
+    RelativeLayout basic_information_wangguan;
+    @InjectView(R.id.gujian_upgrade_rel)
+    RelativeLayout gujian_upgrade_rel;
+    @InjectView(R.id.change_password_rel)
+    RelativeLayout change_password_rel;
+    @InjectView(R.id.view_gujian_upgrade)
+    View view_gujian_upgrade;
+
+    @InjectView(R.id.view_change_pass)
+    View view_change_pass;
+
 
     @InjectView(R.id.slide_btn_plan)
     SlideSwitchButton slide_btn_plan;
@@ -137,7 +160,8 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
             R.string.zhineng, R.string.pm25, R.string.shuijin, R.string.jixieshou, R.string.cha_zuo_1, R.string.cha_zuo, R.string.wifi_hongwai,
             R.string.wifi_camera, R.string.one_light_control, R.string.two_light_control, R.string.three_light_control
             , R.string.two_dimming_one_control, R.string.two_dimming_two_control, R.string.two_dimming_trhee_control, R.string.keshimenling
-            ,R.string.zhinengwangguan
+            , R.string.zhinengwangguan, R.string.one_curtain_zero_light, R.string.one_curtain_one_light, R.string.one_curtain_two_light,
+            R.string.two_curtain
     };
     private String isUse;
     private int option = ContentCommon.INVALID_OPTION;
@@ -154,6 +178,12 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
     private String isfrom = "";
     private boolean isFirst;
     private String boxNumber;
+    private String authType;
+    private String areaNumber;
+    private String boxStatus;
+    private String currentVersion;
+    private String newVersion;
+
 
     @Override
     protected int viewId() {
@@ -187,18 +217,39 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
                     init_status();//初始化状态
                     break;
             }
+            switch (panelItem_map.get("type").toString()) {
+                case "网关":
+                    wangguan_linear.setVisibility(View.VISIBLE);
+
+                    break;
+                default:
+                    base_linear.setVisibility(View.VISIBLE);
+                    break;
+            }
+
             wangguan_set.setImageResource(imgtype);
             set_type(panelItem_map.get("type").toString());
             //成员，业主accountType->addrelative_id
-            String accountType = (String) SharedPreferencesUtil.getData(MyDeviceItemActivity.this, "accountType", "");
-            switch (accountType) {
+//            authType = (String) SharedPreferencesUtil.getData(MyDeviceItemActivity.this, "authType", "");
+            areaNumber = (String) getIntent().getSerializableExtra("areaNumber");
+            authType = (String) getIntent().getSerializableExtra("authType");
+            switch (authType) {
                 case "1":
                     delete_device_rel.setVisibility(View.VISIBLE);
-                    wangguan_set_rel.setEnabled(true);
+//                    wangguan_set_rel.setEnabled(true);
+                    gujian_upgrade_rel.setVisibility(View.VISIBLE);
+                    change_password_rel.setVisibility(View.VISIBLE);
+                    view_change_pass.setVisibility(View.VISIBLE);
+                    view_gujian_upgrade.setVisibility(View.VISIBLE);
                     break;//业主
                 case "2":
                     delete_device_rel.setVisibility(View.GONE);
-                    wangguan_set_rel.setEnabled(false);
+                    gujian_upgrade_rel.setVisibility(View.GONE);
+                    change_password_rel.setVisibility(View.GONE
+                    );
+                    view_change_pass.setVisibility(View.GONE);
+                    view_gujian_upgrade.setVisibility(View.GONE);
+//                    wangguan_set_rel.setEnabled(false);
                     break;//家庭成员
             }
         }
@@ -219,7 +270,6 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
             case "0":
                 slide_btn_baojing.changeOpenState(false);
                 break;
-
         }
     }
 
@@ -297,7 +347,7 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
         dialogUtil.loadDialog();
         Map<String, Object> mapbox = new HashMap<String, Object>();
         mapbox.put("token", TokenUtil.getToken(MyDeviceItemActivity.this));
-        String areaNumber = (String) SharedPreferencesUtil.getData(MyDeviceItemActivity.this,"areaNumber","");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(MyDeviceItemActivity.this,"areaNumber","");
         mapbox.put("number", panelNumber);
         mapbox.put("areaNumber", areaNumber);
         mapbox.put("isUse", isUse);
@@ -344,6 +394,9 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
         slide_btn_plan.setSlideListener(this);
         rel_bufang_plan.setOnClickListener(this);
         rel_sd_set.setOnClickListener(this);
+        basic_information_wangguan.setOnClickListener(this);
+        gujian_upgrade_rel.setOnClickListener(this);
+        change_password_rel.setOnClickListener(this);
     }
 
     @Override
@@ -473,6 +526,18 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
             case "网关":
                 gateway_id_txt.setText(iconName[33]);
                 break;
+            case "A411":
+                gateway_id_txt.setText(iconName[34]);
+                break;
+            case "A412":
+                gateway_id_txt.setText(iconName[35]);
+                break;
+            case "A413":
+                gateway_id_txt.setText(iconName[36]);
+                break;
+            case "A414":
+                gateway_id_txt.setText(iconName[37]);
+                break;
         }
     }
 
@@ -494,7 +559,7 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
         //dimmer,temperature,mode
         mapdevice.put("dimmer", panelItem_map.get("number").toString());
         mapdevice.put("temperature", "888888");
-        mapdevice.put("mode","admin");
+        mapdevice.put("mode", "admin");
 //                onitem_wifi_shexiangtou(mapdevice);//(String strUser, String strPwd, String strDID
         //去首页获取状态，发送广播
         tongzhi_video(mapdevice);
@@ -541,6 +606,8 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
                 if (panelItem_map != null) {
                     intent = new Intent(MyDeviceItemActivity.this, EditMyDeviceActivity.class);
                     intent.putExtra("panelItem", (Serializable) panelItem_map);
+                    intent.putExtra("areaNumber", areaNumber);
+                    intent.putExtra("authType", authType);
                     startActivity(intent);
                 }
                 break;
@@ -559,14 +626,16 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
             case R.id.rel_yaokongqi://跳转到遥控器列表界面
                 intent = new Intent(MyDeviceItemActivity.this, SelectYaoKongQiActivity.class);
                 intent.putExtra("controllerNumber", panelItem_map.get("number").toString());//controllerNumber
+                intent.putExtra("areaNumber", areaNumber);
+                intent.putExtra("authType", authType);
                 startActivity(intent);
                 break;
             case R.id.rel_bufang_plan://布防报警计划
 //                startActivity(new Intent(MyDeviceItemActivity.this,BuFangBaoJingPlanActivity.class));
-
                 Intent intentalam = new Intent(MyDeviceItemActivity.this, BuFangBaoJingPlanActivity.class);
                 intentalam.putExtra(ContentCommon.STR_CAMERA_PWD, "888888");
                 intentalam.putExtra(ContentCommon.STR_CAMERA_ID, strDID);
+                intentalam.putExtra("areaNumber", areaNumber);
                 startActivity(intentalam);
                 break;
             //rel_sd_set
@@ -588,8 +657,105 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
                 startActivity(intentVid);
                 overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
                 break;
+            case R.id.basic_information_wangguan://基本信息
+                Intent intent_gateway = new Intent(MyDeviceItemActivity.this, WangGuanBaseInformationActivity.class
+                );
+                intent_gateway.putExtra("areaNumber",areaNumber);
+                intent_gateway.putExtra("number",panelItem_map.get("number").toString());
+                startActivity(intent_gateway);
+                break;
+            case R.id.gujian_upgrade_rel://固件更新
+                getgateway_version();
+                break;
+            case R.id.change_password_rel://修改网关密码
+                Bundle bundle_change_boxpass = new Bundle();
+                bundle_change_boxpass.putString("boxName", panelItem_map.get("name").toString());
+                bundle_change_boxpass.putString("boxnumber", panelItem_map.get("number").toString());
+                bundle_change_boxpass.putString("boxName", panelItem_map.get("name").toString());
+                bundle_change_boxpass.putString("areaNumber", areaNumber);
+                IntentUtil.startActivity(MyDeviceItemActivity.this, ChangeWangGuanpassActivity.class, bundle_change_boxpass);
+                break;
+
+
         }
     }
+
+    /**
+     * 获取网关版本号
+     */
+
+    private void getgateway_version() {
+        //在这里先调
+        //设置网关模式-sraum-setBox
+        Map map = new HashMap();
+        map.put("token", TokenUtil.getToken(this));
+        map.put("number", panelItem_map.get("number").toString());
+        map.put("areaNumber",areaNumber);
+//        map.put("phoneId", phoned);
+//        map.put("status", "0");//进入设置模式
+//        dialogUtil.loadDialog();
+        MyOkHttp.postMapObject(ApiHelper.sraum_getGatewayUpdate, map, new Mycallback(new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {//
+//
+                        getgateway_version();
+
+                    }
+                }, MyDeviceItemActivity.this, dialogUtil) {
+                    @Override
+                    public void onSuccess(User user) {
+                        currentVersion = user.currentVersion;
+                        newVersion = user.newVersion;
+
+                        if (newVersion != null) {
+
+                            if (Integer.valueOf(newVersion, 16) >= Integer.valueOf("56", 16)) {
+                                //int d = Integer.valueOf("ff",16);   //d=255
+                                if (Integer.valueOf(newVersion, 16) > Integer.valueOf(currentVersion, 16)) {
+                                    updatebox_version(newVersion, currentVersion,"doit");
+                                } else {
+//                                    ToastUtil.showToast(DetailActivity.this, "网关版本已最新");
+//                                    is_index = false;
+                                    updatebox_version(newVersion, currentVersion,"scuess");
+                                    //停止添加网关
+                                }
+                            } else {
+                                ToastUtil.showToast(MyDeviceItemActivity.this, "网关版本过低不支持" +
+                                        "更新");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void wrongToken() {
+                        super.wrongToken();
+                    }
+
+                    @Override
+                    public void wrongBoxnumber() {
+                        ToastUtil.showToast(MyDeviceItemActivity.this, "该网关不存在");
+                    }
+                }
+        );
+    }
+
+    /**
+     * 网关版本更新
+     *  @param newVersion
+     * @param currentVersion
+     * @param doit
+     */
+    private void updatebox_version(String newVersion, String currentVersion, String doit) {
+        Intent intent = new Intent(MyDeviceItemActivity.this,
+               GuJianWangGuanNewActivity.class);
+        intent.putExtra("newVersion", newVersion);
+        intent.putExtra("currentVersion", currentVersion);
+        intent.putExtra("doit", doit);
+        intent.putExtra("areaNumber", areaNumber);
+        intent.putExtra("number", panelItem_map.get("number").toString());
+        startActivity(intent);
+    }
+
 
     //自定义dialog,centerDialog删除对话框
     public void showCenterDeleteDialog(final String panelNumber, final String name,
@@ -614,7 +780,7 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
         confirm = (TextView) view.findViewById(R.id.call_confirm);
         tv_title = (TextView) view.findViewById(R.id.tv_title);//name_gloud
         name_gloud = (TextView) view.findViewById(R.id.name_gloud);
-        name_gloud.setText(name);
+        tv_title.setText(name);
 //        tv_title.setText("是否拨打119");
 //        content.setText(message);
         //显示数据
@@ -658,7 +824,7 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
         if (dialogUtil != null)
             dialogUtil.loadDialog();
         Map<String, String> mapdevice = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(MyDeviceItemActivity.this,"areaNumber","");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(MyDeviceItemActivity.this,"areaNumber","");
         mapdevice.put("token", TokenUtil.getToken(MyDeviceItemActivity.this));
         mapdevice.put("areaNumber", areaNumber);
         String send_method = "";

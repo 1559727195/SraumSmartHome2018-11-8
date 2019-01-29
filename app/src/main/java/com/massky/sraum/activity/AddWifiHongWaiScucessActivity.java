@@ -351,7 +351,7 @@ public class AddWifiHongWaiScucessActivity extends BaseActivity {
     private void sraum_addWifiApple(final String name) {
 
 //        String deviceInfo  = add_bind_dingyue();
-        String areaNumber = (String) SharedPreferencesUtil.getData(AddWifiHongWaiScucessActivity.this, "areaNumber", "");
+        final String areaNumber = (String) SharedPreferencesUtil.getData(AddWifiHongWaiScucessActivity.this, "areaNumber", "");
         dialogUtil.loadDialog();
         map_device.put("token", TokenUtil.getToken(AddWifiHongWaiScucessActivity.this));
         map_device.put("name", name);
@@ -379,6 +379,7 @@ public class AddWifiHongWaiScucessActivity extends BaseActivity {
                         Map map = new HashMap();
                         map.put("deviceId",map_device.get("mac"));
                         map.put("deviceType", "AA02");
+                        map.put("areaNumber",areaNumber);
                         map.put("type","2");
                         Intent intent = new Intent(AddWifiHongWaiScucessActivity.this, SelectRoomActivity.class);
                         intent.putExtra("map_deivce", (Serializable) map);

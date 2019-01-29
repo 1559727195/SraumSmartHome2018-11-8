@@ -155,6 +155,7 @@ public class SelectiveLinkageActivity extends BaseActivity implements
                             map.put("boxName", ud.boxName);
                             map.put("panelType", ud.panelType);
                             map.put("panelMac", ud.panelMac);
+                            map.put("gatewayMac", ud.gatewayMac);
                             map.put("controllerId", "");
 
                             panelList.add(map);
@@ -169,6 +170,7 @@ public class SelectiveLinkageActivity extends BaseActivity implements
                                 map.put("panelType", ud.type);
                                 map.put("boxName", "");
                                 map.put("controllerId", ud.controllerId);
+                                map.put("gatewayMac", "");
                                 panelList.add(map);
                             }
 
@@ -223,6 +225,10 @@ public class SelectiveLinkageActivity extends BaseActivity implements
                 listintwo.add(R.drawable.icon_tiaoguang_40_active);
                 break;
             case "A401":
+            case "A411":
+            case "A412":
+            case "A413":
+            case "A414":
                 listint.add(R.drawable.icon_chuanglian_40);
                 listintwo.add(R.drawable.icon_chuanglian_40_active);
                 break;
@@ -335,6 +341,7 @@ public class SelectiveLinkageActivity extends BaseActivity implements
                 intent.putExtra("panelType", (Serializable) listtype.get(position));
                 intent.putExtra("panelName", (Serializable) listpanelName.get(position));
                 intent.putExtra("boxName", (Serializable) listbox.get(position) == null ? "" : listbox.get(position));
+                intent.putExtra("gatewayMac", panelList.get(position).get("gatewayMac").toString());
                 //boxNumber
                 intent.putExtra("boxNumber", (Serializable) panelList.get(position).get("boxNumber")
                         == null ? "" : panelList.get(position).get("boxNumber").toString());

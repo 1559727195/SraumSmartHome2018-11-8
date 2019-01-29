@@ -17,9 +17,13 @@ import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Utils.ApiHelper;
+import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.percentlayout.widget.PercentRelativeLayout;
 
 /**
  * Created by masskywcy on 2017-05-16.
@@ -31,7 +35,6 @@ public class ManagerRoomAdapter extends BaseAdapter {
     public ManagerRoomAdapter(Context context, List<Map> list) {
         super(context, list);
 //        this.list = list;
-
     }
 
     @Override
@@ -47,15 +50,23 @@ public class ManagerRoomAdapter extends BaseAdapter {
             viewHolderContentType.txt_device_num = (TextView) convertView.findViewById(R.id.txt_device_num);
             viewHolderContentType.rename_btn = (Button) convertView.findViewById(R.id.rename_btn);
             viewHolderContentType.remove_btn = (Button) convertView.findViewById(R.id.remove_btn);
+            viewHolderContentType.swipemenu_layout = (SwipeMenuLayout) convertView.findViewById(R.id.swipemenu_layout);
             convertView.setTag(viewHolderContentType);
         } else {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
 
         viewHolderContentType.room_name_txt.setText(((Map) getList().get(position)).get("name").toString());
-//        viewHolderContentType.txt_device_num.setText(((Map) getList().get(position)).get("count").toString() + "个设备");
 
-        final ViewHolderContentType finalViewHolderContentType = viewHolderContentType;
+        switch (((Map) getList().get(position)).get("authType").toString()) {
+            case "1"://业主
+                viewHolderContentType.swipemenu_layout.setSwipeEnable(true);
+                break;
+            case "2"://成员
+                viewHolderContentType.swipemenu_layout.setSwipeEnable(false);
+                break;
+        }
+//        viewHolderContentType.txt_device_num.setText(((Map) getList().get(position)).get("count").toString() + "个设备");
         viewHolderContentType.rename_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,5 +192,7 @@ public class ManagerRoomAdapter extends BaseAdapter {
         TextView txt_device_num;
         Button rename_btn;
         Button remove_btn;
+        PercentRelativeLayout per_content_lay;
+        SwipeMenuLayout swipemenu_layout;
     }
 }

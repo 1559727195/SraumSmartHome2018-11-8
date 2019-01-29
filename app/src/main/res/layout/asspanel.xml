@@ -459,15 +459,17 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:background="@null" />
+                        android:background="@null"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/pafivetext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/e30"
-                        android:textSize="@dimen/p28"
-                        android:visibility="gone" />
+                        android:textSize="@dimen/p28" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -490,15 +492,17 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:background="@null" />
+                        android:background="@null"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/pasixtext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/e30"
-                        android:textSize="@dimen/p28"
-                        android:visibility="gone" />
+                        android:textSize="@dimen/p28" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -521,15 +525,17 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:background="@null" />
+                        android:background="@null"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/paseventext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/e30"
-                        android:textSize="@dimen/p28"
-                        android:visibility="gone" />
+                        android:textSize="@dimen/p28" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -552,15 +558,17 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:background="@null" />
+                        android:background="@null"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/paeighttext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/e30"
-                        android:textSize="@dimen/p28"
-                        android:visibility="gone" />
+                        android:textSize="@dimen/p28" />
                 </RelativeLayout>
             </LinearLayout>
         </androidx.percentlayout.widget.PercentRelativeLayout>

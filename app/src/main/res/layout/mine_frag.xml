@@ -44,6 +44,16 @@
             android:src="@drawable/icon_touxiang"
             app:civ_border_color="@color/white"
             app:civ_border_width="@dimen/x2" />
+
+        <TextView
+            android:id="@+id/nicheng_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/y5"
+            android:text="jery"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <ScrollView
@@ -54,11 +64,93 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/y8"
+                android:background="#E3E3E3"></View>
+            <RelativeLayout
+                android:id="@+id/area_manager_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y30"
+                android:background="#FFFFFF"
+                android:paddingLeft="@dimen/x3">
+
+                <ImageView
+                    android:id="@+id/area_manager_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/icon_shebeigongxiang" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_toRightOf="@+id/area_manager_img"
+                    android:text="家庭管理"
+                    android:textColor="#171717"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/x10"
+                    android:src="@drawable/wode_right_arrow" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E3E3E3"></View>
+            <RelativeLayout
+                android:id="@+id/room_manager_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y30"
+                android:background="#FFFFFF"
+                android:paddingLeft="@dimen/x3">
+
+                <ImageView
+                    android:id="@+id/room_manager_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/icon_shebeigongxiang" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/x5"
+                    android:layout_toRightOf="@+id/room_manager_img"
+                    android:text="房间管理"
+                    android:textColor="#171717"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/x10"
+                    android:src="@drawable/wode_right_arrow" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:background="#E3E3E3"></View>
             <RelativeLayout
                 android:id="@+id/add_family_rel"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="@dimen/y30"
-                android:layout_marginTop="@dimen/y5"
                 android:background="#FFFFFF"
                 android:paddingLeft="@dimen/x3">
 
@@ -68,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/icon_shebeigongxiang" />
+                    android:src="@drawable/icon_jatingchengyuan" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -89,11 +181,21 @@
                     android:layout_marginRight="@dimen/x10"
                     android:src="@drawable/wode_right_arrow" />
             </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E3E3E3"></View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:background="#E3E3E3"></View>
+
             <RelativeLayout
                 android:id="@+id/dev_manager_rel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y30"
-                android:layout_marginTop="@dimen/y5"
                 android:background="#FFFFFF"
                 android:paddingLeft="@dimen/x3">
 
@@ -125,93 +227,21 @@
                     android:src="@drawable/wode_right_arrow" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/room_manager_rel"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/y30"
-                android:layout_marginTop="@dimen/y5"
-                android:background="#FFFFFF"
-                android:paddingLeft="@dimen/x3">
-
-                <ImageView
-                    android:id="@+id/room_manager_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/icon_shebeigongxiang" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:layout_toRightOf="@+id/room_manager_img"
-                    android:text="房间管理"
-                    android:textColor="#171717"
-                    android:textSize="15sp" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/x10"
-                    android:src="@drawable/wode_right_arrow" />
-            </RelativeLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/gray"></View>
-            <RelativeLayout
-                android:id="@+id/area_manager_rel"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/y30"
-                android:layout_marginTop="@dimen/y5"
-                android:background="#FFFFFF"
-                android:paddingLeft="@dimen/x3">
+                android:background="#E3E3E3"></View>
 
-                <ImageView
-                    android:id="@+id/area_manager_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/icon_shebeigongxiang" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/x5"
-                    android:layout_toRightOf="@+id/area_manager_img"
-                    android:text="区域管理"
-                    android:textColor="#171717"
-                    android:textSize="15sp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/x10"
-                    android:src="@drawable/wode_right_arrow" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/gray"></View>
             <RelativeLayout
                 android:id="@+id/wode_device_share_rel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y30"
                 android:layout_marginTop="@dimen/y5"
                 android:background="#FFFFFF"
-                android:visibility="gone"
-                android:paddingLeft="@dimen/x3">
+                android:paddingLeft="@dimen/x3"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/wode_account"
@@ -262,11 +292,6 @@
                     android:src="@drawable/wode_right_arrow" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:visibility="gone"
-                android:background="@color/gray"></View>
 
             <RelativeLayout
                 android:id="@+id/change_username"
@@ -319,8 +344,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y30"
                 android:background="#FFFFFF"
-                android:visibility="gone"
-                android:paddingLeft="@dimen/x3">
+                android:paddingLeft="@dimen/x3"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/wode_nicheng"
@@ -365,11 +390,16 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="1dp"-->
             <!--android:background="@color/gray"></View>-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/y8"
+                android:background="#E3E3E3"></View>
+
             <RelativeLayout
                 android:id="@+id/sugestion_rel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y30"
-                android:layout_marginTop="@dimen/y8"
                 android:background="#FFFFFF"
                 android:paddingLeft="@dimen/x3">
 
@@ -390,38 +420,7 @@
                     android:text="意见反馈"
                     android:textColor="#171717"
                     android:textSize="15sp" />
-                <!--<FrameLayout-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_height="wrap_content">-->
-                <!--<com.massky.sraumsmarthome.widget.SlideSwitchButton-->
-                <!--android:id="@+id/slide_btn"-->
-                <!--android:layout_width="60dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--slideswitch:isOpen="true"-->
-                <!--slideswitch:themeColor="#f200aa96"/>-->
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="left|center_vertical"-->
-                <!--android:id="@+id/txt_nan"-->
-                <!--android:textColor="#FFFFFF"-->
-                <!--android:textSize="16sp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:text="男"/>-->
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_gravity="right|center_vertical"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:id="@+id/txt_nv"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textColor="#FFFFFF"-->
-                <!--android:textSize="16sp"-->
-                <!--android:visibility="gone"-->
-                <!--android:text="女"/>-->
-                <!--</FrameLayout>-->
+
                 <ImageView
                     android:id="@+id/xingbie_pic"
                     android:layout_width="wrap_content"
@@ -447,7 +446,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray"></View>
+                android:background="#E3E3E3"></View>
 
             <RelativeLayout
                 android:id="@+id/system_infor_rel"
@@ -470,7 +469,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/x5"
                     android:layout_toRightOf="@+id/wode_year"
-                    android:text="系统消息(1)"
+                    android:text="系统消息"
                     android:textColor="#171717"
                     android:textSize="15sp" />
 
@@ -499,15 +498,15 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray"></View>
+                android:background="#E3E3E3"></View>
 
             <RelativeLayout
                 android:id="@+id/wode_sao_rel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y30"
-                android:visibility="gone"
                 android:background="#FFFFFF"
-                android:paddingLeft="@dimen/x3">
+                android:paddingLeft="@dimen/x3"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/wode_dizhi"
@@ -552,11 +551,16 @@
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="1dp"-->
             <!--android:background="@color/gray"></View>-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/y8"
+                android:background="#E3E3E3"></View>
+
             <RelativeLayout
                 android:id="@+id/about_rel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y30"
-                android:layout_marginTop="@dimen/y8"
                 android:background="#FFFFFF"
                 android:paddingLeft="@dimen/x3">
 
@@ -590,7 +594,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray"></View>
+                android:background="#E3E3E3"></View>
 
             <RelativeLayout
                 android:id="@+id/setting_rel"

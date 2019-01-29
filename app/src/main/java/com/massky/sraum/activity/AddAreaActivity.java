@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.bigkoo.pickerview_new.OptionsPickerView;
 import com.massky.sraum.R;
@@ -25,11 +24,9 @@ import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.view.ClearEditText;
 import com.yanzhenjie.statusview.StatusUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.InjectView;
 import db.AreaBean;
 import db.CityBean;
@@ -74,7 +71,6 @@ public class AddAreaActivity extends BaseActivity {
     protected int viewId() {
         return R.layout.add_area_act;
     }
-
 
     @Override
     protected void onView() {

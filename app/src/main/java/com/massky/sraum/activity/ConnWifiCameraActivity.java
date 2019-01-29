@@ -89,11 +89,6 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
     private static final String STR_MSG_PARAM = "msgparam";
     private MyWifiThread myWifiThread = null;
     private boolean blagg = false;
-    private Intent intentbrod = null;
-    private WifiInfo info = null;
-    boolean bthread = true;
-    private int tag = 0;
-    private boolean isSearched;
     private MyBroadCast receiver;
     private static final int SEARCH_TIME = 5000;
     private static final int SEARCH_TIME_SECOND = 6000;
@@ -322,7 +317,7 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
         IntentFilter filter = new IntentFilter();
         filter.addAction("finish");
         registerReceiver(receiver, filter);
-        intentbrod = new Intent("drop");
+//        intentbrod = new Intent("drop");
     }
 
     @Override
@@ -340,7 +335,6 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
         }
 //        progressdlg.dismiss();
         NativeCaller.StopSearch();
-        isSearched = false;
         if (player != null) {
             player.stop();
         }
@@ -350,14 +344,14 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
-        NativeCaller.Free();
+//        NativeCaller.Free();
+
 //        Intent intent = new Intent();
 //        intent.setClass(this, BridgeService.class);
 //        stopService(intent);
         Intent intent = new Intent();
         intent.setClass(this, BridgeService.class);
         stopService(intent);
-        tag = 0;
     }
 
     class MyWifiThread extends Thread {
@@ -381,7 +375,6 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
         public void run() {
             NativeCaller.StopSearch();
 //            progressdlg.dismiss();
-            isSearched = false;
             switch (doit_onekey) {
                 case "search":
                     index_wifi++;
@@ -399,10 +392,10 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
                                 if (connWifiInterfacer != null) {
                                     connWifiInterfacer.conn_wifi_over();
                                 }
-
-                                isOneKey = true;
-                                doit_onekey = "search";
-                                searchCamera();
+                                ToastUtil.showToast(ConnWifiCameraActivity.this,"没有搜索到最新设备，请重新配置");
+//                                isOneKey = true;
+//                                doit_onekey = "search";
+//                                searchCamera();
                             } else if (list_wifi_camera.size() > list.size()) {//说明一健配置之后，搜索到最新设备
                                 Map map_result = new HashMap();
                                 List<String> list_first = new ArrayList<>();
@@ -490,7 +483,7 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
 //            wifi_peizhi++;
 //            if (wifi_peizhi >= 2) {
 //                wifi_peizhi = 0;
-            new Thread(new SearchThread()).start();
+//            new Thread(new SearchThread()).start();
             updateListHandler.postDelayed(updateThread, SEARCH_TIME);
 //            } else {
 //                one_step_second();//一键匹配,配两次
@@ -610,7 +603,6 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
             ConnWifiCameraActivity.this.finish();
             Log.d("ip", "AddCameraActivity.this.finish()");
         }
-
     }
 
     class StartPPPPThread implements Runnable {
@@ -753,12 +745,10 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
             ToastUtil.showToast(ConnWifiCameraActivity.this, "WIFI密码为空");
             return;
         }
-        stopCameraPPPP();
+//        stopCameraPPPP();
         //把相机状态，设备id置空
-        tag = 0;
 //                textView_top_show.setText(R.string.login_stuta_camer);
         SystemValue.deviceId = null;
-        isSearched = true;
         doit_onekey = "search";
         searchCamera();
         show_dialog_fragment();
@@ -929,6 +919,7 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
             @Override
             public void dialogDismiss() {
                 updateListHandler.removeCallbacks(updateThread);
+                updateListHandler.removeCallbacks(updateOneKeyThread);
                 if (myWifiThread != null) {
                     blagg = false;
                 }
@@ -941,8 +932,13 @@ public class ConnWifiCameraActivity extends BaseActivity implements BridgeServic
                     loader.StopSmartConnection();
 
                 NativeCaller.StopSearch();
-                isSearched = false;
                 doit_onekey = "isover";
+
+                isOneKey = false;
+                index_wifi = 0;
+
+                list_wifi_camera.clear();
+                SharedPreferencesUtil.saveData(ConnWifiCameraActivity.this,"list_wifi_camera",new ArrayList<>());
             }
         });//初始化快配和搜索设备dialogFragment
         connWifiInterfacer = (ConnWifiInterfacer) newFragment;

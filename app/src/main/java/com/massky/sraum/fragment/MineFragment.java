@@ -4,18 +4,30 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.AddTogenInterface.AddTogglenInterfacer;
 import com.king.photo.activity.MessageSendActivity;
 import com.massky.sraum.R;
+import com.massky.sraum.User;
+import com.massky.sraum.Util.BitmapUtil;
 import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.MyOkHttp;
+import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
+import com.massky.sraum.Util.TokenUtil;
+import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.activity.AboutActivity;
 import com.massky.sraum.activity.AreaSettingActivity;
+import com.massky.sraum.activity.DeviceSettingActivity;
+import com.massky.sraum.activity.FamilySettingActivity;
 import com.massky.sraum.activity.HomeSettingActivity;
 import com.massky.sraum.activity.LoginGateWayActivity;
 import com.massky.sraum.activity.MyDeviceListActivity;
@@ -34,6 +46,7 @@ import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,6 +93,10 @@ public class MineFragment extends BaseFragment1 {
     RelativeLayout area_manager_rel;
     @InjectView(R.id.add_family_rel)
     RelativeLayout add_family_rel;
+    @InjectView(R.id.nicheng_name)
+    TextView nicheng_name;
+    private User.userinfo userinfo;
+    private int intfirst;
 
     @Override
     protected void onData() {
@@ -102,6 +119,40 @@ public class MineFragment extends BaseFragment1 {
         add_family_rel.setOnClickListener(this);
     }
 
+
+    //账号个人基本信息
+    private void getAccountInfo() {
+//        dialogUtil.loadDialog();
+        account_number_Act();
+    }
+
+    private void account_number_Act() {
+        Map<String, Object> map = new HashMap<>();
+        String areaNumber = (String) SharedPreferencesUtil.getData(getActivity(), "areaNumber", "");
+        map.put("token", TokenUtil.getToken(getActivity()));
+//        map.put("areaNumber", areaNumber);
+
+        MyOkHttp.postMapObject(ApiHelper.sraum_getAccountInfo, map, new Mycallback
+                (new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {
+                        account_number_Act();
+                    }
+                }, getActivity(), null) {
+            @Override
+            public void onSuccess(User user) {
+                super.onSuccess(user);
+                userinfo = user.userInfo;
+                handler.sendEmptyMessage(0);
+            }
+
+            @Override
+            public void wrongToken() {
+                super.wrongToken();
+            }
+        });
+    }
+
     @Override
     public void onEvent(MyDialogEvent eventData) {
         currentpage = 1;
@@ -113,8 +164,44 @@ public class MineFragment extends BaseFragment1 {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        headportrait.setImageBitmap(BitmapUtil.stringtoBitmap((String)
+                SharedPreferencesUtil.getData(getActivity(), "avatar", "")));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getAccountInfo();
+            }
+        }).start();
+
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            nicheng_name.setText(userinfo.userId);
+            SharedPreferencesUtil.saveData(getActivity(), "userName", nicheng_name.getText().toString());
+        }
+    };
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            if (intfirst == 1) {
+                intfirst = 2;
+            } else {
+                getAccountInfo();
+            }
+        }
+    }
+
+
+    @Override
     protected void onView(View view) {
         list_alarm = new ArrayList<>();
+        dialogUtil = new DialogUtil(getActivity());
         StatusUtils.setFullToStatusBar(getActivity());  // StatusBar.
         init_permissions();
     }
@@ -176,7 +263,7 @@ public class MineFragment extends BaseFragment1 {
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;//设置
             case R.id.dev_manager_rel://设备列表
-                startActivity(new Intent(getActivity(), MyDeviceListActivity.class));
+                startActivity(new Intent(getActivity(), DeviceSettingActivity.class));
                 break;
             case R.id.room_manager_rel://房间管理
                 startActivity(new Intent(getActivity(), HomeSettingActivity.class));
@@ -185,7 +272,8 @@ public class MineFragment extends BaseFragment1 {
                 startActivity(new Intent(getActivity(), AreaSettingActivity.class));
                 break;
             case R.id.add_family_rel:
-                Intent mintent = new Intent(getActivity(), MyfamilyActivity.class);
+                Intent mintent = new Intent(getActivity(), FamilySettingActivity
+                        .class);
                 startActivity(mintent);
                 break;
         }

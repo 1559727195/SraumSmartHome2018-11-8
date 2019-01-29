@@ -79,6 +79,7 @@ public class AddWifiCameraScucessActivity extends BaseActivity {
     private GizWifiDevice currGizWifiDevice;
     private String deviceInfo1;
     private Map wificamera = new HashMap();
+    private String areaNumber;
 
     @Override
     protected int viewId() {
@@ -116,7 +117,7 @@ public class AddWifiCameraScucessActivity extends BaseActivity {
     String type = "";
 //        String deviceInfo  = add_bind_dingyue();
         Map map = new HashMap();
-        String areaNumber = (String) SharedPreferencesUtil.getData(AddWifiCameraScucessActivity.this,
+        areaNumber = (String) SharedPreferencesUtil.getData(AddWifiCameraScucessActivity.this,
                 "areaNumber","");
         dialogUtil.loadDialog();
         map.put("token", TokenUtil.getToken(AddWifiCameraScucessActivity.this));
@@ -165,6 +166,7 @@ public class AddWifiCameraScucessActivity extends BaseActivity {
                         Map map = new HashMap();
                         map.put("deviceId",wificamera.get("strDeviceID"));
                         map.put("deviceType", finalType);
+                        map.put("areaNumber", areaNumber);
                         map.put("type","2");
                         Intent intent = new Intent(AddWifiCameraScucessActivity.this, SelectRoomActivity.class);
                         intent.putExtra("map_deivce", (Serializable) map);

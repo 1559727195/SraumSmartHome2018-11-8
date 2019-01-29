@@ -2,11 +2,15 @@ package com.massky.sraum.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.ContentObserver;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -63,6 +67,7 @@ import com.massky.sraum.fragment.HomeFragment;
 import com.massky.sraum.fragment.MineFragment;
 import com.massky.sraum.fragment.SceneFragment;
 import com.massky.sraum.permissions.RxPermissions;
+import com.massky.sraum.view.DownLoadProgressbar;
 import com.yaokan.sdk.api.YkanSDKManager;
 import com.yaokan.sdk.ir.InitYkanListener;
 import com.yaokan.sdk.utils.Utility;
@@ -84,6 +89,9 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import okhttp3.Call;
 import vstc2.nativecaller.NativeCaller;
+import webapp.config.SystemParams;
+import webapp.download.DownLoadUtils;
+import webapp.download.DownloadApk;
 
 import static com.example.jpushdemo.MyReceiver.ACTION_NOTIFICATION_OPENED_MAIN;
 
@@ -94,7 +102,7 @@ import static com.example.jpushdemo.MyReceiver.ACTION_NOTIFICATION_OPENED_MAIN;
 
 public class MainGateWayActivity extends BaseActivity implements InitYkanListener {
 
- public static final String MESSAGE_TONGZHI = "com.massky.sraum.message_tongzhi";
+    public static final String MESSAGE_TONGZHI = "com.massky.sraum.message_tongzhi";
     private HomeFragment fragment1;
     private SceneFragment fragment2;
     private MineFragment fragment3;
@@ -103,7 +111,7 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
     public static String ACTION_SRAUM_SETBOX = "ACTION_SRAUM_SETBOX";//notifactionId = 8 ->设置网关模式，sraum_setBox
-    public static String UPDATE_GRADE_BOX = "com.massky.sraum.update_grade_box";
+//    public static String UPDATE_GRADE_BOX = "com.massky.sraum.update_grade_box";
     private int init_jizhiyun;//机智云index
     private DialogUtil dialogUtil;
 
@@ -140,6 +148,9 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
     private boolean iswait_down_load;//等待NotificationListenerService这个服务唤醒
     private String isdo;
     private MessageReceiver mMessageReceiver_tongzhi_open;
+    private DownLoadUtils mDownloadManager;
+    private DownloadChangeObserver mDownLoadChangeObserver;
+    private DownLoadProgressbar mProgress;
 
     @Override
     protected int viewId() {
@@ -155,7 +166,121 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         init_jizhiyun_1();
         init_video();
         init_receiver();
+        init_download_apk();
+
     }
+
+    private void init_download_apk() {
+        showCenterDeleteDialog("正在下载更新",
+                "");
+        //1.注册下载广播接收器
+        DownloadApk.registerBroadcast(this);
+        //2.删除已存在的Apk
+        DownloadApk.removeFile(this);
+
+        AppDownloadManager(MainGateWayActivity.this);
+    }
+
+    public void AppDownloadManager(Context context) {
+//        activity = (Activity) context;
+        weakReference = new WeakReference<Context>(context);
+//        mDownloadManager = (DownloadManager) weakReference.get().getSystemService(Context.DOWNLOAD_SERVICE);
+//        mDownLoadChangeObserver = new AppDownloadManager.DownloadChangeObserver(new Handler());
+//        mDownloadReceiver = new AppDownloadManager.DownloadReceiver();
+
+        mDownloadManager = DownLoadUtils.getInstance(getApplicationContext());
+        mDownLoadChangeObserver = new DownloadChangeObserver(new Handler());
+    }
+
+    /**
+     * 对应 { Activity#onResume }
+     */
+    public void resume1() {//
+        //设置监听Uri.parse("content://downloads/my_downloads")
+        weakReference.get().getContentResolver().registerContentObserver(Uri.parse("content://downloads/my_downloads"), true,
+                mDownLoadChangeObserver);
+        // 注册广播，监听APK是否下载完成
+    }
+
+    /**
+     * 对应{ Activity#onPause()} ()}
+     */
+    public void onPause1() {
+        weakReference.get().getContentResolver().unregisterContentObserver(mDownLoadChangeObserver);
+    }
+
+    class DownloadChangeObserver extends ContentObserver {
+
+        /**
+         * Creates a content observer.
+         *
+         * @param handler The handler to run {@link #onChange} on, or null if none.
+         */
+        public DownloadChangeObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            updateView();
+        }
+    }
+
+
+    private void updateView() {
+        int[] bytesAndStatus = new int[]{0, 0, 0};
+        //获取存储的下载ID
+        long downloadId = SystemParams.getInstance().getLong(DownloadManager.EXTRA_DOWNLOAD_ID, -1L);
+        DownloadManager.Query query = new DownloadManager.Query().setFilterById(downloadId);
+        Cursor c = null;
+        try {
+            c = mDownloadManager.getDownloadManager().query(query);
+            if (c != null && c.moveToFirst()) {
+                //已经下载的字节数
+                bytesAndStatus[0] = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+                //总需下载的字节数
+                bytesAndStatus[1] = c.getInt(c.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+                //状态所在的列索引
+                bytesAndStatus[2] = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+
+//        long istext = SDCardSizeTest(apkFile);
+//        Log.e("robin debug", "istext:" + istext + "");
+        float num = (float) bytesAndStatus[0] / (float) bytesAndStatus[1];
+        int result = (int) (num * 100);     //把获取的浮点数计算结果转换为整数
+        Log.e(TAG, "bytesAndStatus[0]：" + bytesAndStatus[0]);
+        Log.e(TAG, "bytesAndStatus[1]：" + bytesAndStatus[1]);
+        Log.e(TAG, "下载进度：" + result + "%");
+        if (bytesAndStatus[0] != 0) {
+            if (!dialog1.isShowing()) dialog1.show();
+
+        } else {
+            //获取存储的下载ID
+            if (downloadId != -1) {
+                //存在downloadId
+                DownLoadUtils downLoadUtils = DownLoadUtils.getInstance(MainGateWayActivity.this);
+                //获取当前状态
+                int status = downLoadUtils.getDownloadStatus(downloadId);
+                if (-1 == status) {
+                    //下载已经取消
+                    if (dialog1 != null) dialog1.dismiss();
+//                    MainfragmentActivity.this.finish();
+//                    AppManager.getAppManager().finishAllActivity();
+                } else if (DownloadManager.STATUS_SUCCESSFUL == status) {
+                    if (dialog1 != null) dialog1.dismiss();
+                }
+            }
+        }
+        mProgress.setMaxValue(100);
+        mProgress.setCurrentValue(result);
+    }
+
 
     private void init_receiver() {
         //在这里发送广播，expires_in是86400->24小时
@@ -332,7 +457,6 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
                 }
             }
         }
-
 //        adapter.notifyDataSetChanged();
     }
 
@@ -399,7 +523,7 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         IntentFilter filter = new IntentFilter();
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         filter.addAction(MESSAGE_RECEIVED_ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
+        registerReceiver(mMessageReceiver, filter);
     }
 
     public void registerMessageReceiver_fromAbout() {
@@ -436,12 +560,22 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
                     if (loginflag)
                         ToastUtils.getInstances().showDialog("账号在其他地方登录，请重新登录。");
                 } else if (MESSAGE_RECEIVED_FROM_ABOUT_FRAGMENT.equals(intent.getAction())) {
+                    AppManager.getAppManager().finishActivity_current(AboutActivity.class);
                     String UpApkUrl = ApiHelper.UpdateApkUrl + "sraum" + Version + ".apk";
                     String apkName = "sraum" + Version + ".apk";
                     Log.e("fei", "UpApkUrl:" + UpApkUrl);
-                    UpdateManager manager = new UpdateManager(MainGateWayActivity.this, UpApkUrl, apkName);
-                    updateApkListener = (UpdateApkListener) manager;
-                    manager.showDownloadDialog();
+//                    UpdateManager manager = new UpdateManager(MainGateWayActivity.this, UpApkUrl, apkName);
+//                    updateApkListener = (UpdateApkListener) manager;
+//                    manager.showDownloadDialog();
+                    //3.如果手机已经启动下载程序，执行downloadApk。否则跳转到设置界面
+                    if (DownLoadUtils.getInstance(getApplicationContext()).canDownload()) {
+                        if (dialog1 != null) {
+                            if (!dialog1.isShowing()) dialog1.show();
+                        }
+                        DownloadApk.downloadApk(getApplicationContext(), UpApkUrl, "sraum更新", apkName);
+                    } else {
+                        DownLoadUtils.getInstance(getApplicationContext()).skipToDownloadManager();
+                    }
                 } else if (SRAUM_IS_DOWN_LOAD.equals(intent.getAction())) {//apk正在下载
 //                    ToastUtil.showToast(MainfragmentActivity.this, "apk正在下载中");
                     iswait_down_load = true;
@@ -469,7 +603,34 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
 
 
     private void updateApk() {
-        sraum_get_version();
+//        boolean tokenflag = TokenUtil.getTokenflag(MainfragmentActivity.this);
+//        if (tokenflag) {
+//            sraum_get_version();
+//        }
+
+        boolean isdownload = false;
+        long downloadId = SystemParams.getInstance().getLong(DownloadManager.EXTRA_DOWNLOAD_ID, -1L);
+        //获取存储的下载ID
+        if (downloadId != -1) {
+            //存在downloadId
+            DownLoadUtils downLoadUtils = DownLoadUtils.getInstance(MainGateWayActivity.this);
+            //获取当前状态
+            int status = downLoadUtils.getDownloadStatus(downloadId);
+            if (DownloadManager.STATUS_SUCCESSFUL == status) {
+                //状态为下载成功
+                //获取下载路径URI
+                if (dialog1 != null) dialog1.dismiss();
+            } else if (DownloadManager.STATUS_FAILED == status) {
+
+            } else if (status == -1) {
+                if (dialog1 != null) dialog1.dismiss();
+            } else {
+                isdownload = true;//apk正在下载中
+//                Log.d(context.getPackageName(), "apk is already downloading");
+            }
+        }
+        if (!isdownload)
+            sraum_get_version();
     }
 
     private void initPermission() {
@@ -516,42 +677,36 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
                         int sracode = Integer.parseInt(user.versionCode);
                         if (versionCode < sracode) {
                             //在这里判断有没有正在更新的apk,文件大小小于总长度即可
-                            weakReference = new WeakReference<Context>(App.getInstance());
-                            File apkFile = new File(weakReference.get().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "app_name.apk");
-                            if (apkFile != null && apkFile.exists()) {
-//                                long istext = main_get_real_size(apkFile);
-//                                long istext = 0;
+//                            weakReference = new WeakReference<Context>(App.getInstance());
+//                            File apkFile = new File(weakReference.get().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "app_name.apk");
+//                            if (apkFile != null && apkFile.exists()) {
+//                                long apksize = 0;
 //                                try {
-//                                    istext = getFileSizes(apkFile);
+//                                    apksize = getFileSize(apkFile);
 //                                } catch (Exception e) {
 //                                    e.printStackTrace();
 //                                }
-////                                long istext = SDCardSizeTest(apkFile);
-//                                Log.e("robin debug", "istext:" + istext + "");
-                                long apksize = 0;
-                                try {
-                                    apksize = getFileSize(apkFile);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                //获取已经下载字节数
-//                               String totalSize =  getDataTotalSize(MainfragmentActivity.this,apkFile.getAbsolutePath());
-//                              Integer.parseInt(totalSize);
+//                                //获取已经下载字节数
+////                               String totalSize =  getDataTotalSize(MainfragmentActivity.this,apkFile.getAbsolutePath());
+////                              Integer.parseInt(totalSize);
+//
+//                                int totalapksize = (int) SharedPreferencesUtil.getData(MainGateWayActivity.this, "apk_fileSize", 0);
+//                                if (totalapksize == 0) {//则说明，还没有下载过
+//                                    belowtext_id.setText("版本更新至" + Version);
+//                                    viewDialog.loadViewdialog();
+//                                    return;
+//                                }
+//                                if (apksize - totalapksize == 0) { //说明正在下载或者下载完毕，安装失败时，//->或者是下载完毕后没有去安装；
+////                                    down_load_thread();
+//                                    ToastUtil.showToast(MainGateWayActivity.this, "检测到有新版本，正在下载中");
+//                                }
+//                            } else {//不存在，apk文件
+//                                belowtext_id.setText("版本更新至" + Version);
+//                                viewDialog.loadViewdialog();
+//                            }
 
-                                int totalapksize = (int) SharedPreferencesUtil.getData(MainGateWayActivity.this, "apk_fileSize", 0);
-                                if (totalapksize == 0) {//则说明，还没有下载过
-                                    belowtext_id.setText("版本更新至" + Version);
-                                    viewDialog.loadViewdialog();
-                                    return;
-                                }
-                                if (apksize - totalapksize == 0) { //说明正在下载或者下载完毕，安装失败时，//->或者是下载完毕后没有去安装；
-//                                    down_load_thread();
-                                    ToastUtil.showToast(MainGateWayActivity.this, "检测到有新版本，正在下载中");
-                                }
-                            } else {//不存在，apk文件
-                                belowtext_id.setText("版本更新至" + Version);
-                                viewDialog.loadViewdialog();
-                            }
+                            belowtext_id.setText("版本更新至" + Version);
+                            viewDialog.loadViewdialog();
                         } else {//没有可更新的apk时
                             SharedPreferencesUtil.saveData(MainGateWayActivity.this, "apk_fileSize", 0);
                         }
@@ -623,7 +778,17 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
 
     //自定义dialog,centerDialog删除对话框
     public void showCenterDeleteDialog(final String name1, final String name2) {
-        View view = LayoutInflater.from(MainGateWayActivity.this).inflate(R.layout.promat_dialog, null);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//        // 布局填充器
+//        LayoutInflater inflater = LayoutInflater.from(getActivity());
+//        View view = inflater.inflate(R.layout.user_name_dialog, null);
+//        // 设置自定义的对话框界面
+//        builder.setView(view);
+//
+//        cus_dialog = builder.create();
+//        cus_dialog.show();
+
+        View view = LayoutInflater.from(MainGateWayActivity.this).inflate(R.layout.promat_download_dialog, null);
         TextView confirm; //确定按钮
         TextView cancel; //确定按钮
         TextView tv_title;
@@ -633,6 +798,8 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         confirm = (TextView) view.findViewById(R.id.call_confirm);
         tv_title = (TextView) view.findViewById(R.id.tv_title);//name_gloud
         name_gloud = (TextView) view.findViewById(R.id.name_gloud);
+        mProgress = (DownLoadProgressbar) view.findViewById(R.id.dp_game_progress);
+        mProgress.setMaxValue(100);
         name_gloud.setText(name1);
         tv_title.setText(name2);
 //        tv_title.setText("是否拨打119");
@@ -641,7 +808,7 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         dialog1 = new Dialog(MainGateWayActivity.this, R.style.BottomDialog);
         dialog1.setContentView(view);
         dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog1.setCancelable(false);//设置它可以取消
+        dialog1.setCancelable(true);//设置它可以取消
         dialog1.setCanceledOnTouchOutside(false);
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -649,6 +816,7 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         int displayHeight = dm.heightPixels;
         android.view.WindowManager.LayoutParams p = dialog1.getWindow().getAttributes(); //获取对话框当前的参数值
         p.width = (int) (displayWidth * 0.8); //宽度设置为屏幕的0.5
+        p.height = (int) (displayWidth * 0.4);
 //        p.height = (int) (displayHeight * 0.5); //宽度设置为屏幕的0.5
 //        dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
         dialog1.getWindow().setAttributes(p);  //设置生效
@@ -657,19 +825,28 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog1.dismiss();
-                dialog1.dismiss();
-                over_camera_list();//结束wifi摄像头的tag
-                MainGateWayActivity.this.finish();
+//                dialog1.dismiss();
+//                dialog1.dismiss();
+//                over_camera_list();//结束wifi摄像头的tag
+//                MainfragmentActivity.this.finish();
+                //删除下载任务以及文件
+                long downloadId = SystemParams.getInstance().getLong(DownloadManager.EXTRA_DOWNLOAD_ID, -1L);
+                //获取存储的下载ID
+                if (downloadId != -1) {
+                    //存在downloadId
+                    DownLoadUtils downLoadUtils = DownLoadUtils.getInstance(MainGateWayActivity.this);
+                    downLoadUtils.getDownloadManager().remove(downloadId);
+                    dialog1.dismiss();
+                }
             }
         });
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SharedPreferencesUtil.saveData(MainfragmentActivity.this, "loadapk", false);
-//                over_broad_apk_load();
-                startActivityForResult(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"), TONGZHI_APK_UPGRATE);
+////                SharedPreferencesUtil.saveData(MainfragmentActivity.this, "loadapk", false);
+////                over_broad_apk_load();
+//                startActivityForResult(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"), TONGZHI_APK_UPGRATE);
             }
         });
     }
@@ -700,10 +877,16 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         SharedPreferencesUtil.saveInfo_List(MainGateWayActivity.this, "list_wifi_camera_first", list_second);
     }
 
+    @Override
+    protected void onPause() {
+        onPause1();
+        super.onPause();
+    }
 
     @Override
     protected void onResume() {
         init_jizhiyun_onresume();
+        resume1();
         super.onResume();
     }
 
@@ -718,7 +901,7 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
         init_jlogin();
         boolean netflag = NetUtils.isNetworkConnected(MainGateWayActivity.this);
         if (netflag) {//获取版本号
-//            updateApk();
+            updateApk();
         }
     }
 
@@ -911,7 +1094,6 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
             @Override
             public void registerUserCb(GizWifiErrorCode result, String uid, String token) {
 
-
             }
 
             /** 用于发送验证码的回调 */
@@ -1027,7 +1209,31 @@ public class MainGateWayActivity extends BaseActivity implements InitYkanListene
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.checkbutton_id:
+                viewDialog.removeviewDialog();
+                String UpApkUrl = ApiHelper.UpdateApkUrl + "sraum" + Version + ".apk";
+                Log.e("fei", "UpApkUrl:" + UpApkUrl);
+                String apkName = "sraum" + Version + ".apk";
 
+//                UpdateManager manager = new UpdateManager(MainfragmentActivity.this, UpApkUrl, apkName);
+//                updateApkListener = (UpdateApkListener) manager;
+//                manager.showDownloadDialog();
+
+                //3.如果手机已经启动下载程序，执行downloadApk。否则跳转到设置界面
+                if (DownLoadUtils.getInstance(getApplicationContext()).canDownload()) {
+                    if (dialog1 != null) {
+                        if (!dialog1.isShowing()) dialog1.show();
+                    }
+                    DownloadApk.downloadApk(getApplicationContext(), UpApkUrl, "sraum更新", apkName);
+                } else {
+                    DownLoadUtils.getInstance(getApplicationContext()).skipToDownloadManager();
+                }
+                break;
+            case R.id.qxbutton_id:
+                viewDialog.removeviewDialog();
+                break;
+        }
     }
 
     private RadioGroup radioGroup;

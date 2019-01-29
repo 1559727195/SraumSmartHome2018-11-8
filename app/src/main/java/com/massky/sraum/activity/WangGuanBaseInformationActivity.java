@@ -9,12 +9,17 @@ import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
+import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.base.BaseActivity;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
 import butterknife.InjectView;
 
 /**
@@ -37,6 +42,8 @@ public class WangGuanBaseInformationActivity extends BaseActivity {
     TextView pannel;
     @InjectView(R.id.pan_id)
     TextView pan_id;
+    private String gatewayNumber;//网关编号
+    private String areaNumber;
 
     @Override
     protected int viewId() {
@@ -49,6 +56,8 @@ public class WangGuanBaseInformationActivity extends BaseActivity {
 //            statusView.setBackgroundColor(Color.BLACK);
 //        }
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
+        areaNumber = (String) getIntent().getSerializableExtra("areaNumber");
+        gatewayNumber = (String) getIntent().getSerializableExtra("number");
     }
 
     @Override
@@ -61,19 +70,27 @@ public class WangGuanBaseInformationActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        sraum_getGatewayInfo();
+        super.onResume();
+    }
+
     /**
      * 获取网关基本信息（APP->网关）
      */
     private void sraum_getGatewayInfo() {
         Map map = new HashMap();
-        map.put("command", "sraum_getGatewayInfo");
+        map.put("token", TokenUtil.getToken(this));
+        map.put("number", gatewayNumber);
+        map.put("areaNumber", areaNumber);
         MyOkHttp.postMapObject(ApiHelper.sraum_getGatewayInfo, map,
                 new Mycallback(new AddTogglenInterfacer() {
                     @Override
                     public void addTogglenInterfacer() {
 
                     }
-                },WangGuanBaseInformationActivity.this,null) {
+                }, WangGuanBaseInformationActivity.this, null) {
                     @Override
                     public void onSuccess(User user) {
                         //"roomNumber":"1"
@@ -95,7 +112,7 @@ public class WangGuanBaseInformationActivity extends BaseActivity {
                         //显示
                         mac.setText(user.mac);
                         type.setText(user.type);
-                        version.setText(user.versionType);
+                        version.setText(user.hardware);
                         pannel.setText(user.channel);
                         pan_id.setText(user.panid);
                     }

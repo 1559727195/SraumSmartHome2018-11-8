@@ -224,6 +224,11 @@ public class LoginCloudActivity extends BaseActivity {
                 super.wrongToken();//继承父类，实现父类的方法
                 ToastUtil.showDelToast(LoginCloudActivity.this, "登录失败，账号未注册");
             }
+
+            @Override
+            public void wrongBoxnumber() {
+                ToastUtil.showDelToast(LoginCloudActivity.this, "用户名或密码错误");
+            }
         });
     }
 
@@ -293,6 +298,7 @@ public class LoginCloudActivity extends BaseActivity {
 
             @Override
             public void onSuccess(User user) {
+
 //                                    ToastUtil.showToast(LoginActivity.this,"登录成功");
                 SharedPreferencesUtil.saveData(LoginCloudActivity.this, "loginPhone", usertext_id.getText().toString());
                 SharedPreferencesUtil.saveData(LoginCloudActivity.this, "avatar", user.avatar);

@@ -1,7 +1,10 @@
 package com.massky.sraum.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -118,10 +121,66 @@ public class SettingActivity extends BaseActivity {
 //                IntentUtil.startActivityAndFinishFirst(SettingActivity.this, LoginCloudActivity.class);
 //                AppManager.getAppManager().finishAllActivity();
                 //退出登录
-                logout();
-
+                showCenterDeleteDialog("是否退出登录?");
                 break;//
         }
+    }
+
+
+    //自定义dialog,centerDialog删除对话框
+    public void showCenterDeleteDialog(final String name) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//        // 布局填充器
+//        LayoutInflater inflater = LayoutInflater.from(getActivity());
+//        View view = inflater.inflate(R.layout.user_name_dialog, null);
+//        // 设置自定义的对话框界面
+//        builder.setView(view);
+//
+//        cus_dialog = builder.create();
+//        cus_dialog.show();
+
+        View view = LayoutInflater.from(SettingActivity.this).inflate(R.layout.promat_dialog, null);
+        TextView confirm; //确定按钮
+        TextView cancel; //确定按钮
+        TextView tv_title;
+        TextView name_gloud;
+//        final TextView content; //内容
+        cancel = (TextView) view.findViewById(R.id.call_cancel);
+        confirm = (TextView) view.findViewById(R.id.call_confirm);
+        tv_title = (TextView) view.findViewById(R.id.tv_title);//name_gloud
+        name_gloud = (TextView) view.findViewById(R.id.name_gloud);
+        name_gloud.setText(name);
+        tv_title.setVisibility(View.GONE);
+//        tv_title.setText("是否拨打119");
+//        content.setText(message);
+        //显示数据
+        final Dialog dialog = new Dialog(SettingActivity.this, R.style.BottomDialog);
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        int displayWidth = dm.widthPixels;
+        int displayHeight = dm.heightPixels;
+        android.view.WindowManager.LayoutParams p = dialog.getWindow().getAttributes(); //获取对话框当前的参数值
+        p.width = (int) (displayWidth * 0.8); //宽度设置为屏幕的0.5
+//        p.height = (int) (displayHeight * 0.5); //宽度设置为屏幕的0.5
+//        dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+        dialog.getWindow().setAttributes(p);  //设置生效
+        dialog.show();
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
 

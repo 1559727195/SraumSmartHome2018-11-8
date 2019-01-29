@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="云场景设置"
+            android:text="场景设置"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -66,11 +66,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x15"
-            android:text="云场景名称"
+            android:text="场景名称"
             android:textColor="@color/e30"
             android:textSize="14sp" />
 
-        <com.massky.sraum.view.ClearEditText
+        <com.massky.sraum.view.ClearLengthEditText
             android:id="@+id/link_name_edit"
             android:layout_width="@dimen/x151"
             android:layout_height="@dimen/y25"

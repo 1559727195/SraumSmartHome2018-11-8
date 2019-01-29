@@ -64,11 +64,12 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
             R.drawable.icon_type_yijiandk_90, R.drawable.icon_type_liangjiandk_90,
             R.drawable.icon_type_sanjiandk_90, R.drawable.icon_type_sijiandk_90, R.drawable.icon_type_yilutiaoguang_90,
             R.drawable.icon_type_lianglutiaoguang_90, R.drawable.icon_type_sanlutiaoguang_90, R.drawable.icon_type_chuanglianmb_90,
-            R.drawable.icon_type_kongtiao_90,
+            R.drawable.icon_type_kongtiaomb_90,
             R.drawable.icon_type_menci_90, R.drawable.icon_type_rentiganying_90,
             R.drawable.icon_type_toa_90, R.drawable.icon_type_yanwucgq_90, R.drawable.icon_type_tianranqibjq_90,
-            R.drawable.icon_type_jinjianniu_90, R.drawable.icon_type_zhinengmensuo_90, R.drawable.icon_type_pm25,
-            R.drawable.icon_type_shuijin, R.drawable.icon_type_duogongneng, R.drawable.icon_kaiguan_socket_90, R.drawable.icon_wangguan
+            R.drawable.icon_type_jinjianniu_90, R.drawable.icon_type_zhinengmensuo_90, R.drawable.icon_type_pm25_90,
+            R.drawable.icon_type_shuijin_90, R.drawable.icon_type_duogongneng_90, R.drawable.icon_type_zhinengmensuo_90,
+            R.drawable.icon_type_wangguan_90
     };
 
     //"B301"暂时为多功能模块
@@ -87,11 +88,11 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
     };
 
     private int[] icon_wifi = {
-            R.drawable.hongwai_s,
-            R.drawable.icon_type_yaokongqi,
+            R.drawable.icon_type_hongwaizfq_90,
+            R.drawable.icon_type_yaokongqi_90,
             R.drawable.icon_type_shexiangtou_90,
             // R.drawable.icon_type_pmmofang_90,
-            R.drawable.icon_keshimenling
+            R.drawable.icon_type_keshimenling_90
 
     };
     private int[] iconNam_wifi = {R.string.hongwai, R.string.yaokongqi, R.string.shexiangtou, R.string.keshimenling};//, R.string.pm_mofang
@@ -253,14 +254,83 @@ public class SelectZigbeeDeviceActivity extends BaseActivity {
 //                        }
 
                         if (gatewayList.size() != 0) {
-                            show_gateway_dialog_fragment();
-                            if (getGatewayInterfacer != null)
-                                getGatewayInterfacer.sendGateWayparams(map, gatewayList);
+                            if (gatewayList.size() == 1) {
+                                final String type = (String) map.get("type");
+                                final String gateway_number = (String) gatewayList.get(0).get("number");
+                                switch (type) {
+                                    case "B201"://智能门锁
+                                        Intent intent_position = new Intent(SelectZigbeeDeviceActivity.this, SelectSmartDoorLockActivity.class);
+                                        map.put("gateway_number", gateway_number);
+                                        intent_position.putExtra("map", (Serializable) map);
+                                        startActivity(intent_position);
+                                        break;
+                                    default:
+                                        set_gateway(0,map);
+                                        break;
+                                }
+                            } else {
+                                show_gateway_dialog_fragment();
+                                if (getGatewayInterfacer != null)
+                                    getGatewayInterfacer.sendGateWayparams(map, gatewayList);
+                            }
                         } else {
                             ToastUtil.showToast(SelectZigbeeDeviceActivity.this, "网关列表为空");
                         }
                     }
                 });
+    }
+
+    /**
+     * 设置网关开启模式
+     *
+     * @param position
+     */
+    private void set_gateway(int position,Map map1) {
+        //去设置设置网关模式
+
+        final String type = (String) map1.get("type");
+        String status = (String) map1.get("status");
+        final String gateway_number = (String) gatewayList.get(position).get("number");
+        String areaNumber = (String) SharedPreferencesUtil.getData(SelectZigbeeDeviceActivity.this, "areaNumber", "");
+        //在这里先调
+        //设置网关模式-sraum-setBox
+        Map map = new HashMap();
+//        String phoned = getDeviceId(SelectZigbeeDeviceActivity.this);
+        map.put("token", TokenUtil.getToken(SelectZigbeeDeviceActivity.this));
+        map.put("boxNumber", gateway_number);
+        String regId = (String) SharedPreferencesUtil.getData(SelectZigbeeDeviceActivity.this, "regId", "");
+        map.put("regId", regId);
+        map.put("status", status);
+        map.put("areaNumber", areaNumber);
+
+        dialogUtil.loadDialog();
+        MyOkHttp.postMapObject(ApiHelper.sraum_setGateway, map, new Mycallback(new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {
+
+                    }
+                }, SelectZigbeeDeviceActivity.this, dialogUtil) {
+                    @Override
+                    public void onSuccess(User user) {
+                        Intent intent_position = null;
+                        intent_position = new Intent(SelectZigbeeDeviceActivity.this, AddZigbeeDevActivity.class);
+                        intent_position.putExtra("type", type);
+                        intent_position.putExtra("boxNumber", gateway_number);
+                        startActivity(intent_position);
+                    }
+
+                    @Override
+                    public void wrongToken() {//
+                        super.wrongToken();
+                    }
+
+                    @Override
+                    public void wrongBoxnumber() {
+                        ToastUtil.showToast(SelectZigbeeDeviceActivity.this,
+                                "该网关不存在");
+                    }
+                }
+        );
     }
 
     /**

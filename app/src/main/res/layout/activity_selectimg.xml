@@ -13,31 +13,6 @@
         android:layout_height="wrap_content"
         android:background="@color/green"
         app:fitsView="@+id/root_layout" />
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="60dp"-->
-    <!--android:background="@color/black" >-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_centerInParent="true"-->
-    <!--android:text="写动态"-->
-    <!--android:textColor="#ffffff"-->
-    <!--android:textSize="20sp" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/activity_selectimg_send"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="40dp"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:layout_marginRight="8dp"-->
-    <!--android:gravity="center"-->
-    <!--android:text="发送"-->
-    <!--android:textColor="@drawable/text_while"-->
-    <!--android:textSize="20sp" />-->
-    <!--</RelativeLayout>-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -109,6 +84,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="@dimen/x8"
                         android:layout_weight="1.0"
+                        android:checked="true"
                         android:background="@drawable/function_suggesction"
                         android:gravity="center" />
 
@@ -152,6 +128,7 @@
                     android:layout_height="@dimen/y80"
                     android:background="@null"
                     android:gravity="left|top"
+                    android:id="@+id/edit_text_message"
                     android:hint="请简要描述你的问题和意见"
                     android:paddingRight="@dimen/y5"
                     android:textSize="16sp"></com.massky.sraum.view.ClearEditText>
@@ -181,10 +158,13 @@
                 <com.massky.sraum.view.ClearEditText
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/y35"
+                    android:id="@+id/phone_number"
                     android:background="@null"
                     android:gravity="left|center_vertical"
                     android:hint="请输入您的手机号，方便工作人员联系"
                     android:paddingRight="@dimen/y5"
+                    android:inputType="number"
+                    android:maxLength="11"
                     android:textSize="16sp"></com.massky.sraum.view.ClearEditText>
             </LinearLayout>
 

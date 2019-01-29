@@ -27,6 +27,7 @@ import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.view.ClearEditText;
+import com.massky.sraum.view.ClearLengthEditText;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
@@ -70,7 +71,7 @@ public class SetSelectLinkActivity extends BaseActivity {
     TextView end_time_txt;
     private int index_select;
     @InjectView(R.id.link_name_edit)
-    ClearEditText link_name_edit;
+    ClearLengthEditText link_name_edit;
     @InjectView(R.id.time_select_linear)
     LinearLayout time_select_linear;
     private DialogUtil dialogUtil;
@@ -334,8 +335,8 @@ public class SetSelectLinkActivity extends BaseActivity {
             map_device.put("mode", list_result.get(i).get("mode"));
             map_device.put("temperature", list_result.get(i).get("temperature"));
             map_device.put("speed", list_result.get(i).get("speed"));
-            map_device.put("panelMac", list_result.get(i).get("panelMAC") == null ? "" : list_result.get(i).get("panelMAC"));
-            map_device.put("gatewayMac", list_result.get(i).get("gatewayMAC") == null ? "" : list_result.get(i).get("gatewayMAC"));
+            map_device.put("panelMac", list_result.get(i).get("panelMac") == null ? "" : list_result.get(i).get("panelMac"));
+            map_device.put("gatewayMac", list_result.get(i).get("gatewayMac") == null ? "" : list_result.get(i).get("gatewayMac"));
             list.add(map_device);
         }
         map.put("deviceList", list);

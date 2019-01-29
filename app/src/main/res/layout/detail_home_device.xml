@@ -6,7 +6,7 @@
     android:background="@drawable/home_dev_select_bg"
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/x10"
+    android:paddingLeft="@dimen/x6"
     android:paddingRight="@dimen/x5">
 
     <RelativeLayout
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:text="客厅窗户"
                     android:textColor="#1A1A22"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
 
                 <TextView
 
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:text="打开"
                     android:textColor="#8A8A8A"
-                    android:textSize="7sp" />
+                    android:textSize="9sp" />
             </LinearLayout>
 
             <ImageView

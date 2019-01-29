@@ -91,6 +91,7 @@
                 android:id="@+id/rename_btn"
                 android:layout_width="@dimen/x50"
                 android:layout_height="match_parent"
+                android:textSize="12sp"
                 android:background="@color/blue_txt"
                 android:text="重命名"
                 android:textColor="@android:color/white" />
@@ -105,7 +106,8 @@
                 android:layout_width="@dimen/x50"
                 android:layout_height="match_parent"
                 android:background="#FF9A02"
-                android:text="编辑"
+                android:text="场景按钮"
+                android:textSize="12sp"
                 android:textColor="@android:color/white" />
         </RelativeLayout>
 
@@ -117,6 +119,7 @@
                 android:id="@+id/delete_btn"
                 android:layout_width="@dimen/x50"
                 android:layout_height="match_parent"
+                android:textSize="12sp"
                 android:background="#FF0202"
                 android:text="删除"
                 android:textColor="@android:color/white" />

@@ -12,14 +12,18 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
-import androidx.core.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.massky.sraum.activity.AndroidOPermissionActivity;
 import com.yaokan.sdk.utils.Logger;
+
 import java.io.File;
 import java.lang.ref.WeakReference;
+
+import androidx.core.content.FileProvider;
+import webapp.config.SystemParams;
+import webapp.download.DownLoadUtils;
 
 /**
  * Created by zhu on 2018/10/26.
@@ -188,37 +192,47 @@ public class AppDownloadManager {
 
         @Override
         public void onReceive(final Context context, final Intent intent) {
-            boolean haveInstallPermission;
-            // 兼容Android 8.0
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            install(context, intent, "");
+        }
+    }
 
-                //先获取是否有安装未知来源应用的权限
-                haveInstallPermission = context.getPackageManager().canRequestPackageInstalls();
-                if (!haveInstallPermission) {//没有权限
-                    // 弹窗，并去设置页面授权
-                    final AndroidOInstallPermissionListener listener = new AndroidOInstallPermissionListener() {
-                        @Override
-                        public void permissionSuccess() {
-                            installApk(context, intent);
-                        }
+    /**
+     * 去安装
+     *
+     * @param context
+     * @param intent
+     */
+    public static void install(final Context context, final Intent intent, final String appName) {
+        boolean haveInstallPermission;
+        // 兼容Android 8.0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-                        @Override
-                        public void permissionFail() {
+            //先获取是否有安装未知来源应用的权限
+            haveInstallPermission = context.getPackageManager().canRequestPackageInstalls();
+            if (!haveInstallPermission) {//没有权限
+                // 弹窗，并去设置页面授权
+                final AndroidOInstallPermissionListener listener = new AndroidOInstallPermissionListener() {
+                    @Override
+                    public void permissionSuccess() {
+                        installApk(context, intent, appName);
+                    }
+
+                    @Override
+                    public void permissionFail() {
 //                            ToastUtils.shortToast(context, "授权失败，无法安装应用");
-                            ToastUtil.showToast(context, "授权失败，无法安装应用");
-                        }
-                    };
+                        ToastUtil.showToast(context, "授权失败，无法安装应用");
+                    }
+                };
 
-                    AndroidOPermissionActivity.sListener = listener;
-                    Intent intent1 = new Intent(context, AndroidOPermissionActivity.class);
-                    context.startActivity(intent1);
+                AndroidOPermissionActivity.sListener = listener;
+                Intent intent1 = new Intent(context, AndroidOPermissionActivity.class);
+                context.startActivity(intent1);
 
-                } else {
-                    installApk(context, intent);
-                }
             } else {
-                installApk(context, intent);
+                installApk(context, intent, appName);
             }
+        } else {
+            installApk(context, intent, appName);
         }
     }
 
@@ -226,8 +240,11 @@ public class AppDownloadManager {
      * @param context
      * @param intent
      */
-    private void installApk(Context context, Intent intent) {
-        long completeDownLoadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+    private static void installApk(Context context, Intent intent, String appName) {
+        if (!appName.contains("sraum")) {
+            appName = "sraum" + appName;
+        }
+        long completeDownLoadId = SystemParams.getInstance().getLong(DownloadManager.EXTRA_DOWNLOAD_ID, -1L);
 
         Logger.e(TAG, "收到广播");
         Uri uri;
@@ -235,18 +252,21 @@ public class AppDownloadManager {
         intentInstall.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intentInstall.setAction(Intent.ACTION_VIEW);
 
-        if (completeDownLoadId == mReqId) {
+        if (completeDownLoadId != -1) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) { // 6.0以下
-                uri = mDownloadManager.getUriForDownloadedFile(completeDownLoadId);
+                DownLoadUtils downLoadUtils = DownLoadUtils.getInstance(context);
+                uri = downLoadUtils.getDownloadManager().getUriForDownloadedFile(completeDownLoadId);
             } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) { // 6.0 - 7.0
                 File apkFile = queryDownloadedApk(context, completeDownLoadId);
                 uri = Uri.fromFile(apkFile);
             } else { // Android 7.0 以上
                 uri = FileProvider.getUriForFile(context,
-                        "com.massky.sraum.installapkdemo",
-                        new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "app_name.apk"));
+                        "com.massky.sraum.provider",
+                        new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), appName));
+                //content://com.massky.sraum.installapkdemo/download/Android/data/com.massky.sraum/files/Download/sraum1.9.1.apk
                 intentInstall.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            }
+            }//content://com.massky.sraum.provider/external_files/Android/data/com.massky.sraum/files/Download/sraumsraum1.9.2.apk
+            //content://com.massky.sraum.provider/external_files/Android/data/com.massky.sraum/files/Download/sraumsraum1.9.2.apk
 
             // 安装应用
             Logger.e("zhouwei", "下载完成了");

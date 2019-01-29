@@ -366,7 +366,7 @@ public class SwipeMenuLayout extends ViewGroup {
                         if (getScrollX() > mRightMenuWidths) {
                             scrollTo(mRightMenuWidths, 0);
                         }
-                    } else {//右滑
+                    } else {//右滑.暂时不支持右划
                         if (getScrollX() < -mRightMenuWidths) {
                             scrollTo(-mRightMenuWidths, 0);
                         }

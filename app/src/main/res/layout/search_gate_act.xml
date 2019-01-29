@@ -66,7 +66,7 @@
         <ListView
             android:id="@+id/list_show_rev_item"
             android:layout_width="match_parent"
-            android:layout_height="78dp"
+            android:layout_height="@dimen/y50"
             android:layout_below="@+id/search_txt"
             android:layout_marginTop="15dp"
             android:cacheColorHint="#00000000"
@@ -88,7 +88,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="@dimen/y5"
         android:orientation="horizontal">
 
         <LinearLayout

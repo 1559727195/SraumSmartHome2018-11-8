@@ -111,6 +111,12 @@
             android:src="@drawable/wode_right_arrow" />
     </RelativeLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/wangguan_linear"
+        android:orientation="vertical">
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -156,82 +162,6 @@
         android:background="@color/gray"></View>
 
     <RelativeLayout
-        android:id="@+id/device_list"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:background="#FFFFFF"
-        android:paddingLeft="@dimen/x3">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:text="设备管理(12)"
-            android:textColor="#000000" />
-        <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
-        <!--android:layout_width="40dp"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:id="@+id/touxiang_select"-->
-        <!--android:src="@drawable/account_touxiang"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x10"
-            android:src="@drawable/wode_right_arrow" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray"></View>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y30"
-        android:background="#FFFFFF"
-        android:id="@+id/scene_list_rel"
-        android:paddingLeft="@dimen/x3">
-        />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/x10"
-            android:text="场景管理(7)"
-            android:textColor="#000000" />
-        <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
-        <!--android:layout_width="40dp"-->
-        <!--android:layout_height="40dp"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:id="@+id/touxiang_select"-->
-        <!--android:src="@drawable/account_touxiang"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/x10"
-            android:src="@drawable/wode_right_arrow" />
-    </RelativeLayout>
-
-      <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray"></View>
-
-    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y30"
         android:id="@+id/gujian_upgrade_rel"
@@ -270,27 +200,45 @@
         android:layout_height="1dp"
         android:background="@color/gray"></View>
 
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:layout_marginTop="@dimen/y20"-->
-        <!--android:background="@color/gray"></View>-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y30"
+        android:background="#FFFFFF"
+        android:id="@+id/scene_list_rel"
+        android:paddingLeft="@dimen/x3">
+        />
 
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/delete_rel"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/y30"-->
-        <!--android:background="#FFFFFF">-->
-        <!--/>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="修改网关密码"
+            android:textColor="#000000" />
+        <!--<com.massky.jingruicenterpark.widget.CircleImageView-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:id="@+id/touxiang_select"-->
+        <!--android:src="@drawable/account_touxiang"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_toLeftOf="@+id/touxiang_arrow"/>-->
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:gravity="center"-->
-            <!--android:text="删除设备"-->
-            <!--android:textColor="#F166F1" />-->
-    <!--</RelativeLayout>-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/x10"
+            android:src="@drawable/wode_right_arrow" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"></View>
+
+    </LinearLayout>
 
     <androidx.percentlayout.widget.PercentRelativeLayout
         android:layout_width="match_parent"

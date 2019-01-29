@@ -131,21 +131,30 @@ public class HomeSettingActivity extends BaseActivity implements XListView.IXLis
 //                                current_area_map = areaList.get(0);
 //                                sraum_getRoomsInfo(user.areaList.get(0).number);
 //                            }
-                            if (user.areaList.size() == 1) {//只有一个区域的话，直接显示房间列表
-                                //去获取房间列表
-                                add_room.setVisibility(View.VISIBLE);
-                                sraum_getRoomsInfo(user.areaList.get(0).number);
+//                            if (user.areaList.size() == 1) {//只有一个区域的话，直接显示房间列表
+//                                //去获取房间列表
+//                                switch (user.areaList.get(0).authType) {
+//                                    case "1"://业主
+//                                        add_room.setVisibility(View.VISIBLE);
+//                                        break;
+//                                    case "2"://成员
+//                                        add_room.setVisibility(View.GONE);
+//                                        break;
+//                                }
+//                                sraum_getRoomsInfo(user.areaList.get(0).number,user.areaList.get(0).authType);
+//                            } else {//显示区域列表
+//                                add_room.setVisibility(View.GONE);
+//                                homesettingadapter = new MyAreaListAdapter(HomeSettingActivity.this, areaList);
+//                                xListView_scan.setAdapter(homesettingadapter);
+//                            }
 
-                            } else {//显示区域列表
-                                add_room.setVisibility(View.GONE);
-                                homesettingadapter = new MyAreaListAdapter(HomeSettingActivity.this, areaList);
-                                xListView_scan.setAdapter(homesettingadapter);
-                            }
+                            add_room.setVisibility(View.GONE);
+                            homesettingadapter = new MyAreaListAdapter(HomeSettingActivity.this, areaList, "roomManager");
+                            xListView_scan.setAdapter(homesettingadapter);
                         }
                     }
                 });
     }
-
 
     @Override
     protected void onResume() {
@@ -158,7 +167,7 @@ public class HomeSettingActivity extends BaseActivity implements XListView.IXLis
      *
      * @param areaNumber
      */
-    private void sraum_getRoomsInfo(final String areaNumber) {
+    private void sraum_getRoomsInfo(final String areaNumber,final String authType) {
         if (dialogUtil != null) {
             dialogUtil.loadDialog();
         }
@@ -170,7 +179,7 @@ public class HomeSettingActivity extends BaseActivity implements XListView.IXLis
                 , mapdevice, new Mycallback(new AddTogglenInterfacer() {
                     @Override
                     public void addTogglenInterfacer() {//刷新togglen数据
-                        sraum_getRoomsInfo(areaNumber);
+                        sraum_getRoomsInfo(areaNumber,authType);
                     }
                 }, HomeSettingActivity.this, dialogUtil) {
                     @Override
@@ -209,6 +218,7 @@ public class HomeSettingActivity extends BaseActivity implements XListView.IXLis
                             mapdevice.put("name", user.roomList.get(i).name);
                             mapdevice.put("number", user.roomList.get(i).number);
                             mapdevice.put("count", user.roomList.get(i).count);
+                            mapdevice.put("authType", authType);
                             roomList.add(mapdevice);
                         }
                         display_room_list();
@@ -230,7 +240,6 @@ public class HomeSettingActivity extends BaseActivity implements XListView.IXLis
         xListView_scan.setAdapter(manageroomadapter);
     }
 
-
     @Override
     protected void onData() {
         list_hand_scene = new ArrayList<>();
@@ -249,7 +258,6 @@ public class HomeSettingActivity extends BaseActivity implements XListView.IXLis
             case R.id.add_room:
                 startActivity(new Intent(HomeSettingActivity.this, AddAreaActivity.class));
                 break;
-
         }
     }
 
@@ -258,7 +266,6 @@ public class HomeSettingActivity extends BaseActivity implements XListView.IXLis
         xListView_scan.stopLoadMore();
         xListView_scan.setRefreshTime("刚刚");
     }
-
 
     @Override
     public void onRefresh() {
@@ -274,5 +281,4 @@ public class HomeSettingActivity extends BaseActivity implements XListView.IXLis
             }
         }, 1000);
     }
-
 }

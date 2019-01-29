@@ -28,8 +28,8 @@
 
         <ImageView
             android:id="@+id/finish_bt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x25"
+            android:layout_height="@dimen/x25"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/x15"
             android:layout_toLeftOf="@+id/ok_bt"
@@ -37,8 +37,8 @@
            />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x25"
+            android:layout_height="@dimen/x25"
             android:id="@+id/ok_bt"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

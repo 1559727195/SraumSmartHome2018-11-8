@@ -19,12 +19,10 @@ import com.massky.sraum.adapter.MyAreaListOwnerAdapter;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.view.XListView;
 import com.yanzhenjie.statusview.StatusUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import butterknife.InjectView;
 import okhttp3.Call;
 
@@ -42,8 +40,8 @@ public class AreaSettingActivity extends BaseActivity implements XListView.IXLis
     ImageView back;
     @InjectView(R.id.add_area)
     ImageView add_area;
-    @InjectView(R.id.btn_cancel_wangguan)
-    Button btn_cancel_wangguan;
+//    @InjectView(R.id.btn_cancel_wangguan)
+//    Button btn_cancel_wangguan;
     private MyAreaListOwnerAdapter homesettingadapter;
     private DialogUtil dialogUtil;
     private List<Map> areaList = new ArrayList<>();
@@ -61,8 +59,9 @@ public class AreaSettingActivity extends BaseActivity implements XListView.IXLis
 
     @Override
     protected void onEvent() {
+
         back.setOnClickListener(this);
-        btn_cancel_wangguan.setOnClickListener(this);
+//        btn_cancel_wangguan.setOnClickListener(this);
         add_area.setOnClickListener(this);
     }
 
@@ -82,7 +81,7 @@ public class AreaSettingActivity extends BaseActivity implements XListView.IXLis
             case R.id.back:
                 AreaSettingActivity.this.finish();
                 break;
-            case R.id.btn_cancel_wangguan:
+//            case R.id.btn_cancel_wangguan:
             case R.id.add_area:
                 startActivity(new Intent(AreaSettingActivity.this, AddAreaActivity.class));
                 break;
@@ -94,7 +93,6 @@ public class AreaSettingActivity extends BaseActivity implements XListView.IXLis
         xListView_scan.stopLoadMore();
         xListView_scan.setRefreshTime("刚刚");
     }
-
 
     /**
      * 获取所有区域
@@ -170,6 +168,15 @@ public class AreaSettingActivity extends BaseActivity implements XListView.IXLis
     protected void onResume() {
         super.onResume();
         sraum_getAllArea();//获取所有区域列表
+//        String authType = (String) SharedPreferencesUtil.getData(AreaSettingActivity.this, "authType", "");
+//        switch (authType) {
+//            case "1":
+//                add_area.setVisibility(View.VISIBLE);
+//                break;
+//            case "2":
+//                add_area.setVisibility(View.GONE);
+//                break;
+//        }
     }
 
     @Override
@@ -187,5 +194,4 @@ public class AreaSettingActivity extends BaseActivity implements XListView.IXLis
             }
         }, 1000);
     }
-
 }

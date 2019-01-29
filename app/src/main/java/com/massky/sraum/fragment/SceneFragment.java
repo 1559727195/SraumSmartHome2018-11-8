@@ -10,6 +10,8 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -82,6 +84,7 @@ public class SceneFragment extends BaseFragment1 {
     private String manuallyCount;
     private String autoCount;
     private int intfirst;
+    private String authType;
 
     @Override
     protected void onData() {
@@ -125,8 +128,29 @@ public class SceneFragment extends BaseFragment1 {
     @Override
     public void onResume() {
         super.onResume();
-        sraum_getAllScenesCount();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sraum_getAllScenesCount();
+            }
+        }).start();
+        authType = (String) SharedPreferencesUtil.getData(getActivity(), "authType", "");
+        switch (authType) {//（1 业主 2 成员）
+            case "1":
+                add_scene.setVisibility(View.VISIBLE);
+                break;
+            case "2":
+                add_scene.setVisibility(View.GONE);
+                break;
+        }
     }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            init_tab_layout();
+        }
+    };
 
     /**
      * 获取第二页场景详情
@@ -149,9 +173,9 @@ public class SceneFragment extends BaseFragment1 {
         String areaNumber = (String) SharedPreferencesUtil.getData(getActivity(), "areaNumber", "");
         map.put("areaNumber", areaNumber);
         map.put("token", TokenUtil.getToken(getActivity()));
-        if (dialogUtil != null) {
-            dialogUtil.loadDialog();
-        }
+//        if (dialogUtil != null) {
+//            dialogUtil.loadDialog();
+//        }
         MyOkHttp.postMapString(ApiHelper.sraum_getAllScenesCount, map, new Mycallback(new AddTogglenInterfacer() {
             @Override
             public void addTogglenInterfacer() {//这个是获取togglen来刷新数据
@@ -163,9 +187,7 @@ public class SceneFragment extends BaseFragment1 {
                 super.onSuccess(user);
                 manuallyCount = user.manuallyCount;
                 autoCount = user.autoCount;
-                init_tab_layout();
-
-
+                handler.sendEmptyMessage(0);
             }
         });
     }
@@ -180,23 +202,7 @@ public class SceneFragment extends BaseFragment1 {
         autoCount = autoCount == null ? "0" : autoCount;
         list_title.add("手动(" + manuallyCount + ")");
         list_title.add("自动(" + autoCount + ")");
-//        tab_FindFragment_title.removeAllTabs();
-//        for (int i = 0; i < 2; i++) {
-//            tab_FindFragment_title.addTab(tab_FindFragment_title.newTab().setText(list_title.get(i)));
-//        }
-//
-//        fragmentViewPagerAdapter = new DynamicFragmentViewPagerAdapter(getActivity().getSupportFragmentManager(),
-//                vp_FindFragment_pager, _fragments, list_title);
-//        //viewpager加载adapter
-//        vp_FindFragment_pager.setAdapter(fragmentViewPagerAdapter);
-//
-//        tab_FindFragment_title.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                setIndicator_new(tab_FindFragment_title);
-//            }
-//        });
-
+        if (tab_FindFragment_title == null) return;
         int tabCount = tab_FindFragment_title.getTabCount();
         for (int i = 0; i < tabCount; i++) {
             //这里tab可能为null 根据实际情况处理吧
@@ -509,8 +515,22 @@ public class SceneFragment extends BaseFragment1 {
             if (intfirst == 1) {
                 intfirst = 2;
             } else {
-                sraum_getAllScenesCount();
-                get_scene_second_page();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sraum_getAllScenesCount();
+                        get_scene_second_page();
+                    }
+                }).start();
+                authType = (String) SharedPreferencesUtil.getData(getActivity(), "authType", "");
+                switch (authType) {//（1 业主 2 成员）
+                    case "1":
+                        add_scene.setVisibility(View.VISIBLE);
+                        break;
+                    case "2":
+                        add_scene.setVisibility(View.GONE);
+                        break;
+                }
             }
         }
     }
@@ -520,7 +540,12 @@ public class SceneFragment extends BaseFragment1 {
         String status = event.getMsg();
         switch (status) {
             case "刷新":
-                sraum_getAllScenesCount();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sraum_getAllScenesCount();
+                    }
+                }).start();
                 break;
         }
     }

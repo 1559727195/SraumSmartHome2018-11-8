@@ -77,6 +77,7 @@ public class AddDoorLockDevActivity extends BaseActivity {
     private Map map = new HashMap();
     private String status;
     private String gateway_number;
+    private String areaNumber;
 
 
     @Override
@@ -240,6 +241,7 @@ public class AddDoorLockDevActivity extends BaseActivity {
                             intent.putExtra("panelType", panelType);
                             intent.putExtra("panelName", panelName);
                             intent.putExtra("panelMAC", panelMAC);
+                            intent.putExtra("areaNumber", areaNumber);
                             intent.putExtra("bundle_panel", bundle);
                             intent.putExtra("findpaneltype", "wangguan_status");
                             startActivity(intent);
@@ -274,7 +276,7 @@ public class AddDoorLockDevActivity extends BaseActivity {
 //        final String type = (String) map.get("type");
 //        String status = (String) map.get("status");
 //        String gateway_number = (String) gatewayList.get(position).get("number");
-        String areaNumber = (String) SharedPreferencesUtil.getData(AddDoorLockDevActivity.this, "", "areaNumber");
+        areaNumber = (String) SharedPreferencesUtil.getData(AddDoorLockDevActivity.this, "", "areaNumber");
         map.put("areaNumber", areaNumber);
         switch (type) {
             case "B201":

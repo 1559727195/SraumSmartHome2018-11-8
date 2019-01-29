@@ -179,7 +179,7 @@ public class UpdateManager implements MainGateWayActivity.UpdateApkListener {
     /**
      * 获得网络端apk文件总大小
      */
-    private void get_url_file_size() {
+    private void get_url_file_size() {//UpApkUrl = nullsraum1.8.5.apk
         URL url = null;     //根据下载路径实例化URL
         try {
             url = new URL(UpApkUrl);

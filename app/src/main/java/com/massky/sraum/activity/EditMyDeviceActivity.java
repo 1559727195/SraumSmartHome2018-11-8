@@ -1,6 +1,5 @@
 package com.massky.sraum.activity;
 
-import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -83,6 +82,8 @@ public class EditMyDeviceActivity extends BaseActivity {
     private Map panelItem_map = new HashMap();
     @InjectView(R.id.next_step_txt)
     TextView next_step_txt;
+    @InjectView(R.id.txt_dev)
+    TextView txt_dev;
     private String type = "";
     private String edit_one_txt_str = "";
     private String edit_two_txt_str = "";
@@ -108,6 +109,9 @@ public class EditMyDeviceActivity extends BaseActivity {
     @InjectView(R.id.list_for_air_mode)
     LinearLayout list_for_air_mode;
     private String boxNumber;
+    private String authType;
+    private String areaNumber;
+    private String roomName;
 
     @Override
     protected int viewId() {
@@ -116,7 +120,6 @@ public class EditMyDeviceActivity extends BaseActivity {
 
     @Override
     protected void onView() {
-
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         dialogUtil = new DialogUtil(this);
     }
@@ -136,6 +139,16 @@ public class EditMyDeviceActivity extends BaseActivity {
     @Override
     protected void onData() {
         panelItem_map = (Map) getIntent().getSerializableExtra("panelItem");
+        areaNumber = (String) getIntent().getSerializableExtra("areaNumber");
+        authType = (String) getIntent().getSerializableExtra("authType");
+        switch (authType) {
+            case "1":
+                next_step_txt.setVisibility(View.VISIBLE);
+                break;
+            case "2":
+                next_step_txt.setVisibility(View.GONE);
+                break;
+        }
         if (panelItem_map != null) {
 //            device_name_txt.setText(panelItem_map.get("name").toString());
 //            project_select.setText(panelItem_map.get("name").toString());
@@ -146,10 +159,12 @@ public class EditMyDeviceActivity extends BaseActivity {
             boxNumber = panelItem_map.get("boxNumber") == null ? "" : panelItem_map.get("boxNumber").toString();
             input_panel_name_edit.setText(name);
             setCommon(type);
-            switch (type) {
+            switch (type) {// --type = "AA02"
                 case "AA02"://AA02WIFi模块
                 case "AA03"://AA02WIFi模块
                 case "AA04"://AA02WIFi模块
+                    txt_dev.setText("设备名称"+ "(" + panelItem_map.get("roomName").toString()+ ")");
+                    break;
                 case "202":
                 case "206":
                 case "网关":
@@ -170,7 +185,7 @@ public class EditMyDeviceActivity extends BaseActivity {
     private void sraum_updateWifiAppleName(final String number, final String newName) {
         Map<String, String> mapdevice = new HashMap<>();
         mapdevice.put("token", TokenUtil.getToken(this));
-        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
         mapdevice.put("areaNumber", areaNumber);
         String method = "";
         switch (type) {
@@ -251,6 +266,10 @@ public class EditMyDeviceActivity extends BaseActivity {
                     case "A302":
                     case "A303":
                     case "A401":
+                    case "A411"://1窗帘0灯
+                    case "A412":
+                    case "A413":
+                    case "A414"://两窗帘
 
                     case "A311":
                     case "A312":
@@ -403,6 +422,10 @@ public class EditMyDeviceActivity extends BaseActivity {
                         break;
                 }
                 break;//窗帘 ，窗帘第八个按钮为八键灯控名称修改
+            case "A411":
+            case "A412":
+            case "A413":
+            case "A414":
             case "A501"://空调-设备1个
             case "A511":
             case "A601"://新风
@@ -433,7 +456,7 @@ public class EditMyDeviceActivity extends BaseActivity {
 
         Map<String, String> mapdevice = new HashMap<>();
         mapdevice.put("token", TokenUtil.getToken(this));
-        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
         mapdevice.put("areaNumber", areaNumber);
         String method = "";
         switch (type) {
@@ -570,6 +593,10 @@ public class EditMyDeviceActivity extends BaseActivity {
                 find_device(number2);
                 break;
             case "A401":
+            case "A411":
+            case "A412":
+            case "A413":
+            case "A414":
             case "A511":
             case "A611":
             case "A711":
@@ -672,7 +699,7 @@ public class EditMyDeviceActivity extends BaseActivity {
      */
     private void sraum_find_panel(final String panelnumber) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
         map.put("areaNumber", areaNumber);
         map.put("gatewayNumber", boxNumber);
         map.put("deviceNumber", number);
@@ -714,7 +741,7 @@ public class EditMyDeviceActivity extends BaseActivity {
      */
     private void find_device(final String deviceNumber) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
         map.put("areaNumber", areaNumber);
         map.put("gatewayNumber", boxNumber);
         map.put("deviceNumber", number);
@@ -769,7 +796,7 @@ public class EditMyDeviceActivity extends BaseActivity {
     private void getPanel_devices() {
         Map<String, Object> map = new HashMap<>();
         map.put("token", TokenUtil.getToken(EditMyDeviceActivity.this));
-        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
         map.put("boxNumber", boxNumber);
         map.put("panelNumber", number);
         map.put("areaNumber", areaNumber);
@@ -796,7 +823,13 @@ public class EditMyDeviceActivity extends BaseActivity {
                         panelType = user.panelType;
                         panelName = user.panelName;
                         panelMAC = user.panelMAC;
+                        roomName = user.roomName;
                         panel_and_device_information();
+                        if (roomName != null) {
+                            if (!roomName.trim().equals("")) {
+                                txt_dev.setText("设备名称(" + roomName + ")");
+                            }
+                        }
                     }
 
                     @Override
@@ -812,26 +845,40 @@ public class EditMyDeviceActivity extends BaseActivity {
     private void panel_and_device_information() {
         switch (panelType) {
             case "A201"://一灯控
+            case "A411":
                 edit_one.setText(replaceBlank(deviceList.get(0).name));
+                first_txt.setText(first_txt.getText().toString() + "(" + deviceList.get(0).roomName + ")");
                 break;
             case "A202"://二灯控
             case "A311"://二灯控
+            case "A412":
+            case "A414":
                 edit_one.setText(replaceBlank(deviceList.get(0).name));
                 edit_two.setText(replaceBlank(deviceList.get(1).name));
+                first_txt.setText(first_txt.getText().toString() + "(" + deviceList.get(0).roomName + ")");
+                second_txt.setText(second_txt.getText().toString() + "(" + deviceList.get(1).roomName + ")");
 
                 break;
             case "A203"://三灯控
             case "A312"://三灯控
             case "A321"://三灯控
+            case "A413":
                 edit_one.setText(replaceBlank(deviceList.get(0).name));
                 edit_two.setText(replaceBlank(deviceList.get(1).name));
                 edit_three.setText(replaceBlank(deviceList.get(2).name));
+                first_txt.setText(first_txt.getText().toString() + "(" + deviceList.get(0).roomName + ")");
+                second_txt.setText(second_txt.getText().toString() + "(" + deviceList.get(1).roomName + ")");
+                three_txt.setText(three_txt.getText().toString() + "(" + deviceList.get(2).roomName + ")");
                 break;
             case "A204"://四灯控
                 edit_one.setText(replaceBlank(deviceList.get(0).name));
                 edit_two.setText(replaceBlank(deviceList.get(1).name));
                 edit_three.setText(replaceBlank(deviceList.get(2).name));
                 edit_four.setText(replaceBlank(deviceList.get(3).name));
+                first_txt.setText(first_txt.getText().toString() + "(" + deviceList.get(0).roomName + ")");
+                second_txt.setText(second_txt.getText().toString() + "(" + deviceList.get(1).roomName + ")");
+                three_txt.setText(three_txt.getText().toString() + "(" + deviceList.get(2).roomName + ")");
+                four_txt.setText(four_txt.getText().toString() + "(" + deviceList.get(3).roomName + ")");
                 break;
 
             case "A301"://一键调光，3键灯控  设备4个
@@ -845,6 +892,10 @@ public class EditMyDeviceActivity extends BaseActivity {
                 edit_two.setText(replaceBlank(deviceList.get(1).name));
                 edit_three.setText(replaceBlank(deviceList.get(2).name));
                 edit_four.setText(replaceBlank(deviceList.get(3).name));
+                first_txt.setText(first_txt.getText().toString() + "(" + deviceList.get(0).roomName + ")");
+                second_txt.setText(second_txt.getText().toString() + "(" + deviceList.get(1).roomName + ")");
+                three_txt.setText(three_txt.getText().toString() + "(" + deviceList.get(2).roomName + ")");
+                four_txt.setText(four_txt.getText().toString() + "(" + deviceList.get(3).roomName + ")");
                 break;//一键-4键调光
 
             case "A401"://设备2个
@@ -852,6 +903,11 @@ public class EditMyDeviceActivity extends BaseActivity {
                 edit_two.setText(replaceBlank(deviceList.get(0).name1));
                 edit_three.setText(replaceBlank(deviceList.get(0).name2));
                 edit_four.setText(replaceBlank(deviceList.get(1).name));
+
+                first_txt.setText(first_txt.getText().toString() + "(" + deviceList.get(0).roomName + ")");
+                second_txt.setText(second_txt.getText().toString() + "(" + deviceList.get(0).roomName + ")");
+                three_txt.setText(three_txt.getText().toString() + "(" + deviceList.get(0).roomName + ")");
+                four_txt.setText(four_txt.getText().toString() + "(" + deviceList.get(1).roomName + ")");
                 //窗帘前3个搞定，最后一个按钮为八键灯控名称修改
                 break;//窗帘 ，窗帘第八个按钮为八键灯控名称修改
 
@@ -891,7 +947,7 @@ public class EditMyDeviceActivity extends BaseActivity {
         List<Map> list = new ArrayList<>();
         for (int i = 0; i < deviceList.size(); i++) {
             Map map = new HashMap();
-            map.put("name", "第" + (i + 1) + name);
+            map.put("name", "第" + (i + 1) + name + "(" + deviceList.get(i).roomName + ")");
             list.add(map);
         }
         NormalAdapter normalAdapter = new NormalAdapter(EditMyDeviceActivity.this, list,
@@ -931,12 +987,15 @@ public class EditMyDeviceActivity extends BaseActivity {
     private void updateDeviceInfo() {
         switch (panelType) {
             case "A201"://一灯控
+            case "A411":
                 edit_one_txt_str = edit_one.getText().toString().trim();
                 device_index = 0;
                 control_device_name_change_one(edit_one_txt_str, 0);
                 break;
             case "A202"://二灯控
             case "A311"://二灯控
+            case "A412":
+            case "A414":
                 edit_one_txt_str = edit_one.getText().toString().trim();
                 edit_two_txt_str = edit_two.getText().toString().trim();
                 device_index = 1;
@@ -945,6 +1004,7 @@ public class EditMyDeviceActivity extends BaseActivity {
             case "A203"://三灯控
             case "A312"://二灯控
             case "A321"://二灯控
+            case "A413":
                 edit_one_txt_str = edit_one.getText().toString().trim();
                 edit_two_txt_str = edit_two.getText().toString().trim();
                 edit_three_txt_str = edit_three.getText().toString().trim();
@@ -1129,7 +1189,7 @@ public class EditMyDeviceActivity extends BaseActivity {
 
     private void sraum_update_s(final String customName, final String name1, final String name2, final String deviceNumber, final String chuanglian, final int index) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(EditMyDeviceActivity.this));
         map.put("areaNumber", areaNumber);
         map.put("gatewayNumber", boxNumber);
@@ -1266,7 +1326,7 @@ public class EditMyDeviceActivity extends BaseActivity {
      */
     private void sraum_update_others(final String customName, final String deviceNumber, final int index) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(EditMyDeviceActivity.this));
         map.put("areaNumber", areaNumber);
         map.put("gatewayNumber", boxNumber);
@@ -1331,7 +1391,7 @@ public class EditMyDeviceActivity extends BaseActivity {
 
     private void sraum_update_panel_name(final String panelName, final String panelNumber, final boolean istrue) {
         Map<String, Object> map = new HashMap<>();
-        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
+//        String areaNumber = (String) SharedPreferencesUtil.getData(EditMyDeviceActivity.this, "areaNumber", "");
         map.put("token", TokenUtil.getToken(EditMyDeviceActivity.this));
         map.put("areaNumber", areaNumber);
         map.put("gatewayNumber", boxNumber);
@@ -1394,12 +1454,33 @@ public class EditMyDeviceActivity extends BaseActivity {
                 first_txt.setText("第一路灯控名称");
                 edit_one.setHint("输入第一路灯控自定义名称");
                 break;
+            case "A411"://1窗帘0灯
+                linear_one.setVisibility(View.VISIBLE);
+                first_txt.setText("第一路窗帘名称");
+                edit_one.setHint("输入第一路窗帘自定义名称");
+                break;
             case "A202":
                 linear_one.setVisibility(View.VISIBLE);
                 linear_two.setVisibility(View.VISIBLE);
                 first_txt.setText("第一路灯控名称");
                 second_txt.setText("第二路灯控名称");
                 edit_one.setHint("输入第一路灯控自定义名称");
+                edit_two.setHint("输入第二路灯控自定义名称");
+                break;
+            case "A414":
+                linear_one.setVisibility(View.VISIBLE);
+                linear_two.setVisibility(View.VISIBLE);
+                first_txt.setText("第一路窗帘名称");
+                second_txt.setText("第二路窗帘名称");
+                edit_one.setHint("输入第一路窗帘自定义名称");
+                edit_two.setHint("输入第二路窗帘自定义名称");
+                break;
+            case "A412"://1窗帘1灯
+                linear_one.setVisibility(View.VISIBLE);
+                linear_two.setVisibility(View.VISIBLE);
+                first_txt.setText("第一路窗帘名称");
+                second_txt.setText("第二路灯控名称");
+                edit_one.setHint("输入第一路窗帘自定义名称");
                 edit_two.setHint("输入第二路灯控自定义名称");
                 break;
             case "A311":
@@ -1418,6 +1499,17 @@ public class EditMyDeviceActivity extends BaseActivity {
                 second_txt.setText("第二路灯控名称");
                 three_txt.setText("第三路灯控名称");
                 edit_one.setHint("输入第一路灯控自定义名称");
+                edit_two.setHint("输入第二路灯控自定义名称");
+                edit_three.setHint("输入第三路灯控自定义名称");
+                break;
+            case "A413"://1窗帘2灯
+                linear_one.setVisibility(View.VISIBLE);
+                linear_two.setVisibility(View.VISIBLE);
+                linear_three.setVisibility(View.VISIBLE);
+                first_txt.setText("第一路窗帘名称");
+                second_txt.setText("第二路灯控名称");
+                three_txt.setText("第三路灯控名称");
+                edit_one.setHint("输入第一路窗帘自定义名称");
                 edit_two.setHint("输入第二路灯控自定义名称");
                 edit_three.setHint("输入第三路灯控自定义名称");
                 break;

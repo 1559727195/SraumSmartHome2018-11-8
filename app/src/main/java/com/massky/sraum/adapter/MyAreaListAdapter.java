@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.massky.sraum.R;
-import com.massky.sraum.activity.EditSceneSecondActivity;
-import com.massky.sraum.activity.ManagerRoomActivity;
+import com.massky.sraum.activity.MyDeviceListActivity;
+import com.massky.sraum.activity.MyfamilyActivity;
+import com.massky.sraum.activity.PersonMessageActivity;
 import com.massky.sraum.activity.RoomListActivity;
 import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
@@ -29,10 +31,12 @@ import java.util.Map;
 public class MyAreaListAdapter extends BaseAdapter {
     private List<Map> list = new ArrayList<>();
     private boolean is_open_to_close;
+    private String roomManager;
 
-    public MyAreaListAdapter(Context context, List<Map> list) {
+    public MyAreaListAdapter(Context context, List<Map> list, String roomManager) {
         super(context, list);
         this.list = list;
+        this.roomManager = roomManager;
     }
 
     @Override
@@ -41,22 +45,90 @@ public class MyAreaListAdapter extends BaseAdapter {
         if (null == convertView) {
             viewHolderContentType = new ViewHolderContentType();
             convertView = LayoutInflater.from(context).inflate(R.layout.myarealist_item, null);
-            viewHolderContentType.swipe_context = (LinearLayout) convertView.findViewById(R.id.swipe_context);
+            viewHolderContentType.swipe_context = (RelativeLayout) convertView.findViewById(R.id.swipe_context);
             viewHolderContentType.area_name_txt = (TextView) convertView.findViewById(R.id.area_name_txt);
             viewHolderContentType.rename_btn = (Button) convertView.findViewById(R.id.rename_btn);
             viewHolderContentType.swipemenu_layout = (SwipeMenuLayout) convertView.findViewById(R.id.swipemenu_layout);
+            viewHolderContentType.hand_scene_btn = (ImageView) convertView.findViewById(R.id.hand_scene_btn);
             convertView.setTag(viewHolderContentType);
         } else {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
+//
+//        viewHolderContentType.area_name_txt.setText(list.get(position).get("name").toString());
 
-        viewHolderContentType.area_name_txt.setText(list.get(position).get("name").toString());
+        switch (list.get(position).get("authType").toString()) {
+            case "1":
+                viewHolderContentType.area_name_txt.setText(list.get(position).get("name").toString() + "(" + "业主" + ")");
+                break;
+            case "2":
+                viewHolderContentType.area_name_txt.setText(list.get(position).get("name").toString() + "(" +
+                        "" + "成员" + ")");
+                break;
+        }
+//        final String authType = list.get(position).get("authType").toString();
+//        switch (authType) {
+//            case "1":
+//                viewHolderContentType.swipemenu_layout.setSwipeEnable(true);
+//                break;
+//            case "2":
+//                viewHolderContentType.swipemenu_layout.setSwipeEnable(false);
+//                break;
+//        }
+        viewHolderContentType.swipemenu_layout.setSwipeEnable(false);
+        viewHolderContentType.hand_scene_btn.setVisibility(View.VISIBLE);
+        final ViewHolderContentType finalViewHolderContentType1 = viewHolderContentType;
+        viewHolderContentType.swipe_context.setOnClickListener(new View.OnClickListener() {//事件被SwipeLayout释放后执行，
+            @Override
+            public void onClick(View view) {
+//                switch (authType) {
+//                    case "1":
+//
+//                        break;
+//                    case "2":
+//                        Intent intent = new Intent(context, RoomListActivity.class);
+//                        intent.putExtra("areaNumber", list.get(position).get("number").toString());
+//                        intent.putExtra("authType", list.get(position).get("authType").toString());
+//                        context.startActivity(intent);
+//                        break;
+//                }
+                Intent intent = null;
+                switch (roomManager) {
+                    case "roomManager":
+                       intent = new Intent(context, RoomListActivity.class);
+                        break;
+                    case "deviceManager":
+                        intent = new Intent(context, MyDeviceListActivity.class);
+                        break;
+                    case "familyManager":
+                        intent = new Intent(context, MyfamilyActivity.class);
+                        break;
+                }
+                intent.putExtra("areaNumber", list.get(position).get("number").toString());
+                intent.putExtra("authType", list.get(position).get("authType").toString());
+                context.startActivity(intent);
+            }
+        });
+
+        switch (list.get(position).get("sign") == null ? "" : list.get(position).get("sign").toString()) {
+            case "1":
+
+                viewHolderContentType.area_name_txt.setTextColor(context.getResources().getColor(R.color.green));
+                break;
+            case "0":
+                viewHolderContentType.area_name_txt.setTextColor(context.getResources().getColor(R.color.black));
+
+                break;
+        }
+
+
         ((SwipeMenuLayout) convertView).setOnMenuClickListener(new SwipeMenuLayout.OnMenuClickListener() {
 
             @Override
             public void onItemClick() {
                 Intent intent = new Intent(context, RoomListActivity.class);
                 intent.putExtra("areaNumber", list.get(position).get("number").toString());
+                intent.putExtra("authType", list.get(position).get("authType").toString());
                 context.startActivity(intent);
             }
 
@@ -65,7 +137,7 @@ public class MyAreaListAdapter extends BaseAdapter {
                 is_open_to_close = is_open_to_close1;
             }
         });
-        viewHolderContentType.swipemenu_layout.setLeftSwipe(false);
+
         viewHolderContentType.rename_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +153,9 @@ public class MyAreaListAdapter extends BaseAdapter {
         TextView area_name_txt;
         TextView hand_gateway_content;
         Button rename_btn;
-        LinearLayout swipe_context;
+        RelativeLayout swipe_context;
         SwipeMenuLayout swipemenu_layout;
+        ImageView hand_scene_btn;
     }
 
     //自定义dialog,自定义重命名dialog

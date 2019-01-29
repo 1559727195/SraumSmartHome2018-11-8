@@ -35,15 +35,12 @@ import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.receiver.ApiTcpReceiveHelper;
 import com.massky.sraum.service.MyService;
 import com.yanzhenjie.statusview.StatusUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import butterknife.InjectView;
 import okhttp3.Call;
-
 import static com.massky.sraum.fragment.HomeFragment.ACTION_INTENT_RECEIVER_TO_SECOND_PAGE;
 
 /**
@@ -88,7 +85,6 @@ public class CurtainWindowActivity extends BaseActivity {
     private String windflag;
     String statusm;
     private MessageReceiver mMessageReceiver;
-
     private boolean mapflag;
     private boolean statusbo;
     private String areaNumber;
@@ -103,9 +99,21 @@ public class CurtainWindowActivity extends BaseActivity {
     @Override
     protected void onView() {
         StatusUtils.setFullToStatusBar(this);
+        dialogUtil = new DialogUtil(this);
 //        init_receiver_control();
         registerMessageReceiver();
         init_event();
+    }
+
+    private void init_type() {
+        switch (type) {
+            case "18":
+                name1_txt.setVisibility(View.GONE);
+                name2_txt.setVisibility(View.GONE);
+                radio_group_out.setVisibility(View.GONE);
+                radio_group_in.setVisibility(View.GONE);
+                break;
+        }
     }
 
 
@@ -127,7 +135,7 @@ public class CurtainWindowActivity extends BaseActivity {
             if (intent.getAction().equals(ACTION_INTENT_RECEIVER_TO_SECOND_PAGE)) {
                 Log.e("zhu", "LamplightActivity:" + "LamplightActivity");
                 //控制部分的二级页面进去要同步更新推送的信息显示 （推送的是消息）。
-//                upload();
+                upload();
             }
         }
     }
@@ -140,7 +148,6 @@ public class CurtainWindowActivity extends BaseActivity {
         mapdevice.put("roomNumber", number);
         mapdevice.put("token", TokenUtil.getToken(CurtainWindowActivity.this));
         dialogUtil.loadDialog();
-        SharedPreferencesUtil.saveData(CurtainWindowActivity.this, "boxnumber", boxnumber);
         MyOkHttp.postMapString(ApiHelper.sraum_getOneRoomInfo, mapdevice, new Mycallback(new AddTogglenInterfacer() {
             @Override
             public void addTogglenInterfacer() {//获取togglen成功后重新刷新数据
@@ -175,7 +182,7 @@ public class CurtainWindowActivity extends BaseActivity {
      * 根据status去切换UI显示
      */
     private void change_status_toui(String type, String status) {
-        if (type.equals("4")) {
+        if (type.equals("4") || type.equals("18")) {
             switch (status) {
                 case "0"://全关
                     flagone = "2";// 2 -全关，1- 开 ， 3 -
@@ -401,7 +408,7 @@ public class CurtainWindowActivity extends BaseActivity {
     //控制设备
     private void getMapdevice() {
         //两个特别全开全关设置
-        if (type.equals("4")) {
+        if (type.equals("4") || type.equals("18")) {
             statusm = "";
             switch (curtain) {
                 //窗帘1打开
@@ -561,6 +568,7 @@ public class CurtainWindowActivity extends BaseActivity {
     @Override
     protected void onData() {
         init_Data();
+        init_type();
     }
 
     private void init_Data() {

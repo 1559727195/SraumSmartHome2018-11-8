@@ -137,7 +137,7 @@
                     android:layout_toRightOf="@+id/time_set_img"
                     android:text="时间设定"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
                 <View
                     android:id="@+id/three_s"
                     android:layout_width="match_parent"
@@ -149,6 +149,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:paddingBottom="8dp"
+                    android:background="@color/white"
                     android:paddingTop="8dp">
 
                     <TextView
@@ -158,7 +159,7 @@
                         android:layout_marginLeft="20dp"
                         android:text="开始时间"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/start_time_txt"
@@ -168,7 +169,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
                         android:text="00:00"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </RelativeLayout>
 
                 <View
@@ -180,6 +181,7 @@
                     android:id="@+id/sleep_time_rel"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:background="@color/white"
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp">
 
@@ -190,7 +192,7 @@
                         android:layout_marginLeft="20dp"
                         android:text="结束时间"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/end_time_txt"
@@ -200,7 +202,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
                         android:text="23:59"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </RelativeLayout>
                 <View
                     android:layout_width="match_parent"

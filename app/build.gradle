@@ -8,10 +8,10 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.massky.sraum"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
-        versionCode 50
-        versionName "2.0"
+        versionCode 51
+        versionName "2.0.1"//最新51 ，2.0.1
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //添加如下配置就OK了
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
@@ -163,6 +163,7 @@ dependencies {
     implementation 'androidx.core:core:1.1.0-alpha02'
     implementation project(':citypickerview')
     compile 'org.greenrobot:eventbus:3.0.0'
+    implementation 'com.airbnb.android:lottie:2.5.4'
 }
 
 

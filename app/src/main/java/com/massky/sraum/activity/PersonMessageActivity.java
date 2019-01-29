@@ -24,11 +24,20 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.AddTogenInterface.AddTogglenInterfacer;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.massky.sraum.R;
+import com.massky.sraum.User;
+import com.massky.sraum.Util.BitmapUtil;
 import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.MyOkHttp;
+import com.massky.sraum.Util.Mycallback;
+import com.massky.sraum.Util.SharedPreferencesUtil;
+import com.massky.sraum.Util.TokenUtil;
+import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.Utils.App;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.permissions.RxPermissions;
 import com.massky.sraum.tool.Constants;
@@ -39,6 +48,8 @@ import com.yanzhenjie.statusview.StatusView;
 import org.chenglei.widget.datepicker.DatePicker;
 import org.chenglei.widget.datepicker.Sound;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import butterknife.InjectView;
 import cn.forward.androids.views.BitmapScrollPicker;
@@ -51,7 +62,7 @@ import io.reactivex.disposables.Disposable;
  * Created by zhu on 2018/1/17.
  */
 
-public class PersonMessageActivity extends BaseActivity{
+public class PersonMessageActivity extends BaseActivity  {
     @InjectView(R.id.status_view)
     StatusView statusView;
     @InjectView(R.id.back)
@@ -68,7 +79,7 @@ public class PersonMessageActivity extends BaseActivity{
     RelativeLayout account_nicheng;
     @InjectView(R.id.nicheng_txt)
     TextView nicheng_txt;
-//    @InjectView(R.id.xingbie_pic)
+    //    @InjectView(R.id.xingbie_pic)
 //    ImageView xingbie_pic;//性别选择图片
     @InjectView(R.id.xingbie_rel)
     RelativeLayout xingbie_rel;
@@ -108,6 +119,7 @@ public class PersonMessageActivity extends BaseActivity{
     TextView txt_nan;
     @InjectView(R.id.txt_nv)
     TextView txt_nv;
+    private String gender;
 
 
     @Override
@@ -124,6 +136,9 @@ public class PersonMessageActivity extends BaseActivity{
         init_permissions();
         addViewid();
         createCameraTempFile(savedInstanceState);
+        touxiang_select.setImageBitmap(BitmapUtil.stringtoBitmap((String)
+                SharedPreferencesUtil.getData(PersonMessageActivity.this, "avatar", "")));
+        getAccountInfo();
     }
 
     @Override
@@ -138,7 +153,6 @@ public class PersonMessageActivity extends BaseActivity{
         account_year.setOnClickListener(this);
         account_id_rel.setOnClickListener(this);
         change_phone.setOnClickListener(this);
-
         slide_btn.setSlideListener(new MySlideSwitchButtonListener());
     }
 
@@ -153,9 +167,9 @@ public class PersonMessageActivity extends BaseActivity{
             case R.id.back:
                 PersonMessageActivity.this.finish();
                 break;
-                case R.id.touxiang_select://头像选择
+            case R.id.touxiang_select://头像选择
                 dialogUtil.loadViewBottomdialog();
-                    break;
+                break;
             case R.id.camera_id:
                 //跳转到调用系统相机
                 dialogUtil.removeviewBottomDialog();
@@ -173,7 +187,7 @@ public class PersonMessageActivity extends BaseActivity{
             case R.id.account_nicheng:
                 Intent intent_nicheng = new Intent(PersonMessageActivity.this,
                         AccountNiChengActivity.class);
-                intent_nicheng.putExtra("nicheng_txt",nicheng_txt.getText().toString());
+                intent_nicheng.putExtra("nicheng_txt", nicheng_txt.getText().toString());
                 startActivityForResult(intent_nicheng, Constants.MyNICheng);
                 break;
             case R.id.xingbie_rel://性别图片选择
@@ -186,33 +200,125 @@ public class PersonMessageActivity extends BaseActivity{
                 Intent intent_account_id
                         = new Intent(PersonMessageActivity.this,
                         AccountIdActivity.class);
-                intent_account_id.putExtra("account_id",accountid_txt.getText().toString());
+                intent_account_id.putExtra("account_id", accountid_txt.getText().toString());
                 startActivityForResult(intent_account_id, Constants.MyAccountId);
                 break;
             case R.id.change_phone://修改已经绑定的手机号
                 Intent intent_change
                         = new Intent(PersonMessageActivity.this,
-                       ChangePhoneNumberActivity.class);
-                intent_change.putExtra("account_change_phone",change_phone_txt.getText().toString());
+                        ChangePhoneNumberActivity.class);
+                intent_change.putExtra("account_change_phone", change_phone_txt.getText().toString());
                 startActivityForResult(intent_change, Constants.MyChangePhoneNumber);
                 break;
         }
     }
 
-    private  class MySlideSwitchButtonListener  implements SlideSwitchButton.SlideListener {
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    //账号个人基本信息
+    private void getAccountInfo() {
+        dialogUtil.loadDialog();
+        account_number_Act();
+    }
+
+    private void account_number_Act() {
+        Map<String, Object> map = new HashMap<>();
+        String areaNumber = (String) SharedPreferencesUtil.getData(PersonMessageActivity.this, "areaNumber", "");
+        map.put("token", TokenUtil.getToken(PersonMessageActivity.this));
+        map.put("areaNumber", areaNumber);
+        MyOkHttp.postMapObject(ApiHelper.sraum_getAccountInfo, map, new Mycallback
+                (new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {
+                        account_number_Act();
+                    }
+                }, PersonMessageActivity.this, dialogUtil) {
+            @Override
+            public void onSuccess(User user) {
+                super.onSuccess(user);
+                User.userinfo userinfo = user.userInfo;
+                accountid_txt.setText(userinfo.userId);
+//                SharedPreferencesUtil.saveData(PersonMessageActivity.this, "userName", username.getText().toString());
+                nicheng_txt.setText(userinfo.nickname);
+//                sextext_id.setText(userinfo.gender);
+                SharedPreferencesUtil.saveData(PersonMessageActivity.this,
+                        "avatar", userinfo.avatar == null ? "" : userinfo.avatar);
+                gender = userinfo.gender;
+                switch (userinfo.gender) {
+                    case "男":
+                        slide_btn.changeOpenState(true);
+                        break;
+                    case "女":
+                        slide_btn.changeOpenState(false);
+                        break;
+                }
+                birthday.setText(userinfo.birthDay);
+                change_phone_txt.setText(userinfo.mobilePhone);
+            }
+
+            @Override
+            public void wrongToken() {
+                super.wrongToken();
+            }
+        });
+    }
+
+
+    //用于更新用户
+    private void updateAccountInfo(final String nickName, final String gender, final String birthDay, final String mobilePhone) {
+        account_num_sraum_update(nickName, gender, birthDay, mobilePhone);
+    }
+
+    private void account_num_sraum_update(final String nickName, final String gender, final String birthDay, final String mobilePhone) {
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> mapInfo = new HashMap<String, Object>();
+        mapInfo.put("nickName", nickName);
+        mapInfo.put("gender", gender);
+        mapInfo.put("birthDay", birthDay);
+        mapInfo.put("mobilePhone", mobilePhone);
+        map.put("token", TokenUtil.getToken(PersonMessageActivity.this));
+        map.put("userInfo", mapInfo);
+        dialogUtil.loadDialog();
+        MyOkHttp.postMapObject(ApiHelper.sraum_updateAccountInfo, map, new Mycallback
+                (new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {
+                        account_num_sraum_update(nickName, gender, birthDay, mobilePhone);
+                    }
+                }, PersonMessageActivity.this, dialogUtil) {
+            @Override
+            public void onSuccess(User user) {
+                super.onSuccess(user);
+
+            }
+
+            @Override
+            public void wrongToken() {
+                super.wrongToken();
+            }
+        });
+    }
+
+
+    private class MySlideSwitchButtonListener implements SlideSwitchButton.SlideListener {
 
         @Override
         public void openState(boolean isOpen, View view) {
             if (isOpen) {
                 txt_nan.setVisibility(View.VISIBLE);
-//                gender = "男";
+                gender = "男";
                 txt_nv.setVisibility(View.GONE);
             } else {
                 txt_nan.setVisibility(View.GONE);
                 txt_nv.setVisibility(View.VISIBLE);
-//                gender = "女";
+                gender = "女";
             }
 //            upgrate_single_information();
+            updateAccountInfo(nicheng_txt.getText().toString(), gender,
+                    birthday.getText().toString(), change_phone_txt.getText().toString());
         }
     }
 
@@ -250,71 +356,18 @@ public class PersonMessageActivity extends BaseActivity{
         startActivityForResult(Intent.createChooser(intent, "请选择图片"), REQUEST_PICK);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
             case REQUEST_CAPTURE: //调用系统相机返回
                 if (resultCode == RESULT_OK) {
                     gotoClipActivity(Uri.fromFile(tempFile));
-//                    final Uri uri = Uri.fromFile(tempFile);
-//                    final Uri uri = intent.getData();
-//                    if (uri == null) {
-//                        return;
-//                    }
-//                    }
-//                    String cropImagePath = getRealFilePathFromUri(getApplicationContext(), uri);
-//                    //快速压缩
-//
-//                    int x =  dip2px(PhotoSelectActivity.this,80);
-//                    int y =  dip2px(PhotoSelectActivity.this,80);
-//                    stringBase64 = bitmapToString(cropImagePath,x,y);
-////                    String stringBase64 =imageToBase64(finalPath);
-////                    shangchuanAvatar(stringBase64);
-////                    bitMap = bm;
-//                    img_rel.setVisibility(View.VISIBLE);
-//                    img_select.setVisibility(View.GONE);
-////                    img_show.setImageBitmap(bitMap);
-//                    RequestOptions options = new RequestOptions()
-//                            .centerCrop()
-//                            .placeholder(R.color.color_f6)
-//                            .diskCacheStrategy(DiskCacheStrategy.ALL);
-//                    Glide.with(this)
-//                            .load(cropImagePath)
-//                            .apply(options)
-//                            .into(img_show);
-//                }
                 }
                 break;
             case REQUEST_PICK:  //调用系统相册返回
                 if (resultCode == RESULT_OK) {
                     Uri uri = intent.getData();
                     gotoClipActivity(uri);
-
-//                    final Uri uri = intent.getData();
-//                    if (uri == null) {
-//                        return;
-//                    }
-//                    String cropImagePath = getRealFilePathFromUri(getApplicationContext(), uri);
-                    //快速压缩
-
-//                    int x =  dip2px(PhotoSelectActivity.this,80);
-//                    int y =  dip2px(PhotoSelectActivity.this,80);
-//                    stringBase64 = bitmapToString(cropImagePath,x,y);
-////                    String stringBase64 =imageToBase64(finalPath);
-////                    shangchuanAvatar(stringBase64);
-////                    bitMap = bm;
-//                    img_rel.setVisibility(View.VISIBLE);
-//                    img_select.setVisibility(View.GONE);
-////                    img_show.setImageBitmap(bitMap);
-//                    RequestOptions options = new RequestOptions()
-//                            .centerCrop()
-//                            .placeholder(R.color.color_f6)
-//                            .diskCacheStrategy(DiskCacheStrategy.ALL);
-//                    Glide.with(this)
-//                            .load(cropImagePath)
-//                            .apply(options)
-//                            .into(img_show);
                 }
                 break;
             case REQUEST_CROP_PHOTO:  //剪切图片返回
@@ -324,10 +377,6 @@ public class PersonMessageActivity extends BaseActivity{
                         return;
                     }
                     String cropImagePath = getRealFilePathFromUri(getApplicationContext(), uri);
-//                    bitMap = BitmapFactory.decodeFile(cropImagePath);
-//                    img_rel.setVisibility(View.VISIBLE);
-//                    img_select.setVisibility(View.GONE);
-//                    img_show.setImageBitmap(bitMap);
                     RequestOptions options = new RequestOptions()
                             .centerCrop()
                             .placeholder(R.color.color_f6)
@@ -336,31 +385,102 @@ public class PersonMessageActivity extends BaseActivity{
                             .load(cropImagePath)
                             .apply(options)
                             .into(touxiang_select);
+
+                    Bitmap bitMap = BitmapFactory.decodeFile(cropImagePath);
+                    //此处后面可以将bitMap转为二进制上传后台网络
+                    updateAvatar(bitMap);
                 }
                 break;
             case Constants.MyNICheng:
                 if (intent != null) {
                     nicheng = intent.getStringExtra("nicheng");// http://weixin.qq.com/r/bWTZwbXEsOjPrfGi9zF-
                     nicheng_txt.setText(nicheng);
+                    updateAccountInfo(nicheng_txt.getText().toString(), gender,
+                            birthday.getText().toString(), change_phone_txt.getText().toString());
                 }
                 break;
             case Constants.MyAccountId:
                 if (intent != null) {
                     account_id = intent.getStringExtra("account_id");// http://weixin.qq.com/r/bWTZwbXEsOjPrfGi9zF-
                     accountid_txt.setText(account_id);
+                    updateUserId(accountid_txt.getText().toString());
                 }
                 break;
             case Constants.MyChangePhoneNumber:
                 if (intent != null) {
                     change_phone_string = intent.getStringExtra("account_change_phone");// http://weixin.qq.com/r/bWTZwbXEsOjPrfGi9zF-
                     change_phone_txt.setText(change_phone_string);
+                    updateAccountInfo(nicheng_txt.getText().toString(), gender,
+                            birthday.getText().toString(), change_phone_txt.getText().toString());
                 }
                 break;
         }
     }
 
+    //更新头像
+    private void updateAvatar(final Bitmap bitMap) {
+        dialogUtil.loadDialog();
+        sraum_updateAvatar(bitMap);
+    }
+
+
+    //更新用户名
+    private void updateUserId(final String userId) {
+        dialogUtil.loadDialog();
+        sraum_updateUserId(userId);
+    }
+
+    private void sraum_updateUserId(final String userId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("token", TokenUtil.getToken(PersonMessageActivity.this));
+        map.put("userId", userId);
+        MyOkHttp.postMapObject(ApiHelper.sraum_updateUserId, map, new Mycallback
+                (new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {
+                        sraum_updateUserId(userId);
+                    }
+                }, PersonMessageActivity.this, dialogUtil) {
+            @Override
+            public void onSuccess(User user) {
+                super.onSuccess(user);
+            }
+
+            @Override
+            public void wrongToken() {
+                super.wrongToken();
+            }
+        });
+    }
+
+    private void sraum_updateAvatar(final Bitmap bitMap) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("token", TokenUtil.getToken(PersonMessageActivity.this));
+        map.put("avatar", BitmapUtil.bitmaptoString(bitMap));
+        MyOkHttp.postMapObject(ApiHelper.sraum_updateAvatar, map, new Mycallback
+                (new AddTogglenInterfacer() {
+                    @Override
+                    public void addTogglenInterfacer() {
+                        sraum_updateAvatar(bitMap);
+                    }
+                }, PersonMessageActivity.this, dialogUtil) {
+            @Override
+            public void onSuccess(User user) {
+                super.onSuccess(user);
+                SharedPreferencesUtil.saveData(PersonMessageActivity.this, "avatar",
+                        BitmapUtil.bitmaptoString(bitMap));
+            }
+
+            @Override
+            public void wrongToken() {
+                super.wrongToken();
+            }
+        });
+    }
+
     // 1: qq, 2: weixin
     private int type = 1;
+
     /**
      * 打开截图界面
      *
@@ -435,9 +555,6 @@ public class PersonMessageActivity extends BaseActivity{
         }
         return dirPath;
     }
-    private String stringBase64;
-
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -449,9 +566,9 @@ public class PersonMessageActivity extends BaseActivity{
 
         // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
         RxPermissions permissions = new RxPermissions(this);
-        permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE
-                ,Manifest.permission.CAMERA
-                ,Manifest.permission.WRITE_SETTINGS).subscribe(new Observer<Boolean>() {
+        permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE
+                , Manifest.permission.CAMERA
+                , Manifest.permission.WRITE_SETTINGS).subscribe(new Observer<Boolean>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -475,6 +592,7 @@ public class PersonMessageActivity extends BaseActivity{
 
     /**
      * 从底部弹出的popwindow
+     *
      * @param
      */
     public void showPopFormBottom() {
@@ -490,8 +608,8 @@ public class PersonMessageActivity extends BaseActivity{
 
             }
         });
-        TextView  btn_cancel = (TextView) view.findViewById(R.id.btn_cancel);//btn_onfirm
-        TextView  btn_onfirm = (TextView) view.findViewById(R.id.btn_onfirm);//btn_onfirm
+        TextView btn_cancel = (TextView) view.findViewById(R.id.btn_cancel);//btn_onfirm
+        TextView btn_onfirm = (TextView) view.findViewById(R.id.btn_onfirm);//btn_onfirm
 
 //        mPicker02.setSelectedPosition(0);//使ScrollPickerView<T>某一个处于选择位置,默认选择一个
 
@@ -500,13 +618,13 @@ public class PersonMessageActivity extends BaseActivity{
             public void confirm(String time) { //确定选择具体日期，在某天的具体日期
 
             }
-        },view);
+        }, view);
         // 取消按钮
         btn_cancel.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // 销毁弹出框
-                    takePhotoPopWin.dismiss();
+                takePhotoPopWin.dismiss();
             }
         });
 
@@ -520,26 +638,26 @@ public class PersonMessageActivity extends BaseActivity{
 
 
 //        设置Popupwindow显示位置（从底部弹出）
-        takePhotoPopWin.showAtLocation(findViewById(R.id.root_layout), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        takePhotoPopWin.showAtLocation(findViewById(R.id.root_layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         final WindowManager.LayoutParams[] params = {getWindow().getAttributes()};
         //当弹出Popupwindow时，背景变半透明
-        params[0].alpha=0.7f;
+        params[0].alpha = 0.7f;
         getWindow().setAttributes(params[0]);
         //设置Popupwindow关闭监听，当Popupwindow关闭，背景恢复1f
         takePhotoPopWin.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 params[0] = getWindow().getAttributes();
-                params[0].alpha=1f;
+                params[0].alpha = 1f;
                 getWindow().setAttributes(params[0]);
             }
         });
     }
 
 
-
     /**
      * 从底部弹出的popwindow
+     *
      * @param
      */
     public void showPopFormBottom_select_datapicker() {
@@ -567,14 +685,16 @@ public class PersonMessageActivity extends BaseActivity{
         mDatePicker1.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String  birthday1 = year+"年"+monthOfYear+"月"+dayOfMonth+"日";
+                String birthday1 = year + "年" + monthOfYear + "月" + dayOfMonth + "日";
 //                date = year + "-" + monthOfYear + "-" + dayOfMonth;
                 birthday.setText(birthday1);
+                updateAccountInfo(nicheng_txt.getText().toString(), gender,
+                        birthday.getText().toString(), change_phone_txt.getText().toString());
             }
         });
 
-        TextView  btn_cancel = (TextView) view.findViewById(R.id.btn_cancel);//btn_onfirm
-        TextView  btn_onfirm = (TextView) view.findViewById(R.id.btn_onfirm);//btn_onfirm
+        TextView btn_cancel = (TextView) view.findViewById(R.id.btn_cancel);//btn_onfirm
+        TextView btn_onfirm = (TextView) view.findViewById(R.id.btn_onfirm);//btn_onfirm
 
 //        mPicker02.setSelectedPosition(0);//使ScrollPickerView<T>某一个处于选择位置,默认选择一个
 
@@ -583,7 +703,8 @@ public class PersonMessageActivity extends BaseActivity{
             public void confirm(String time) { //确定选择具体日期，在某天的具体日期
 
             }
-        },view);
+        }, view);
+
         // 取消按钮
         btn_cancel.setOnClickListener(new View.OnClickListener() {
 
@@ -601,19 +722,18 @@ public class PersonMessageActivity extends BaseActivity{
             }
         });
 
-
 //        设置Popupwindow显示位置（从底部弹出）
-        takePhotoPopWin.showAtLocation(findViewById(R.id.root_layout), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        takePhotoPopWin.showAtLocation(findViewById(R.id.root_layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         final WindowManager.LayoutParams[] params = {getWindow().getAttributes()};
         //当弹出Popupwindow时，背景变半透明
-        params[0].alpha=0.7f;
+        params[0].alpha = 0.7f;
         getWindow().setAttributes(params[0]);
         //设置Popupwindow关闭监听，当Popupwindow关闭，背景恢复1f
         takePhotoPopWin.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 params[0] = getWindow().getAttributes();
-                params[0].alpha=1f;
+                params[0].alpha = 1f;
                 getWindow().setAttributes(params[0]);
             }
         });

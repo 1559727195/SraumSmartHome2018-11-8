@@ -446,6 +446,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:visibility="gone"
                 android:background="#E3E3E3"></View>
 
             <RelativeLayout
@@ -453,6 +454,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y30"
                 android:background="#FFFFFF"
+                android:visibility="gone"
                 android:paddingLeft="@dimen/x3">
 
                 <ImageView
@@ -480,7 +482,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/x10"
                     android:layout_toLeftOf="@+id/wode_right_arrow4"
-                    android:text="1990年01月23日"
+                    android:text="1995年01月23日"
                     android:textColor="@color/gray"
                     android:textSize="15sp"
                     android:visibility="gone" />
@@ -642,6 +644,11 @@
                     android:layout_marginRight="@dimen/x10"
                     android:src="@drawable/wode_right_arrow" />
             </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E3E3E3"></View>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

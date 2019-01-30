@@ -7,7 +7,7 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/x6"
-    android:paddingRight="@dimen/x5">
+>
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -32,6 +32,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/txt_rel"
             android:layout_toRightOf="@+id/img_rel"
+            android:paddingRight="@dimen/x5"
             android:layout_height="match_parent">
 
             <LinearLayout
@@ -69,15 +70,6 @@
                     android:textColor="#8A8A8A"
                     android:textSize="9sp" />
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/scene_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/icon_n_scene"
-                android:visibility="gone" />
-
             <CheckBox
                 android:id="@+id/scene_checkbox"
                 style="@style/CheckSceneTheme"
@@ -90,5 +82,13 @@
                 android:paddingLeft="@dimen/x8"
                 android:visibility="gone" />
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/scene_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_n_scene"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

@@ -21,6 +21,7 @@ import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.IntentUtil;
+import com.massky.sraum.Util.LogUtil;
 import com.massky.sraum.Util.MusicUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
@@ -51,6 +52,8 @@ import okhttp3.Call;
  */
 
 public class HandSceneAdapter extends BaseAdapter {
+    private  boolean vibflag;
+    private  boolean musicflag;
     private List<Map> list = new ArrayList<>();
     private boolean is_open_to_close;
     private List<Integer> listint = new ArrayList<>();
@@ -60,13 +63,16 @@ public class HandSceneAdapter extends BaseAdapter {
 
     public HandSceneAdapter(Context context, List<Map> list,
                             List<Integer> listint,
-                            List<Integer> listintwo, DialogUtil dialogUtil, RefreshListener refreshListener) {
+                            List<Integer> listintwo, DialogUtil dialogUtil, boolean vibflag,
+                            boolean musicflag,RefreshListener refreshListener) {
         super(context, list);
         this.list = list;
         this.listint = listint;
         this.listintwo = listintwo;
         this.dialogUtil = dialogUtil;
         this.refreshListener = refreshListener;
+        this.vibflag = vibflag;
+        this.musicflag = musicflag;
     }
 
     @Override
@@ -517,6 +523,17 @@ public class HandSceneAdapter extends BaseAdapter {
             public void onSuccess(User user) {
                 super.onSuccess(user);
                 ToastUtil.showToast(context, "操作成功");
+                if (vibflag) {
+                    Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(200);
+                }
+
+                if (musicflag) {
+                    LogUtil.i("铃声响起");
+                    MusicUtil.startMusic(context, 1, "");
+                } else {
+                    MusicUtil.stopMusic(context, "");
+                }
             }
 
             @Override
@@ -533,6 +550,11 @@ public class HandSceneAdapter extends BaseAdapter {
         this.list = list;
         this.listint = listint;
         this.listintwo = listintwo;
+    }
+
+    public void setflag(boolean vibflag, boolean musicflag) {
+        this.vibflag = vibflag;
+        this.musicflag = musicflag;
     }
 
     class ViewHolderContentType {

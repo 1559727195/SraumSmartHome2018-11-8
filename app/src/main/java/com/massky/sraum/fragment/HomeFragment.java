@@ -69,6 +69,7 @@ import com.massky.sraum.activity.MainGateWayActivity;
 import com.massky.sraum.activity.MessageActivity;
 import com.massky.sraum.activity.MyDeviceItemActivity;
 import com.massky.sraum.activity.SelectZigbeeDeviceActivity;
+import com.massky.sraum.activity.SettingActivity;
 import com.massky.sraum.activity.TVShowActivity;
 import com.massky.sraum.activity.TiaoGuangLightActivity;
 import com.massky.sraum.activity.WifiAirControlActivity;
@@ -315,7 +316,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     private String device_name1;
     private String device_name2;
     private String qiehuan;
-    private boolean onhideSelect;
 
     /**
      * 发送给MyDeviceItemActivity视频的状态，获取摄像头状态，并返回
@@ -364,12 +364,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     }
 
     private void share_getData() {
-        loginPhone = (String) SharedPreferencesUtil.getData(getActivity(), "loginPhone", "");
-        SharedPreferences preferences = getActivity().getSharedPreferences("sraum" + loginPhone,
-                Context.MODE_PRIVATE);
-        vibflag = preferences.getBoolean("vibflag", false);
-        musicflag = preferences.getBoolean("musicflag", false);
-
+        init_music_flag();
         //成员，业主accountType->addrelative_id
         String accountType = (String) SharedPreferencesUtil.getData(getActivity(), "accountType", "");
         switch (accountType) {
@@ -380,6 +375,15 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 add_device.setVisibility(View.GONE);
                 break;//家庭成员
         }
+    }
+
+    private void init_music_flag() {
+        loginPhone = (String) SharedPreferencesUtil.getData(getActivity(), "loginPhone", "");
+        SharedPreferences preferences = getActivity().getSharedPreferences("sraum" + loginPhone,
+                Context.MODE_PRIVATE);
+        vibflag = preferences.getBoolean("vibflag", false);
+//        musicflag = preferences.getBoolean("musicflag", false);
+        musicflag = (boolean) SharedPreferencesUtil.getData(getActivity(),"musicflag",false);
     }
 
     /**
@@ -869,8 +873,11 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     @Override
     public void onResume() {//视图可见后，去加载接口数据
         super.onResume();
-        onhideSelect = false;
         areaList = SharedPreferencesUtil.getInfo_List(getActivity(), "areaList");
+        init_music_flag();
+        show_old_areaList();
+        show_old_roomList();
+        show_old_deviceList();
         if (areaList.size() != 0) {
             new Thread(new Runnable() {
                 @Override
@@ -895,6 +902,54 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 getOtherDevices();
             }
         }).start();
+    }
+
+    private void show_old_roomList() {
+        roomList = SharedPreferencesUtil.getInfo_List(getActivity(), "roomList_old");
+        if (roomList.size() != 0) {
+            display_room_list(0);
+        }
+    }
+
+    /**
+     * 显示历史区域
+     */
+    private void show_old_areaList() {
+        areaList = SharedPreferencesUtil.getInfo_List(getActivity(), "areaList_old");
+        if (areaList.size() != 0) {
+            for (Map map : areaList) {
+                if ("1".equals(map.get("sign").toString())) {
+                    current_area_map = map;
+                    handler_laungh.sendEmptyMessage(0);
+                    areaNumber = current_area_map.get("number").toString();
+                    authType = current_area_map.get("authType").toString();//（1 业主 2 成员）
+                    SharedPreferencesUtil.saveData(getActivity(), "areaNumber", areaNumber);
+                    SharedPreferencesUtil.saveData(getActivity(), "authType", authType);
+                    handler_laungh.sendEmptyMessage(1);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * 首页显示历史设备数据
+     */
+    private void show_old_deviceList() {
+        boolean isnewProcess = (boolean) SharedPreferencesUtil.getData(getActivity(), "newProcess", false);
+        if (isnewProcess) {//新进程下首页默认填充设备历史数据（历史数据只供显示填补空白）（待完成）；
+            SharedPreferencesUtil.saveData(getActivity(), "newProcess", false);
+            list = SharedPreferencesUtil.getInfo_List(getActivity(), "list_old");
+            listtype.clear();
+            if (list.size() != 0) {
+                for (Map map : list) {
+                    listtype.add(map.get("status") == null ? "1" :
+                            map.get("status").toString());
+                }
+                //展示首页设备列表
+                handler_laungh.sendEmptyMessage(5);
+            }
+        }
     }
 
     Handler handler_laungh = new Handler() {
@@ -1045,12 +1100,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         mDeviceManager = DeviceManager
                 .instanceDeviceManager(getActivity().getApplicationContext());
 //        get_wifidevice(0);
-        loginPhone = (String) SharedPreferencesUtil.getData(getActivity(), "loginPhone", "");
-        SharedPreferences preferences = getActivity().getSharedPreferences("sraum" + loginPhone,
-                Context.MODE_PRIVATE);
-        vibflag = preferences.getBoolean("vibflag", false);
-        musicflag = preferences.getBoolean("musicflag", false);
-        LogUtil.i("这是震动二" + musicflag);
     }
 
     Runnable updateThread = new Runnable() {
@@ -2025,6 +2074,17 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
             public void onSuccess(User user) {
                 super.onSuccess(user);
                 ToastUtil.showToast(getActivity(), "操作成功");
+                if (vibflag) {
+                    Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(200);
+                }
+
+                if (musicflag) {
+                    LogUtil.i("铃声响起");
+                    MusicUtil.startMusic(getActivity(), 1, "");
+                } else {
+                    MusicUtil.stopMusic(getActivity(), "");
+                }
             }
 
             @Override
@@ -2181,7 +2241,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 common_video(video_item);
             }
         }
-
     }
 
     /**
@@ -2216,17 +2275,18 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         map.put("areaNumber", areaNumber);
         map.put("roomNumber", number);
         map.put("token", TokenUtil.getToken(getActivity()));
-
-        if(!onhideSelect) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (dialogUtil != null) {
-                        dialogUtil.loadDialog();
-                    }
-                }
-            });
-        }
+//        boolean isnewProcess = (boolean) SharedPreferencesUtil.getData(getActivity(), "newProcess", false);
+//        if (isnewProcess) {
+//            SharedPreferencesUtil.saveData(getActivity(), "newProcess", false);
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (dialogUtil != null) {
+//                        dialogUtil.loadDialog();
+//                    }
+//                }
+//            });
+//        }
 
 //        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(SelectSensorActivity.this));
         MyOkHttp.postMapString(ApiHelper.sraum_getOneRoomInfo
@@ -2321,6 +2381,12 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                                 );
                                 list.add(map);
                             }
+
+                        if (list.size() != 0) {
+                            SharedPreferencesUtil.saveInfo_List(getActivity(), "list_old", list);
+                        } else {
+                            SharedPreferencesUtil.saveInfo_List(getActivity(), "list_old", new ArrayList<Map>());
+                        }
 
                         if (list.size() != 0) {
                             for (Map map : list) {
@@ -2737,6 +2803,13 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                             areaList.add(mapdevice);
                         }
 
+
+                        if (areaList.size() != 0) {
+                            SharedPreferencesUtil.saveInfo_List(getActivity(), "areaList_old", areaList);
+                        } else {
+                            SharedPreferencesUtil.saveInfo_List(getActivity(), "areaList_old", new ArrayList<Map>());
+                        }
+
                         if (user.areaList != null && user.areaList.size() != 0) {//区域命名
 
                             for (Map map : areaList) {
@@ -2831,6 +2904,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                             }
 
                         }
+                        SharedPreferencesUtil.saveInfo_List(getActivity(), "areaList_old", areaList);
                         SharedPreferencesUtil.saveData(getActivity(), "authType", authType);
                         handler_laungh.sendEmptyMessage(6);
                     }
@@ -2896,13 +2970,19 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                         //qie huan cheng gong ,获取区域的所有房间信息
                         roomList = new ArrayList<>();
                         for (int i = 0; i < user.roomList.size(); i++) {
-                            Map<String, String> mapdevice = new HashMap<>();
+                            Map mapdevice = new HashMap<>();
                             mapdevice.put("name", user.roomList.get(i).name);
                             mapdevice.put("number", user.roomList.get(i).number);
                             mapdevice.put("count", user.roomList.get(i).count);
+                            mapdevice.put("room_index", i);
                             roomList.add(mapdevice);
                         }
 
+                        if (roomList.size() != 0) {
+                            SharedPreferencesUtil.saveInfo_List(getActivity(), "roomList_old", roomList);
+                        } else {
+                            SharedPreferencesUtil.saveInfo_List(getActivity(), "roomList_old", new ArrayList<Map>());
+                        }
                         handler_laungh.sendEmptyMessage(4);
                     }
 
@@ -3275,7 +3355,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
     }
 
     @Override
@@ -3285,7 +3364,6 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
             if (intfirst_time == 1) {
                 intfirst_time = 2;
             } else {
-                onhideSelect = true;
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

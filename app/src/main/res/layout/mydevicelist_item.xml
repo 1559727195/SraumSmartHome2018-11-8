@@ -44,6 +44,17 @@
                     android:id="@+id/hand_device_content"
                     android:textColor="#171717"
                     android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/hand_gateway_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/hand_device_content"
+                    android:text=""
+                    android:textColor="#8a8a8a"
+                    android:visibility="gone"
+                    android:textSize="12sp" />
+
             </RelativeLayout>
 
         </RelativeLayout>

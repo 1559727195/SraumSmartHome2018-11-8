@@ -213,6 +213,7 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                             mapdevice.put("roomNumber", "");
                             mapdevice.put("roomName", "");
                             mapdevice.put("wifi", "");
+                            mapdevice.put("boxName","");
                             list_hand_scene.add(mapdevice);
                             setPicture("网关");
                         }
@@ -229,6 +230,9 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                             mapdevice.put("roomNumber", "");
                             mapdevice.put("roomName", "");
                             mapdevice.put("wifi", "");
+                            mapdevice.put("boxName",user.panelList.get(i).boxName == null ? "" :
+                                    user.panelList.get(i).boxName
+                            );
                             list_hand_scene.add(mapdevice);
                             setPicture(user.panelList.get(i).type);
                         }
@@ -246,6 +250,7 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                             mapdevice.put("roomName", user.wifiList.get(i).roomName);
                             //wifi
                             mapdevice.put("wifi", user.wifiList.get(i).wifi);
+                            mapdevice.put("boxName","");
                             list_hand_scene.add(mapdevice);
                             setPicture(user.wifiList.get(i).type);
                         }

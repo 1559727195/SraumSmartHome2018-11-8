@@ -3,6 +3,7 @@ package com.massky.sraum.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.transition.Slide;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
 import com.massky.sraum.Util.DialogUtil;
+import com.massky.sraum.Util.LogUtil;
+import com.massky.sraum.Util.MusicUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.SharedPreferencesUtil;
@@ -48,6 +51,8 @@ import okhttp3.Call;
 
 public class AutoSceneAdapter extends BaseAdapter {
     private final Context context;
+    private  boolean vibflag;
+    private  boolean musicflag;
     private boolean is_open_to_close;
     private DialogUtil dialogUtil;
     private View view;
@@ -55,12 +60,14 @@ public class AutoSceneAdapter extends BaseAdapter {
     private RefreshListener refreshListener;
     private List<Map> list = new ArrayList<>();
 
-    public AutoSceneAdapter(Context context, List<Map> list, DialogUtil dialogUtil, RefreshListener refreshListener) {
+    public AutoSceneAdapter(Context context, List<Map> list, DialogUtil dialogUtil, boolean vibflag,boolean musicflag,RefreshListener refreshListener) {
 //        this.list = list;
         this.dialogUtil = dialogUtil;
         this.refreshListener = refreshListener;
         this.list = list;
         this.context = context;
+        this.vibflag = vibflag;
+        this.musicflag = musicflag;
     }
 
     @Override
@@ -484,6 +491,17 @@ public class AutoSceneAdapter extends BaseAdapter {
 
 //                        if (refreshListener != null)
 //                            refreshListener.refresh();
+                        if (vibflag) {
+                            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                            vibrator.vibrate(200);
+                        }
+
+                        if (musicflag) {
+                            LogUtil.i("铃声响起");
+                            MusicUtil.startMusic(context, 1, "");
+                        } else {
+                            MusicUtil.stopMusic(context, "");
+                        }
                     }
                 });
     }
@@ -569,6 +587,11 @@ public class AutoSceneAdapter extends BaseAdapter {
         this.list.clear();
         this.list = list;
 
+    }
+
+    public void addFlag(boolean vibflag1, boolean musicflag1) {
+        vibflag = vibflag1;
+        musicflag = musicflag1;
     }
 
 

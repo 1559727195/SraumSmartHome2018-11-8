@@ -1,5 +1,7 @@
 package com.massky.sraum.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -50,6 +52,10 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
     private List<Integer> listintwo = new ArrayList<>();
     private int first_add;
 
+    private String loginPhone;
+    private boolean vibflag;
+    private boolean musicflag;
+
     @Override
     protected void onData() {
     }
@@ -65,6 +71,7 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
     @Override
     public void onResume() {
         super.onResume();
+        init_music_flag();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -92,6 +99,7 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
             }
 
             handSceneAdapter.setList_s(list, listint, listintwo, true);
+            handSceneAdapter.setflag(vibflag,musicflag);
             handSceneAdapter.notifyDataSetChanged();
         }
     };
@@ -182,6 +190,17 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
                 });
     }
 
+
+    private void init_music_flag() {
+        loginPhone = (String) SharedPreferencesUtil.getData(getActivity(), "loginPhone", "");
+        SharedPreferences preferences = getActivity().getSharedPreferences("sraum" + loginPhone,
+                Context.MODE_PRIVATE);
+        vibflag = preferences.getBoolean("vibflag", false);
+//        musicflag = preferences.getBoolean("musicflag", false);
+        musicflag = (boolean) SharedPreferencesUtil.getData(getActivity(),"musicflag",false);
+    }
+
+
     private void setPicture(String type) {
         switch (type) {
             case "1":
@@ -257,7 +276,7 @@ public class HandSceneFragment extends BaseFragment1 implements XListView.IXList
     protected void onView(View view) {
         dialogUtil = new DialogUtil(getActivity());
         EventBus.getDefault().register(this);
-        handSceneAdapter = new HandSceneAdapter(getActivity(), list, listint, listintwo, dialogUtil, new HandSceneAdapter.RefreshListener() {
+        handSceneAdapter = new HandSceneAdapter(getActivity(), list, listint, listintwo, dialogUtil, vibflag,musicflag,new HandSceneAdapter.RefreshListener() {
             @Override
             public void refresh() {
                 new Thread(new Runnable() {

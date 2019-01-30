@@ -52,8 +52,8 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
     private Context context;//上下文
     private String accountType;
     private RefreshListener refreshListener;
-    private  String authType = "";
-    private  String areaNumber;
+    private String authType = "";
+    private String areaNumber;
 
     public MyDeviceListAdapter(Context context, List<Map> list, List<Integer> listint, List<Integer> listintwo, String authType, String accountType, String areaNumber, RefreshListener refreshListener) {
 
@@ -95,6 +95,7 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
             viewHolderContentType.hand_scene_btn = (ImageView) convertView.findViewById(R.id.hand_scene_btn);
             viewHolderContentType.swipe_layout = (SwipeMenuLayout) convertView.findViewById(R.id.swipe_layout);
             viewHolderContentType.delete_btn = (Button) convertView.findViewById(R.id.delete_btn);
+            viewHolderContentType.hand_gateway_name = (TextView) convertView.findViewById(R.id.hand_gateway_name);
             convertView.setTag(viewHolderContentType);
         } else {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
@@ -103,6 +104,17 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
         viewHolderContentType.device_type_pic.setImageResource(listint.get(position));
         viewHolderContentType.hand_device_content.setText(list.get(position).get("name").toString());
 //        final String authType = (String) SharedPreferencesUtil.getData(context, "authType", "");
+        viewHolderContentType.hand_gateway_name.setVisibility(View.VISIBLE);
+        switch (list.get(position).get("type").toString()) {
+            case "网关":
+            case "AA02":
+            case "AA03":
+                viewHolderContentType.hand_gateway_name.setVisibility(View.GONE);
+                break;
+            default:
+                viewHolderContentType.hand_gateway_name.setText(list.get(position).get("boxName").toString());
+                break;
+        }
         switch (authType) {
             case "1":
                 viewHolderContentType.swipe_layout.setSwipeEnable(true);
@@ -320,6 +332,7 @@ public class MyDeviceListAdapter extends android.widget.BaseAdapter {
 
     class ViewHolderContentType {
         public Button delete_btn;
+        public TextView hand_gateway_name;
         ImageView device_type_pic;
         TextView hand_device_content;
         TextView hand_gateway_content;

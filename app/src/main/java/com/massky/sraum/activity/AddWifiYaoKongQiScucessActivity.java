@@ -276,8 +276,7 @@ public class AddWifiYaoKongQiScucessActivity extends BaseActivity {
                             }
                         });
 
-                        ykanInterface
-                                .getRemoteDetails(control_number, rid, new YKanHttpListener() {
+                        ykanInterface.getRemoteDetails(control_number, rid, new YKanHttpListener() {
                                     @Override
                                     public void onSuccess(BaseResult baseResult) {
                                         if (baseResult != null) {

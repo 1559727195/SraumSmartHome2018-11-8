@@ -82,6 +82,7 @@ public class DetailDeviceHomeAdapter extends android.widget.BaseAdapter {
             viewHolderContentType = (ViewHolderContentType) convertView.getTag();
         }
 
+        viewHolderContentType.scene_img.setVisibility(View.GONE);
         final ViewHolderContentType mHolder = viewHolderContentType;
         mHolder.device_name.setText(list.get(position).get("name")== null ?
         "": list.get(position).get("name").toString());
@@ -368,6 +369,7 @@ public class DetailDeviceHomeAdapter extends android.widget.BaseAdapter {
                 }
                 break;
             case "100"://手动场景
+                viewHolderContentType.scene_img.setVisibility(View.VISIBLE);
                 if (list.get(position).get("status").toString().equals("1")) {
 //                    mHolder.itemrela_id.setBackgroundResource(R.drawable.markstarh);
                     mHolder.imageitem_id.setImageResource(R.drawable.icon_changjing);

@@ -1,5 +1,7 @@
 package com.massky.sraum.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,6 +48,9 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
     private List<User.deviceLinkList> list = new ArrayList<>();
     private List<Map> list_atuo_scene = new ArrayList<>();
     private int first_add;
+    private String loginPhone;
+    private boolean vibflag;
+    private boolean musicflag;
 
     @Override
     protected void onData() {
@@ -71,7 +76,7 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
     protected void onView(View view) {
         dialogUtil = new DialogUtil(getActivity());
         EventBus.getDefault().register(this);
-        autoSceneAdapter = new AutoSceneAdapter(getActivity(), list_atuo_scene, dialogUtil, new AutoSceneAdapter.RefreshListener() {
+        autoSceneAdapter = new AutoSceneAdapter(getActivity(), list_atuo_scene, dialogUtil,vibflag,musicflag, new AutoSceneAdapter.RefreshListener() {
             @Override
             public void refresh() {
 //                get_myDeviceLink();
@@ -131,6 +136,7 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
     @Override
     public void onResume() {
         super.onResume();
+        init_music_flag();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -214,6 +220,15 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
                 });
     }
 
+    private void init_music_flag() {
+        loginPhone = (String) SharedPreferencesUtil.getData(getActivity(), "loginPhone", "");
+        SharedPreferences preferences = getActivity().getSharedPreferences("sraum" + loginPhone,
+                Context.MODE_PRIVATE);
+        vibflag = preferences.getBoolean("vibflag", false);
+//        musicflag = preferences.getBoolean("musicflag", false);
+        musicflag = (boolean) SharedPreferencesUtil.getData(getActivity(),"musicflag",false);
+    }
+
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -226,6 +241,7 @@ public class AutoSceneFragment extends BaseFragment1 implements XListView.IXList
                     }
 
                     autoSceneAdapter.addAll(list_atuo_scene);//不要new adapter
+                    autoSceneAdapter.addFlag(vibflag,musicflag);
                     autoSceneAdapter.notifyDataSetChanged();
                     break;
                 case 1:

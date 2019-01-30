@@ -2,7 +2,10 @@ package com.massky.sraum.activity;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +18,10 @@ import android.widget.TextView;
 import com.AddTogenInterface.AddTogglenInterfacer;
 import com.massky.sraum.R;
 import com.massky.sraum.User;
+import com.massky.sraum.Util.DataCleanManager;
 import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.IntentUtil;
+import com.massky.sraum.Util.MusicUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.SharedPreferencesUtil;
@@ -26,6 +31,7 @@ import com.massky.sraum.Utils.AppManager;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.permissions.RxPermissions;
 import com.massky.sraum.widget.ApplicationContext;
+import com.massky.sraum.widget.SlideSwitchButton;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
@@ -40,7 +46,7 @@ import io.reactivex.disposables.Disposable;
  * Created by zhu on 2018/1/17.
  */
 
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity implements SlideSwitchButton.SlideListener {
     @InjectView(R.id.status_view)
     StatusView statusView;
     @InjectView(R.id.back)
@@ -62,9 +68,9 @@ public class SettingActivity extends BaseActivity {
 
     @InjectView(R.id.account_id_rel)
     RelativeLayout account_id_rel;
-
-    @InjectView(R.id.change_phone)
-    RelativeLayout change_phone;
+//
+//    @InjectView(R.id.change_phone)
+//    RelativeLayout change_phone;
 
     @InjectView(R.id.home_room_manger_rel)
     RelativeLayout home_room_manger_rel;
@@ -73,6 +79,21 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout infor_setting_rel;
     @InjectView(R.id.btn_quit_gateway)
     Button btn_quit_gateway;
+    @InjectView(R.id.slide_btn_music)
+    SlideSwitchButton slide_btn_music;
+    @InjectView(R.id.slide_zhendong)
+    SlideSwitchButton slide_zhendong;
+    private String loginPhone;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+    private boolean vibflag;
+    private boolean musicflag;
+    private Vibrator vibrator;
+    @InjectView(R.id.get_cache_rel)
+    RelativeLayout get_cache_rel;
+    @InjectView(R.id.get_cache_txt)
+    TextView get_cache_txt;
+    //slide_zhendong
 
     @Override
     protected int viewId() {
@@ -86,6 +107,16 @@ public class SettingActivity extends BaseActivity {
 //        }
         StatusUtils.setFullToStatusBar(this);
         init_permissions();
+        loginPhone = (String) SharedPreferencesUtil.getData(SettingActivity.this, "loginPhone", "");
+        preferences = getSharedPreferences("sraum" + loginPhone, Context.MODE_PRIVATE);
+        editor = preferences.edit();
+        vibflag = preferences.getBoolean("vibflag", false);
+//        musicflag = preferences.getBoolean("musicflag", false);
+        musicflag = (boolean) SharedPreferencesUtil.getData(SettingActivity.this, "musicflag", false);
+//        swibtntwo.setChecked(musicflag);
+//        swibtnone.setChecked(vibflag);
+        slide_btn_music.changeOpenState(musicflag);
+        slide_zhendong.changeOpenState(vibflag);
     }
 
     @Override
@@ -94,11 +125,26 @@ public class SettingActivity extends BaseActivity {
         home_room_manger_rel.setOnClickListener(this);
         infor_setting_rel.setOnClickListener(this);
         btn_quit_gateway.setOnClickListener(this);
+        slide_btn_music.setSlideListener(this);
+        slide_zhendong.setSlideListener(this);
+        get_cache_rel.setOnClickListener(this);
     }
 
     @Override
     protected void onData() {
+        get_cache();
+    }
 
+    /**
+     * 获取缓存
+     */
+    private void get_cache() {
+        try {
+            String size = DataCleanManager.getTotalCacheSize(SettingActivity.this);
+            get_cache_txt.setText("清除缓存(" + size + ")");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -123,6 +169,9 @@ public class SettingActivity extends BaseActivity {
                 //退出登录
                 showCenterDeleteDialog("是否退出登录?");
                 break;//
+            case R.id.get_cache_rel://清除缓存大小
+                showCenterDeleteDialog("是否清除缓存?");
+                break;
         }
     }
 
@@ -171,7 +220,16 @@ public class SettingActivity extends BaseActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout();
+                switch (name) {
+                    case "是否清除缓存?":
+                        DataCleanManager.clearAllCache(SettingActivity.this);
+                        get_cache();
+                        break;
+                    case "是否退出登录?":
+                        logout();
+                        break;
+                }
+                dialog.dismiss();
             }
         });
 
@@ -247,5 +305,29 @@ public class SettingActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    public void openState(boolean isOpen, View view) {
+        switch (view.getId()) {
+            case R.id.slide_btn_music://音效
+                if (isOpen) {
+                    MusicUtil.startMusic(SettingActivity.this, 1, "");
+                } else {
+                    MusicUtil.stopMusic(SettingActivity.this, "");
+                }
+//                editor.putBoolean("musicflag", isOpen);
+//                editor.commit();
+                SharedPreferencesUtil.saveData(SettingActivity.this, "musicflag", isOpen);
+                break;
+            case R.id.slide_zhendong://震动
+                editor.putBoolean("vibflag", isOpen);
+                editor.commit();
+                if (isOpen) {
+                    vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(200);
+                }
+                break;
+        }
     }
 }

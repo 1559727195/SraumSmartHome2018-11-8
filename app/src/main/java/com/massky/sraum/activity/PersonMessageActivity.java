@@ -35,6 +35,7 @@ import com.massky.sraum.Util.DialogUtil;
 import com.massky.sraum.Util.MyOkHttp;
 import com.massky.sraum.Util.Mycallback;
 import com.massky.sraum.Util.SharedPreferencesUtil;
+import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
 import com.massky.sraum.Utils.App;
@@ -449,6 +450,11 @@ public class PersonMessageActivity extends BaseActivity  {
             @Override
             public void wrongToken() {
                 super.wrongToken();
+            }
+
+            @Override
+            public void wrongBoxnumber() {
+                ToastUtil.showToast(PersonMessageActivity.this,"名字已存在");
             }
         });
     }

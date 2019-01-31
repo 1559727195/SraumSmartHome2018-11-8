@@ -142,7 +142,7 @@ public class HistoryBackActivity extends BaseActivity implements XListView.IXLis
                     opinionList.add(map);
                 }
 
-
+                historybackdapter.clear();
                 historybackdapter.addAll(opinionList);
             }
 

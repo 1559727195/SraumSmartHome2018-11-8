@@ -383,7 +383,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 Context.MODE_PRIVATE);
         vibflag = preferences.getBoolean("vibflag", false);
 //        musicflag = preferences.getBoolean("musicflag", false);
-        musicflag = (boolean) SharedPreferencesUtil.getData(getActivity(),"musicflag",false);
+        musicflag = (boolean) SharedPreferencesUtil.getData(getActivity(), "musicflag", false);
     }
 
     /**
@@ -873,7 +873,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     @Override
     public void onResume() {//视图可见后，去加载接口数据
         super.onResume();
-        areaList = SharedPreferencesUtil.getInfo_List(getActivity(), "areaList");
+        areaList = SharedPreferencesUtil.getInfo_Second_List(App.getInstance().getApplicationContext(), "areaList");
         init_music_flag();
         show_old_areaList();
         show_old_roomList();
@@ -905,7 +905,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
     }
 
     private void show_old_roomList() {
-        roomList = SharedPreferencesUtil.getInfo_List(getActivity(), "roomList_old");
+        roomList = SharedPreferencesUtil.getInfo_Second_List(App.getInstance().getApplicationContext(), "roomList_old");
         if (roomList.size() != 0) {
             display_room_list(0);
         }
@@ -915,7 +915,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
      * 显示历史区域
      */
     private void show_old_areaList() {
-        areaList = SharedPreferencesUtil.getInfo_List(getActivity(), "areaList_old");
+        areaList = SharedPreferencesUtil.getInfo_Second_List(App.getInstance().getApplicationContext(), "areaList_old");
         if (areaList.size() != 0) {
             for (Map map : areaList) {
                 if ("1".equals(map.get("sign").toString())) {
@@ -939,7 +939,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
         boolean isnewProcess = (boolean) SharedPreferencesUtil.getData(getActivity(), "newProcess", false);
         if (isnewProcess) {//新进程下首页默认填充设备历史数据（历史数据只供显示填补空白）（待完成）；
             SharedPreferencesUtil.saveData(getActivity(), "newProcess", false);
-            list = SharedPreferencesUtil.getInfo_List(getActivity(), "list_old");
+            list = SharedPreferencesUtil.getInfo_Second_List(App.getInstance().getApplicationContext(), "list_old");
             listtype.clear();
             if (list.size() != 0) {
                 for (Map map : list) {
@@ -1026,7 +1026,9 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 
     private void common_room_show() {
         if (roomList.size() != 0) {
-            list = SharedPreferencesUtil.getInfo_List(getActivity(), "list");
+
+            list = SharedPreferencesUtil.getInfo_Second_List(App.getInstance().getApplicationContext(), "list");
+
             listtype.clear();
             if (current_room_number != null) {
                 common_device_list();
@@ -1071,7 +1073,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 SharedPreferencesUtil.saveData(getActivity(), "authType", authType);
                 handler_laungh.sendEmptyMessage(1);
 
-                roomList = SharedPreferencesUtil.getInfo_List(getActivity(), "roomList");
+                roomList = SharedPreferencesUtil.getInfo_Second_List(App.getInstance().getApplicationContext(), "roomList");
                 if (roomList.size() != 0) {
                     handler_laungh.sendEmptyMessage(3);
                 } else {
@@ -1081,9 +1083,9 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                 break;
             }
         }
-        SharedPreferencesUtil.saveInfo_List(getActivity(), "areaList", new ArrayList<Map>());
-        SharedPreferencesUtil.saveInfo_List(getActivity(), "roomList", new ArrayList<Map>());
-        SharedPreferencesUtil.saveInfo_List(getActivity(), "list", new ArrayList<Map>());
+        SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "areaList", new ArrayList<Map>());
+        SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "roomList", new ArrayList<Map>());
+        SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "list", new ArrayList<Map>());
     }
 
     private void init_first_sraum() {
@@ -2383,9 +2385,9 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                             }
 
                         if (list.size() != 0) {
-                            SharedPreferencesUtil.saveInfo_List(getActivity(), "list_old", list);
+                            SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "list_old", list);
                         } else {
-                            SharedPreferencesUtil.saveInfo_List(getActivity(), "list_old", new ArrayList<Map>());
+                            SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "list_old", new ArrayList<Map>());
                         }
 
                         if (list.size() != 0) {
@@ -2805,9 +2807,9 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
 
 
                         if (areaList.size() != 0) {
-                            SharedPreferencesUtil.saveInfo_List(getActivity(), "areaList_old", areaList);
+                            SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "areaList_old", areaList);
                         } else {
-                            SharedPreferencesUtil.saveInfo_List(getActivity(), "areaList_old", new ArrayList<Map>());
+                            SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "areaList_old", new ArrayList<Map>());
                         }
 
                         if (user.areaList != null && user.areaList.size() != 0) {//区域命名
@@ -2904,7 +2906,7 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                             }
 
                         }
-                        SharedPreferencesUtil.saveInfo_List(getActivity(), "areaList_old", areaList);
+                        SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "areaList_old", areaList);
                         SharedPreferencesUtil.saveData(getActivity(), "authType", authType);
                         handler_laungh.sendEmptyMessage(6);
                     }
@@ -2979,9 +2981,9 @@ public class HomeFragment extends BaseFragment1 implements AdapterView.OnItemCli
                         }
 
                         if (roomList.size() != 0) {
-                            SharedPreferencesUtil.saveInfo_List(getActivity(), "roomList_old", roomList);
+                            SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "roomList_old", roomList);
                         } else {
-                            SharedPreferencesUtil.saveInfo_List(getActivity(), "roomList_old", new ArrayList<Map>());
+                            SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "roomList_old", new ArrayList<Map>());
                         }
                         handler_laungh.sendEmptyMessage(4);
                     }

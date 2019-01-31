@@ -8,7 +8,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.massky.sraum"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 51
         versionName "2.0.1"//最新51 ，2.0.1
@@ -164,6 +164,7 @@ dependencies {
     implementation project(':citypickerview')
     compile 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.airbnb.android:lottie:2.5.4'
+    implementation 'com.github.zhangliangming:PreferencesProvider:v1.3'
 }
 
 

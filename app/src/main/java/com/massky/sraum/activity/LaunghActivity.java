@@ -15,6 +15,7 @@ import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Util.TokenUtil;
 import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.Utils.App;
 import com.massky.sraum.base.BaseActivity;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
@@ -49,6 +50,7 @@ public class LaunghActivity extends BaseActivity {
     private List<Map> areaList = new ArrayList<>();
     private List<Map> roomList = new ArrayList<>();//fang jian lie biao
     private List<Map> list = new ArrayList<>();
+
     @Override
     protected int viewId() {
         return R.layout.laugh_layout;
@@ -73,10 +75,10 @@ public class LaunghActivity extends BaseActivity {
         int pid_past = (int) SharedPreferencesUtil.getData(LaunghActivity.this, "pid", 0);
         if (pid_past == pid) {//则说明app没有被杀死,直接跳转
             tiaozhuan();
-            SharedPreferencesUtil.saveData(LaunghActivity.this,"newProcess",false);
+            SharedPreferencesUtil.saveData(LaunghActivity.this, "newProcess", false);
             return;
         } else {
-            SharedPreferencesUtil.saveData(LaunghActivity.this,"newProcess",true);
+            SharedPreferencesUtil.saveData(LaunghActivity.this, "newProcess", true);
             saveProcess();
         }
     }
@@ -86,7 +88,7 @@ public class LaunghActivity extends BaseActivity {
      */
     public void saveProcess() {
         int pid = android.os.Process.myPid();//4731
-        SharedPreferencesUtil.saveData(LaunghActivity.this,"pid",pid);
+        SharedPreferencesUtil.saveData(LaunghActivity.this, "pid", pid);
     }
 
 
@@ -175,10 +177,10 @@ public class LaunghActivity extends BaseActivity {
                             areaList.add(mapdevice);
                         }
 
-                        if(areaList.size() != 0) {
-                            SharedPreferencesUtil.saveInfo_List(LaunghActivity.this, "areaList", areaList);
+                        if (areaList.size() != 0) {
+                            SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "areaList", areaList);
                         } else {
-                            SharedPreferencesUtil.saveInfo_List(LaunghActivity.this, "areaList", new ArrayList<Map>());
+                            SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "areaList", new ArrayList<Map>());
                         }
                         if (areaList.size() != 0) {//区域命名
                             for (Map map : areaList) {
@@ -245,17 +247,10 @@ public class LaunghActivity extends BaseActivity {
                             mapdevice.put("count", user.roomList.get(i).count);
                             roomList.add(mapdevice);
                         }
-                        if(roomList.size() != 0) {
-                            SharedPreferencesUtil.saveInfo_List(LaunghActivity.this, "roomList", roomList);
-//                            new Thread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    sraum_getOneRoomInfo(roomList.get(0).get("number").toString(),areaNumber);
-//                                }
-//                            }).start();
-//                            sraum_getOneRoomInfo(roomList.get(0).get("number").toString(),areaNumber);
+                        if (roomList.size() != 0) {
+                            SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "roomList", roomList);
                         } else {
-                            SharedPreferencesUtil.saveInfo_List(LaunghActivity.this, "roomList", new ArrayList<Map>());
+                            SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(), "roomList", new ArrayList<Map>());
                         }
                     }
 
@@ -265,124 +260,6 @@ public class LaunghActivity extends BaseActivity {
                     }
                 });
     }
-
-
-//    /**
-//     * 获取单个房间关联信息（APP->网关）
-//     *
-//     * @param number
-//     */
-//    private void sraum_getOneRoomInfo(final String number,final String areaNumber) {
-//        Map map = new HashMap();
-//        map.put("areaNumber", areaNumber);
-//        map.put("roomNumber", number);
-//        map.put("token", TokenUtil.getToken(LaunghActivity.this));
-////        if (dialogUtil != null) {
-////            dialogUtil.loadDialog();
-////        }
-//
-////        mapdevice.put("boxNumber", TokenUtil.getBoxnumber(SelectSensorActivity.this));
-//        MyOkHttp.postMapString(ApiHelper.sraum_getOneRoomInfo
-//                , map, new Mycallback(new AddTogglenInterfacer() {
-//                    @Override
-//                    public void addTogglenInterfacer() {//刷新togglen数据
-//                        sraum_getOneRoomInfo(number,areaNumber);
-//                    }
-//                }, LaunghActivity.this, null) {
-//                    @Override
-//                    public void onError(Call call, Exception e, int id) {
-//                        super.onError(call, e, id);
-//                    }
-//
-//                    @Override
-//                    public void pullDataError() {
-//                        super.pullDataError();
-//                    }
-//
-//                    @Override
-//                    public void emptyResult() {
-//                        super.emptyResult();
-//                    }
-//
-//                    @Override
-//                    public void wrongToken() {
-//                        super.wrongToken();
-//                        //重新去获取togglen,这里是因为没有拉到数据所以需要重新获取togglen
-//                    }
-//
-//                    @Override
-//                    public void wrongBoxnumber() {
-//                        super.wrongBoxnumber();
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(final User user) {
-//                        list = new ArrayList<>();
-//                        for (int i = 0; i < user.deviceList.size(); i++) {
-//                            Map map = new HashMap();
-//                            map.put("name", user.deviceList.get(i).name == null ? "" : user.deviceList.get(i).name
-//                            );
-//                            map.put("number", user.deviceList.get(i).number);
-//                            map.put("type", user.deviceList.get(i).type);
-//                            map.put("status", user.deviceList.get(i).status == null ? "" : user.deviceList.get(i).status);
-//                            map.put("mode", user.deviceList.get(i).mode);
-//                            map.put("dimmer", user.deviceList.get(i).dimmer);
-//                            map.put("temperature", user.deviceList.get(i).temperature);
-//                            map.put("speed", user.deviceList.get(i).speed);
-//                            map.put("boxNumber", user.deviceList.get(i).boxNumber == null ? "" :
-//                                    user.deviceList.get(i).boxNumber
-//                            );
-////                            map.put("boxNumber", user.deviceList.get(i).boxNumber);
-////                            map.put("boxName", user.deviceList.get(i).boxName);
-//                            //name1
-//                            //name2
-//                            //flag
-//                            map.put("name1", user.deviceList.get(i).name1);
-//                            map.put("name2", user.deviceList.get(i).name2);
-////                            map.put("flag", user.deviceList.get(i).flag);
-//                            map.put("panelName", user.deviceList.get(i).panelName);
-//                            map.put("panelMac", user.deviceList.get(i).panelMac);
-////                            map.put("deviceId", "");
-//                            map.put("mac", "");
-//                            map.put("deviceId", "");
-//                            list.add(map);
-//                        }
-//
-//                        if (user.wifiList != null)
-//                            for (int i = 0; i < user.wifiList.size(); i++) {
-//                                Map map = new HashMap();
-//                                map.put("name", user.wifiList.get(i).name);
-//                                map.put("number", user.wifiList.get(i).number);
-//                                map.put("type", user.wifiList.get(i).type);
-//                                map.put("status", user.wifiList.get(i).status);
-//                                map.put("mode", user.wifiList.get(i).mode);
-//                                map.put("dimmer", user.wifiList.get(i).dimmer);
-//                                map.put("temperature", user.wifiList.get(i).temperature);
-//                                map.put("speed", user.wifiList.get(i).speed);
-//                                map.put("boxNumber", "");
-//                                map.put("boxName", "");
-//                                map.put("mac", user.wifiList.get(i).mac);
-//                                map.put("name1", "");
-//                                map.put("name2", "");
-//                                map.put("flag", "");
-//                                map.put("panelName", "");
-//                                map.put("deviceId", user.wifiList.get(i).deviceId);
-//                                map.put("panelMac", user.wifiList.get(i).panelMac);
-//                                map.put("boxNumber", ""
-//                                );
-//                                list.add(map);
-//                            }
-//
-//                        if(list.size() != 0) {
-//                            SharedPreferencesUtil.saveInfo_List(LaunghActivity.this, "list", list);
-//                        } else {
-//                            SharedPreferencesUtil.saveInfo_List(LaunghActivity.this, "list", new ArrayList<Map>());
-//                        }
-//                    }
-//                });
-//    }
-
-
 
     private int add = 3;
 

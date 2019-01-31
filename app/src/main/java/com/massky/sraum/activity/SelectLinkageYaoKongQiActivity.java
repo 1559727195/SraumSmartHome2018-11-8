@@ -230,7 +230,7 @@ public class SelectLinkageYaoKongQiActivity extends BaseActivity implements
                         listintwo.clear();
                         for (int i = 0; i < user.deviceList.size(); i++) {
                             Map<String, String> mapdevice = new HashMap<>();
-                            mapdevice.put("name", user.deviceList.get(i).name);
+                            mapdevice.put("name", user.deviceList.get(i).device_name);
                             mapdevice.put("number", user.deviceList.get(i).number);
                             mapdevice.put("type", user.deviceList.get(i).type);
                             mapdevice.put("deviceId", user.deviceList.get(i).deviceId);

@@ -121,6 +121,8 @@ public class PersonMessageActivity extends BaseActivity  {
     @InjectView(R.id.txt_nv)
     TextView txt_nv;
     private String gender;
+    private String birthday1;
+    private String birthday_str ="";
 
 
     @Override
@@ -691,11 +693,12 @@ public class PersonMessageActivity extends BaseActivity  {
         mDatePicker1.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String birthday1 = year + "年" + monthOfYear + "月" + dayOfMonth + "日";
+                birthday1 = year + "年" + monthOfYear + "月" + dayOfMonth + "日";
+                birthday_str = year + "-" + monthOfYear + "-" + dayOfMonth;
 //                date = year + "-" + monthOfYear + "-" + dayOfMonth;
-                birthday.setText(birthday1);
-                updateAccountInfo(nicheng_txt.getText().toString(), gender,
-                        birthday.getText().toString(), change_phone_txt.getText().toString());
+//                birthday.setText(birthday1);
+//                updateAccountInfo(nicheng_txt.getText().toString(), gender,
+//                        birthday.getText().toString(), change_phone_txt.getText().toString());
             }
         });
 
@@ -725,6 +728,9 @@ public class PersonMessageActivity extends BaseActivity  {
             public void onClick(View v) {
                 // 销毁弹出框
                 takePhotoPopWin.dismiss();
+                birthday.setText(birthday1);
+                updateAccountInfo(nicheng_txt.getText().toString(), gender,
+                        birthday.getText().toString(), change_phone_txt.getText().toString());
             }
         });
 

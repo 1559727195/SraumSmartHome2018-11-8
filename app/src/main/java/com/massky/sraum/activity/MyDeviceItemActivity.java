@@ -405,6 +405,7 @@ public class MyDeviceItemActivity extends com.massky.sraum.base.BaseActivity imp
     }
 
     private void set_type(String type) {
+        banben_txt.setText(type);
         switch (type) {
             case "A201":
                 gateway_id_txt.setText(iconName[0]);

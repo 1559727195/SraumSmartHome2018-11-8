@@ -127,7 +127,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/y80"
                     android:background="@null"
-                    android:gravity="left|top"
+                    android:gravity="left|center_vertical"
                     android:id="@+id/edit_text_message"
                     android:hint="请简要描述你的问题和意见"
                     android:paddingRight="@dimen/y5"

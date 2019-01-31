@@ -224,8 +224,9 @@ public class MyDeviceListActivity extends BaseActivity implements XListView.IXLi
                             mapdevice.put("name", user.panelList.get(i).name);
                             mapdevice.put("type", user.panelList.get(i).type);
                             mapdevice.put("boxNumber", user.panelList.get(i).boxNumber);
-                            mapdevice.put("mac", "");
+                            mapdevice.put("mac", user.panelList.get(i).mac);
                             mapdevice.put("isUse", "");
+
                             //roomNumber
                             mapdevice.put("roomNumber", "");
                             mapdevice.put("roomName", "");

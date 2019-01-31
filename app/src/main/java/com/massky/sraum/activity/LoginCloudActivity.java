@@ -25,6 +25,7 @@ import com.massky.sraum.Util.SharedPreferencesUtil;
 import com.massky.sraum.Util.Timeuti;
 import com.massky.sraum.Util.ToastUtil;
 import com.massky.sraum.Utils.ApiHelper;
+import com.massky.sraum.Utils.App;
 import com.massky.sraum.base.BaseActivity;
 import com.massky.sraum.myzxingbar.qrcodescanlib.CaptureActivity;
 import com.massky.sraum.permissions.RxPermissions;
@@ -33,6 +34,7 @@ import com.massky.sraum.view.ClearEditText;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,6 +91,20 @@ public class LoginCloudActivity extends BaseActivity {
         StatusUtils.setFullToStatusBar(this);  // StatusBar.
         toolbar_txt.setText("登录网关");
         scan_gateway.setOnClickListener(this);
+        clear_hository_first_page_datas();
+    }
+
+    /**
+     * 清空首页首页区域，房间，设备历史信息
+     */
+    private void clear_hository_first_page_datas() {
+        //areaList，roomList，list，list_old，roomList_old，areaList_old
+       SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(),"areaList",new ArrayList<Map>());
+       SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(),"roomList",new ArrayList<Map>());
+       SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(),"list",new ArrayList<Map>());
+       SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(),"list_old",new ArrayList<Map>());
+       SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(),"roomList_old",new ArrayList<Map>());
+       SharedPreferencesUtil.saveInfo_Second_List(App.getInstance().getApplicationContext(),"areaList_old",new ArrayList<Map>());
     }
 
     @Override

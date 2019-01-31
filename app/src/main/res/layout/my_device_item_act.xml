@@ -494,7 +494,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dp"
-                            android:text="设备版本"
+                            android:text="设备类型"
                             android:textColor="#000000" />
 
 
